@@ -30,6 +30,7 @@ The list of available config overrides:
  * fstab (only fstab supported, remember to create mount point through init-start first if it doesn't exist!)
  * group, gshadow, passwd, shadow (only .add versions supported)
  * hosts (for /etc/hosts)
+ * igmpproxy.conf
  * minidlna.conf
  * mt-daap.service
  * pptpd.conf
@@ -69,6 +70,7 @@ The list of available postconf scripts is:
  * group.postconf
  * gshadow.postconf
  * hosts.postconf
+ * igmpproxy.postconf
  * minidlna.postconf
  * mt-daap.postconf
  * openvpnclient1.postconf (1 through 5)
