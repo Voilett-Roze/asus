@@ -35,4 +35,5 @@ Connect to your router through SSH (you can use PUTTY on windows). Default IP ad
 2. Go to `Administration -> System` and disable `Enable SSH config option`
 
 # More
-For more dnsmasq options check [manual](http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html)
+* You can run webserver directly on the router [howto](https://github.com/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware) 
+* For more dnsmasq options check [manual](http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html)
