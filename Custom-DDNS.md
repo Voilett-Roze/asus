@@ -311,3 +311,35 @@ else
 fi
 
 ```
+### CloudFlare IMPROVED and working as of Dec 30th 2015
+If you use CloudFlare for your domains, this script can update any A record on your account. Something was broke in the old script above. If you are having trouble, use this one. To get your record ID use:
+```
+curl https://www.cloudflare.com/api_json.html -d 'a=rec_load_all' \
+  -d 'tkn=YOUR_API_KEY’ \
+  -d 'email=YOUR_EMAIL_ADDRESS’ \
+  -d 'z=YOUR_DOMAIN_NAME’
+```
+/jffs/scripts/ddns-start
+```
+#!/bin/sh
+
+NEW_IP=`wget http://ipinfo.io/ip -qO -`
+
+        curl https://www.cloudflare.com/api_json.html \
+          -d 'a=rec_edit' \
+          -d 'tkn=YOUR_API_KEY_HERE’ \
+          -d 'email=YOUR_ACCOUNT_EMAIL_HERE’ \
+          -d 'z=ZONE_OR_ROOT_DOMAIN_NAME’ \
+          -d 'id=RECORD_ID’ \
+          -d 'type=A' \
+          -d 'name=DOMAIN_NAME’ \
+          -d 'ttl=1' \
+          -d "content=$NEW_IP"
+        echo $NEW_IP > /var/tmp/current_ip.txt
+
+if [ $? -eq 0 ]; then
+    /sbin/ddns_custom_updated 1
+else
+    /sbin/ddns_custom_updated 0
+fi
+```
