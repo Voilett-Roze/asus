@@ -1,11 +1,11 @@
-_Please note, this how-to will work only on asuswrt-merlin releases newer then 378.55._
+_Please note, this how-to will work only on asuswrt-merlin releases newer than 378.55. 380.57 or newer is recommended._
 
 This solution consists of two parts:
 
 * collecting resolved IPs from unwanted domains list to IP set with dnsmasq,
 * dropping traffic from/to collected IPs with firewall rule.
 
-First, enable JFFS custom scripts and configs from WebUI. Put following list of unwanted domains to `/jffs/Win10tracking.txt`:
+First, enable JFFS custom scripts and configs from WebUI. Put following list of unwanted domains to `/jffs/configs/windows-10-tracking-hosts.txt`:
 ```
 a.ads1.msn.com
 a.ads2.msads.net
@@ -116,11 +116,13 @@ www.msftncsi.com
 I took mine list from [here](http://forums.zyxmon.org/go.php?https://github.com/10se1ucgo/DisableWinTracking/blob/master/run.py#L208). Now put following content to `/jffs/scripts/firewall-start`:
 ```
 #!/bin/sh
-DNSMASQ_CFG=/jffs/configs/dnsmasq.conf.add
+JFFS_CONFIG_DIR=/jffs/configs
+BLOCKED_HOSTS_FILE=${JFFS_CONFIG_DIR}/windows-10-tracking-hosts.txt
+DNSMASQ_CFG=${JFFS_CONFIG_DIR}/dnsmasq.conf.add
 if [ ! -f $DNSMASQ_CFG ] || [ "$(grep Win10tracking $DNSMASQ_CFG)" = "" ];
 then
   rm -f $DNSMASQ_CFG
-  for i in `cat /jffs/Win10tracking.txt`;
+  for i in `cat $BLOCKED_HOSTS_FILE`;
   do
     echo "ipset=/$i/Win10tracking" >> $DNSMASQ_CFG
   done
@@ -160,3 +162,5 @@ You may check it's working by trying to open some site from list (view.atdmt.com
 ```
 ipset --list Win10tracking
 ```
+
+Alternatively, put the above script into `/jffs/scripts/windows-10-tracking-blocker` and call that from `/jffs/scripts/firewall-start`.
