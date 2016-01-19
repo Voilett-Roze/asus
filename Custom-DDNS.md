@@ -343,3 +343,36 @@ else
     /sbin/ddns_custom_updated 0
 fi
 ```
+### BIND9 DDNS using nsupdate
+If you run your own DNS server with BIND9, this script uses nsupdate to update an A record.  This requires that you are updating a zone configured for use with dynamic updates rather than the standard zone config files.
+```
+#!/opt/bin/bash
+# A bash script to update BIND9 DDNS using nsupdate and tsig key
+# Tested with bash and bind-client to be installed from entware-ng
+
+#User variables - replace with your variables
+NS="ns1.example.com"
+ZONE="dynamic.example.com"
+DHOST="dhost.dynamic.example.com"
+TSIGFILE="/tmp/sda1/mykey.tsig"
+
+NSUPDATE=$(which nsupdate)
+IP=$1
+
+echo "server $NS" > /tmp/nsupdate
+echo "debug yes" >> /tmp/nsupdate
+echo "zone $ZONE." >> /tmp/nsupdate
+echo "update delete $DHOST A" >> /tmp/nsupdate
+echo "update add $DHOST 600 A $IP" >> /tmp/nsupdate
+echo "send" >> /tmp/nsupdate
+
+$NSUPDATE -k $TSIGFILE /tmp/nsupdate 2>&1 &
+wait $!
+echo $?
+
+if [ $?==0 ]; then
+	/sbin/ddns_custom_updated 1
+else
+	/sbin/ddns_custom_updated 0
+fi
+```
