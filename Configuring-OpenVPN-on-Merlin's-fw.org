@@ -138,18 +138,20 @@ Key Files
 
 Now we will find our newly-generated keys and certificates in the keys subdirectory. Here is an explanation of the relevant files:
 
-Filename	Needed By	Purpose	Secret
-ca.crt	server + all clients	Root CA certificate	NO
-ca.key	key signing machine only	Root CA key	YES
-dh{n}.pem	server only	Diffie Hellman parameters	NO
-server.crt	server only	Server Certificate	NO
-server.key	server only	Server Key	YES
-client1.crt	client1 only	Client1 Certificate	NO
-client1.key	client1 only	Client1 Key	YES
-client2.crt	client2 only	Client2 Certificate	NO
-client2.key	client2 only	Client2 Key	YES
-client3.crt	client3 only	Client3 Certificate	NO
-client3.key	client3 only	Client3 Key	YES
+|Filename	|Needed By	|Purpose	|Secret
+|--
+|ca.crt	|server + all clients	|Root CA certificate	|NO
+|ca.key	|key signing machine only	|Root CA key	|YES
+|dh{n}.pem	|server only	|Diffie Hellman parameters	|NO
+|server.crt	|server only	|Server Certificate	|NO
+|server.key	|server only	|Server Key	|YES
+|client1.crt	|client1 only	|Client1 Certificate	|NO
+|client1.key	|client1 only	|Client1 Key	|YES
+|client2.crt	|client2 only	|Client2 Certificate	|NO
+|client2.key	|client2 only	|Client2 Key	|YES
+|client3.crt	|client3 only	|Client3 Certificate	|NO
+|client3.key	|client3 only	|Client3 Key	|YES
+
 The final step in the key generation process is to copy all files to the machines which need them, taking care to copy secret files over a secure channel.
 
 Now wait, you may say. Shouldn't it be possible to set up the PKI without a pre-existing secure channel?
