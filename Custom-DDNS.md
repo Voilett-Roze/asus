@@ -376,3 +376,24 @@ else
 	/sbin/ddns_custom_updated 0
 fi
 ```
+
+### Loopia 
+Just edit USERNAME, PASSWORD and HOSTNAME according to your setup, then set force update to 7 days
+```
+#!/bin/sh
+# https://support.loopia.com/wiki/CURL
+burl=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
+cred=username:password
+hostname=yourdomain.com
+wanip=$(curl -s http://whatismyip.akamai.com/)
+url="$burl"'?hostname='"$hostname"'&'myip="$wanip&wildcard=NOCHG"
+curl -s --user "$cred" "$url"
+
+
+if [ $? -eq 0 ]; then
+        /sbin/ddns_custom_updated 1
+
+else
+        /sbin/ddns_custom_updated 0
+fi
+```
