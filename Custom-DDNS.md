@@ -389,7 +389,6 @@ wanip=$(curl -s http://whatismyip.akamai.com/)
 url="$burl"'?hostname='"$hostname"'&'myip="$wanip&wildcard=NOCHG"
 curl -s --user "$cred" "$url"
 
-
 if [ $? -eq 0 ]; then
         /sbin/ddns_custom_updated 1
 
