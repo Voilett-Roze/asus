@@ -387,7 +387,7 @@ cred=username:password
 hostname=yourdomain.com
 # dont edit anything beyond this point
 burl=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
-wanip=$(curl -s http://whatismyip.akamai.com/)
+wanip=$(curl -s ipecho.net/plain)
 url="$burl"'?hostname='"$hostname"'&'myip="$wanip&wildcard=NOCHG"
 curl -s --user "$cred" "$url"
 
