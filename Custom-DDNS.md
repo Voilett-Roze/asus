@@ -378,13 +378,15 @@ fi
 ```
 
 ### Loopia 
-Just edit USERNAME, PASSWORD and HOSTNAME according to your setup, then set force update to 7 days
+Just edit Cred and Hostname then set force update to 7 days
 ```
 #!/bin/sh
 # https://support.loopia.com/wiki/CURL
-burl=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
+# set your account credentials and domain name
 cred=username:password
 hostname=yourdomain.com
+# dont edit anything beyond this point
+burl=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
 wanip=$(curl -s http://whatismyip.akamai.com/)
 url="$burl"'?hostname='"$hostname"'&'myip="$wanip&wildcard=NOCHG"
 curl -s --user "$cred" "$url"
