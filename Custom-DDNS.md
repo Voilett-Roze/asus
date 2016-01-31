@@ -378,23 +378,27 @@ fi
 ```
 
 ### Loopia 
-Just edit Cred and Hostname then set force update to 7 days
+This scripts add Loopia support using curl just edit hostname and cred.
 ```
 #!/bin/sh
 # https://support.loopia.com/wiki/CURL
-# set your account credentials and domain name
+# Add your credentials here
 cred=username:password
-hostname=yourdomain.com
-# dont edit anything beyond this point
+hostname=domain.com
+# Don't edit anything beyond this point
 burl=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
 wanip=$(curl -s ipecho.net/plain)
 url="$burl"'?hostname='"$hostname"'&'myip="$wanip&wildcard=NOCHG"
-curl -s --user "$cred" "$url"
 
-if [ $? -eq 0 ]; then
-        /sbin/ddns_custom_updated 1
-
-else
-        /sbin/ddns_custom_updated 0
-fi
+loopia_dns_update() {
+  CMD=$(curl -s --user "$cred" "$url")
+  logger "ddns status: $CMD"
+  case "$CMD" in
+    good*|nochg*) /sbin/ddns_custom_updated 1 ;;
+    abuse) /sbin/ddns_custom_updated 1 ;;
+    *) /sbin/ddns_custom_updated 0 ;;
+  esac
+}
+loopia_dns_update
+exit 0
 ```
