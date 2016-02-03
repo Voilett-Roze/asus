@@ -57,17 +57,6 @@ STARTUP_SCRIPT_LOG_FILE="/tmp/ipv6.log"
 #Settings end here
 #***************************
 
-
-########################
-#Tunnel endpoint update
-########################
-echo "" >> $STARTUP_SCRIPT_LOG_FILE
-echo "HE IPv6 Script started" >> $STARTUP_SCRIPT_LOG_FILE
-#get a hash of the plaintext password
-MD5PASSWD=`echo -n $PASSWD | md5sum | sed -e 's/  -//g'`
-echo `date` >> $STARTUP_SCRIPT_LOG_FILE
-echo "configuring tunnel" >> $STARTUP_SCRIPT_LOG_FILE
-
 #**********************************
 # pause until connection is ready #
 #**********************************
@@ -102,6 +91,17 @@ else
 
     done
 fi
+
+########################
+#Tunnel endpoint update
+########################
+echo "" >> $STARTUP_SCRIPT_LOG_FILE
+echo "HE IPv6 Script started" >> $STARTUP_SCRIPT_LOG_FILE
+#get a hash of the plaintext password
+MD5PASSWD=`echo -n $PASSWD | md5sum | sed -e 's/  -//g'`
+echo `date` >> $STARTUP_SCRIPT_LOG_FILE
+echo "configuring tunnel" >> $STARTUP_SCRIPT_LOG_FILE
+
 
 #update HE endpoint
 #need to alllow wan ping or HE will not validate new endpoint
