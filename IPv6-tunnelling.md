@@ -79,7 +79,7 @@ if ping -c 1 "$HE_VERIFY_SERVER_IP" &>/dev/null
 
 then
 
-    echo " " >> "$STARTUP_SCRIPT_LOG_FILE"
+    echo "" >> "$STARTUP_SCRIPT_LOG_FILE"
     echo "Already Connected - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
 
 #if ping test failed, pause until connection is ready.
@@ -90,7 +90,7 @@ else
     do
         if ping -c 1 "$HE_VERIFY_SERVER_IP" &>/dev/null
         then
-            echo " " >> "$STARTUP_SCRIPT_LOG_FILE"
+            echo "" >> "$STARTUP_SCRIPT_LOG_FILE"
             echo "Now Connected, starting tunnel update - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
             break
         fi
