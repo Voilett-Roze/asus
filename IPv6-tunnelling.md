@@ -42,8 +42,8 @@ NOTE: If your tunnel was made before 19th Jan 2014, you need to uncomment the se
 USERID="this_is_your_hexadecimal_userid_from_tunnelbroker"
 #if tunnel made after 2014/01/19, insert tunnel update key here
 #found under the advanced tab of tunnel options.
-PASSWD="your_tunnelbroker_password"
-TUNNELID="12345_from_tunnelbroker"
+PASSWD="your_tunnelbroker_password_or_update_key"
+TUNNELID="tunnel_id_number_ex_12345_from_tunnelbroker"
 
 #####Optional/Advanced Settings######
 
@@ -68,9 +68,44 @@ MD5PASSWD=`echo -n $PASSWD | md5sum | sed -e 's/  -//g'`
 echo `date` >> $STARTUP_SCRIPT_LOG_FILE
 echo "configuring tunnel" >> $STARTUP_SCRIPT_LOG_FILE
 
+#**********************************
+# pause until connection is ready #
+#**********************************
+
+#if ping test succeeds, log it and proceed to update tunnel.
+
+
+if ping -c 1 "$HE_VERIFY_SERVER_IP" &>/dev/null
+
+then
+
+    echo " " >> "$STARTUP_SCRIPT_LOG_FILE"
+    echo "Already Connected - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
+
+#if ping test failed, pause until connection is ready.
+
+else
+    i=0
+    while [ $i -le 50 ]
+    do
+        if ping -c 1 "$HE_VERIFY_SERVER_IP" &>/dev/null
+        then
+            echo " " >> "$STARTUP_SCRIPT_LOG_FILE"
+            echo "Now Connected, starting tunnel update - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
+            break
+        fi
+        echo >> "$STARTUP_SCRIPT_LOG_FILE"
+        echo "Not Connected, - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
+        echo "connecting wait ..."
+
+        sleep 15
+
+    done
+fi
+
 #update HE endpoint
 #need to alllow wan ping or HE will not validate new endpoint
-#iptables -I INPUT 2 -s $HE_VERIFY_SERVER_IP -p icmp -j ACCEPT
+iptables -I INPUT 2 -s $HE_VERIFY_SERVER_IP -p icmp -j ACCEPT
 etime=`date +%s`
 
 #for new tunnels
@@ -89,7 +124,7 @@ and don't forget to make it executable:
 ```
 chmod +x /jffs/scripts/wan-start
 ```
-Edit the parameters at the top to enter your UserID (it's an hexadecimal value, found on the Main Page of your account info in Tunnel Broker - right after you log in), password and tunnelID (found on the page where you see all the details of your tunnel).
+Edit the parameters at the top to enter your UserID (it's an hexadecimal value, found on the Main Page of your account info in Tunnel Broker - right after you log in), password (or update key for newer tunnels), and tunnelID (found on the page where you see all the details of your tunnel).
 
 You can manually execute the script, then check the content of /tmp/ipv6.log to ensure that the script is running correctly.
 
