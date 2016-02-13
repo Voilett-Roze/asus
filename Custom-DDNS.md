@@ -402,3 +402,28 @@ loopia_dns_update() {
 loopia_dns_update
 exit 0
 ```
+
+### DNSimple
+This script adds DNSimple support, get token and record_id from the site and edit all the variables.
+```
+#!/bin/bash
+ 
+LOGIN="your@email"
+TOKEN="your-api-token"
+DOMAIN_ID="yourdomain.com"
+RECORD_ID="12345" # Replace with the Record ID
+IP=`curl -s http://icanhazip.com/`
+ 
+curl -H "Accept: application/json" \
+     -H "Content-Type: application/json" \
+     -H "X-DNSimple-Token: $LOGIN:$TOKEN" \
+     -X "PUT" \
+     -i "https://api.dnsimple.com/v1/domains/$DOMAIN_ID/records/$RECORD_ID" \
+     -d "{\"record\":{\"content\":\"$IP\"}}" > /dev/null
+
+if [ $? -eq 0 ]; then
+    /sbin/ddns_custom_updated 1
+else
+    /sbin/ddns_custom_updated 0
+fi
+``` 
