@@ -414,7 +414,8 @@ DOMAIN_ID="yourdomain.com"
 RECORD_ID="12345" # Replace with the Record ID
 IP=`curl -s http://icanhazip.com/`
  
-curl -H "Accept: application/json" \
+curl --silent \
+     -H "Accept: application/json" \
      -H "Content-Type: application/json" \
      -H "X-DNSimple-Token: $LOGIN:$TOKEN" \
      -X "PUT" \
