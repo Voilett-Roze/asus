@@ -28,6 +28,7 @@ Its content should be:
  pc_append "
  log-dhcp
  interface=wl0.2
+ dhcp-range=wl0.2,172.30.20.150,172.30.20.200,255.255.255.0,86400s
  dhcp-option=wl0.2,3,172.30.20.1
  dhcp-option=wl0.2,6,8.8.8.8,8.8.4.4
  " /tmp/etc/dnsmasq.conf
@@ -77,4 +78,3 @@ Example:
  sent size:  1 option:252   0a
  sent size:  8 option:  6 dns-server  172.30.20.1, 172.30.20.1
  sent size:  4 option:  3 router  172.30.20.1
-  
