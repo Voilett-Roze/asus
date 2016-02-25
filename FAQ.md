@@ -17,6 +17,8 @@ A: Yes.  We frequently exchange emails, and they have also integrated some of th
 **Q: Will flashing this void my warranty?**  
 A: This is a kinda grey area for which I have no definitive answer unfortunately.  I have seen Asus publicly commit to supporting DD-WRT for some of their models, without any mention about it voiding your warranty.  Therefore my personal opinion would be that "No, it won't void your warranty", but as the saying goes, IANAL.  Your retailer might certainly have a different view on this than Asus would, too.
 
+NOTE: CSR Sanita, after confirming w/ her supervisor, said on 2/24/2016 "We will repair the product free of cost under warranty if it does not have any physical damage. No, it won't void your warranty."
+
 **Q: Will you support router "RT-xXX" from Asus?**  
 A: Most likely not.  Without having an actual router to test with, building a firmware that people would flash without me having at least confirmed it can be flashed at all would be far too risky.
 
