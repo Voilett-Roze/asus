@@ -37,6 +37,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 12. [Webcam video surveillance Optware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer) (External link)
 13. [Installing Deluge through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Deluge-through-Entware)
 14. [Webcam video surveillance Entware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer-entware/) (External link)
+15. [Plex Media Server on Arm Routers](http://www.hqt.ro/plex-media-server-through-debian-arm/) (External link)
 
 ### Development
 1. [Download the latest source code from GitHub](/RMerl/asuswrt-merlin/wiki/Download-the-latest-source-code-from-GitHub)
