@@ -36,7 +36,7 @@ Before we can build `asuswrt-merlin`, we need to install packages required that 
     sudo apt-get --no-install-recommends install autoconf automake bash bison bzip2 diffutils file flex g++ gawk gcc-multilib gettext gperf groff-base libncurses-dev libexpat1-dev libslang2 libssl-dev libtool libxml-parser-perl make patch perl pkg-config python sed shtool tar texinfo unzip zlib1g zlib1g-dev
 
 
-(EDIT/UPDATE: When struggling with asuswrt on a Debian 7.2 i386, I was forced by make to install 2 more packages: intltool, autopoint)
+(EDIT/UPDATE: When struggling with asuswrt on a Debian 7.2 i386, I was forced by make to install 2 more packages: intltool, autopoint,)
 
 When prompted, enter your password for `sudo` to gain `root` access to install the packages. Enter 'Y' when prompted to install the packages. When the packages have finished installing, you will be returned back to your command line.
 
@@ -58,6 +58,12 @@ If you're unsure whether you have Debian x64 or not, use the following command l
 
 ```bash
 [[ "$(uname -m)" == "x86_64" ]] && sudo apt-get --no-install-recommends install lib32z1-dev lib32stdc++6
+```
+
+Under some circumstances you may need to install automake-1.11 (I had to on Debian 8):
+
+```bash
+sudo apt-get install --no-install-recommends automake-1.11
 ```
 
 **Note:** the following commands assume that you have downloaded the source code into `~/asuswrt-merlin/` as specified in the [Download the latest source code from GitHub](https://github.com/RMerl/asuswrt-merlin/wiki/Download-the-latest-source-code-from-GitHub) guide on this wiki. If this is not where you have downloaded the source code to, adjust the commands/paths as necessary for your own environment.
