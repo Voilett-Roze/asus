@@ -12,6 +12,11 @@ echo "no-resolv" > /jffs/configs/dnsmasq.conf.add
 echo "server=127.0.0.1#65053" >> /jffs/configs/dnsmasq.conf.add
 ```
 
+start dnscrypt when router boots up
+```bash
+echo "/opt/etc/init.d/S09dnscrypt-proxy start" >> /jffs/scripts/servies-start
+```
+
 (optional) You can redirect using other DNS-servers on clients:
 add to firewall-start or nat-start
 ```
@@ -22,6 +27,24 @@ iptables -t nat -A PREROUTING -i br0 -p tcp --dport 53 -j DNAT --to $(nvram get 
 Reboot router to take effect:
 ```
 reboot
+```
+
+Check if it is working
+
+stop the dnscrypt service
+
+```bash
+/opt/etc/init.d/S09dnscrypt-proxy stop
+```
+Try to ping a url like
+
+```bash
+ping bing.com
+```
+The DNS resolution should not be working anymore
+Turn it back on
+```bash
+/opt/etc/init.d/S09dnscrypt-proxy start
 ```
 
 More info and discussion [here](http://www.snbforums.com/threads/dnscrypt-from-opendns.11645/).
