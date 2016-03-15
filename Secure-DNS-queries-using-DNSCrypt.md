@@ -14,7 +14,7 @@ echo "server=127.0.0.1#65053" >> /jffs/configs/dnsmasq.conf.add
 
 start dnscrypt when router boots up
 ```bash
-echo "/opt/etc/init.d/S09dnscrypt-proxy start" >> /jffs/scripts/servies-start
+echo "/opt/etc/init.d/S09dnscrypt-proxy start" >> /jffs/scripts/services-start
 ```
 
 (optional) You can redirect using other DNS-servers on clients:
