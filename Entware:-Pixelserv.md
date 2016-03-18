@@ -20,4 +20,4 @@ PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 ```
 
 * For possible issues use this thread [pixelserv - A Better One-pixel Webserver for Adblock](http://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/)
-* Use blocklists like [Entware Adblock Solution](https://github.com/Entware-ng/Entware-ng/wiki/Using-AdBlock--filters) or [uBlockr](https://gitlab.com/spitfire-project/ublockr)
+* Use a blocklists: [uBlockr](https://gitlab.com/spitfire-project/ublockr)
