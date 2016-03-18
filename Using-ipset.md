@@ -250,3 +250,38 @@ May 29 09:03:22 admin: Destroy this transient set just in case
 May 29 09:03:22 admin: Load the latest rule(s)
 May 29 09:04:04 admin: exiting Peerguarding rules
 ```
+## Malware Filter
+
+Grabs list of active ip addresses from http://www.malwaredomainlist.com/ and blocks the set.
+
+```
+#!/bin/sh
+
+# Loading ipset modules
+lsmod | grep "ipt_set" > /dev/null 2>&1 || \
+for module in ip_set ip_set_iptreemap ipt_set
+do
+    insmod $module
+done
+
+# Different routers got different iptables syntax
+case $(uname -m) in
+  armv7l)
+    MATCH_SET='--match-set'
+    ;;
+  mips)
+    MATCH_SET='--set'
+    ;;
+esac
+wget -q "http://www.malwaredomainlist.com/hostslist/ip.txt" -O /opt/tmp/ip.tmp | nice grep -oE "^[0-9].+$" > /opt/tmp/ip.txt
+if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep 'Unknown set')" != "" ]
+
+then
+    ipset -N malware-filter iphash
+    for IP in $(cat /opt/tmp/ip.txt)
+    do
+        ipset -A malware-filter $IP
+    done
+fi
+[ -z "$(iptables-save | grep malware-filter)" ] && iptables -I FORWARD -m set $MATCH_SET malware-filter dst -j DROP
+```
