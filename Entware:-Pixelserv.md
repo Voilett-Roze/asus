@@ -1,8 +1,9 @@
 * Work in progress
-* If possible define verification (test) criteria for each step
 
+# Foreword
+Pixelserv is a tool used to create a 1x1 transparant image can be used in combination with an adblocker (see notes) to remove ads without having a adblocker extension in the browser and it works across your network with any device thats hooked up to your router.
 
-### Pixelserv Installation Process
+## Pixelserv Installation Process
 * Follow the official installation steps at: https://github.com/kvic-z/pixelserv-tls
 * Get the Mips or ARM release from Pixelserv: https://github.com/kvic-z/pixelserv-tls/releases
 * Make Pixelserv autostart on boot place this file at /opt/etc/init.d/S81pixelserv-custom
@@ -18,5 +19,5 @@ PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 . /opt/etc/init.d/rc.func
 ```
 
-* for possible issues use this thread [Source: SNB forums](http://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/)
+* For possible issues use this thread [pixelserv - A Better One-pixel Webserver for Adblock](http://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/)
 * Use blocklists like [Entware Adblock Solution](https://github.com/Entware-ng/Entware-ng/wiki/Using-AdBlock--filters) or [uBlockr](https://gitlab.com/spitfire-project/ublockr)
