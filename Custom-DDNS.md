@@ -430,17 +430,17 @@ fi
 ``` 
 
 ### Double NAT - External IP Example
-This script first retrieves the external IP rather than using the one passed to it from the Custom DDNS settings.  This may be necessary if your ASUS router is double NATed behind your ISP's router.
+This script first retrieves the external IP rather than using the one passed to it from the Custom DDNS settings.  This may be necessary if your ASUS router is double NATed behind your ISP's router.  Example makes use of DNS-O-Matic but could be modified to work with other DDNS providers.
 ```
 #!/bin/sh
 USER="YourEmail%40domain.com" # replace @ symbol with URL safe %40
 PASS="YourPassword"
 HOST="all.dnsomatic.com"
 
+# Should be no need to modify anything beyond this point
 IP=$(wget -O - -q http://myip.dnsomatic.com/)
 logger "Retrieved External IP: $IP"
 
-# Should be no need to modify anything beyond this point
 RESULT=$(/usr/sbin/curl -k --silent "https://$USER:$PASS@updates.dnsomatic.com/nic/update?hostname=$HOST&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG&myip=$IP")
 
 logger "Results: $RESULT"
