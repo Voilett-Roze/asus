@@ -405,26 +405,25 @@ exit 0
 
 ### DNSimple
 This script adds DNSimple support, get token and record_id from the site and edit all the variables.
+Example code below utilizes DNS-O-Matic but could be modified to work with other DDNS providers
 ```
-#!/bin/bash
- 
-LOGIN="your@email"
-TOKEN="your-api-token"
-DOMAIN_ID="yourdomain.com"
-RECORD_ID="12345" # Replace with the Record ID
-IP=`curl -s http://icanhazip.com/`
- 
-curl --silent \
-     -H "Accept: application/json" \
-     -H "Content-Type: application/json" \
-     -H "X-DNSimple-Token: $LOGIN:$TOKEN" \
-     -X "PUT" \
-     -i "https://api.dnsimple.com/v1/domains/$DOMAIN_ID/records/$RECORD_ID" \
-     -d "{\"record\":{\"content\":\"$IP\"}}" > /dev/null
+#!/bin/sh
+USER="YourEmail%40domain.com" # replace the @ symbol with URL safe %40
+PASS="YourPassword"
+HOST="all.dnsomatic.com"
 
-if [ $? -eq 0 ]; then
-    /sbin/ddns_custom_updated 1
+IP=$(wget -O - -q http://myip.dnsomatic.com/)
+logger "Retrieved External IP: $IP"
+
+# Should be no need to modify anything beyond this point
+RESULT=$(/usr/sbin/curl -k --silent "https://$USER:$PASS@updates.dnsomatic.com/nic/update?hostname=$HOST&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG&myip=$IP")
+
+logger "Results: $RESULT"
+
+if [[ ${RESULT:0:4} == 'good' ]]
+then
+  /sbin/ddns_custom_updated 1
 else
-    /sbin/ddns_custom_updated 0
+  /sbin/ddns_custom_updated 0
 fi
 ``` 
