@@ -27,7 +27,43 @@ ledson.sh:
 nvram set led_disable=0
 service restart_leds
 ```
+or use an all in one script save it to /jffs/scripts/ledcontrol this is intended replacment to ledsoff.sh and ledson.sh with ledcontrol this is for those that don't want to clutter with several files, usage is simple:
 
+ledcontrol -on
+
+ledcontrol -off
+```
+#!/bin/sh
+show_help()
+{
+        echo "usage:"
+        echo "ledcontrol -on         Turn leds on"
+        echo "ledcontrol -off        Turn leds off"
+        echo ""
+}
+
+option="${1}"
+case ${option} in
+
+                -on)
+                    nvram set led_disable=0
+                    service restart_leds
+                    echo "Leds are now on"
+                    logger "Leds: on"
+                ;;
+
+                -off)
+                    nvram set led_disable=1
+                    service restart_leds
+                    echo "Leds are now off"
+                    logger "Leds: off"
+                ;;
+
+                *) show_help
+                exit 1
+                ;;
+esac
+```
 Then, reboot your router.  You can confirm that the jobs are properly set up by running the following command through telnet:
 
 ```
