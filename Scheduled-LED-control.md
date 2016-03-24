@@ -27,10 +27,9 @@ ledson.sh:
 nvram set led_disable=0
 service restart_leds
 ```
-or use an all in one script save it to /jffs/scripts/ledcontrol this is intended replacment to ledsoff.sh and ledson.sh with ledcontrol this is for those that don't want to clutter with several files, usage is simple:
+Or use an all in one script save it to /jffs/scripts/ledcontrol this is intended replacement to ledsoff.sh and ledson.sh with ledcontrol this is for those that don't want to clutter with several files, usage is simple:
 
 ledcontrol -on
-
 ledcontrol -off
 ```
 #!/bin/sh
