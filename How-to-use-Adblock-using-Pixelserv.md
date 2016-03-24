@@ -18,4 +18,4 @@ PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 ```
 
 * For community support use this thread [pixelserv - A Better One-pixel Webserver for Adblock](http://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/)
-* Use a blocklists: [uBlockr](https://gitlab.com/spitfire-project/ublockr)
+* Use a blocklists: [uBlockr](https://gitlab.com/spitfire-project/ublockr),[AB-Solution](https://github.com/decoderman/AB-Solution)
