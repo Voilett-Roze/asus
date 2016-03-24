@@ -30,6 +30,7 @@ service restart_leds
 Or use an all in one script save it to /jffs/scripts/ledcontrol this is intended replacement to ledsoff.sh and ledson.sh with ledcontrol this is for those that don't want to clutter with several files, usage is simple:
 
 ledcontrol -on
+
 ledcontrol -off
 ```
 #!/bin/sh
