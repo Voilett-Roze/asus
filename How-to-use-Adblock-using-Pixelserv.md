@@ -1,7 +1,5 @@
-* Work in progress
-
 # Foreword
-Pixelserv is a tool used to create a 1x1 transparant image can be used in combination with an adblocker (see notes) to remove ads without having a adblocker extension in the browser and it works across your network with any device thats hooked up to your router.
+Pixelserv is a tool used to create a 1x1 transparent image can be used in combination with an Adblocker (see notes) to remove ads without having a Adblocker extension in the browser and it works across your network with any device that is connected to your router.
 
 ## Pixelserv Installation Process
 * Follow the official installation steps at: https://github.com/kvic-z/pixelserv-tls
