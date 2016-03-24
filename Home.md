@@ -61,6 +61,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 11. [How to have dedicated DHCP options bind to a specific SSID?](/RMerl/asuswrt-merlin/wiki/How-to-have-dedicated-DHCP-options-bind-to-a-specific-SSID%3F)
 12. [Custom domains with dnsmasq](/RMerl/asuswrt-merlin/wiki/Custom-domains-with-dnsmasq)
 13. [How to use Adblock using Pixelserv](https://github.com/RMerl/asuswrt-merlin/wiki/How-to-use-Adblock-using-Pixelserv)
+
 ### Misc HowTo and Guides
 1. [Scheduled Reboot](/RMerl/asuswrt-merlin/wiki/Scheduled-Reboot)
 2. [Email notification from your router](/RMerl/asuswrt-merlin/wiki/Sending-Email)
