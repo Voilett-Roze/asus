@@ -46,9 +46,9 @@ If you have Debian x64 (amd64) edition you need the extra packages `lib32z1-dev`
 sudo apt-get --no-install-recommends install lib32z1-dev lib32stdc++6
 ```
 
-Under some circumstances you may need to install automake-1.11 (I had to on Debian 8):
+Under some circumstances you may need to install automake1.11 (I had to on Debian 8):
 ```bash
-sudo apt-get --no-install-recommends install automake-1.11
+sudo apt-get --no-install-recommends install automake1.11
 ```
 
 Starting debian 7, if you're on amd64, you'll need to setup multiarch gcc, you'll need to add i386 arch to package dependencies, to get libelf1 / libelf-dev 32 bits. to do so:
