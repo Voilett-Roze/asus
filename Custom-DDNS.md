@@ -208,6 +208,7 @@ else
   /sbin/ddns_custom_updated 0
 fi
 ```
+**Note:** It seems that the DNS-O-Matic API (at least when using a single https command) does _not_ like an email address as the user name and will fail. DNS-O-Matic no longer allows the creation of a separate user name. However there is a workaround: Your DNS-O-Matic account is the same as your OpenDNS account. If you go to _my account_ at [opendns.com](opendns.com) and choose _display name_ (purportedly for forum use), this will also work in this script for user name.
 
 ### [Duck DNS](https://www.duckdns.org)
 
