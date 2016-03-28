@@ -5,7 +5,8 @@ Pixelserv is a tool used to create a 1x1 transparent image can be used in combin
 * Follow the official installation steps at: https://github.com/kvic-z/pixelserv-tls
 * Get the Mips or ARM release from Pixelserv: https://github.com/kvic-z/pixelserv-tls/releases
 * Make Pixelserv autostart on boot place this file at /opt/etc/init.d/S81pixelserv-custom
-```#!/bin/sh
+```
+#!/bin/sh
 
 ENABLED=yes
 PROCS=pixelserv
