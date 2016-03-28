@@ -318,7 +318,6 @@ ipset --destroy malware-update > /dev/null 2>&1
 nice ipset --restore && \
 nice ipset --swap malware-update malware-filter && \
 nice ipset --destroy malware-update
-logger "Total Malware IPs Blocked: `cat $path/malware-*.txt | wc -l`"
 exit $?
 ```
 Save this list as malware-filter.list and set it in your relative path (see configuration part in script) you can also add more list by just appending to this list.
