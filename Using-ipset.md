@@ -252,45 +252,79 @@ May 29 09:04:04 admin: exiting Peerguarding rules
 ```
 ## Malware Filter
 
-Grabs list of active ip addresses from http://www.malwaredomainlist.com/ and blocks the set.
+Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks ips. 
 
 ```
 #!/bin/sh
-lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-for module in ip_set ip_set_iptreemap ipt_set; do
-	insmod $module
-done
+# SET CONFIG
+path=/jffs/filters
+#path for malware filter files
+# END CONFIG
 
+# SET VARIBLES
+regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
+# END VARIBLES
+
+# Loading ipset modules
+lsmod | grep "ipt_set" > /dev/null 2>&1 || \
+    for module in ip_set ip_set_iptreemap ipt_set; do
+        insmod $module
+    done
+
+# Different routers got different iptables syntax
 case $(uname -m) in
-  armv7l)
+armv7l)
     MATCH_SET='--match-set'
-    ;;
-  mips)
+;;
+mips)
     MATCH_SET='--set'
-    ;;
+;;
 esac
 
+# Get lists
+get_list () {
+        mkdir -p $path
+        wget -q --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
+        cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.txt
+ }
+
+get_update () {
+        mkdir -p $path
+        wget -q --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
+        cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-updates.txt
+ }
+
+# Create the malware-filter (primary) if does not exists
 if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep 'Unknown set')" != "" ]; then
-wget -q "http://www.malwaredomainlist.com/hostslist/ip.txt" -O /tmp/malware-filter.txt
-	ipset -N malware-filter iphash
-        for IP in $(cat /tmp/malware-filter.txt)
+    get_list
+    ipset -N malware-filter iphash
+        for IP in $(cat $path/malware-filter.txt)
     do
         ipset -A malware-filter $IP
     done
-	[ -z "$(iptables-save | grep malware-filter)" ] && iptables -I FORWARD -m set $MATCH_SET malware-filter dst -j DROP
-	logger "`cat /tmp/malware-filter.txt | wc -l` malware ip blocked" 
+    [ -z "$(iptables-save | grep malware-filter)" ] && iptables -I FORWARD -m set $MATCH_SET malware-filter dst -j DROP
 fi
 
+# Destroy this transient set just in case
 ipset --destroy malware-update > /dev/null 2>&1
 
+# Load the latest rule(s)
 (echo -e "-N malware-update iphash\n" && \
- wget -q "http://www.malwaredomainlist.com/hostslist/ip.txt" -O /tmp/malware-update.txt | \
-    nice sed 's/^/-A malware-update /' && \
- echo -e "\nCOMMIT\n" \
+    get_update | \
+        nice sed 's/^/-A malware-update /' && \
+    echo -e "\nCOMMIT\n" \
 ) | \
+
 nice ipset --restore && \
 nice ipset --swap malware-update malware-filter && \
 nice ipset --destroy malware-update
-
+logger "Total Malware IPs Blocked: `cat $path/malware-*.txt | wc -l`"
 exit $?
+```
+Save this list as malware-filter.list and set it in your relative path (see configuration part in script) you can also add more list by just appending to this list.
+```
+https://ransomwaretracker.abuse.ch/downloads/RW_IPBL.txt
+https://zeustracker.abuse.ch/blocklist.php?download=badips
+https://feodotracker.abuse.ch/blocklist/?download=ipblocklist
+http://www.malwaredomainlist.com/hostslist/ip.txt
 ```
