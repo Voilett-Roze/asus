@@ -326,4 +326,5 @@ https://ransomwaretracker.abuse.ch/downloads/RW_IPBL.txt
 https://zeustracker.abuse.ch/blocklist.php?download=badips
 https://feodotracker.abuse.ch/blocklist/?download=ipblocklist
 http://www.malwaredomainlist.com/hostslist/ip.txt
+http://cinsscore.com/list/ci-badguys.txt
 ```
