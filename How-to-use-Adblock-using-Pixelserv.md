@@ -9,7 +9,7 @@ Pixelserv is a tool used to create a 1x1 transparent image can be used in combin
 
 ### Setting arguments in /opt/etc/init.d/S80pixelserv-tls
 
-**Example:** _ARGS="`192.168.1.1 -p 80 -p 8080 -k 443 -k 2443 -u root"_<br/>
+**Example:** `ARGS="192.168.1.1 -p 80 -p 8080 -k 443 -k 2443 -u root"`<br/>
 Makes pixelserv run on 192.168.1.1 at port 80,8080 for http and https 443,2443 as root
 
 for other settings 
