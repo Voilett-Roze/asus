@@ -3,20 +3,6 @@ Pixelserv is a tool used to create a 1x1 transparent image can be used in combin
 
 ## Pixelserv Installation Process
 * Follow the official installation steps at: https://github.com/kvic-z/pixelserv-tls
-* Get the Mips or ARM release from Pixelserv: https://github.com/kvic-z/pixelserv-tls/releases
-* Make Pixelserv autostart on boot place this file at /opt/etc/init.d/S81pixelserv-custom
-```
-#!/bin/sh
-
-ENABLED=yes
-PROCS=pixelserv
-ARGS="`ifconfig br0 | awk '/inet addr/{print substr($2,6)}'` -p 80 -p 8080 -k 443 -k 2443 -u $USER"
-PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-. /opt/etc/init.d/rc.func
-```
-
+* Or install from Entware via OPKG: `opkg install pixelserv-tls`
 * For community support use this thread [pixelserv - A Better One-pixel Webserver for Adblock](http://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/)
 * Use a blocklists: [uBlockr](https://gitlab.com/spitfire-project/ublockr), [AB-Solution](https://github.com/decoderman/AB-Solution)
