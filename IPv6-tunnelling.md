@@ -16,11 +16,28 @@ Setting up the router is fairly simple.  On the IPv6 section simply select the 6
 * Prefix Length will be 64
 * IPv6 DNS Server 1 is optional (if your ISP's DNS support IPv6 resolution), otherwise enter the Anycasted IPv6 Caching Nameserver
 
+**Router Settings page**  =  **HE  Sites setting page**
+* Server IPv4 Address =  Use Server IPv4 Address: on Tunnel Details IPv6 Tunnel Tab
+* Client IPv6 Address =  Use Client IPv6 Address: on Tunnel Details IPv6 Tunnel Tab
+* IPv6 Prefix Length  =  Use 64
+* Server IPv6 Address =  Use Server IPv6 Address: on Tunnel Details IPv6 Tunnel Tab
+* Tunnel MTU 	      =  Use MTU  on Tunnel Details Advanced tab 
+* Tunnel TTL 	      =  Router defaults are fine
+* LAN Prefix Length   =  Use 48
+* LAN IPv6 Prefix     =  Routed /48: hit button to  get your prefix xxxx:xxx:xxxx:: 
+
+
 Also make sure to enable Router Advertisement.  This is what will automatically assign IPv6 addresses to your devices on your LAN, and provide them with routing information (a bit similar to what DHCP does for IPv4, but more advanced).
 
 The next step: you need to somehow tell Hurricane Electric what your current IPv4 is.  There are two methods.
 
-1) You can use the TunnelBroker option on the DDNS tab.  Just like a regular Dynamic DNS service, this will take care of letting HE know about any IP change.
+1) You can use the TunnelBroker option on the DDNS tab make account with Trial button in router. Just like a regular Dynamic DNS service, this will take care of letting HE know about any IP change.
+
+Setup
+* Host name                   = Use Tunnel ID : "xxxxxx" on Tunnel Details IPv6 Tunnel Tab
+* User Name or E-mail Address = Use User ID "xxxxxxxxxxxxxxxx.xxxxxxxx" on Main page of HE upon login
+* Password or DDNS Key        = Use Update Key on Tunnel Details Advanced tab 
+
 
 2) If you want to use DDNS for a regular DDNS service, you can replace the functionality using a custom script.
 
@@ -139,3 +156,11 @@ Starting with Asuswrt-Merlin 3.0.0.4.374.32, a user-configurable IPv6 firewall i
 ### Conclusion
 
 That pretty much covers it.  Tunnels are a great way for you to familiarize yourself with IPv6, regardless of what your ISP provides you.
+
+***
+
+***
+
+***
+
+***
