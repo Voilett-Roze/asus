@@ -33,7 +33,7 @@ The next step: you need to somehow tell Hurricane Electric what your current IPv
 
 1) You can use the TunnelBroker option on the DDNS tab make account with Trial button in router. Just like a regular Dynamic DNS service, this will take care of letting HE know about any IP change.
 
-Setup
+**Setup On Router DDNS page**
 * Host name                   = Use Tunnel ID : "xxxxxx" on Tunnel Details IPv6 Tunnel Tab
 * User Name or E-mail Address = Use User ID "xxxxxxxxxxxxxxxx.xxxxxxxx" on Main page of HE upon login
 * Password or DDNS Key        = Use Update Key on Tunnel Details Advanced tab 
