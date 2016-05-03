@@ -42,4 +42,4 @@ Go to [Port forwarding page](router.asus.com/Advanced_VirtualServer_Content.asp)
 
 Youtube video [here](http://youtu.be/KHABSd7qB2M)
 
-Post issues [here](http://goo.gl/2jisLq)
+Post issues [here](https://www.hqt.ro/lighttpd-web-server-with-php-support-through-entware-ng/)
