@@ -12,6 +12,10 @@ cru a lightson "0 6 * * * /jffs/scripts/ledson.sh"
 ```
 You can adjust the time at which you want both events to fire off by adjusting the second digit (which represents the hour).
 
+After create services-start execute command:
+```
+chmod a+rx /jffs/scripts/services-start
+```
 Then, create the following two scripts, and also save them in /jffs/scripts/ :
 
 ledsoff.sh:
