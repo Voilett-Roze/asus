@@ -23,6 +23,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 9. [Mounting remote CIFS shares](/RMerl/asuswrt-merlin/wiki/Mounting-remote-CIFS-shares)
 10. [Disk Spindown when idle](/RMerl/asuswrt-merlin/wiki/Disk-Spindown-when-idle)
 11. [NFS Exports](/RMerl/asuswrt-merlin/wiki/NFS-Exports)
+12. [DNS Filter](/RMerl/asuswrt-merlin/wiki/DNS-Filter)
 
 
 ### OpenVPN
