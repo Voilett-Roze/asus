@@ -1,0 +1,2 @@
+Under Tools -> Other Settings there are various parameters that lets you tweak the timeout values related to connection tracking for TCP and UDP connections.  You should be careful with those settings.  Most commonly, people will tweak the UDP timeout values to make them more VoIP-friendly, by using smaller timeouts.  Timeout values are in 
+seconds.
