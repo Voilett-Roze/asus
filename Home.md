@@ -17,6 +17,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 3. [Customizing configuration files](/RMerl/asuswrt-merlin/wiki/Custom-config-files)
 4. [Custom DDNS support](/RMerl/asuswrt-merlin/wiki/Custom-DDNS)
 5. [SSHD](/RMerl/asuswrt-merlin/wiki/SSHD)
+6. [Crond](/RMerl/asuswrt-merlin/wiki/Crond)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin/wiki/About-OpenVPN)
