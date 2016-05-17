@@ -1,0 +1,1 @@
+The router can be accessed over SSH (through Dropbear).  Password-based login will use the same username and password as telnet/web access. You can also optionally insert a RSA or ECDSA public key there for keypair-based authentication.  Finally, there is also an option to make SSH access available over WAN.
