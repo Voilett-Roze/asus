@@ -19,8 +19,9 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 5. [SSHD](/RMerl/asuswrt-merlin/wiki/SSHD)
 6. [Crond](/RMerl/asuswrt-merlin/wiki/Crond)
 7. [Enhanced Traffic monitoring](/RMerl/asuswrt-merlin/wiki/Enhanced-Traffic-monitoring)
-8. [Adjustable TCP/IP connection tracking setting](/RMerl/asuswrt-merlin/wiki/Adjustable-TCPip-connection-tracking)
+8. [Adjustable TCP/IP connection tracking setting](/RMerl/asuswrt-merlin/wiki/Adjustable-TCPIP-connection-tracking)
 9. [Mounting remote CIFS shares](/RMerl/asuswrt-merlin/wiki/Mounting-remote-CIFS-shares)
+10. [Disk Spindown when idle](/RMerl/asuswrt-merlin/wiki/Disk-Spindown-when-idle)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin/wiki/About-OpenVPN)
