@@ -1,0 +1,1 @@
+Jeff Gibbons's sd-idle-2.6 has been added to the firmware, allowing you to configure a timeout value (in seconds) on the Tools -> Other Settings page. Plugged hard drives will stop spinning after being inactive for that specified period of time.  Note that services like Download Master might be generating background disk activity, preventing it from idling.
