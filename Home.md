@@ -22,6 +22,8 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 8. [Adjustable TCP/IP connection tracking setting](/RMerl/asuswrt-merlin/wiki/Adjustable-TCPIP-connection-tracking)
 9. [Mounting remote CIFS shares](/RMerl/asuswrt-merlin/wiki/Mounting-remote-CIFS-shares)
 10. [Disk Spindown when idle](/RMerl/asuswrt-merlin/wiki/Disk-Spindown-when-idle)
+11. [NFS Exports](/RMerl/asuswrt-merlin/wiki/NFS-Exports)
+
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin/wiki/About-OpenVPN)
