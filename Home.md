@@ -17,7 +17,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 3. [Customizing configuration files](/RMerl/asuswrt-merlin/wiki/Custom-config-files)
 4. [Custom DDNS support](/RMerl/asuswrt-merlin/wiki/Custom-DDNS)
 5. [SSHD](/RMerl/asuswrt-merlin/wiki/SSHD)
-6. [Crond](/RMerl/asuswrt-merlin/wiki/Crond)
+6. [Crond](/RMerl/asuswrt-merlin/wiki/Scheduled-tasks-(cron-jobs))
 7. [Enhanced Traffic monitoring](/RMerl/asuswrt-merlin/wiki/Enhanced-Traffic-monitoring)
 8. [Adjustable TCP/IP connection tracking setting](/RMerl/asuswrt-merlin/wiki/Adjustable-TCPIP-connection-tracking)
 9. [Mounting remote CIFS shares](/RMerl/asuswrt-merlin/wiki/Mounting-remote-CIFS-shares)
