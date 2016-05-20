@@ -1,0 +1,3 @@
+You can create scheduled tasks using the standard crond service that runs on the router.  You can put your cron tasks in /var/spool/cron/crontabs/. The file must be named "admin" as this is the name of the system user.  Note that this location resides in RAM, so you would have to put your cron script somewhere such as in the jffs partition, and at boot time copy it to _/var/spool/cron/crontabs/_ using an init-start user script.
+
+A simple way to manage your cron jobs is through the included "**cru**" command.  Just run "**cru**" to see the usage information.  You can then put your "**cru**" commands inside a user script to re-generate your cron jobs at boot time.
