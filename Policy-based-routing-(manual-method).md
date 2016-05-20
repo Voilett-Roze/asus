@@ -17,10 +17,8 @@ This guide is specifically tailored for ASUS routers running Merlin Firmware.
 STEP A:
 
 1. Make sure [VPN](https://torguard.net/knowledgebase.php?action=displayarticle&id=148) is ON and Start with WAN option
-2. Goto to Administration > System
-3. Enable JFFS partition - YES
-4. Format JFFS partition at next boot - YES
-5. Reboot Router
+2. Go to to Administration > System
+3. Make sure Custom script support is enabled
 
 STEP B:
 
@@ -117,7 +115,7 @@ To enable SSH on Merlin do this:
 1. Under “Advanced Settings” on the left bar click “Administration”.
 2. Under “Miscellaneous” make sure these are set as follows:
  
- Enable SSH - Yes
+ Enable SSH - LAN Only (or LAN + WAN if you really need WAN access to SSH)
 
  Allow SSH Port Forwarding - No
 
@@ -213,18 +211,3 @@ When you run the batch file you will be prompted A:VPN or B:Local ISP
 It all seems hard but its easier then you think :)
 
 Enjoy!
-
-
-
- 
-
-
-
-
-
-        
-      
-
-
-
-    
