@@ -8,7 +8,7 @@ On the OpenVPN Clients page, set "_Redirect Internet traffic_" to "_Policy Rules
 The "_Iface_" field (short for Interface) lets you determine if matching traffic should be sent through the VPN tunnel or through your regular Internet access (WAN).  This allows you to define exceptions (WAN rules being processed 
 before the VPN rules).
 
-You CANNOT configure a policy that will be based on a port - only on IPs (or subnets).
+You CANNOT configure a policy that will be based on a port through the webui - only on IPs (or subnets).  If you need more flexibility in your rules, you can look at this [alternate manual method](/RMerl/asuswrt-merlin/wiki/Policy-based-routing-(manual-method)).  Note that this method might interfere with other features, such as Adaptive QoS.
 
 
 ### Examples
