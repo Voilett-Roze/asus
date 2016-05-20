@@ -31,6 +31,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 1. [About OpenVPN](/RMerl/asuswrt-merlin/wiki/About-OpenVPN)
 2. [Setting up OpenVPN](/RMerl/asuswrt-merlin/wiki/Configuring-OpenVPN)
 3. [Generating certs with Easy-RSA](/RMerl/asuswrt-merlin/wiki/Generating-OpenVPN-keys-using-Easy-RSA)
+4. [Policy-based routing](/RMerl/asuswrt-merlin/wiki/Policy-based-routing)
 
 ### External software repositories
 1. [Setting up New Generation Optware](http://www.hqt.ro/how-to-install-new-generation-optware/) (External link)
