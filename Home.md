@@ -32,6 +32,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 2. [Setting up OpenVPN](/RMerl/asuswrt-merlin/wiki/Configuring-OpenVPN)
 3. [Generating certs with Easy-RSA](/RMerl/asuswrt-merlin/wiki/Generating-OpenVPN-keys-using-Easy-RSA)
 4. [Policy-based routing](/RMerl/asuswrt-merlin/wiki/Policy-based-routing)
+5. [Policy-based routing - manual method](/RMerl/asuswrt-merlin/wiki/Policy-based-routing-(manual-method))
 
 ### External software repositories
 1. [Setting up New Generation Optware](http://www.hqt.ro/how-to-install-new-generation-optware/) (External link)
@@ -67,11 +68,10 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 6. [How to use ipset to block connections from Tor nodes or some countries](/RMerl/asuswrt-merlin/wiki/Using-ipset)
 7. [Link Aggregation Setup](/RMerl/asuswrt-merlin/wiki/Link-Aggregation)
 8. [Access modem Web UI on WAN port (no script)](/RMerl/asuswrt-merlin/wiki/Access-modem-Web-UI-on-WAN-port-(no-script))
-9. [How to Direct Traffic Over VPN and Drop connections if VPN goes down](https://github.com/RMerl/asuswrt-merlin/wiki/How-to-Direct-Traffic-over-VPN-and-Drop-connections-if-VPN-goes-down)
-10. [Enforce the use of Google Safesearch on your LAN](/RMerl/asuswrt-merlin/wiki/Enforce-Safesearch)
-11. [How to have dedicated DHCP options bind to a specific SSID?](/RMerl/asuswrt-merlin/wiki/How-to-have-dedicated-DHCP-options-bind-to-a-specific-SSID%3F)
-12. [Custom domains with dnsmasq](/RMerl/asuswrt-merlin/wiki/Custom-domains-with-dnsmasq)
-13. [How to use Adblock using Pixelserv](https://github.com/RMerl/asuswrt-merlin/wiki/How-to-use-Adblock-using-Pixelserv)
+9. [Enforce the use of Google Safesearch on your LAN](/RMerl/asuswrt-merlin/wiki/Enforce-Safesearch)
+10. [How to have dedicated DHCP options bind to a specific SSID?](/RMerl/asuswrt-merlin/wiki/How-to-have-dedicated-DHCP-options-bind-to-a-specific-SSID%3F)
+11. [Custom domains with dnsmasq](/RMerl/asuswrt-merlin/wiki/Custom-domains-with-dnsmasq)
+12. [How to use Adblock using Pixelserv](https://github.com/RMerl/asuswrt-merlin/wiki/How-to-use-Adblock-using-Pixelserv)
 
 ### Misc HowTo and Guides
 1. [Scheduled Reboot](/RMerl/asuswrt-merlin/wiki/Scheduled-Reboot)
