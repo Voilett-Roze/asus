@@ -1,3 +1,5 @@
+**_This feature is considered to be deprecated, and will probably be removed in a future release._**
+
 Support for layer7 rules in iptables has been enabled on MIPS-based routers (RT-N66/AC66).  You will need to manually configure the iptables rules to make use of it - there is no web interface exposing this. The defined protocols can be found in /etc/l7-protocols.
 
 To use it, you must first load the module:
