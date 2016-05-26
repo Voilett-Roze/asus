@@ -23,7 +23,7 @@ NOTE: CSR Sanita, after confirming w/ her supervisor, said on 2/24/2016 "We will
 A: Most likely not.  Without having an actual router to test with, building a firmware that people would flash without me having at least confirmed it can be flashed at all would be far too risky.
 
 
-**Q: Asus just released firmware version XYZ.  When will you integrate it in your firmware?**
+**Q: Asus just released firmware version XYZ.  When will you integrate it in your firmware?**  
 A: For a new Asus release to be merged in, a lot of things are required:
 
 1. The source code (AKA GPL release) must be available.  Asus don't always release them at the exact same time as the binary firmware.
