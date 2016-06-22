@@ -44,46 +44,37 @@ tar: removing leading '/' from member names
  Info:  Modifying start scripts...
  Info:  Starting Entware deployment....
 
-Connecting to entware.wl500g.info (81.4.122.163:80)
--                    100% |*******************************|  1141   0:00:00 ETA
-Info: Checking for prerequisites and creating folders...
-Info: Opkg package manager deployment...
-Connecting to entware.wl500g.info (81.4.122.163:80)
-opkg                 100% |*******************************|   456k  0:00:00 ETA
-Connecting to entware.wl500g.info (81.4.122.163:80)
-opkg.conf            100% |*******************************|   105   0:00:00 ETA
+Info: Creating folders...
+Info: Deploying opkg package manager...
+Downloading /opt/bin/opkg... success!
+Downloading /opt/etc/opkg.conf... success!
+Downloading /opt/etc/profile... success!
+Downloading /opt/etc/init.d/rc.func... success!
+Downloading /opt/etc/init.d/rc.unslung... success!
 Info: Basic packages installation...
-Downloading http://entware.wl500g.info/binaries/entware/Packages.gz.
-Updated list of available packages in /opt/var/opkg-lists/openwrt.
-Installing uclibc-opt (0.9.32-4) to root...
-Downloading http://entware.wl500g.info/binaries/entware/uclibc-opt_0.9.32-4_entware.ipk.
-Installing libc (0.9.32-6) to root...
-Downloading http://entware.wl500g.info/binaries/entware/libc_0.9.32-6_entware.ipk.
-Installing libgcc (4.6.4-6) to root...
-Downloading http://entware.wl500g.info/binaries/entware/libgcc_4.6.4-6_entware.ipk.
-Installing libstdcpp (4.6.4-6) to root...
-Downloading http://entware.wl500g.info/binaries/entware/libstdcpp_4.6.4-6_entware.ipk.
-Installing libpthread (0.9.32-6) to root...
-Downloading http://entware.wl500g.info/binaries/entware/libpthread_0.9.32-6_entware.ipk.
-Installing librt (0.9.32-6) to root...
-Downloading http://entware.wl500g.info/binaries/entware/librt_0.9.32-6_entware.ipk.
-Installing ldconfig (0.9.32-6) to root...
-Downloading http://entware.wl500g.info/binaries/entware/ldconfig_0.9.32-6_entware.ipk.
-Installing findutils (4.5.12-1) to root...
-Downloading http://entware.wl500g.info/binaries/entware/findutils_4.5.12-1_entware.ipk.
+Downloading http://pkg.entware.net/binaries/mipsel/Packages.gz.
+Updated list of available packages in /opt/var/opkg-lists/entware-ng.
+Installing ldconfig (1.0.12-1) to root...
+Downloading http://pkg.entware.net/binaries/mipsel/ldconfig_1.0.12-1_mipselsf.ipk.
+Installing findutils (4.5.14-1) to root...
+Downloading http://pkg.entware.net/binaries/mipsel/findutils_4.5.14-1_mipselsf.ipk.
+Installing libc (1.0.12-1) to root...
+Downloading http://pkg.entware.net/binaries/mipsel/libc_1.0.12-1_mipselsf.ipk.
+Installing libgcc (4.8.5-1) to root...
+Downloading http://pkg.entware.net/binaries/mipsel/libgcc_4.8.5-1_mipselsf.ipk.
+Installing libssp (4.8.5-1) to root...
+Downloading http://pkg.entware.net/binaries/mipsel/libssp_4.8.5-1_mipselsf.ipk.
 Configuring ldconfig.
 Configuring libgcc.
 Configuring libc.
-Configuring libpthread.
-Configuring libstdcpp.
-Configuring librt.
+Configuring libssp.
 Configuring findutils.
-Configuring uclibc-opt.
-Updating /opt/etc/ld.so.cache... done.
-Info: Cleanup...
-Info: Congratulations!
-Info: If there are no errors above then Entware successfully initialized.
-Info: Found a Bug? Please report at https://github.com/Entware/entware/issues
+ 
+Congratulations! If there are no errors above then Entware-ng is successfully initialized.
+ 
+Found a Bug? Please report at https://github.com/Entware-ng/Entware-ng/issues
+ 
+Type 'opkg install <pkg_name>' to install necessary package.
 ```
 The script will create a new directory named "entware" and not "asusware" like in the "old" way, but the result is the same:
 ```
@@ -119,7 +110,7 @@ This will ensure that Asuswrt will properly mount /opt at boot time.
 After the reboot, the optware directory should be initialized and automounted by Asuswrt.  It's now time to initialize Entware itself:
 
 ```shell
-wget -O - http://entware.wl500g.info/binaries/entware/installer/entware_install.sh | sh
+wget -O - http://pkg.entware.net/binaries/mipsel/installer/install.sh | sh
 ```
 
 Now we have to configure Asuswrt to automatically stop/start services:
