@@ -12,6 +12,7 @@ The following devices are fully supported:
 * RT-AC88U
 * RT-AC3100
 * RT-AC5300
+* RT-AC1900 (and RT-AC1900P)
 
 Note that the R (retail SKU) and W (white casing SKU) are also all supported, as they are the same exact hardware and firmware.
 
