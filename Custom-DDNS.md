@@ -157,6 +157,7 @@ fi
 ### [pdd.yandex.ru](https://domain.yandex.com)
 If you use domain.yandex.com for your domains, this script can update any A/AAAA record on your account. Replace `router.yourdomain.com`, `token` and `id` with your own values.
 ```
+#!/bin/sh
 # Get token at https://pddimp.yandex.ru/token/index.xml?domain=yourdomain.com
 token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
