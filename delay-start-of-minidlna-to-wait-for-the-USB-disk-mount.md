@@ -48,8 +48,7 @@ Reboot router to take effect.
 
 # Alternate method
 for systems without /jffs
-
---added by pliu1s (I'm a newbie so I'm not sure where to put this)
+(I'm a newbie so I'm not sure where to put this -- pliu1s)
 
 Another way to do this in Archlinux is by using systemctl and fstab options.  The basic idea is for fstab to use x-systemd.automount and then to make x-systemd.automount an "After=" requirement for minidlna.  This way the kernel holds off minidlna until fsck is done.  The detailed steps are:
 
