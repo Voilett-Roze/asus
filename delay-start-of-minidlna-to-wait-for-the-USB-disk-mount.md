@@ -48,17 +48,23 @@ Reboot router to take effect.
 
 # Alternate method
 for systems without /jffs
+
 --added by pliu1s (I'm a newbie so I'm not sure where to put this)
 
 Another way to do this in Archlinux is by using systemctl and fstab options.  The basic idea is for fstab to use x-systemd.automount and then to make x-systemd.automount an "After=" requirement for minidlna.  This way the kernel holds off minidlna until fsck is done.  The detailed steps are:
+
 1. set up /etc/fstab to use x-systemd.automount, such as:
- /dev/sdb1 /media/usb    ext4 defaults,nofail,x-systemd.automount,x-systemd.device-timeout=1 0 2
+
+>    /dev/sdb1 /media/usb    ext4 defaults,nofail,x-systemd.automount,x-systemd.device-timeout=1 0 2
+
 
 2. add 1 line under the [Unit] section of /etc/systemd/system/multi-user.target.wants/minidlna.service
-[Unit]
-Description=minidlna server
-After=network.target x-systemd.automount
+
+>     [Unit]
+>     Description=minidlna server
+>     After=network.target x-systemd.automount
+
 
 I found the straightforward way of making the mount point a requirement for minidlna didn't work because though the USB disk would get mounted, the directories inside the mount point were not 'revealed' by the OS until fsck was done.  But since fsck would take a very long time, minidlna would try to access the directory before fsck was done, get an error that the directory doesn't exist, and then delete that directory from its database.  The end result was that minidlna would start successfully, but the database would be wiped clean.  The above method using x-systemd.automount prevents this from happening.
 
-Hope this helps those who come across this page as I did.
+Hope this helps those who come across this page as I did.> 
