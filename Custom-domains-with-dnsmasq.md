@@ -7,6 +7,12 @@ With dnsmasq you are able to create custom domains within your network or route 
 2. Enable: `Enable JFFS custom scripts and configs` config option
 3. Enable: `Enable SSH config option`
 
+## Adjust DHCP Server Options
+1. Go to `LAN -> DHCP Server`
+2. `DNS Server 1` should contain your router's IP address
+3. If `Advertise routers IP in addition to user specified DNS` is enabled all custom DNS address will be appended to the address list given to the clients when they lease an IP address.  So if you want to be able to resolve names without specifying the routers address as the name server to do the resolution then make sure this setting is turned of.
+4. Turn off `Forward local domain queries to upstream DNS` to prevent your private DNS resolution requests from being passed to the Internet.
+
 ## Connect to your router
 
 Connect to your router through SSH (you can use PUTTY on windows). Default IP address is `192.168.1.1`, use credentials as in web interface. ([How to use putty](https://www.google.sk/search?q=how%20to%20use%20putty))
