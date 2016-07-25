@@ -461,4 +461,4 @@ fi
 ``` 
 
 ### DigitalOcean
-DigitalOcean DNS has a more involved JSON-based API, but [do-ddns](https://github.com/mieko/do-ddns) can update records with only Bash and curl as system dependencies.  It has automatic support for executing `/sbin/ddns_custom_updated` on success or failure.
+DigitalOcean DNS has a more involved JSON-based API, but [do-ddns](https://github.com/mieko/do-ddns) can update records with only sh and curl as system dependencies.  It has automatic support for executing `/sbin/ddns_custom_updated` on success or failure.
