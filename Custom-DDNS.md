@@ -462,3 +462,19 @@ fi
 
 ### DigitalOcean
 DigitalOcean DNS has a more involved JSON-based API, but [do-ddns](https://github.com/mieko/do-ddns) can update records with only sh and curl as system dependencies.  It has automatic support for executing `/sbin/ddns_custom_updated` on success or failure.
+
+### ChangeIP
+Here is a very basic script for ChangeIP.com. The "curl" command is needed instead of "wget" because secured https is being utilized. This is just the minimal required and a work in progress, feel free to improve on it. Replace "USERNAME," "PASSWORD," and "YourDomainName" with your relevant info.
+```
+#!/bin/sh
+
+
+curl -k "https://nic.changeip.com/nic/update?u=USERNAME&p=PASSWORD&hostname=YourDomainName"
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+
+```
