@@ -1,3 +1,3 @@
-Just like flashing, reverting to an original Asus firmware is just as simple as flashing the router with a firmware downloaded from their website.  The same rules apply as when flashing Asuswrt-Merlin: resetting settings might be required if going back to 32 KB nvram or to a much older or newer firmware, etc...
+Just like flashing, reverting to an original Asus firmware is just as simple as flashing the router with a firmware downloaded from their website.  The same rules apply as when flashing Asuswrt-Merlin: resetting settings might be required if going back multiple versions.
 
-There is no special procedure required.  For instance, Asus does not prevent flashing an older version of a firmware.
+Note that starting around firmware 3.0.0.4.380_3000 (and with Asuswrt-merlin 380.60), a new firmware format is used, which will reject flashing attempts of any older version than these two versions.
