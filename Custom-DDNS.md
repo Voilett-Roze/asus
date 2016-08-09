@@ -478,3 +478,21 @@ else
 fi
 
 ```
+### Joker.com
+
+Activate Dynamic DNS Authentication from DNS control panel in order to get authentication details that you will need in the following example. Create a DYNA or DYNAAAA record and choose your subdomain. Your IP is detected automatically at this point, but you can change it, so you can confirm your setup is working.
+
+```
+#!/bin/sh
+USERNAME=your_username
+PASSWORD=your_password
+DOMAIN=your_domain (e.g. subdomain.example.com)
+curl -k "https://svc.joker.com/nic/update?username=$USERNAME&password=$PASSWORD&hostname=$DOMAIN" >/dev/null 2>&1 &
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+
+```
