@@ -22,7 +22,7 @@ opkg install nano
 We need to install Transmission:
 
 ```
-opkg install transmission-web
+opkg install transmission-web transmission-daemon-openssl
 ```
 
 Create the data directories (adjust as desired):
