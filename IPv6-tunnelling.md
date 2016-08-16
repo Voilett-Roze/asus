@@ -148,19 +148,8 @@ You can manually execute the script, then check the content of /tmp/ipv6.log to 
 After that, you can test your tunnel by accessing, for example, http://www.whatismyipv6.com.  If you see an IPv6 (meaning a long hexadecimal string), then congratulations - you're set!
 
 
-### Security
-
-Starting with Asuswrt-Merlin 3.0.0.4.374.32, a user-configurable IPv6 firewall is available (and is enabled by default).  Be aware however that previous versions, as well as the original firmware from Asus provide NO firewalling on the IPv6 interfaces, leaving your whole LAN open for access from the Internet over IPv6 addresses.
-
 
 ### Conclusion
 
 That pretty much covers it.  Tunnels are a great way for you to familiarize yourself with IPv6, regardless of what your ISP provides you.
 
-***
-
-***
-
-***
-
-***
