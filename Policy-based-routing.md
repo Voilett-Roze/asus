@@ -10,6 +10,8 @@ before the VPN rules).
 
 You CANNOT configure a policy that will be based on a port through the webui - only on IPs (or subnets).  If you need more flexibility in your rules, you can look at this [alternate manual method](/RMerl/asuswrt-merlin/wiki/Policy-based-routing-(manual-method)).  Note that this method might interfere with other features, such as Adaptive QoS.
 
+Also note that this feature is only compatible with OpenVPN tunnels using a TUN interface - it's not compatible with configurations set up with a TAP interface.
+
 
 ### Examples
 
