@@ -179,8 +179,8 @@ If you use Namecheap for your domains, this script can update any A record on yo
 ```
 #!/bin/sh
 # Update the following variables:
-HOSTNAME=[hostname]
-DOMAIN=[domain.com]
+HOSTNAME=hostname
+DOMAIN=domain.com
 PASSWORD=XXXXXXXXXXXXXXXXXXXXXXXX
 
 # Should be no need to modify anything beyond this point
