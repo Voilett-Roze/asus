@@ -1,5 +1,4 @@
-The services executed by the router such as _minidlna_ or _dnsmasq_ relies on dynamically-generated config files.  There are various methods through which you can interact with these config scripts to customize 
-them.
+The services executed by the router such as _minidlna_ or _dnsmasq_ relies on dynamically-generated config files.  There are various methods through which you can interact with these config files to customize them.
 
 ### Enabling support for custom configs ###
 Starting with 378.50, this functionality is disabled by default.  To enable it, go to Administration -> System, then enable it under the JFFS section.
@@ -56,7 +55,7 @@ A lot of the configuration scripts used by the router services (such as dnsmasq)
 
 Postconf scripts are the solution to that.  Those scripts are executed after the router has generated a configuration script, but before the related service gets started.  This means you can use those scripts to manipulate the configuration script, using tools such as "sed" for example.
 
-Postconf scripts must be stored in _/jffs/scripts/_ .The path/filename of the target config file is passed as argument to the postconf script.
+Postconf scripts must be stored in _/jffs/scripts/_ .  The path/filename of the target config file is passed as argument to the postconf script.
 
 The list of available postconf scripts is:
 
@@ -74,7 +73,7 @@ The list of available postconf scripts is:
  * minidlna.postconf
  * mt-daap.postconf
  * openvpnclient1.postconf (1 through 5)
- * openvpnserver1.postconf (1 through 5)
+ * openvpnserver1.postconf (1 or 2)
  * passwd.postconf
  * pptpd.postconf
  * radvd.postconf
