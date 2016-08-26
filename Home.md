@@ -38,7 +38,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 1. [Setting up New Generation Optware](http://www.hqt.ro/how-to-install-new-generation-optware/) (External link)
 2. [Setting up Optware](/RMerl/asuswrt-merlin/wiki/Initialize-OPTWARE)
 3. [Setting up Entware](/RMerl/asuswrt-merlin/wiki/Entware) (Optware alternative)
-4. [Setting up Entware-Arm](https://www.hqt.ro/how-to-install-entware-arm) (External link)
+4. [Setting up New Generation Entware](https://www.hqt.ro/how-to-install-new-generation-entware) (External link)
 5. [Installing Transmission through Optware](/RMerl/asuswrt-merlin/wiki/Transmission-through-Optware)
 6. [Installing Transmission through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Transmission-through-Entware)
 7. [Cherokee Web Server](http://www.hqt.ro/cherokee-web-server-through-optware) (External link)
