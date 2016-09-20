@@ -1,14 +1,14 @@
-A VPN is a Virtual Private Network. Using a public internet network, it is possible to virtualy built a private network between a server somewhere and a client, usually your PC, but may be any intelligent devices. The VPN circuitry will garanty you that the communication between you and the accessed server cannot be understood by someone else.
+A VPN is a Virtual Private Network. Using a public internet network, it is possible to build a virtual private network between a server and a client, often a PC but may be any intelligent device. The VPN circuitry will guaranty the communication between you and the accessed server cannot be understood by anyone else.
 
-There is many products distributed to build such a virtual channel. One of them is free and supported by the community: OpenVPN
+There are many products distributed to build such a virtual channel. One of them is free and supported by the community: OpenVPN
 All the information about it is gathered on http://openvpn.net/
 
-As you can imagine, there is two ends: 
+As you can imagine, there are two components: 
 
 	* the server 
-	* the clients.
+	* the clients
 
-The OpenVPN server is already installed in Merlin's version of the ASUS firmware. You can access it throught the "VPN server" choice in the "Advanced settings". Two VPN servers are offered on that page:
+The OpenVPN server is already installed in Merlin's version of the ASUS firmware. You can access it through the "VPN" heading under "Advanced settings". Two VPN servers are offered on that page:
 
 	* the one coming with the ASUS firmware: PPTP. 
 	* the one added by Merlin (probably coming from the project/firmware TOMATO)
