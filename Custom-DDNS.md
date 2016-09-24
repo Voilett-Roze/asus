@@ -154,6 +154,25 @@ else
 fi
 ```
 
+### [Inernet.bs](http://www.internet.bs)
+
+```
+#!/bin/sh
+
+USER=username-goes-here
+PASS=unbreakable-password
+DOMAIN=mydomain.site
+
+wget --no-check-certificate -qO - "https://dyndns.topdns.com/update?hostname=$DOMAIN&username=$USER&password=$PASS"
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+
+```
+
 ### [pdd.yandex.ru](https://domain.yandex.com)
 If you use domain.yandex.com for your domains, this script can update any A/AAAA record on your account. Replace `router.yourdomain.com`, `token` and `id` with your own values.
 ```
