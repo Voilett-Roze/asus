@@ -1,9 +1,8 @@
 ## About user scripts
 While Asuswrt-Merlin only adds a limited number of new features over the original firmware, a lot of customizations can be achieved through the use of user scripts.  These will allow you to setup custom firewall rules, create jobs that can be run at scheduled intervals, or start new services.
 
-Those scripts are stored in the internal non-volatile flash in the [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) partition, so this partition must first be enabled before you can use custom scripts.  Support for these scripts must also be enabled.  Both settings can be found under Administration -> System on the webui.
+Those scripts are stored in the internal non-volatile flash in the [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) partition.  Support for these scripts must be enabled, under Administration -> System on the webui.
 
-A useful command for debugging user scripts is `logger`, which will log messages to the system log, visible in the Web UI.
 
 ## Available scripts:
 
@@ -63,7 +62,7 @@ And like any Linux script, they need to start with a shebang:
 #!/bin/sh
 ```
 
-Also, you must save files with a UNIX encoding.  Note that Windows's Notepad cannot save with a UNIX encoding - get Notepad++ instead.  You can also directly edit it on the router through vi (included in the firmware) or nano (available through Optware/Entware) to ensure that your scripts are saved in a valid format.
+Also, you must save files with a UNIX encoding.  Note that Windows's Notepad cannot save with a UNIX encoding - get Notepad++ instead.  You can also directly edit them on the router through SSH, by using _vi_ or _nano_, both included in the firmware.  These two will create files already encoded in the proper format.
 
 
 ## Troubleshooting scripts:
@@ -73,3 +72,5 @@ Try running your script manually at first to make sure there is no syntax error 
 touch /tmp/000wanstarted
 ```
 You can then easily tell that the script did run by looking for the presence of 000wanstarted in the /tmp directory.
+
+A useful command for debugging user scripts is `logger`, which will log messages to the system log, visible in the Web UI.
