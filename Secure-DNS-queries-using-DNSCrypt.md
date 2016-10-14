@@ -12,10 +12,14 @@ echo "no-resolv" > /jffs/configs/dnsmasq.conf.add
 echo "server=127.0.0.1#65053" >> /jffs/configs/dnsmasq.conf.add
 ```
 
-start dnscrypt when router boots up and set timezone variable for correct syslog times
-```bash
-echo "export TZ=$(cat /etc/TZ)" >> /jffs/scripts/services-start
+start dnscrypt when router boots up
+```
 echo "/opt/etc/init.d/S09dnscrypt-proxy start" >> /jffs/scripts/services-start
+```
+
+set timezone variable for correct syslog times
+```
+echo "export TZ=$(cat /etc/TZ)" >> /opt/etc/profile
 ```
 
 (optional) You can redirect using other DNS-servers on clients:
