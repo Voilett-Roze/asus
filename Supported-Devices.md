@@ -4,7 +4,7 @@ The following devices are fully supported:
 
 * RT-N66U
 * RT-AC56U
-* RT-AC66U
+* RT-AC66U (except for revision B1)
 * RT-AC68U (including revision C1)
 * RT-AC68P (same FW as RT-AC68U)
 * RT-AC87U
