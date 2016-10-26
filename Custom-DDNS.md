@@ -154,6 +154,31 @@ else
 fi
 ```
 
+### CloudFlare (another variant)
+If you use CloudFlare for your domains, this script can update any A record on your account.
+```
+#!/bin/sh
+ 
+EMAIL= # Your Email
+ZONEID= # Your zone id, hex16 string
+RECORDID= # You DNS record ID, hex16 string
+RECORDNAME= # Your DNS record name, e.g. sub.example.com
+API= # Cloudflare API Key
+IP=${1}
+ 
+curl -fs -o /dev/null -XPUT "https://api.cloudflare.com/client/v4/zones/$ZONEID/dns_records/$RECORDID" \
+  -H "X-Auth-Email: $EMAIL" \
+  -H "X-Auth-Key: $API" \
+  -H "Content-Type: application/json" \
+  --data "{\"id\":\"$RECORDID\",\"type\":\"A\",\"name\":\"$RECORDNAME\",\"content\":\"$IP\",\"zone_id\":\"$ZONEID\"}"
+   
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+```
+
 ### [Inernet.bs](http://www.internet.bs)
 
 ```
