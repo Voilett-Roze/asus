@@ -48,6 +48,9 @@ Called whenever an OpenVPN server gets started/stopped, or an OpenVPN client con
 Script called at the end of a DDNS update process.  This script is also called when setting the DDNS type to "Custom".  The script gets passed the WAN IP as an argument.  When handling a "Custom" DDNS, this script is 
 also responsible for reporting the success or failure of the update process.  See the [Custom DDNS](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS) section for more information.
 
+### Postconf scripts
+Note that in addition to these, you can also use the numerous postconf scripts supported by the firmware, which allows you to execute a script between the moment a service's config file is generated and the service is about to be executed.  See the [Postconf scripts](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-config-files#postconf-scripts) section for more information.
+
 
 ## Creating scripts
 Don't forget to set any script you create as being executable:
