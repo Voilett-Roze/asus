@@ -56,7 +56,7 @@ Now save the script as openvpn-event with no extension!
 
     #!/bin/sh
     
-     Sleep 2
+    sleep 2
      
     for i in /proc/sys/net/ipv4/conf/*/rp_filter ; do
       echo 0 > $i
