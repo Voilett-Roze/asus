@@ -540,3 +540,43 @@ else
 fi
 
 ```
+### DNS Made Easy
+
+```
+#!/bin/sh
+#---------------------------------------------------------------------------
+# Update using dnsmadeeasy.com API
+#---------------------------------------------------------------------------
+update_dynamic_dns () {
+  if [ -n "$WAN_IP_ADDRESS" ]; then
+    logger "$0: using WAN IP address $WAN_IP_ADDRESS for dynamic DNS"
+    resp=`curl -k $DYNDNS_URL`
+    rcode=$?
+    logger "$0: ddns response: $resp; result code: $rcode"
+    if [ $resp != "success" ] && [ $resp != "error-record-ip-same" ]; then
+      /sbin/ddns_custom_updated 0
+      return 1
+    else
+      /sbin/ddns_custom_updated 1
+      return 0
+    fi
+  else
+    logger "$0: WARNING: no WAN IP address available.  Not updating dynamic DNS."
+    /sbin/ddns_custom_updated 0
+    return 1
+  fi
+}
+
+
+#===========================================================================
+
+
+logger "$0 event called with args: $@"
+
+WAN_IP_ADDRESS=$(nvram get wan0_ipaddr)
+DYNDNS_ID="<set to your dyn DNS record ID"
+DYNDNS_PASSWORD="set to your dyn DNS record password"
+DYNDNS_URL="https://www.dnsmadeeasy.com/servlet/updateip?id=$DYNDNS_ID&password=$DYNDNS_PASSWORD&ip=$WAN_IP_ADDRESS"
+
+update_dynamic_dns
+```
