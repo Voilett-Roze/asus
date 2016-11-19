@@ -256,8 +256,11 @@ Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks
 
 ```
 #!/bin/sh
+
+# Original script by swetoast. Updates by Neurophile & Octopus.
+
 # SET CONFIG
-path=/jffs/filters
+path=/opt/var/cache/malware-filter
 #path for malware filter files
 # END CONFIG
 
@@ -266,12 +269,28 @@ regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
 # END VARIBLES
 
 # Loading ipset modules
-lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-    for module in ip_set ip_set_iptreemap ipt_set; do
-        insmod $module
-    done
 
-# Different routers got different iptables syntax
+# # Load ipset modules
+ipset -v | grep -i "v4" > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+     # old ipset
+     ipsetv=4
+     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
+     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
+     do
+          insmod $module
+     done
+else
+     # new ipset
+     ipsetv=6
+     lsmod | grep "xt_set" > /dev/null 2>&1 || \
+     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
+     do
+          insmod $module
+     done
+fi
+
+#Different routers got different iptables syntax
 case $(uname -m) in
 armv7l)
     MATCH_SET='--match-set'
