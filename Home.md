@@ -94,3 +94,4 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 2. [Credits](/RMerl/asuswrt-merlin/wiki/Credits/)
 3. [Contact](/RMerl/asuswrt-merlin/wiki/Contact/)
 4. [Disclaimer](/RMerl/asuswrt-merlin/wiki/Disclaimer/)
+5. [Privacy](RMerl/asuswrt-merlin/wiki/Privacy-disclosure)
