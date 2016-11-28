@@ -2,7 +2,12 @@
 
 *This HOWTO is mostly based off [this post on vip.asus.com from (https://vip.asus.com/forum/view.aspx?id=20121022225145408&board_id=11&model=RT-N6) @ryzhovau .*
 
-### Preface
+With a few kernel modules, a USB-equipped ASUS router running Merlin can use [LUKS and cryptsetup](https://gitlab.com/cryptsetup/cryptsetup) to work with encription-on-the-fly on a disk.
+(*I have only tested this on my ASUS AC-1900 (a.k.a. RT-AC68P), so I do not know if it will work with other routers.*)
+
+Alas, the firmware available from download does not include the necessary kernel modules to do this.  I am too paranoid to install self-built kernel on my router, so I went for a safer approach: build the kernel modules on a Linux machine, then copy them over to somewhere on the `/jffs` partition on the router.
+
+### Before You Do This...
 
 Depending on your router model, things might run quite slow--it might not be worth it unless you have a fast router.
 
@@ -11,11 +16,6 @@ This article does not cover auto-mounting the encrypted volume at boot, as a pas
 The Merlin [`post-mount` user script](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) will not try and mount an encrypted volume.  [Here is a post](http://www.snbforums.com/threads/usb-disk-encryption-on-asuswrt-merlin.31586/) describing an alternative way to do it.
 
 ### Steps
-
-With a few kernel modules, a USB-equipped ASUS router running Merlin can use [LUKS and cryptsetup](https://gitlab.com/cryptsetup/cryptsetup) to work with encription-on-the-fly on a disk.
-(*I have only tested this on my ASUS AC-1900 (a.k.a. RT-AC68P), so I do not know if it will work with other routers.*)
-
-Alas, the firmware available from download does not include the necessary kernel modules to do this.  I am too paranoid to install self-built kernel on my router, so I went for a safer approach: build the kernel modules on a Linux machine, then copy them over to somewhere on the `/jffs` partition on the router.
 
 1. Download the Merlin source tree:
   ``` 
