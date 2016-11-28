@@ -17,8 +17,6 @@ With a few kernel modules, a USB-equipped ASUS router running Merlin can use [LU
 
 Alas, the firmware available from download does not include the necessary kernel modules to do this.  I am too paranoid to install self-built kernel on my router, so I went for a safer approach: build the kernel modules on a Linux machine, then copy them over to somewhere on the `/jffs` partition on the router.
 
-### Compile Sources
-
 1. Download the Merlin source tree:
   ``` 
     # git clone git@github.com:RMerl/asuswrt-merlin.git
