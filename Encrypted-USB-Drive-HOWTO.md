@@ -255,6 +255,86 @@ but I could not figure out how to do it.  It would be major time saver!
      $ losetup -d /dev/loop1
   ```
 
+# Mount Scripts
+
+These scripts assume a convention to facilitate mounting and unmounting of encrypted volumes. 
+Both leverage a naming convention: `command foo` means `foo.img` and a mount of `/tmp/mnt/foo`.
+
+# lmount
+
+```
+#!/bin/sh
+
+# - Accepts an image base name without the `.img` extension as the sole argument.  
+#   For example, given "foo.img", one would run "./lmount foo", then the script will:
+#   - Create a loop device if one for this image is not present.
+#   - Create `/dev/mapper/foo-crypted` upon successful passphrase entry 
+      if the mapper entry is not present.
+#   - Mount the encrypted volume to `/tmp/mnt/foo`.
+# - Be sure to set `IMAGE_DIR` were your image(s) are kept on the USB disk.
+
+VOLUME=$1
+
+# where the kernel dm-crypt and related modules live
+KMOD_DIR=/jffs/crypto/modules
+
+MOUNT_ROOT=/tmp/mnt
+
+# base directory on the USB disk
+# where your encrypted `.img` files are
+IMAGE_DIR=$MOUNT_ROOT/images
+
+IMG_FILE="$IMAGE_DIR/$VOLUME.img"
+MAPPER_NAME=$VOLUME-crypted      
+
+if [ -z "$VOLUME" ]; then
+  echo usage $0 [base_image_name]
+  exit 1
+fi
+                                           
+MCOUNT=`cat /proc/mounts | grep -c $MOUNT_ROOT/$VOLUME`
+if [ "$MCOUNT" != "0" ]; then
+  echo "Volume $VOLUME is already mounted."
+  exit 0
+fi
+                                                     
+if [ -f "$IMG_FILE" ]; then
+                                                                                  
+  # see if there is already a loop device for this image
+  local LDEV=`losetup -j $IMG_FILE | sed  's/\(\/dev\/loop[[:digit:]]\+\).\+/\1/'`
+                                                       
+  if [ -z "$LDEV" ]; then
+    LDEV=`losetup -f`
+    if [ -z "$LDEV" ]; then
+      echo "Could not determine the next free loop device."
+      exit 1
+    fi
+    losetup $LDEV $IMG_FILE
+  fi
+                                      
+  if [ ! -d "/dev/mapper/$MAPPER_NAME" ]; then
+    cryptsetup luksOpen $LDEV $MAPPER_NAME
+  fi                                                           
+
+  for module in dm-mod dm-crypt sha256_generic gf128mul xts; do
+    local mname=`echo $module | sed 's/-/_/g'`
+    mcount=`lsmod | grep -c ^${mname}`
+    if [ "$mcount" == "0" ]; then
+      insmod $KMOD_DIR/${module}.ko
+    fi
+  done                                                       
+                                                    
+  [ ! -d "$MOUNT_ROOT/$VOLUME" ] && mkdir $MOUNT_ROOT/$VOLUME
+  mount /dev/mapper/$MAPPER_NAME $MOUNT_ROOT/$VOLUME
+fi
+```
+
+
+
+## lumount 
+
+
+
 # References
 
 https://wiki.gentoo.org/wiki/Dm-crypt#Kernel_Configuration
