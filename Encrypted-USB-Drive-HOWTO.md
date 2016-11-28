@@ -2,10 +2,10 @@
 
 *This HOWTO is partially based off [this post on vip.asus.com] (https://vip.asus.com/forum/view.aspx?id=20121022225145408&board_id=11&model=RT-N6) from @ryzhovau .*
 
-With a few kernel modules, a USB-equipped ASUS router running Merlin can use [LUKS and cryptsetup](https://gitlab.com/cryptsetup/cryptsetup) to work with encription-on-the-fly on a disk.
+A USB-equipped ASUS router running Merlin can use [LUKS and cryptsetup](https://gitlab.com/cryptsetup/cryptsetup) to work with an encrypted volume on an attached drive.
 (*I have only tested this on my ASUS AC-1900 (a.k.a. RT-AC68P), so I do not know if it will work with other routers.*)
 
-Alas, the firmware available from download does not include the necessary kernel modules to do this.  I am too paranoid to install self-built kernel on my router, so I went for a safer approach: build the kernel modules on a Linux machine, then copy them over to somewhere on the `/jffs` partition on the router.
+However, the firmware images on the Merlin download repository do not include the necessary kernel modules to do this.  I am too paranoid to install a custom self-built kernel on my router, so I went for a safer approach: build the kernel modules on a separate Linux machine, then copy them over to somewhere on the `/jffs` partition on the router.
 
 ### Before You Do This...
 
