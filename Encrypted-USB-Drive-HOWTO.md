@@ -50,9 +50,9 @@ find the tag that matches our installed version:
 
   At this point, if you followed the README.TXT  from step 2, you should be `cd`'d into the proper `release` directory.  In my case (`RC-AC68P`),  I need to be in `release/src-rt-6.x.4708/`.
 
-  Now we need to update the Linux kernel config file to tell it to build the extra modules we want.  *This seems to vary by which folder you are in*, but most likely it's named something like `config_base`.  For the `src-rt-6.x.4708`, the file is `config_base.6a`.  
+  Now we need to update the Linux kernel config file to tell it to build the extra modules we want.  *The actual config file seems to vary by which release folder you are in*, but most likely it's named something like `config_base`.  For the `src-rt-6.x.4708`, the file is `config_base.6a`.  
 
-  Again, this might vary by router model, but essentially, you will need to have these entries in the config file:
+  Again, this might vary by which release folder you are in, but essentially, you will need to have these entries in the config file:
   ``` 
     CONFIG_MD=y
     CONFIG_BLK_DEV_MD=m
