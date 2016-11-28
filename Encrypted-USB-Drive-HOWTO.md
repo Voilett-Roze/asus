@@ -13,7 +13,7 @@ Depending on your router model, things might run quite slow--it might not be wor
 
 This article does not cover auto-mounting the encrypted volume at boot, as a passphrase is required to unlock the volume.  Keeping the password on the router would defeat the entire purpose of encrypting it, so you should find an acceptable way to keep things secure.
 
-The Merlin [`post-mount` user script](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) will not try and mount an encrypted volume.  [Here is a post](http://www.snbforums.com/threads/usb-disk-encryption-on-asuswrt-merlin.31586/) describing an alternative way to do it.
+The Merlin [`post-mount` user script](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) will not try and mount an encrypted volume.  [Here is a post](http://www.snbforums.com/threads/usb-disk-encryption-on-asuswrt-merlin.31586/) describing an alternative way to do it.  (Also refer to the `lmount` and `lumount` scripts below.)
 
 ### Steps
 
@@ -270,6 +270,7 @@ Both leverage a naming convention: `command foo` means `foo.img` and a mount of 
 #   - Create a loop device if one for this image is not present.
 #   - Create `/dev/mapper/foo-crypted` upon successful passphrase entry 
       if the mapper entry is not present.
+#   - `insmod` the crypto kernel modules if they are not loaded already. 
 #   - Mount the encrypted volume to `/tmp/mnt/foo`.
 # - Be sure to set `IMAGE_DIR` were your image(s) are kept on the USB disk.
 
@@ -333,6 +334,60 @@ fi
 
 ## lumount 
 
+```
+#!/bin/sh 
+
+# - Accepts an image base name without the `.img` extension as the sole argument.  
+#   For example, given "foo.img", one would run "./lumount foo", then the script will:
+#   - `umount` the encrypted volume to `/tmp/mnt/foo`.
+#   - Remove (`luksClose`) `/dev/mapper/foo-crypted`.
+#   - Remove the loop device for this image.
+#   - `rmmod` the crypto kernel modules if no other loop device is present
+#   
+# - Be sure to set `IMAGE_DIR` were your image(s) are kept on the USB disk.
+
+VOLUME=$1
+MOUNT_ROOT=/tmp/mnt
+IMAGE_DIR=$MOUNT_ROOT/images
+MAPPER_NAME=$VOLUME-crypted
+
+if [ -z "$VOLUME" ]; then
+  echo usage $0 [base_image_name]
+  exit 1
+fi
+
+MCOUNT=`cat /proc/mounts | grep -c $MOUNT_ROOT/$VOLUME`
+if [ "$MCOUNT" == "0" ]; then
+  echo "Volume $VOLUME is not mounted."
+  exit 0
+fi
+
+umount $MOUNT_ROOT/$VOLUME
+
+cryptsetup luksClose $MAPPER_NAME
+
+# find loop device
+LDEV=`losetup -l -n -O name,back-file | grep $IMAGE_DIR/${VOLUME}.img | awk '{ print $1 }'`
+
+if [ -n "$LDEV" ]; then
+  echo "Removing loop device: $LDEV"
+  losetup -d $LDEV
+else
+  echo "Could not find loop device for volume ${VOLUME}"
+  exit 1
+fi
+
+# remove kernel modules if no other loop dev is around 
+LDEV_COUNT=`losetup -l -n | wc -l`
+
+if [ "$LDEV_COUNT" == "0" ]; then 
+  echo "Removing crypto kernel modules"
+  
+  for module in xts gf128mul sha256_generic dm-crypt dm-mod; do
+    rmmod $module
+  done
+fi
+```
 
 
 # References
