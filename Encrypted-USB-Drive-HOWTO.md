@@ -1,6 +1,6 @@
 # Using a LUKS Encrypted Drive
 
-*This HOWTO is mostly based off [this post on vip.asus.com from (https://vip.asus.com/forum/view.aspx?id=20121022225145408&board_id=11&model=RT-N6) @ryzhovau .*
+*This HOWTO is mostly based off [this post on vip.asus.com] (https://vip.asus.com/forum/view.aspx?id=20121022225145408&board_id=11&model=RT-N6) from @ryzhovau .*
 
 With a few kernel modules, a USB-equipped ASUS router running Merlin can use [LUKS and cryptsetup](https://gitlab.com/cryptsetup/cryptsetup) to work with encription-on-the-fly on a disk.
 (*I have only tested this on my ASUS AC-1900 (a.k.a. RT-AC68P), so I do not know if it will work with other routers.*)
