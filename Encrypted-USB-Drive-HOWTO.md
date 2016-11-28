@@ -1,6 +1,6 @@
 # Using a LUKS Encrypted Drive
 
-*This HOWTO is mostly based off [this post on vip.asus.com from ryzhov_av](https://vip.asus.com/forum/view.aspx?id=20121022225145408&board_id=11&model=RT-N6).*
+*This HOWTO is mostly based off [this post on vip.asus.com from (https://vip.asus.com/forum/view.aspx?id=20121022225145408&board_id=11&model=RT-N6) @ryzhovau .*
 
 ### Preface
 
