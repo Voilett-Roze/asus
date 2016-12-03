@@ -68,7 +68,7 @@ mkdir -p CA/private new export
 3.1 - **Generate private key** 
 
 ```
-openssl ecparam -name secp521r1 -genkey -noout | openssl ec -aes256 -out CA/private/ec-cakey.pem
+openssl ecparam -name secp384r1 -genkey -noout | openssl ec -aes256 -out CA/private/ec-cakey.pem
 ```
 
 3.2 - **Generate self-signed X.509 CA certificate**
@@ -288,3 +288,4 @@ iOS Devices
 P-521 crypto update
 
 If you created P-521 certificates, you noticed already Windows 10 and 8 and 7 will refuse to connect to a WiFi with P-521 certificates. You better use P-384 curves to generate your certificates as P-521 are not in [Suite B NSA](http://crypto.stackexchange.com/questions/9901/why-is-the-p-521-elliptic-curve-not-in-suite-b-if-aes-256-is). [Windows](https://support.microsoft.com/en-us/kb/3161639), [MacOs](https://github.com/ssllabs/ssllabs-scan/issues/411) and browsers like [Firefox](https://bugzilla.mozilla.org/show_bug.cgi?id=1128792) or [Chrome](https://bugs.chromium.org/p/chromium/issues/detail?id=478225) are also dropping support for P-521.
+Correct in your eap.conf, tls section, variable ecdh_curve = "secp384r1". Thank you for your cooperation.
