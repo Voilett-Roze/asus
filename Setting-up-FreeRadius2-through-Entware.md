@@ -284,3 +284,7 @@ iOS Devices
 * Install certificate on [iOS device](https://support.quovadisglobal.com/KB/a64/how-do-i-install-digital-certificate-onto-an-iphone-ipad.aspx)
 
 * [iOS Support](http://support.apple.com/kb/DL1465) for EAP-TTLS, PAP.
+
+P-521 crypto update
+
+If you created P-521 certificates, you noticed already Windows 10 and 8 and 7 will refuse to connect to a WiFi with P-521 certificates. You better use P-384 curves to generate your certificates as P-521 are not in [Suite B NSA](http://crypto.stackexchange.com/questions/9901/why-is-the-p-521-elliptic-curve-not-in-suite-b-if-aes-256-is). [Windows](https://support.microsoft.com/en-us/kb/3161639), [MacOs](https://github.com/ssllabs/ssllabs-scan/issues/411) and browsers like [Firefox](https://bugzilla.mozilla.org/show_bug.cgi?id=1128792) or [Chrome](https://bugs.chromium.org/p/chromium/issues/detail?id=478225) are also dropping support for P-521.
