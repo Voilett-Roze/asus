@@ -170,7 +170,7 @@ curl -fs -o /dev/null -XPUT "https://api.cloudflare.com/client/v4/zones/$ZONEID/
   -H "X-Auth-Email: $EMAIL" \
   -H "X-Auth-Key: $API" \
   -H "Content-Type: application/json" \
-  --data "{\"id\":\"$RECORDID\",\"type\":\"A\",\"name\":\"$RECORDNAME\",\"content\":\"$IP\",\"zone_id\":\"$ZONEID\"}"
+  --data "{\"type\":\"A\",\"name\":\"$RECORDNAME\",\"content\":\"$IP\",\"ttl\":120,\"proxied\":false}"
    
 if [ $? -eq 0 ]; then
   /sbin/ddns_custom_updated 1
