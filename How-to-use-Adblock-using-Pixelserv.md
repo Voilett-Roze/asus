@@ -5,7 +5,8 @@ Pixelserv is a tool used to create a 1x1 transparent image can be used in combin
 * Either follow the installation steps at: https://github.com/kvic-z/pixelserv-tls
 * Or install from Entware via OPKG: `opkg install pixelserv-tls`
 * For community support use this thread [pixelserv - A Better One-pixel Webserver for Adblock](http://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/)
-* Use a blocklists: [uBlockr](https://gitlab.com/spitfire-project/ublockr/blob/master/README.md), [AB-Solution](http://www.ab-solution.info/) Note: Both these Ad-blockers include the installation of pixelserv-tls
+* Use a blocklists: [uBlockr](https://gitlab.com/spitfire-project/ublockr/blob/master/README.md), [AB-Solution](http://www.ab-solution.info/) 
+  Note: Both these Ad-blockers include the installation of pixelserv-tls
 
 ## Pixelserv Installation (auto-install)
 * [uBlockr](http://www.snbforums.com/threads/ublockr-a-minimalists-approach-to-adblocking.31683/) by @swetoast, installs pixelserv-tls by default
