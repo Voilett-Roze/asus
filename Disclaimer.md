@@ -8,7 +8,4 @@ This is the part where you usually put a lot of legalese stuff that nobody reads
 
 4. In any other cases not covered, Common Sense prevails,  and I shall also make use of Good Will.
 
-And for those worried about privacy:
-
-This firmware does not contact me back in any way whatsoever.  Not even through any update checker - the only update code there is Asus's.
 
