@@ -4,16 +4,17 @@ The following devices are fully supported:
 
 * RT-N66U
 * RT-AC56U
-* RT-AC66U (except for revision B1)
+* RT-AC66U
+* RT-AC66U_B1 (use the RT-AC68U firmware)
 * RT-AC68U (including revision C1)
-* RT-AC68P (same FW as RT-AC68U)
+* RT-AC68P (use the RT-AC68U firmware)
 * RT-AC87U
 * RT-AC3200
 * RT-AC88U
 * RT-AC3100
 * RT-AC5300
-* RT-AC1900 (same FW as RT-AC68U)
-* RT-AC1900P (same FW as RT-AC68U)
+* RT-AC1900 (use the RT-AC68U firmware)
+* RT-AC1900P (use the RT-AC68U firmware)
 
 Note that the R (retail SKU) and W (white casing SKU) are also all supported, as they are the same exact hardware and firmware.
 
