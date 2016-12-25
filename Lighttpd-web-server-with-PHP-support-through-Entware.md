@@ -3,6 +3,8 @@ First, setup Entware from [this](https://github.com/RMerl/asuswrt-merlin/wiki/En
 Login to router with a terminal like putty and enter this commands:
 ### The following _tinyurl.com_ links are no longer active. Please update this tutorial with working links/source. Better yet, if someone can explain each step in more detail, it would greatly help n00bs understand what's going on (more than copypasta instructions)!
 
+Since the links are deprecated, this URL helps with customization of the server.
+
 ```
 opkg install lighttpd php5-cgi lighttpd-mod-fastcgi
 rm /opt/etc/lighttpd/lighttpd.conf
