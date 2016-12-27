@@ -330,4 +330,5 @@ https://zeustracker.abuse.ch/blocklist.php?download=badips
 https://feodotracker.abuse.ch/blocklist/?download=ipblocklist
 http://www.malwaredomainlist.com/hostslist/ip.txt
 http://cinsscore.com/list/ci-badguys.txt
+http://sanyalnet-cloud-vps.freeddns.org/mirai-ips.txt
 ```
