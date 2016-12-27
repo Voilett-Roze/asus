@@ -317,7 +317,7 @@ fi
 
 # Apply iptables rule
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
-  iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j DROP
+  iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
 }
 
 run_ipset
