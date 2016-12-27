@@ -260,17 +260,15 @@ Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks
 # Original script by swetoast. Updates by Neurophile & Octopus.
 
 # SET CONFIG
-path=/opt/var/cache/malware-filter
-#path for malware filter files
+path=/opt/var/cache/malware-filter  #path for malware filter files
 # END CONFIG
 
 # SET VARIBLES
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
 # END VARIBLES
 
-# Loading ipset modules
+#Load ipset modules
 
-# # Load ipset modules
 ipset -v | grep -i "v4" > /dev/null 2>&1
 if [ $? -eq 0 ]; then
      # old ipset
@@ -307,36 +305,22 @@ get_list () {
         cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.txt
  }
 
-get_update () {
-        mkdir -p $path
-        wget -q --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
-        cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-updates.txt
- }
+run_ipset () {
 
-# Create the malware-filter (primary) if does not exists
-if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep 'Unknown set')" != "" ]; then
-    get_list
-    ipset -N malware-filter iphash
-        for IP in $(cat $path/malware-filter.txt)
-    do
-        ipset -A malware-filter $IP
-    done
-    [ -z "$(iptables-save | grep malware-filter)" ] && iptables -I FORWARD -m set $MATCH_SET malware-filter dst -j DROP
+get_list
+ipset --destroy malware-filter > /dev/null 2>&1 # destroy the old rules to get new ones.
+
+# Create ip set
+if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+  ipset -N malware-filter iphash
 fi
 
-# Destroy this transient set just in case
-ipset --destroy malware-update > /dev/null 2>&1
+# Apply iptables rule
+iptables-save | grep malware-filter > /dev/null 2>&1 || \
+  iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j DROP
+}
 
-# Load the latest rule(s)
-(echo -e "-N malware-update iphash\n" && \
-    get_update | \
-        nice sed 's/^/-A malware-update /' && \
-    echo -e "\nCOMMIT\n" \
-) | \
-
-nice ipset --restore && \
-nice ipset --swap malware-update malware-filter && \
-nice ipset --destroy malware-update
+run_ipset
 exit $?
 ```
 Save this list as malware-filter.list and set it in your relative path (see configuration part in script) you can also add more list by just appending to this list.
