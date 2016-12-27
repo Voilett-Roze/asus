@@ -256,22 +256,13 @@ Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks
 
 ```
 #!/bin/sh
-
 # Original script by swetoast. Updates by Neurophile & Octopus.
-
-# SET CONFIG
-path=/opt/var/cache/malware-filter  #path for malware filter files
-# END CONFIG
-
-# SET VARIBLES
-regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
-# END VARIBLES
-
-#Load ipset modules
+path=/opt/var/cache/malware-filter				# Set your path here
+regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` 		# Dont change this value
 
 ipset -v | grep -i "v4" > /dev/null 2>&1
+
 if [ $? -eq 0 ]; then
-     # old ipset
      ipsetv=4
      lsmod | grep "ipt_set" > /dev/null 2>&1 || \
      for module in ip_set ip_set_nethash ip_set_iphash ipt_set
@@ -279,7 +270,6 @@ if [ $? -eq 0 ]; then
           insmod $module
      done
 else
-     # new ipset
      ipsetv=6
      lsmod | grep "xt_set" > /dev/null 2>&1 || \
      for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
@@ -288,17 +278,15 @@ else
      done
 fi
 
-#Different routers got different iptables syntax
 case $(uname -m) in
 armv7l)
-    MATCH_SET='--match-set'
+    MATCH_SET='--match-set'					# Value for ARM Routers
 ;;
 mips)
-    MATCH_SET='--set'
+    MATCH_SET='--set'						# Value for Mips Routers
 ;;
 esac
 
-# Get lists
 get_list () {
         mkdir -p $path
         wget -q --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
@@ -308,16 +296,14 @@ get_list () {
 run_ipset () {
 
 get_list
-ipset --destroy malware-filter > /dev/null 2>&1 # destroy the old rules to get new ones.
+ipset --destroy malware-filter > /dev/null 2>&1			# Delete the filter so it doesnt clash with the update
 
-# Create ip set
 if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-  ipset -N malware-filter iphash
+	ipset -N malware-filter iphash
 fi
 
-# Apply iptables rule
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
-  iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
+iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
 }
 
 run_ipset
