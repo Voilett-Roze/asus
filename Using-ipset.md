@@ -299,7 +299,10 @@ get_list
 ipset --destroy malware-filter > /dev/null 2>&1         # Delete the filter so it doesnt clash with the update
 
 if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    ipset -N malware-filter iphash
+        ipset -N malware-filter iphash
+        while [ $((--i)) -ge 0 ]; do
+                ipset --add temp_ipset $(cat $path/malware-filter.txt)
+        done
 fi
 
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
