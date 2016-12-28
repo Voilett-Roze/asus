@@ -257,8 +257,9 @@ Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks
 ```
 #!/bin/sh
 # Original script by swetoast. Updates by Neurophile & Octopus.
-path=/opt/var/cache/malware-filter				# Set your path here
-regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"` 		# Dont change this value
+
+path=/opt/var/cache/malware-filter              	# Set your path here
+regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
 ipset -v | grep -i "v4" > /dev/null 2>&1
 
@@ -280,10 +281,10 @@ fi
 
 case $(uname -m) in
 armv7l)
-    MATCH_SET='--match-set'					# Value for ARM Routers
+    MATCH_SET='--match-set'                 # Value for ARM Routers
 ;;
 mips)
-    MATCH_SET='--set'						# Value for Mips Routers
+    MATCH_SET='--set'                       # Value for Mips Routers
 ;;
 esac
 
@@ -296,10 +297,15 @@ get_list () {
 run_ipset () {
 
 get_list
-ipset --destroy malware-filter > /dev/null 2>&1			# Delete the filter so it doesnt clash with the update
+ipset --destroy malware-filter > /dev/null 2>&1         # Delete the filter so it doesnt clash with the update
+
+for IP in $(cat $path/malware-filter.txt)
+do
+	ipset -A malware-filter $IP > /dev/null 2>&1
+done
 
 if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-	ipset -N malware-filter iphash
+    ipset -N malware-filter iphash
 fi
 
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
