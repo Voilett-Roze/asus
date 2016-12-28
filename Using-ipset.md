@@ -299,8 +299,14 @@ run_ipset () {
 get_list
 ipset --destroy malware-filter > /dev/null 2>&1         # Delete the filter so it doesnt clash with the update
 
-if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]
+then
     ipset -N malware-filter iphash
+    [ -e $PATH/malware-filter.txt ] || wget -q -O $PATH/malware-filter.txt
+    for IP in $(cat $PATH/malware-filter.txt)
+    do
+        ipset -A malware-filter $IP
+    done
 fi
 
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
