@@ -302,9 +302,10 @@ ipset --destroy malware-filter > /dev/null 2>&1         # Delete the filter so i
 if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]
 then
     ipset -N malware-filter iphash
-    [ -e $PATH/malware-filter.txt ] || wget -q -O $PATH/malware-filter.txt
-    for IP in $(cat $PATH/malware-filter.txt)
-    do
+   	[ -e $PATH/malware-filter.txt ] || wget -q --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
+        cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.txt
+    	for IP in $(cat $PATH/malware-filter.txt)
+    	do
         ipset -A malware-filter $IP
     done
 fi
