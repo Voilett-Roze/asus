@@ -257,8 +257,7 @@ Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks
 ```
 #!/bin/sh
 # Original script by swetoast. Updates by Neurophile & Octopus.
-
-path=/opt/var/cache/malware-filter              	# Set your path here
+path=/opt/var/cache/malware-filter              # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
 ipset -v | grep -i "v4" > /dev/null 2>&1
@@ -299,15 +298,8 @@ run_ipset () {
 get_list
 ipset --destroy malware-filter > /dev/null 2>&1         # Delete the filter so it doesnt clash with the update
 
-if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]
-then
+if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
     ipset -N malware-filter iphash
-   	[ -e $PATH/malware-filter.txt ] || wget -q --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
-        cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.txt
-    	for IP in $(cat $PATH/malware-filter.txt)
-    	do
-        ipset -A malware-filter $IP
-    done
 fi
 
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
