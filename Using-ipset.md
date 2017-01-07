@@ -254,9 +254,22 @@ May 29 09:04:04 admin: exiting Peerguarding rules
 
 Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks ips. 
 
+its recommended not to store this script in firewall-start rather add the script to /opt/bin/malware-block 
+
+then type this
+
+nano /jffs/scripts/services-start
+
+and append
+
+cru a malware-filter ""0 */12 * * */opt/bin/malware-block"
+
+save it this will make malware-block run every 12th hour and update the router.
 ```
 #!/bin/sh
 # Original script by swetoast. Updates by Neurophile & Octopus.
+# Revision 2
+
 path=/opt/var/cache/malware-filter              # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
@@ -281,9 +294,24 @@ fi
 case $(uname -m) in
 armv7l)
     MATCH_SET='--match-set'                 # Value for ARM Routers
+    HASH='hash:ip'
+    SYNTAX='add'
+    SWAPPED='swap'
+    DESTROYED='destroy'
 ;;
 mips)
     MATCH_SET='--set'                       # Value for Mips Routers
+    HASH='iphash'
+    SYNTAX='-N'
+    SWAPPED='-W'
+    DESTROYED='−X'
+;;
+*)
+    MATCH_SET='--match-set'                 # Value for Wildcard Routers
+    HASH='hash:ip'
+    SYNTAX='add'
+    SWAPPED='swap'
+    DESTROYED='destroy'
 ;;
 esac
 
@@ -296,14 +324,22 @@ get_list () {
 run_ipset () {
 
 get_list
-ipset --destroy malware-filter > /dev/null 2>&1         # Delete the filter so it doesnt clash with the update
 
-if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-        ipset -N malware-filter iphash
-        while [ $((--i)) -ge 0 ]; do
-                ipset --add temp_ipset $(cat $path/malware-filter.txt)
-        done
+ipset -L malware-filter >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+    if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+    path=/opt/var/cache/malware-filter
+    ipset -N malware-filter $HASH family inet hashsize 2048 maxelem 65536
+    for i in `cat $path/malware-filter.txt`; do ipset $SYNTAX malware-filter $i ; done
 fi
+else
+    path=/opt/var/cache/malware-filter
+    ipset -N malware-update $HASH family inet hashsize 2048 maxelem 65536
+    for i in `cat $path/malware-filter.txt`; do ipset $SYNTAX malware-update $i ; done
+    ipset $SWAPPED malware-update malware-filter
+    ipset $DESTROYED malware-update
+fi
+
 
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
