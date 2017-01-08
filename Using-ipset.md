@@ -270,7 +270,7 @@ save it this will make malware-block run every 12th hour and update the router.
 # Original script by swetoast. Updates by Neurophile & Octopus.
 # Revision 5
 
-path=/opt/var/cache/malware-filter                               # Set your path here
+path=/opt/var/cache/malware-filter                      # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
 ipset -v | grep -i "v4" > /dev/null 2>&1
@@ -293,7 +293,7 @@ fi
 
 case $(uname -m) in
 armv7l)
-    MATCH_SET='--match-set'                 # Value for ARM Routers
+    MATCH_SET='--match-set'                       # Value for ARM Routers
     HASH='hash:ip'
     SYNTAX='add'
     SWAPPED='swap'
@@ -309,7 +309,7 @@ mips)
     OPTIONAL=''
 ;;
 *)
-    MATCH_SET='--match-set'                 # Value for Wildcard Routers
+    MATCH_SET='--match-set'                       # Value for Wildcard Routers
     HASH='hash:ip'
     SYNTAX='add'
     SWAPPED='swap'
