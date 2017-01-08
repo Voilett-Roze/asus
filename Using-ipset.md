@@ -268,53 +268,44 @@ save it this will make malware-block run every 12th hour and update the router.
 ```
 #!/bin/sh
 # Original script by swetoast. Updates by Neurophile & Octopus.
-# Revision 5
+# Revision 6
 
 path=/opt/var/cache/malware-filter                      # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
-ipset -v | grep -i "v4" > /dev/null 2>&1
+case $(ipset -v | grep -oE "ipset v[0-9]") in
+*v6) # Value for ARM Routers
 
-if [ $? -eq 0 ]; then
-     ipsetv=4
-     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
-     do
-          insmod $module
-     done
-else
+    MATCH_SET='--match-set'
+    HASH='hash:ip'
+    SYNTAX='add'
+    SWAPPED='swap'
+    DESTROYED='destroy'
+    OPTIONAL='family inet hashsize 2048 maxelem 65536'
+
      ipsetv=6
      lsmod | grep "xt_set" > /dev/null 2>&1 || \
      for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
      do
           insmod $module
      done
-fi
-
-case $(uname -m) in
-armv7l)
-    MATCH_SET='--match-set'                       # Value for ARM Routers
-    HASH='hash:ip'
-    SYNTAX='add'
-    SWAPPED='swap'
-    DESTROYED='destroy'
-    OPTIONAL='family inet hashsize 2048 maxelem 65536'
 ;;
-mips)
-    MATCH_SET='--set'                             # Value for Mips Routers
+
+*v4) # Value for Mips Routers
+
+    MATCH_SET='--set'
     HASH='iphash'
     SYNTAX='-q -A'
     SWAPPED='-W'
     DESTROYED='--destroy'
-    OPTIONAL=''
-;;
-*)
-    MATCH_SET='--match-set'                       # Value for Wildcard Routers
-    HASH='hash:ip'
-    SYNTAX='add'
-    SWAPPED='swap'
-    DESTROYED='destroy'
-    OPTIONAL=''
+    OPTIONAL=''   
+
+     ipsetv=4
+     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
+     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
+     do
+          insmod $module
+     done
 ;;
 esac
 
@@ -331,14 +322,12 @@ get_list
 ipset -L malware-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    path=/opt/var/cache/malware-filter
     ipset -N malware-filter $HASH $OPTIONAL
     for i in `cat $path/malware-filter.txt`; do nice -n 12 ipset $SYNTAX malware-filter $i ; done
 fi
 else
-    path=/opt/var/cache/malware-filter
     ipset -N malware-update $HASH $OPTIONAL
-    for i in `cat $path/malware-filter.txt`; do ipset $SYNTAX malware-update $i ; done
+    for i in `cat $path/malware-filter.txt`; do nice -n 12 ipset $SYNTAX malware-update $i ; done
     ipset $SWAPPED malware-update malware-filter
     ipset $DESTROYED malware-update
 fi
