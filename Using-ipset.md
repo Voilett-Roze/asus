@@ -258,11 +258,11 @@ its recommended not to store this script in firewall-start rather add the script
 
 then type this
 
-nano /jffs/scripts/services-start
+> nano /jffs/scripts/services-start 
 
 and append
 
-cru a malware-filter "0 */12 * * */opt/bin/malware-block"
+> cru a malware-filter "0 */12 * * */opt/bin/malware-block"
 
 save it this will make malware-block run every 12th hour and update the router.
 ```
