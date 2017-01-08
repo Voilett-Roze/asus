@@ -268,7 +268,7 @@ save it this will make malware-block run every 12th hour and update the router.
 ```
 #!/bin/sh
 # Original script by swetoast. Updates by Neurophile & Octopus.
-# Revision 4
+# Revision 5
 
 path=/opt/var/cache/malware-filter                               # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
@@ -306,6 +306,7 @@ mips)
     SYNTAX='-q -A'
     SWAPPED='-W'
     DESTROYED='--destroy'
+    OPTIONAL=''
 ;;
 *)
     MATCH_SET='--match-set'                 # Value for Wildcard Routers
