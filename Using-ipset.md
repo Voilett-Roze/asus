@@ -343,7 +343,6 @@ else
     ipset $DESTROYED malware-update
 fi
 
-
 iptables-save | grep malware-filter > /dev/null 2>&1 || \
 iptables -D FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
