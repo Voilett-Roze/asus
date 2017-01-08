@@ -26,7 +26,7 @@ Now, clone the repository: `git clone git://github.com/RMerl/asuswrt-merlin.git`
 
 Here's what the output of this command will look like:
 
-    build@asuswrt-merlin:~$ git://github.com/RMerl/asuswrt-merlin.git
+    build@asuswrt-merlin:~$ git clone git://github.com/RMerl/asuswrt-merlin.git
     Cloning into asuswrt-merlin...
     remote: Counting objects: 76989, done.
     remote: Compressing objects: 100% (54069/54069), done.
