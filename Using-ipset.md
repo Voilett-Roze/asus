@@ -314,7 +314,7 @@ mips)
     SYNTAX='add'
     SWAPPED='swap'
     DESTROYED='destroy'
-    OPTIONAL='family inet hashsize 2048 maxelem 65536'
+    OPTIONAL=''
 ;;
 esac
 
