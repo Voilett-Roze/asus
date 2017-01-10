@@ -267,8 +267,10 @@ and append
 save it this will make malware-block run every 12th hour and update the router.
 ```
 #!/bin/sh
-# Original script by swetoast. Updates by Neurophile & Octopus.
-# Revision 6
+# Author: Toast
+# Contributers: Octopus, Tomsk, Neurophile
+# Testers: shooter40sw
+# Revision 7
 
 path=/opt/var/cache/malware-filter                      # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
@@ -300,7 +302,7 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
     DESTROYED='--destroy'
     OPTIONAL=''   
 
-     ipsetv=4
+    ipsetv=4
      lsmod | grep "ipt_set" > /dev/null 2>&1 || \
      for module in ip_set ip_set_nethash ip_set_iphash ipt_set
      do
@@ -322,23 +324,28 @@ get_list
 ipset -L malware-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    ipset -N malware-filter $HASH $OPTIONAL
-    for i in `cat $path/malware-filter.txt`; do nice -n 12 ipset $SYNTAX malware-filter $i ; done
+    nice -n 2 ipset -N malware-filter $HASH $OPTIONAL
+    for i in `cat $path/malware-filter.txt`; do nice -n 2 ipset $SYNTAX malware-filter $i ; done
 fi
 else
-    ipset -N malware-update $HASH $OPTIONAL
-    for i in `cat $path/malware-filter.txt`; do nice -n 12 ipset $SYNTAX malware-update $i ; done
-    ipset $SWAPPED malware-update malware-filter
-    ipset $DESTROYED malware-update
+    nice -n 2 ipset -N malware-update $HASH $OPTIONAL
+    for i in `cat $path/malware-filter.txt`; do nice ipset $SYNTAX malware-update $i ; done
+    nice -n 2 ipset $SWAPPED malware-update malware-filter
+    nice -n 2 ipset $DESTROYED malware-update
 fi
 
-iptables-save | grep malware-filter > /dev/null 2>&1 || \
-iptables -D FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
-iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
-logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.txt | wc -l) unique ip addresses."
+iptables -L | grep malware-filter > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
+else
+    nice -n 2 iptables -D FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
+fi
 }
 
 run_ipset
+
+logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.txt | wc -l) unique ip addresses."
 exit $?
 ```
 Save this list as malware-filter.list and set it in your relative path (see configuration part in script) you can also add more list by just appending to this list.
