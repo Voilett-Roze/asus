@@ -73,7 +73,7 @@ So a common solution to this last problem is to simply insert a delay to allow a
 But I'm not going to show anything about that method.  I've come up with an alternate scheme that still fully utilizes the Web GUI to configure and control minidlna, but guarantees that minidlna is started only after all available storage volumes are indeed mounted and available.  It doesn't require a custom firmware build; it's all implemented with just two text files using AsusWRT-Merlin's custom scripting capability.  The next section covers that in detail.
 
 
-## latenitetech's  Minidlna Configuration Solution for AsusWRT-Merlin routers
+## A Minidlna Configuration Solution for AsusWRT-Merlin routers
 Follow this guide for a successful and fulfilling minidlna experience!  This solution addresses all the pitfalls described above, and maintains full use of the stock Web GUI to configure and control minidlna.
 
 ### Theory of Operation (aka "How it Works")
