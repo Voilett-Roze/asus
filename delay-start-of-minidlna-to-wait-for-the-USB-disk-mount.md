@@ -63,3 +63,8 @@ Reboot
 [I found that the straightforward way of making the mount point a requirement for minidlna didn't work because though the USB disk would get mounted, the directories inside the mount point were not 'revealed' by the OS until fsck was done.  But since fsck would take a very long time, minidlna would try to access the directory before fsck was done, get an error that the directory doesn't exist, and then delete that directory from its database.  The end result was that minidlna would start successfully, but the database would be wiped clean.  The above method using x-systemd.automount prevents this from happening.]
 
 Hope this helps those who come across this page as I did.
+
+# Another alternate method
+Check out   
+https://github.com/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions    
+for a more comprehensive guide and solution.
