@@ -90,6 +90,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 13. [Tinc VPN on AsusWRT-Merlin](http://nwgat.ninja/tinc-vpn-on-asuswrt-merlin/) (External Link)
 14. [Encrypted USB Drive HOWTO](Encrypted-USB-Drive-HOWTO)
 15. [Disk Check at Boot (and other noobie hints and tips)](/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot-\(and-other-noobie-hints-and-tips\))
+16. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions)
 
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin/wiki/FAQ)
