@@ -43,7 +43,7 @@ https://www.hqt.ro/how-to-install-new-generation-entware/
 
 Note:  While the AsusWRT-Merlin firmware already contains an entware set-up script as described in:   
 https://github.com/RMerl/asuswrt-merlin/wiki/Entware   
-It's a bit dated and doesn't include the swapfile creation step.  You can still use that, but then you'll need to manually set up the swap file using something like this:   
+It doesn't include the swapfile creation step.  You can still use that, but then you'll need to manually set up the swap file using something like this:   
 https://mydevtutorials.wordpress.com/2014/01/10/how-to-activate-swap-on-asus-rt-ac68u-router/
 
 Once you have entware installed, and swap enabled, hopefully those pesky _malloc_ errors will be a thing of the past, and your large media database will complete indexing without error.
