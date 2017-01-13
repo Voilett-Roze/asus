@@ -91,6 +91,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 14. [Encrypted USB Drive HOWTO](Encrypted-USB-Drive-HOWTO)
 15. [Disk Check at Boot (and other noobie hints and tips)](/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot-\(and-other-noobie-hints-and-tips\))
 16. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions)
+17. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
 
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin/wiki/FAQ)
