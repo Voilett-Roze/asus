@@ -35,6 +35,8 @@ The easiest way to install swap is via entware, an add-on software package that 
 
 Fortunately, it's pretty easy to do;  the most difficult part for a noobie is just setting up that first Linux filesystem if you're new to the Linux world.  You'll need a Linux filesystem for entware, swap, and as I said in part (1) above, for minidlna.
 
+It's strongly recommended to install entware and swapfile on a flash drive rather than a traditional spinning hard drive, especially if your hard drive spins down on inactivity.  The swap file must react instantly and things won't work right if it has to wait for the hard drive to spin up.  A traditional external USB hard drive is fine for your media collection.
+
 There are many how-to guides out there for creating your first Linux volume; here's one  I followed:   
 http://www.algissalys.com/how-to/format-and-partition-usb-asuswrt-routers
 
