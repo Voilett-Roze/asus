@@ -32,7 +32,7 @@ The zeroconf protocol utilizes Multicast DNS (mDNS), specifically using the mult
     opkg install procps-ng
     opkg install procps-ng-pgrep
        
-'Pgrep' isn't technically required, but it's used in the init.d start-up script.  It's a handy command to have around anyway.
+'pgrep' isn't technically required, but it's used in the init.d start-up script.  It's a handy command to have around anyway.
 
 3)  Define/create a directory in the Linux filesystem to hold your pyTivo software and configuration.  I've chosen to use _/opt/app/pyTivo_, so if you see that string referenced below, substitute the path to your pyTivo directory if you're using something else.   
 [Note _/opt_ is the entware directory, so I just created another directory within the entware structure I call "app" to hold application-specific data, then created another subdirectory within it for pyTivo specific files.   This is purely a matter of personal preference, so set it up as you like.]
@@ -48,7 +48,7 @@ Then follow the instructions on that page under:  _New users are recommended to 
 \- On the _beacon_ line, update to match your network's subnet (the '192.168.1' part, the 255 at the end you'll want to leave as that's the broadcast identifier)   
 \- Update the media shares to match your rig.  The string in the square brackets is the name displayed on the Tivo client.   
     
-    [Server[
+    [Server]
     beacon = 192.168.1.255
     ffmpeg = /opt/bin/ffmpeg
     
@@ -87,7 +87,7 @@ You should see something like this coming back from pyTivo:
 > INFO:pyTivo.beacon:Registering: Video on Router   
 > INFO:pyTivo:pyTivo is ready.   
 
-Note: to get to pyTivo's Web GUI as a user-friendly way to edit advanced config options, navigate to \<your router's IP>\:9032/   
+Optional: to get to pyTivo's Web GUI as a user-friendly way to edit advanced config options, navigate to http://\<your router's IP>\:9032/   
 For example, http://192.168.1.1:9032/
 
 8) Go to your Tivo and see if the shares show up.    
@@ -98,9 +98,9 @@ Select a share, navigate to a media file and start it playing.  Sit back and enj
 
 A common problem with recent Tivos (those depending exclusively on zeroconf) is they are slow to respond to new media servers coming onto the network.  You can force a zeroconf refresh by 'bouncing' the network on the Tivo device (e.g. unplug the network cable, wait a few seconds, then plug it in again).  You should then see the pyTivo shares pop up on your Tivo's menu in a couple of seconds.
 
-9)  Once you're happy with your configuration, install the following start script on the router so it will start up automatically.
-Update the line _'PYTIVO_DIR='_ to match your config if it's not correct as is.    
-Install to:  _/opt/etc/init.d/S50pyTivo_   
+9)  Once you're happy with your configuration, install the following start script on the router so it will start up automatically.   
+\- Update the line _'PYTIVO_DIR='_ to match your config if it's not correct as is.    
+\- Install to:  _/opt/etc/init.d/S50pyTivo_   
 (Feel free to change the '50' to whatever number you want, it determines the start-up order of services under init.d.  Lower-numbered are started first.)
 
 Create this file (in UNIX-format, as described in  https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts)   
@@ -226,7 +226,8 @@ The simplest 'kill off avahi-daemon' solution is to install an empty avahi-daemo
     
 That's it, you're done.  When the router reboots, it will install the empty .conf file on top of the system-generated one.
 
-A slightly more elaborate arrangement is to install an _avahi-daemon.postconf_ script under /jffs/scripts.  That's what I do:    
+A slightly more elaborate arrangement is to install an _avahi-daemon.postconf_ script under /jffs/scripts.  That's what I do:   
+[All caveats noted above about creating in UNIX-format, and making the script executable apply ...]   
     
     #!/bin/sh
     #
