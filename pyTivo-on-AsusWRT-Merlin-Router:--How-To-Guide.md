@@ -201,7 +201,7 @@ For Windows users, one quick option is to run nano via telnet or ssh, then just 
     chmod a+rx /opt/etc/init.d/S50pyTivo
     /opt/etc/init.d/S50pyTivo start
     
-It now should auto-start on router reboot.
+It now should auto-start on router reboot as well.
 
 11)  The start-up script provides an easy way to enable or disable logging from pyTivo.  I suggest leave it by default to create a log file under your pyTivo directory until you're sure it's running OK.  But it can grow quite large as it logs a lot of messages just from normal activity.  Once you're satisfied it's working correctly, you can easily turn off logging by creating a dummy file in the pyTivo directory named _NOLOG_, then restarting pyTivo
     
