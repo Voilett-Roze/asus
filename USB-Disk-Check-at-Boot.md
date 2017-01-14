@@ -111,7 +111,7 @@ Install as '/jffs/scripts/unmount' (caveats for installing scripts mentioned abo
     #
     
     # determine if this is the entware volume by comparing the '/opt' mountpoint to $1
-    OPT=`ls -lFa /tmp/opt | cut -c70- | cut -d/ -f1-4`
+    OPT=$(dirname $(readlink /tmp/opt))
     if [ "$1" == "$OPT" ] ; then
             # this should be the same code as in 'services-stop', so you could just call services-stop instead
             /opt/etc/init.d/rc.unslung stop
