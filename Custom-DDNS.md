@@ -443,7 +443,7 @@ url="$burl"'?hostname='"$hostname"'&'myip="$wanip&wildcard=NOCHG"
 
 loopia_dns_update() {
   CMD=$(curl -s --user "$cred" "$url")
-  logger "ddns status: $CMD"
+  logger -s -t ddns "ddns status: $CMD"
   case "$CMD" in
     good*|nochg*) /sbin/ddns_custom_updated 1 ;;
     abuse) /sbin/ddns_custom_updated 1 ;;
