@@ -268,12 +268,12 @@ save it this will make malware-block run every 12th hour and update the router.
 ```
 #!/bin/sh
 # Author: Toast
-# Contributers: Octopus, Tomsk, Neurophile
+# Contributers: Octopus, Tomsk, Neurophile, jimf
 # Testers: shooter40sw
-# Revision 8
+# Revision 9
 
 path=/opt/var/cache/malware-filter                      # Set your path here
-timeout=60                                              # Set your timeout value here (seconds)
+retries=3                                               # Set number of tries here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
@@ -314,7 +314,7 @@ esac
 
 get_list () {
         mkdir -p $path
-        wget -q --timeout=$timeout --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
+        wget -q --tries=$retries --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
         cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.txt
  }
 
@@ -344,12 +344,6 @@ else
     nice -n 2 iptables -D FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
     nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
 fi
-}
-
-run_ipset
-
-logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.txt | wc -l) unique ip addresses."
-exit $?
 }
 
 run_ipset
