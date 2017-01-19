@@ -270,9 +270,10 @@ save it this will make malware-block run every 12th hour and update the router.
 # Author: Toast
 # Contributers: Octopus, Tomsk, Neurophile
 # Testers: shooter40sw
-# Revision 7
+# Revision 8
 
 path=/opt/var/cache/malware-filter                      # Set your path here
+timeout=60                                              # Set your timeout value here (seconds)
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
@@ -300,7 +301,7 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
     SYNTAX='-q -A'
     SWAPPED='-W'
     DESTROYED='--destroy'
-    OPTIONAL=''   
+    OPTIONAL=''  
 
     ipsetv=4
      lsmod | grep "ipt_set" > /dev/null 2>&1 || \
@@ -313,13 +314,15 @@ esac
 
 get_list () {
         mkdir -p $path
-        wget -q --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
+        wget -q --timeout=$timeout --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
         cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.txt
  }
 
 run_ipset () {
 
 get_list
+
+echo "adding ipset rule to firewall this will take time."
 
 ipset -L malware-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -347,6 +350,12 @@ run_ipset
 
 logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.txt | wc -l) unique ip addresses."
 exit $?
+}
+
+run_ipset
+
+logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.txt | wc -l) unique ip addresses."
+exit $?
 ```
 Save this list as malware-filter.list and set it in your relative path (see configuration part in script) you can also add more list by just appending to this list.
 ```
@@ -354,6 +363,7 @@ https://ransomwaretracker.abuse.ch/downloads/RW_IPBL.txt
 https://zeustracker.abuse.ch/blocklist.php?download=badips
 https://feodotracker.abuse.ch/blocklist/?download=ipblocklist
 http://www.malwaredomainlist.com/hostslist/ip.txt
-http://cinsscore.com/list/ci-badguys.txt
-http://sanyalnet-cloud-vps.freeddns.org/mirai-ips.txt
+https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt
+https://lists.blocklist.de/lists/ssh.txt
+https://lists.blocklist.de/lists/bots.txt
 ```
