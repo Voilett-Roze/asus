@@ -88,7 +88,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 12. [Setting a random password for guest wifi]
 (/RMerl/asuswrt-merlin/wiki/Setting-a-random-password-for-guest-wifi)
 13. [Tinc VPN on AsusWRT-Merlin](http://nwgat.ninja/tinc-vpn-on-asuswrt-merlin/) (External Link)
-14. [Encrypted USB Drive HOWTO](Encrypted-USB-Drive-HOWTO)
+14. [LUKS Encrypted USB Drive HOWTO](LUKS-Encrypted-USB-Drive-HOWTO)
 15. [Disk Check at Boot](/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot)
 16. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions)
 17. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
