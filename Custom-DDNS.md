@@ -580,3 +580,7 @@ DYNDNS_URL="https://www.dnsmadeeasy.com/servlet/updateip?id=$DYNDNS_ID&password=
 
 update_dynamic_dns
 ```
+
+### AWS Route53
+
+[Gist link](https://gist.github.com/venator85/0b677e535dd35e2cd02c54ed445221ed)
