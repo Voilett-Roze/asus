@@ -361,3 +361,188 @@ https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt
 https://lists.blocklist.de/lists/ssh.txt
 https://lists.blocklist.de/lists/bots.txt
 ```
+
+## Privacy Filter
+
+So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/) and some additional Google Servers and some Chinese data collection centers for [Android rootkits](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/)
+
+```
+#!/bin/sh
+# Author: Toast
+# Original script by swetoast
+# Contributers: Tomsk
+# Revision 4
+
+path=/opt/var/cache/privacy-filter                      # Set your path here
+dnsmasq_cfg=/jffs/configs/dnsmasq.conf.add
+dnsmasq_real=/tmp/etc/dnsmasq.conf
+regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
+
+if  grep -Fxq "#privacy-filter" $dnsmasq_real
+    then    logger -s -t privacy-filter is present in $dnsmasq_real
+    else    echo "#privacy-filter" >> $dnsmasq_cfg
+            for i in `cat $path/privacy-filter.list`
+            do echo "server=/$i/127.0.0.1#1919" >> $dnsmasq_cfg; done
+            service restart_dnsmasq
+            logger -s -t privacy-filter was added to $dnsmasq_cfg; fi
+
+case $(ipset -v | grep -oE "ipset v[0-9]") in
+*v6) # Value for ARM Routers
+
+    MATCH_SET='--match-set'
+    HASH='hash:ip'
+    SYNTAX='add'
+    SWAPPED='swap'
+    DESTROYED='destroy'
+    OPTIONAL='family inet hashsize 2048 maxelem 65536'
+
+     ipsetv=6
+     lsmod | grep "xt_set" > /dev/null 2>&1 || \
+     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
+     do
+          insmod $module
+     done
+;;
+
+*v4) # Value for Mips Routers
+
+    MATCH_SET='--set'
+    HASH='iphash'
+    SYNTAX='-q -A'
+    SWAPPED='-W'
+    DESTROYED='--destroy'
+    OPTIONAL=''
+
+     ipsetv=4
+     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
+     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
+     do
+          insmod $module
+     done
+;;
+esac
+
+
+run_ipset () {
+
+ipset -L privacy-filter >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+    if [ "$(ipset --swap privacy-filter privacy-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+    nice ipset -N privacy-filter $HASH $OPTIONAL
+    for i in `cat $path/privacy-filter.txt`; do nice -n 2 ipset $SYNTAX privacy-filter $i ; done
+fi
+else
+    nice -n 2 ipset -N privacy-update $HASH $OPTIONAL
+    for i in `cat $path/privacy-filter.txt`; do nice -n 2 ipset $SYNTAX privacy-update $i ; done
+    nice -n 2 ipset $SWAPPED privacy-update privacy-filter
+    nice -n 2 ipset $DESTROYED privacy-update
+fi
+
+iptables -L | grep privacy-filter > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
+else
+    nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
+fi
+}
+
+run_ipset
+exit $?
+```
+
+and here is the iplist of the telemertry server taken of the original script save as privacy-filter.txt in your path
+
+```
+23.99.10.11
+63.85.36.35
+63.85.36.50
+64.4.6.100
+64.4.54.22
+64.4.54.32
+64.4.54.254
+65.52.100.7
+65.52.100.9
+65.52.100.11
+65.52.100.91
+65.52.100.92
+65.52.100.93
+65.52.100.94
+65.55.29.238
+65.55.39.10
+65.55.44.108
+65.55.163.222
+65.55.252.43
+65.55.252.63
+65.55.252.71
+65.55.252.92
+65.55.252.93
+66.119.144.157
+93.184.215.200
+104.76.146.123
+111.221.29.177
+131.107.113.238
+131.253.40.37
+134.170.52.151
+134.170.58.190
+134.170.115.60
+134.170.115.62
+134.170.188.248
+157.55.129.21
+157.55.133.204
+157.56.91.77
+168.62.187.13
+191.234.72.183
+191.234.72.186
+191.234.72.188
+191.234.72.190
+204.79.197.200
+207.46.223.94
+207.68.166.254
+```
+
+and last but not least the list save as privacy-filter.list in your path
+
+```
+googleadservices.com
+www.google-analytics.com
+google-analytics.com
+ssl.google-analytics.com
+secure.adnxs.com
+secure.flashtalking.com
+services.wes.df.telemetry.microsoft.com
+settings-sandbox.data.microsoft.com
+settings-win.data.microsoft.com
+sls.update.microsoft.com.akadns.net
+sqm.df.telemetry.microsoft.com
+sqm.telemetry.microsoft.com
+sqm.telemetry.microsoft.com.nsatc.net
+static.2mdn.net
+statsfe1.ws.microsoft.com
+statsfe2.update.microsoft.com.akadns.net
+statsfe2.ws.microsoft.com
+survey.watson.microsoft.com
+telecommand.telemetry.microsoft.com
+telecommand.telemetry.microsoft.com.nsatc.net
+telemetry.appex.bing.net
+telemetry.microsoft.com
+telemetry.urs.microsoft.com
+view.atdmt.com
+vortex.data.microsoft.com
+vortex-bn2.metron.live.com.nsatc.net
+vortex-cy2.metron.live.com.nsatc.net
+vortex-sandbox.data.microsoft.com
+vortex-win.data.microsoft.com
+watson.live.com
+watson.microsoft.com
+watson.ppe.telemetry.microsoft.com
+watson.telemetry.microsoft.com
+watson.telemetry.microsoft.com.nsatc.net
+wes.df.telemetry.microsoft.com
+www.msftncsi.com
+nametests.com
+oyag.lhzbdvm.com
+oyag.prugskh.net
+oyag.prugskh.com
+```
+for support please use this thread: https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/
