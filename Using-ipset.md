@@ -9,6 +9,8 @@ This is an example of using [ipset utility](http://manpages.ubuntu.com/manpages/
 
 Please, enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI, place this content to `/jffs/scripts/firewall-start`
 
+**NOTE MOST SCRIPTS ON THIS PAGE ONLY SUPPORTS IPSET 4.5**
+
 ```
 #!/bin/sh
 
@@ -252,6 +254,8 @@ May 29 09:04:04 admin: exiting Peerguarding rules
 ```
 ## Malware Filter
 
+Supports both IPSET 4 and 6
+
 Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks ips. 
 
 its recommended not to store this script in firewall-start rather add the script to /opt/bin/malware-block 
@@ -363,6 +367,8 @@ https://lists.blocklist.de/lists/bots.txt
 ```
 
 ## Privacy Filter
+
+Supports both IPSET 4 and 6
 
 So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/) and some additional Google Servers and some Chinese data collection centers for [Android rootkits](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/)
 
