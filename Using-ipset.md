@@ -5,11 +5,11 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * to dynamically update iptables rules against IP addresses or ports without performance penalty;
 * to express complex IP address and ports based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
+> **NOTE:** _Most scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
+
 This is an example of using [ipset utility](http://manpages.ubuntu.com/manpages/lucid/man8/ipset.8.html) with two different set types: iphash and nethash. The example shows how to block incoming connection form [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
 
 Please, enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI, place this content to `/jffs/scripts/firewall-start`
-
-> **NOTE:** _Most scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
 
 ```
 #!/bin/sh
