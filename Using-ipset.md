@@ -9,7 +9,7 @@ This is an example of using [ipset utility](http://manpages.ubuntu.com/manpages/
 
 Please, enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI, place this content to `/jffs/scripts/firewall-start`
 
-**NOTE:** _Most scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
+> **NOTE:** _Most scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
 ```
 #!/bin/sh
 
