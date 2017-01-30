@@ -262,7 +262,8 @@ May 29 09:03:22 admin: Load the latest rule(s)
 May 29 09:04:04 admin: exiting Peerguarding rules
 ```
 ## Malware Filter
-Supports both IPSET 4 and 6
+* Support Thread: https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/
+* Supports both IPSET 4 and 6
 
 Grabs list of active ip addresses from abuse.ch and malwaredomainlist and blocks ips. 
 
