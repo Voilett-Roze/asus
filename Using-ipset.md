@@ -384,7 +384,6 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 ```
 #!/bin/sh
 # Author: Toast
-# Original script by swetoast
 # Contributers: Tomsk
 # Revision 4
 
