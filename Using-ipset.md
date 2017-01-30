@@ -376,7 +376,8 @@ https://lists.blocklist.de/lists/bots.txt
 ```
 
 ## Privacy Filter
-Supports both IPSET 4 and 6
+* Support thread: https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/
+* Supports both IPSET 4 and 6
 
 So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/) and some additional Google Servers and some Chinese data collection centers for [Android rootkits](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/)
 
@@ -559,4 +560,3 @@ oyag.lhzbdvm.com
 oyag.prugskh.net
 oyag.prugskh.com
 ```
-for support please use this thread: https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/
