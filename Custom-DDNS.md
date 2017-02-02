@@ -584,3 +584,24 @@ update_dynamic_dns
 ### AWS Route53
 
 [Gist link](https://gist.github.com/venator85/0b677e535dd35e2cd02c54ed445221ed)
+
+### Dynu
+```
+#!/bin/sh
+#
+# https://www.dynu.com/en-US/DynamicDNS/IP-Update-Protocol
+
+HOSTNAME=YOUR-HOSTNAME.dynu.com
+PASSWORD=YOUR-SUPERSECRET-PASSWORD
+IP=${1}
+
+URL="https://api.dynu.com/nic/update?hostname=${HOSTNAME}&myip=${IP}&password=${PASSWORD}"
+
+ANSWER=$(wget -q -O - "$URL")
+
+if [ "$ANSWER" == "good" ] || [ "$ANSWER" == "nochg" ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+```
