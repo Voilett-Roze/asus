@@ -123,6 +123,7 @@ https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts
     inotify=yes
     notify_interval=600
     album_art_names=Cover.jpg/cover.jpg/Thumb.jpg/thumb.jpg
+    uuid=aaaaaaaa-bbbb-cccc-dddd-ffffffffffff
     #root_container=B
     
 Note:  for all the new files created here, be sure to follow the script creation guidelines near the bottom of   
