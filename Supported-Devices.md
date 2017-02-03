@@ -6,8 +6,9 @@ The following devices are fully supported:
 * RT-AC56U
 * RT-AC66U
 * RT-AC66U_B1 (use the RT-AC68U firmware)
-* RT-AC68U (including revision C1)
+* RT-AC68U (including revision C1 and E1)
 * RT-AC68P (use the RT-AC68U firmware)
+* RT-AC68UF (use the RT-AC68U firmware)
 * RT-AC87U
 * RT-AC88U
 * RT-AC1750 (use the RT-AC68U firmware)
