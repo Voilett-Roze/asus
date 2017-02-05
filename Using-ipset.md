@@ -281,9 +281,9 @@ save it this will make malware-block run every 12th hour and update the router.
 ```
 #!/bin/sh
 # Author: Toast
-# Contributers: Octopus, Tomsk, Neurophile, jimf
+# Contributers: Octopus, Tomsk, Neurophile, jimf, spalife
 # Testers: shooter40sw
-# Revision 9
+# Revision 10
 
 path=/opt/var/cache/malware-filter                      # Set your path here
 retries=3                                               # Set number of tries here
@@ -314,7 +314,7 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
     SYNTAX='-q -A'
     SWAPPED='-W'
     DESTROYED='--destroy'
-    OPTIONAL=''  
+    OPTIONAL=''
 
     ipsetv=4
      lsmod | grep "ipt_set" > /dev/null 2>&1 || \
@@ -341,11 +341,15 @@ ipset -L malware-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
     nice -n 2 ipset -N malware-filter $HASH $OPTIONAL
-    for i in `cat $path/malware-filter.txt`; do nice -n 2 ipset $SYNTAX malware-filter $i ; done
+    if [ -f /opt/bin/xargs ]; then
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.txt nice -n 2 ipset $SYNTAX malware-filter PARAM
+    else for i in `cat $path/malware-filter.txt`; do nice -n 2 ipset $SYNTAX malware-filter $i ; done; fi
 fi
 else
     nice -n 2 ipset -N malware-update $HASH $OPTIONAL
-    for i in `cat $path/malware-filter.txt`; do nice ipset $SYNTAX malware-update $i ; done
+    if [ -f /opt/bin/xargs ]; then
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.txt nice -n 2 ipset $SYNTAX malware-update PARAM
+    else for i in `cat $path/malware-filter.txt`; do nice -n 2 ipset $SYNTAX malware-update $i ; done; fi
     nice -n 2 ipset $SWAPPED malware-update malware-filter
     nice -n 2 ipset $DESTROYED malware-update
 fi
