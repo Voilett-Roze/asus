@@ -469,7 +469,7 @@ exit $?
 run_ipset
 exit $?
 ```
-save this list as privacy-filter.list in your path on the router
+save this list as privacy-filter.list in your path on the router the script will resolve dns to ip and block the ip with a ipset.
 
 ```
 googleadservices.com
@@ -529,5 +529,9 @@ pacific.census.shodan.io
 rim.census.shodan.io
 pirate.census.shodan.io
 ninja.census.shodan.io
+border.census.shodan.io
+burger.census.shodan.io
+atlantic.dns.shodan.io
+hello.data.shodan.io
 ```
 
