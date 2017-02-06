@@ -386,23 +386,22 @@ https://lists.blocklist.de/lists/bots.txt
 So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/) and some additional Google Servers and some Chinese data collection centers for [Android rootkits](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/)
 
 ```
+Code:
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 4
+# Revision 5
 
 path=/opt/var/cache/privacy-filter                      # Set your path here
-dnsmasq_cfg=/jffs/configs/dnsmasq.conf.add
-dnsmasq_real=/tmp/etc/dnsmasq.conf
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
-if  grep -Fxq "#privacy-filter" $dnsmasq_real
-    then    logger -s -t privacy-filter is present in $dnsmasq_real
-    else    echo "#privacy-filter" >> $dnsmasq_cfg
-            for i in `cat $path/privacy-filter.list`
-            do echo "server=/$i/127.0.0.1#1919" >> $dnsmasq_cfg; done
-            service restart_dnsmasq
-            logger -s -t privacy-filter was added to $dnsmasq_cfg; fi
+if [ -z "$(which opkg)" ]; then logger -s -t shoblock "no package manager found"; exit 0; else
+if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi fi
+
+        if [ -f $path/privacy_block.list ]; then rm $path/privacy_block.list; fi
+        for i in `cat $path/privacy-filter.list`; do hostip $i >>$path/privacy_block.pre; done
+        sort -u $path/privacy_block.pre > $path/privacy_block.list
+        if [ -f $path/privacy_block.pre ]; then rm $path/privacy_block.pre; fi
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) # Value for ARM Routers
@@ -412,7 +411,6 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
     SYNTAX='add'
     SWAPPED='swap'
     DESTROYED='destroy'
-    OPTIONAL='family inet hashsize 2048 maxelem 65536'
 
      ipsetv=6
      lsmod | grep "xt_set" > /dev/null 2>&1 || \
@@ -429,7 +427,6 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
     SYNTAX='-q -A'
     SWAPPED='-W'
     DESTROYED='--destroy'
-    OPTIONAL=''
 
      ipsetv=4
      lsmod | grep "ipt_set" > /dev/null 2>&1 || \
@@ -446,12 +443,12 @@ run_ipset () {
 ipset -L privacy-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap privacy-filter privacy-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    nice ipset -N privacy-filter $HASH $OPTIONAL
-    for i in `cat $path/privacy-filter.txt`; do nice -n 2 ipset $SYNTAX privacy-filter $i ; done
+    nice ipset -N privacy-filter $HASH
+    for i in `cat $path/privacy_block.list`; do nice -n 2 ipset $SYNTAX privacy-filter $i ; done
 fi
 else
-    nice -n 2 ipset -N privacy-update $HASH $OPTIONAL
-    for i in `cat $path/privacy-filter.txt`; do nice -n 2 ipset $SYNTAX privacy-update $i ; done
+    nice -n 2 ipset -N privacy-update $HASH
+    for i in `cat $path/privacy_block.list`; do nice -n 2 ipset $SYNTAX privacy-update $i ; done
     nice -n 2 ipset $SWAPPED privacy-update privacy-filter
     nice -n 2 ipset $DESTROYED privacy-update
 fi
@@ -467,59 +464,12 @@ fi
 
 run_ipset
 exit $?
-```
+}
 
-and here is the iplist of the telemertry server taken of the original script save as privacy-filter.txt in your path
-
+run_ipset
+exit $?
 ```
-23.99.10.11
-63.85.36.35
-63.85.36.50
-64.4.6.100
-64.4.54.22
-64.4.54.32
-64.4.54.254
-65.52.100.7
-65.52.100.9
-65.52.100.11
-65.52.100.91
-65.52.100.92
-65.52.100.93
-65.52.100.94
-65.55.29.238
-65.55.39.10
-65.55.44.108
-65.55.163.222
-65.55.252.43
-65.55.252.63
-65.55.252.71
-65.55.252.92
-65.55.252.93
-66.119.144.157
-93.184.215.200
-104.76.146.123
-111.221.29.177
-131.107.113.238
-131.253.40.37
-134.170.52.151
-134.170.58.190
-134.170.115.60
-134.170.115.62
-134.170.188.248
-157.55.129.21
-157.55.133.204
-157.56.91.77
-168.62.187.13
-191.234.72.183
-191.234.72.186
-191.234.72.188
-191.234.72.190
-204.79.197.200
-207.46.223.94
-207.68.166.254
-```
-
-and last but not least the list save as privacy-filter.list in your path
+save this list as privacy-filter.list in your path on the router
 
 ```
 googleadservices.com
@@ -562,103 +512,22 @@ nametests.com
 oyag.lhzbdvm.com
 oyag.prugskh.net
 oyag.prugskh.com
+census1.shodan.io
+census2.shodan.io
+census3.shodan.io
+census4.shodan.io
+census5.shodan.io
+census6.shodan.io
+census7.shodan.io
+census8.shodan.io
+census9.shodan.io
+census10.shodan.io
+census11.shodan.io
+census12.shodan.io
+atlantic.census.shodan.io
+pacific.census.shodan.io
+rim.census.shodan.io
+pirate.census.shodan.io
+ninja.census.shodan.io
 ```
-## Shoblock
-* Supports both IPSET 4 and 6
-* Requirement Entware package: hostip
 
-Blocks known ip addresses from shodan.io scanners this script populates with dns if they are not added initially and more can be added by adding to /opt/var/cache/shoblock/shodandns.list
-
-its recommended not to store this script in firewall-start rather add the script to /opt/bin/shoblock 
-
-then type this
-
-> nano /jffs/scripts/services-start 
-
-and append
-
-> cru a shoblock "0 */12 * * * /opt/bin/shoblock"
-
-save it this will make shoblock run every 12th hour and update the router.
-
-```
-#!/bin/sh
-# Author: Toast
-# Revision 1
-path=/opt/var/cache/shoblock
-url=https://gitlab.com/swe_toast/shodan-block/raw/master/shoblock.list
-if [ -z "$(which opkg)" ]; then logger -s -t shoblock "no package manager found"; exit 0; else
-if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi fi
-get_list () {
-if [ -f $path/block.list ]; then rm $path/block.list; fi
-mkdir -p $path
-if [ -f $path/shoblock.list ]; then
-        for i in `cat $path/shoblock.list`; do hostip $i >>$path/block.pre; done
-        sort -u $path/block.pre > $path/block.list
-        if [ -f $path/block.pre ]; then rm $path/block.pre; fi;
-        else wget -q --show-progress $url -O $path/shoblock.list
-        for i in `cat $path/shoblock.list`; do hostip $i >>$path/block.pre; done
-        sort -u $path/block.pre > $path/block.list
-        if [ -f $path/block.pre ]; then rm $path/block.pre; fi;
-        fi
-}
-case $(ipset -v | grep -oE "ipset v[0-9]") in
-*v6) # Value for ARM Routers
-    MATCH_SET='--match-set'
-    HASH='hash:ip'
-    SYNTAX='add'
-    SWAPPED='swap'
-    DESTROYED='destroy'
-     ipsetv=6
-     lsmod | grep "xt_set" > /dev/null 2>&1 || \
-     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
-     do
-          insmod $module
-     done
-;;
-*v4) # Value for Mips Routers
-    MATCH_SET='--set'
-    HASH='iphash'
-    SYNTAX='-q -A'
-    SWAPPED='-W'
-    DESTROYED='--destroy'
-    OPTIONAL=''
-    ipsetv=4
-     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
-     do
-          insmod $module
-     done
-;;
-esac
-run_ipset () {
-get_list
-echo "adding ipset rule to firewall this will take time."
-ipset -L shoblock-primary >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-    if [ "$(ipset --swap shoblock-primary shoblock-primary 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    nice -n 2 ipset -N shoblock-primary $HASH
-        if [ -f /opt/bin/xargs ]; then
-        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shoblock-primary PARAM
-        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shoblock-primary $i ; done; fi
-fi
-else
-    nice -n 2 ipset -N shoblock-update $HASH
-        if [ -f /opt/bin/xargs ]; then
-        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shoblock-update PARAM
-        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shoblock-update $i ; done; fi
-        nice -n 2 ipset $SWAPPED shoblock-update shoblock-primary
-    nice -n 2 ipset $DESTROYED shoblock-update
-fi
-iptables -L | grep shoblock-primary > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shoblock-primary src,dst -j REJECT
-else
-    nice -n 2 iptables -D FORWARD -m set $MATCH_SET shoblock-primary src,dst -j REJECT
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shoblock-primary src,dst -j REJECT
-fi
-}
-run_ipset
-logger -s -t system "Shodan.io Scanner Filter Loaded $(cat $path/shoblock.list | wc -l) unique ip addresses to the blocklist."
-exit $?
-```
