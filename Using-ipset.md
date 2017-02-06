@@ -569,6 +569,18 @@ oyag.prugskh.com
 
 Blocks known ip addresses from shodan.io scanners this script populates with dns if they are not added initially and more can be added by adding to /opt/var/cache/shoblock/shodandns.list
 
+its recommended not to store this script in firewall-start rather add the script to /opt/bin/shoblock 
+
+then type this
+
+> nano /jffs/scripts/services-start 
+
+and append
+
+> cru a shoblock "0 */12 * * * /opt/bin/shoblock"
+
+save it this will make shoblock run every 12th hour and update the router.
+
 ```
 #!/bin/sh
 # Author: Toast
