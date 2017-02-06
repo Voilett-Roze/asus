@@ -586,19 +586,22 @@ save it this will make shoblock run every 12th hour and update the router.
 # Author: Toast
 # Revision 1
 path=/opt/var/cache/shoblock
-url=https://gitlab.com/swe_toast/shodan-block/raw/master/shodandns.list
+url=https://gitlab.com/swe_toast/shodan-block/raw/master/shoblock.list
+if [ -z "$(which opkg)" ]; then logger -s -t shoblock "no package manager found"; exit 0; else
+if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi fi
 get_list () {
-if [ -z "$(which opkg)" ]; then logger -s -t ublockr "no package manager found"; exit 0; else
-	if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi
-	if [ -f $path/block.list ]; then rm $path/block.list; fi
-	if [ -z $path/shodandns.list]; then
-        mkdir -p $path
-        wget -q --tries=$retries --show-progress $url -O $path/shodandns.list
-    fi
-	for i in `cat $path/shodandns.list`; do hostip $i >>$path/block.pre; done
-	sort -u $path/block.pre > $path/block.list
-	if [ -f $path/block.pre ]; then rm $path/block.pre; fi
-fi }
+if [ -f $path/block.list ]; then rm $path/block.list; fi
+mkdir -p $path
+if [ -f $path/shoblock.list ]; then
+        for i in `cat $path/shoblock.list`; do hostip $i >>$path/block.pre; done
+        sort -u $path/block.pre > $path/block.list
+        if [ -f $path/block.pre ]; then rm $path/block.pre; fi;
+        else wget -q --show-progress $url -O $path/shoblock.list
+        for i in `cat $path/shoblock.list`; do hostip $i >>$path/block.pre; done
+        sort -u $path/block.pre > $path/block.list
+        if [ -f $path/block.pre ]; then rm $path/block.pre; fi;
+        fi
+}
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) # Value for ARM Routers
     MATCH_SET='--match-set'
@@ -631,31 +634,31 @@ esac
 run_ipset () {
 get_list
 echo "adding ipset rule to firewall this will take time."
-ipset -L shodan-block >/dev/null 2>&1
+ipset -L shoblock-primary >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-    if [ "$(ipset --swap shodan-block shodan-block 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    nice -n 2 ipset -N shodan-block $HASH
+    if [ "$(ipset --swap shoblock-primary shoblock-primary 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+    nice -n 2 ipset -N shoblock-primary $HASH
         if [ -f /opt/bin/xargs ]; then
-        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shodan-block PARAM
-        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shodan-block $i ; done; fi
+        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shoblock-primary PARAM
+        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shoblock-primary $i ; done; fi
 fi
 else
-    nice -n 2 ipset -N shodan-update $HASH
-	if [ -f /opt/bin/xargs ]; then
-        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shodan-update PARAM
-        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shodan-update $i ; done; fi
-        nice -n 2 ipset $SWAPPED shodan-update shodan-block
-    nice -n 2 ipset $DESTROYED shodan-update
+    nice -n 2 ipset -N shoblock-update $HASH
+        if [ -f /opt/bin/xargs ]; then
+        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shoblock-update PARAM
+        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shoblock-update $i ; done; fi
+        nice -n 2 ipset $SWAPPED shoblock-update shoblock-primary
+    nice -n 2 ipset $DESTROYED shoblock-update
 fi
-iptables -L | grep shodan-block > /dev/null 2>&1
+iptables -L | grep shoblock-primary > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shodan-block src,dst -j REJECT
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shoblock-primary src,dst -j REJECT
 else
-    nice -n 2 iptables -D FORWARD -m set $MATCH_SET shodan-block src,dst -j REJECT
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shodan-block src,dst -j REJECT
+    nice -n 2 iptables -D FORWARD -m set $MATCH_SET shoblock-primary src,dst -j REJECT
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shoblock-primary src,dst -j REJECT
 fi
 }
 run_ipset
-logger -s -t system "Shodan Scanner Filter loaded $(cat $path/shodandns.list | wc -l) unique ip addresses to the blocklist."
+logger -s -t system "Shodan.io Scanner Filter Loaded $(cat $path/shoblock.list | wc -l) unique ip addresses to the blocklist."
 exit $?
 ```
