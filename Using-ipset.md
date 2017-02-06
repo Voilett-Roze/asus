@@ -395,7 +395,7 @@ Code:
 path=/opt/var/cache/privacy-filter                      # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
-if [ -z "$(which opkg)" ]; then logger -s -t shoblock "no package manager found"; exit 0; else
+if [ -z "$(which opkg)" ]; then logger -s -t system "no package manager found"; exit 0; else
 if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi fi
 
         if [ -f $path/privacy_block.list ]; then rm $path/privacy_block.list; fi
