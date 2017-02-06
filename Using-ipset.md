@@ -563,3 +563,87 @@ oyag.lhzbdvm.com
 oyag.prugskh.net
 oyag.prugskh.com
 ```
+## Shoblock
+* Supports both IPSET 4 and 6
+* Requirement Entware package: hostip
+
+Blocks known ip addresses from shodan.io scanners this script populates with dns if they are not added initially and more can be added by adding to /opt/var/cache/shoblock/shodandns.list
+
+```
+#!/bin/sh
+# Author: Toast
+# Revision 1
+path=/opt/var/cache/shoblock
+url=https://gitlab.com/swe_toast/shodan-block/raw/master/shodandns.list
+get_list () {
+if [ -z "$(which opkg)" ]; then logger -s -t ublockr "no package manager found"; exit 0; else
+	if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi
+	if [ -f $path/block.list ]; then rm $path/block.list; fi
+	if [ -z $path/shodandns.list]; then
+        mkdir -p $path
+        wget -q --tries=$retries --show-progress $url -O $path/shodandns.list
+    fi
+	for i in `cat $path/shodandns.list`; do hostip $i >>$path/block.pre; done
+	sort -u $path/block.pre > $path/block.list
+	if [ -f $path/block.pre ]; then rm $path/block.pre; fi
+fi }
+case $(ipset -v | grep -oE "ipset v[0-9]") in
+*v6) # Value for ARM Routers
+    MATCH_SET='--match-set'
+    HASH='hash:ip'
+    SYNTAX='add'
+    SWAPPED='swap'
+    DESTROYED='destroy'
+     ipsetv=6
+     lsmod | grep "xt_set" > /dev/null 2>&1 || \
+     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
+     do
+          insmod $module
+     done
+;;
+*v4) # Value for Mips Routers
+    MATCH_SET='--set'
+    HASH='iphash'
+    SYNTAX='-q -A'
+    SWAPPED='-W'
+    DESTROYED='--destroy'
+    OPTIONAL=''
+    ipsetv=4
+     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
+     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
+     do
+          insmod $module
+     done
+;;
+esac
+run_ipset () {
+get_list
+echo "adding ipset rule to firewall this will take time."
+ipset -L shodan-block >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+    if [ "$(ipset --swap shodan-block shodan-block 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+    nice -n 2 ipset -N shodan-block $HASH
+        if [ -f /opt/bin/xargs ]; then
+        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shodan-block PARAM
+        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shodan-block $i ; done; fi
+fi
+else
+    nice -n 2 ipset -N shodan-update $HASH
+	if [ -f /opt/bin/xargs ]; then
+        /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/block.list nice -n 2 ipset $SYNTAX shodan-update PARAM
+        else for i in `cat $path/block.list`; do nice -n 2 ipset $SYNTAX shodan-update $i ; done; fi
+        nice -n 2 ipset $SWAPPED shodan-update shodan-block
+    nice -n 2 ipset $DESTROYED shodan-update
+fi
+iptables -L | grep shodan-block > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shodan-block src,dst -j REJECT
+else
+    nice -n 2 iptables -D FORWARD -m set $MATCH_SET shodan-block src,dst -j REJECT
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET shodan-block src,dst -j REJECT
+fi
+}
+run_ipset
+logger -s -t system "Shodan Scanner Filter loaded $(cat $path/shodandns.list | wc -l) unique ip addresses to the blocklist."
+exit $?
+```
