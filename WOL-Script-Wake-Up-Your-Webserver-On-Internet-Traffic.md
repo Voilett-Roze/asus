@@ -4,6 +4,10 @@ The script doesn't mind which port was used and will respond to any request so i
 I rewrote the script a little to fit my own needs
 On the bottom of this page you will find another script, that script is intended for people that only want to wake a server on one port.
 
+```
+Changelog:
+06/02/2017 Changed ether-wake path from /usr/bin/ether-wake to /usr/sbin/ether-wake [Change in 380.65]
+```
 
 Guide For Wake On Lan Script :
 
@@ -48,7 +52,7 @@ OLD=""
 TARGET=IP OF THE TARGET YOU WANT TO WAKE
 IFACE=br0
 MAC=MAC ADRESS OF THE TARGET YOU WANT TO WAKE
-WOL=/usr/bin/ether-wake
+WOL=/usr/sbin/ether-wake
 LOGFILE="/var/log/ether-wake.log"
 
 while sleep $INTERVAL;do
@@ -125,7 +129,7 @@ TARGET=PUT YOUR INTERNAL IP ADRESS HERE!
 PORT=SPECIFY YOUR PORT HERE!
 IFACE=br0
 MAC=PUT YOUR MAC ADRESS HERE!
-WOL=/usr/bin/ether-wake
+WOL=/usr/sbin/ether-wake
 LOGFILE="/var/log/ether-wake.log"
 
 while sleep $INTERVAL;do
