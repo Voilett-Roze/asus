@@ -283,7 +283,7 @@ save it this will make malware-block run every 12th hour and update the router.
 # Author: Toast
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife
 # Testers: shooter40sw
-# Revision 11
+# Revision 13
 
 path=/opt/var/cache/malware-filter                      # Set your path here
 retries=3                                               # Set number of tries here
@@ -327,8 +327,11 @@ esac
 
 get_list () {
         mkdir -p $path
-        wget -q --tries=$retries --show-progress -i $path/malware-filter.list -O $path/malware-list.pre
-        cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.txt
+        wget -q --tries=$retries --show-progress -i $path/malware-filter.list -O $path/malware-list.tmp
+		awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' $path/malware-list.tmp > $path/malware-list.pre
+        cat $path/malware-list.pre | grep -oE "$regexp" | sort -u >$path/malware-filter.blocklist
+		if [ -f $path/malware-list.tmp ]; then rm $path/malware-list.tmp; fi
+		if [ -f $path/malware-list.pre ]; then rm $path/malware-list.pre; fi
  }
 
 run_ipset () {
@@ -342,14 +345,14 @@ if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
     nice -n 2 ipset -N malware-filter $HASH $OPTIONAL
     if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.txt nice -n 2 ipset $SYNTAX malware-filter PARAM
-    else cat $path/malware-filter.txt | xargs -I {} ipset $SYNTAX malware-filter {}; fi
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.blocklist nice -n 2 ipset $SYNTAX malware-filter PARAM
+    else cat $path/malware-filter.blocklist | xargs -I {} ipset $SYNTAX malware-filter {}; fi
 fi
 else
     nice -n 2 ipset -N malware-update $HASH $OPTIONAL
     if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.txt nice -n 2 ipset $SYNTAX malware-update PARAM
-    else cat $path/malware-filter.txt | xargs -I {} ipset $SYNTAX malware-update {}; fi
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.blocklist nice -n 2 ipset $SYNTAX malware-update PARAM
+    else cat $path/malware-filter.blocklist | xargs -I {} ipset $SYNTAX malware-update {}; fi
     nice -n 2 ipset $SWAPPED malware-update malware-filter
     nice -n 2 ipset $DESTROYED malware-update
 fi
@@ -365,7 +368,7 @@ fi
 
 run_ipset
 
-logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.txt | wc -l) unique ip addresses."
+logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.blocklist | wc -l) unique ip addresses."
 exit $?
 ```
 Save this list as malware-filter.list and set it in your relative path (see configuration part in script) you can also add more list by just appending to this list.
@@ -390,19 +393,21 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 6
+# Revision 7
 
 path=/opt/var/cache/privacy-filter                      # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
-if [ -z "$(which opkg)" ]; then logger -s -t system "no package manager found"; exit 0; else
-if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi fi
-
-        if [ -f $path/privacy_block.list ]; then rm $path/privacy_block.list; fi
-        if [ -z "$(which hostip)" ]; then echo "hostip missing"; else
-           for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy_block.pre; done fi
-            sort -u $path/privacy_block.pre > $path/privacy_block.list
-        if [ -f $path/privacy_block.pre ]; then rm $path/privacy_block.pre; fi
+if [ -f $path/privacy-filter.blocklist ]; then rm $path/privacy-filter.blocklist; fi
+    if [ -z "$(which hostip)" ]; then 
+	    for i in `cat $path/privacy-filter.list`; do traceroute $i | head -1 | grep -oE "$regexp" >> $path/privacy-filter.tmp; done
+		else for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy-filter.pre; done fi
+		if [ -f $path/privacy-filter.tmp ]; then 
+		awk '!/^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' $path/privacy-filter.tmp > $path/privacy-filter.pre; fi	
+		sort -u $path/privacy-filter.pre > $path/privacy-filter.blocklist
+		
+		if [ -f $path/privacy-filter.tmp ]; then rm $path/privacy-filter.tmp; fi
+        if [ -f $path/privacy-filter.pre ]; then rm $path/privacy-filter.pre; fi
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) # Value for ARM Routers
@@ -445,11 +450,11 @@ ipset -L privacy-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap privacy-filter privacy-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
     nice ipset -N privacy-filter $HASH
-    cat $path/privacy_block.list | xargs -I {} ipset $SYNTAX privacy-filter {}
+    cat $path/privacy-filter.blocklist| xargs -I {} ipset $SYNTAX privacy-filter {}
 fi
 else
     nice -n 2 ipset -N privacy-update $HASH
-    cat $path/privacy_block.list | xargs -I {} ipset $SYNTAX privacy-update {}
+    cat $path/privacy-filter.blocklist | xargs -I {} ipset $SYNTAX privacy-update {}
     nice -n 2 ipset $SWAPPED privacy-update privacy-filter
     nice -n 2 ipset $DESTROYED privacy-update
 fi
