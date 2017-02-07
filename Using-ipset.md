@@ -403,7 +403,7 @@ if [ -f $path/privacy-filter.blocklist ]; then rm $path/privacy-filter.blocklist
 	    for i in `cat $path/privacy-filter.list`; do traceroute $i | head -1 | grep -oE "$regexp" >> $path/privacy-filter.tmp; done
 		else for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy-filter.pre; done fi
 		if [ -f $path/privacy-filter.tmp ]; then 
-		awk '!/^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' $path/privacy-filter.tmp > $path/privacy-filter.pre; fi	
+		awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' $path/privacy-filter.tmp > $path/privacy-filter.pre; fi	
 		sort -u $path/privacy-filter.pre > $path/privacy-filter.blocklist
 		
 		if [ -f $path/privacy-filter.tmp ]; then rm $path/privacy-filter.tmp; fi
