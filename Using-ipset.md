@@ -385,7 +385,7 @@ https://lists.blocklist.de/lists/bots.txt
 ## Privacy Filter
 * Support thread: https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/
 * Supports both IPSET 4 and 6
-* Requirements: Entware (hostip) package
+* Optional: Entware (hostip) package
 
 So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/) and some Chinese data collection centers for [Android rootkits](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/) along with shodan.io scanners.
 
