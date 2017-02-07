@@ -65,7 +65,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 (/RMerl/asuswrt-merlin/wiki/Secure-DNS-queries-using-DNSCrypt)
 4. [Setting up an IPv6 tunnel through Hurricane Electric](/RMerl/asuswrt-merlin/wiki/IPv6-tunnelling)
 5. [How to dedicate SSID for VPN and SSID for regular ISP using OpenVPN](/RMerl/asuswrt-merlin/wiki/How-to-setup-SSID-for-VPN-and-SSID-for-Regular-ISP-using-OpenVPN.)
-6. [How to use ipset to block connections from Tor nodes or some countries](/RMerl/asuswrt-merlin/wiki/Using-ipset)
+6. [How to use ipset to block connections](/RMerl/asuswrt-merlin/wiki/Using-ipset)
 7. [Link Aggregation Setup](/RMerl/asuswrt-merlin/wiki/Link-Aggregation)
 8. [Access modem Web UI on WAN port (no script)](/RMerl/asuswrt-merlin/wiki/Access-modem-Web-UI-on-WAN-port-(no-script))
 9. [Enforce the use of Google Safesearch on your LAN](/RMerl/asuswrt-merlin/wiki/Enforce-Safesearch)
