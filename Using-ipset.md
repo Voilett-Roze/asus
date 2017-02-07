@@ -465,7 +465,6 @@ fi
 
 run_ipset
 exit $?
-}
 ```
 save this list as privacy-filter.list in your path on the router the script will resolve dns to ip and block the ip with a ipset.
 
