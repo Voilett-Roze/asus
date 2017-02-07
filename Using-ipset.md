@@ -387,11 +387,10 @@ https://lists.blocklist.de/lists/bots.txt
 So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/) and some additional Google Servers and some Chinese data collection centers for [Android rootkits](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/)
 
 ```
-Code:
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 5
+# Revision 6
 
 path=/opt/var/cache/privacy-filter                      # Set your path here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
@@ -400,8 +399,9 @@ if [ -z "$(which opkg)" ]; then logger -s -t system "no package manager found"; 
 if [ -z "$(opkg list-installed | grep hostip)" ]; then opkg install hostip; fi fi
 
         if [ -f $path/privacy_block.list ]; then rm $path/privacy_block.list; fi
-        for i in `cat $path/privacy-filter.list`; do hostip $i >>$path/privacy_block.pre; done
-        sort -u $path/privacy_block.pre > $path/privacy_block.list
+        if [ -z "$(which hostip)" ]; then echo "hostip missing"; else
+           for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy_block.pre; done fi
+            sort -u $path/privacy_block.pre > $path/privacy_block.list
         if [ -f $path/privacy_block.pre ]; then rm $path/privacy_block.pre; fi
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
@@ -445,11 +445,11 @@ ipset -L privacy-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap privacy-filter privacy-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
     nice ipset -N privacy-filter $HASH
-    for i in `cat $path/privacy_block.list`; do nice -n 2 ipset $SYNTAX privacy-filter $i ; done
+    cat $path/privacy_block.list | xargs -I {} ipset $SYNTAX privacy-filter {}
 fi
 else
     nice -n 2 ipset -N privacy-update $HASH
-    for i in `cat $path/privacy_block.list`; do nice -n 2 ipset $SYNTAX privacy-update $i ; done
+    cat $path/privacy_block.list | xargs -I {} ipset $SYNTAX privacy-update {}
     nice -n 2 ipset $SWAPPED privacy-update privacy-filter
     nice -n 2 ipset $DESTROYED privacy-update
 fi
@@ -466,9 +466,6 @@ fi
 run_ipset
 exit $?
 }
-
-run_ipset
-exit $?
 ```
 save this list as privacy-filter.list in your path on the router the script will resolve dns to ip and block the ip with a ipset.
 
