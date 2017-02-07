@@ -283,7 +283,7 @@ save it this will make malware-block run every 12th hour and update the router.
 # Author: Toast
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife
 # Testers: shooter40sw
-# Revision 10
+# Revision 11
 
 path=/opt/var/cache/malware-filter                      # Set your path here
 retries=3                                               # Set number of tries here
@@ -343,13 +343,13 @@ if [ $? -ne 0 ]; then
     nice -n 2 ipset -N malware-filter $HASH $OPTIONAL
     if [ -f /opt/bin/xargs ]; then
     /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.txt nice -n 2 ipset $SYNTAX malware-filter PARAM
-    else for i in `cat $path/malware-filter.txt`; do nice -n 2 ipset $SYNTAX malware-filter $i ; done; fi
+    else cat $path/malware-filter.txt | xargs -I {} ipset $SYNTAX malware-filter {}; fi
 fi
 else
     nice -n 2 ipset -N malware-update $HASH $OPTIONAL
     if [ -f /opt/bin/xargs ]; then
     /opt/bin/xargs -P10 -I "PARAM" -n1 -a $path/malware-filter.txt nice -n 2 ipset $SYNTAX malware-update PARAM
-    else for i in `cat $path/malware-filter.txt`; do nice -n 2 ipset $SYNTAX malware-update $i ; done; fi
+    else cat $path/malware-filter.txt | xargs -I {} ipset $SYNTAX malware-update {}; fi
     nice -n 2 ipset $SWAPPED malware-update malware-filter
     nice -n 2 ipset $DESTROYED malware-update
 fi
