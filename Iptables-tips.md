@@ -15,7 +15,7 @@ The same method can be used to allow forwarding SSH, FTP, etc...  Just adjust th
 
 ### Configure a port forward with brute force detection
 
-The following nat-start script will create a port forward that will only forward connections if there is no more than a set number of attempts within a period if time.  This example will forward SSH to an internal server sitting on 192.168.1.100, limiting connection attempts at 5 per period of 60 seconds:
+The following nat-start script will create a port forward that will only forward connections if there is no more than a set number of attempts within a period of time.  This example will forward SSH to an internal server sitting on 192.168.1.100, limiting connection attempts at 5 per period of 60 seconds:
 
 ```
 #!/bin/sh
