@@ -395,51 +395,53 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 # Contributers: Tomsk
 # Revision 7
 
-path=/opt/var/cache/privacy-filter                      # Set your path here
-regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
+path=/opt/var/cache/privacy-filter                                                                  # Set your path here
+regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`                                                     # Dont change this value
+local=`echo "!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/"` # Dont change this value
 
 if [ -f $path/privacy-filter.blocklist ]; then rm $path/privacy-filter.blocklist; fi
-    if [ -z "$(which hostip)" ]; then 
-	    for i in `cat $path/privacy-filter.list`; do traceroute $i | head -1 | grep -oE "$regexp" >> $path/privacy-filter.tmp; done
-		else for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy-filter.pre; done fi
-		if [ -f $path/privacy-filter.tmp ]; then 
-		awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' $path/privacy-filter.tmp > $path/privacy-filter.pre; fi	
-		sort -u $path/privacy-filter.pre > $path/privacy-filter.blocklist
-		
-		if [ -f $path/privacy-filter.tmp ]; then rm $path/privacy-filter.tmp; fi
-        if [ -f $path/privacy-filter.pre ]; then rm $path/privacy-filter.pre; fi
+   if [ -z "$(which hostip)" ]; then
+        for i in `cat $path/privacy-filter.list`; do traceroute $i | head -1 | grep -oE "$regexp" >> $path/privacy-filter.tmp; done
+        else for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy-filter.pre; done fi
+    
+	if [ -f $path/privacy-filter.tmp ]; then
+        awk $local $path/privacy-filter.tmp > $path/privacy-filter.pre; fi
+       
+	   sort -u $path/privacy-filter.pre > $path/privacy-filter.blocklist
+       if [ -f $path/privacy-filter.tmp ]; then rm $path/privacy-filter.tmp; fi
+       if [ -f $path/privacy-filter.pre ]; then rm $path/privacy-filter.pre; fi
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) # Value for ARM Routers
 
-    MATCH_SET='--match-set'
-    HASH='hash:ip'
-    SYNTAX='add'
-    SWAPPED='swap'
-    DESTROYED='destroy'
+   MATCH_SET='--match-set'
+   HASH='hash:ip'
+   SYNTAX='add'
+   SWAPPED='swap'
+   DESTROYED='destroy'
 
-     ipsetv=6
-     lsmod | grep "xt_set" > /dev/null 2>&1 || \
-     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
-     do
-          insmod $module
-     done
+    ipsetv=6
+    lsmod | grep "xt_set" > /dev/null 2>&1 || \
+    for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
+    do
+         insmod $module
+    done
 ;;
 
 *v4) # Value for Mips Routers
 
-    MATCH_SET='--set'
-    HASH='iphash'
-    SYNTAX='-q -A'
-    SWAPPED='-W'
-    DESTROYED='--destroy'
+   MATCH_SET='--set'
+   HASH='iphash'
+   SYNTAX='-q -A'
+   SWAPPED='-W'
+   DESTROYED='--destroy'
 
-     ipsetv=4
-     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
-     do
-          insmod $module
-     done
+    ipsetv=4
+    lsmod | grep "ipt_set" > /dev/null 2>&1 || \
+    for module in ip_set ip_set_nethash ip_set_iphash ipt_set
+    do
+         insmod $module
+    done
 ;;
 esac
 
@@ -448,23 +450,23 @@ run_ipset () {
 
 ipset -L privacy-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-    if [ "$(ipset --swap privacy-filter privacy-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    nice ipset -N privacy-filter $HASH
-    cat $path/privacy-filter.blocklist| xargs -I {} ipset $SYNTAX privacy-filter {}
+   if [ "$(ipset --swap privacy-filter privacy-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+   nice ipset -N privacy-filter $HASH
+   cat $path/privacy-filter.blocklist| xargs -I {} ipset $SYNTAX privacy-filter {}
 fi
 else
-    nice -n 2 ipset -N privacy-update $HASH
-    cat $path/privacy-filter.blocklist | xargs -I {} ipset $SYNTAX privacy-update {}
-    nice -n 2 ipset $SWAPPED privacy-update privacy-filter
-    nice -n 2 ipset $DESTROYED privacy-update
+   nice -n 2 ipset -N privacy-update $HASH
+   cat $path/privacy-filter.blocklist | xargs -I {} ipset $SYNTAX privacy-update {}
+   nice -n 2 ipset $SWAPPED privacy-update privacy-filter
+   nice -n 2 ipset $DESTROYED privacy-update
 fi
 
 iptables -L | grep privacy-filter > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
 else
-    nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
+   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
 fi
 }
 
