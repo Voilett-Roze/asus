@@ -393,49 +393,39 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 7
+# Revision 8
 
-path=/opt/var/cache/privacy-filter                                                                  # Set your path here
-regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`                                                     # Dont change this value
-local=`echo "!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/"` # Dont change this value
+path=/opt/var/cache/privacy-filter    # Set your path here
 
-if [ -f $path/privacy-filter.blocklist ]; then rm $path/privacy-filter.blocklist; fi
-   if [ -z "$(which hostip)" ]; then
-        for i in `cat $path/privacy-filter.list`; do traceroute $i | head -1 | grep -oE "$regexp" >> $path/privacy-filter.tmp; done
-        else for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy-filter.pre; done fi
-    
-	if [ -f $path/privacy-filter.tmp ]; then
-        awk $local $path/privacy-filter.tmp > $path/privacy-filter.pre; fi
-       
-	   sort -u $path/privacy-filter.pre > $path/privacy-filter.blocklist
-       if [ -f $path/privacy-filter.tmp ]; then rm $path/privacy-filter.tmp; fi
-       if [ -f $path/privacy-filter.pre ]; then rm $path/privacy-filter.pre; fi
+# Dont change this values
+regexp_v4=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
+local_v4=`echo "!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/"`
+regexp_v6=`echo "\b(?=([0-9a-f]+(:[0-9a-f])*)?(?P<wild>::)(?!([0-9a-f]+:)*:))(::)?([0-9a-f]{1,4}:{1,2}){0,6}(?(wild)[0-9a-f]{0,4}|[0-9a-f]{1,4}:[0-9a-f]{1,4})\b"`
+local_v6=`echo "!(^(fc00::)"`
+# Dont change this values
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) # Value for ARM Routers
-
    MATCH_SET='--match-set'
    HASH='hash:ip'
    SYNTAX='add'
    SWAPPED='swap'
    DESTROYED='destroy'
-
-    ipsetv=6
+   INET6='family inet6'
+   ipsetv=6
     lsmod | grep "xt_set" > /dev/null 2>&1 || \
     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
     do
          insmod $module
     done
 ;;
-
 *v4) # Value for Mips Routers
-
    MATCH_SET='--set'
    HASH='iphash'
    SYNTAX='-q -A'
    SWAPPED='-W'
    DESTROYED='--destroy'
-
+   IPV6=''
     ipsetv=4
     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
@@ -445,32 +435,85 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 ;;
 esac
 
+run_ipv4_block () {
+if [ -f $path/privacy-filter_ipv4.blocklist ]; then rm $path/privacy-filter_ipv4.blocklist; fi
+    if [ -z "$(which hostip)" ]; then
+        for i in `cat $path/privacy-filter.list`; do traceroute -4 $i | head -1 | grep -oE "$regexp_v4" >> $path/privacy-filter_ipv4.tmplist; done
+        else for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy-filter_ipv4.prelist; done fi
+    if [ -f $path/privacy-filter_ipv4.tmplist ]; then
+       awk $local_v4 $path/privacy-filter_ipv4.tmplist > $path/privacy-filter_ipv4.prelist; fi
+       if [ -f $path/privacy-filter_ipv4.prelist ]; then sort -u $path/privacy-filter_ipv4.prelist > $path/privacy-filter_ipv4.blocklist; fi
+       if [ -f $path/privacy-filter_ipv4.tmplist ]; then rm $path/privacy-filter_ipv4.tmplist; fi
+       if [ -f $path/privacy-filter_ipv4.prelist ]; then rm $path/privacy-filter_ipv4.prelist; fi }
+
+run_ipv6_block () {
+if [ -f $path/privacy-filter_ipv6.blocklist ]; then rm $path/privacy-filter_ipv6.blocklist; fi
+    if [ -z "$(which hostip)" ]; then
+        for i in `cat $path/privacy-filter.list`; do traceroute -6 $i | head -1 | grep -oE "$regexp_v6" >> $path/privacy-filter_ipv6.tmplist; done
+        else for i in `cat $path/privacy-filter.list`; do hostip -6 $i >> $path/privacy-filter_ipv6.prelist; done fi
+    if [ -f $path/privacy-filter_ipv6.tmplist ]; then
+       awk $local_v6 $path/privacy-filter_ipv6.tmplist > $path/privacy-filter_ipv6.prelist; fi
+       if [ -f $path/privacy-filter_ipv6.prelist ]; then sort -u $path/privacy-filter_ipv6.prelist > $path/privacy-filter_ipv6.blocklist; fi
+       if [ -f $path/privacy-filter_ipv6.tmplist ]; then rm $path/privacy-filter_ipv6.tmplist; fi
+       if [ -f $path/privacy-filter_ipv6.prelist ]; then rm $path/privacy-filter_ipv6.prelist; fi }
+
+run_ipset_4 () {
+ipset -L privacy-filter_ipv4 >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+   if [ "$(ipset --swap privacy-filter_ipv4 privacy-filter_ipv4 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+   nice ipset -N privacy-filter_ipv4 $HASH
+   cat $path/privacy-filter_ipv4.blocklist | xargs -I {} ipset $SYNTAX privacy-filter_ipv4 {}
+fi
+else
+   nice -n 2 ipset -N privacy-update_ipv4 $HASH
+   cat $path/privacy-filter_ipv4.blocklist | xargs -I {} ipset $SYNTAX privacy-update_ipv4 {}
+   nice -n 2 ipset $SWAPPED privacy-update_ipv4 privacy-filter_ipv4
+   nice -n 2 ipset $DESTROYED privacy-update_ipv4
+fi
+iptables -L | grep privacy-filter_ipv4 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
+else
+   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
+fi }
+
+run_ipset_6 () {
+ipset -L privacy-filter_ipv6 >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+   if [ "$(ipset --swap privacy-filter_ipv6 privacy-filter_ipv6 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+   nice ipset -N privacy-filter_ipv6 $HASH $INET6
+   cat $path/privacy-filter_ipv6.blocklist | xargs -I {} ipset $SYNTAX privacy-filter_ipv6 {}
+fi
+else
+   nice -n 2 ipset -N privacy-update_ipv6 $HASH $INET6
+   cat $path/privacy-filter_ipv6.blocklist | xargs -I {} ipset $SYNTAX privacy-update_ipv6 {}
+   nice -n 2 ipset $SWAPPED privacy-update_ipv6 privacy-filter_ipv6
+   nice -n 2 ipset $DESTROYED privacy-update_ipv6
+fi
+iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+else
+   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+fi }
+
+run_blocklists () {
+run_ipv4_block
+case $(ipset -v | grep -oE "ipset v[0-9]") in
+*v6) if [ "$(cat /proc/net/if_inet6 | wc -l)" -gt "0" ]; then run_ipv6_block; fi ;;
+esac }
 
 run_ipset () {
+run_ipset_4
+case $(ipset -v | grep -oE "ipset v[0-9]") in
+*v6) if [ "$(cat /proc/net/if_inet6 | wc -l)" -gt "0" ]; then run_ipset_6; fi  ;;
+esac }
 
-ipset -L privacy-filter >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-   if [ "$(ipset --swap privacy-filter privacy-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-   nice ipset -N privacy-filter $HASH
-   cat $path/privacy-filter.blocklist| xargs -I {} ipset $SYNTAX privacy-filter {}
-fi
-else
-   nice -n 2 ipset -N privacy-update $HASH
-   cat $path/privacy-filter.blocklist | xargs -I {} ipset $SYNTAX privacy-update {}
-   nice -n 2 ipset $SWAPPED privacy-update privacy-filter
-   nice -n 2 ipset $DESTROYED privacy-update
-fi
-
-iptables -L | grep privacy-filter > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
-else
-   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter src,dst -j REJECT
-fi
-}
-
+run_blocklists
 run_ipset
+
 exit $?
 ```
 save this list as privacy-filter.list in your path on the router the script will resolve dns to ip and block the ip with a ipset.
