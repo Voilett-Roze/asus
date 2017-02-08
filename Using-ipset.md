@@ -400,7 +400,7 @@ path=/opt/var/cache/privacy-filter    # Set your path here
 # Dont change this values
 regexp_v4=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
 local_v4=`echo "!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/"`
-regexp_v6=`echo "\b(?=([0-9a-f]+(:[0-9a-f])*)?(?P<wild>::)(?!([0-9a-f]+:)*:))(::)?([0-9a-f]{1,4}:{1,2}){0,6}(?(wild)[0-9a-f]{0,4}|[0-9a-f]{1,4}:[0-9a-f]{1,4})\b"`
+regexp_v6=`echo "^(([0-9a-f]){1,4}:)+(:)?(([0-9a-f]){1,4}:)+(:)?(([0-9a-f]){1,4})"`
 local_v6=`echo "!(^(fc00::)"`
 # Dont change this values
 
