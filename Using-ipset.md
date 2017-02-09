@@ -393,16 +393,16 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 8
+# Revision 9
 
-path=/opt/var/cache/privacy-filter    # Set your path here
+path=/opt/var/cache/privacy-filter	# Set your path here
 
-# Dont change this values
+# Dont change this value
 regexp_v4=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
 local_v4=`echo "!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/"`
 regexp_v6=`echo "^(([0-9a-f]){1,4}:)+(:)?(([0-9a-f]){1,4}:)+(:)?(([0-9a-f]){1,4})"`
 local_v6=`echo "!(^(fc00::)"`
-# Dont change this values
+# Dont change this value
 
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) # Value for ARM Routers
@@ -435,29 +435,47 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 ;;
 esac
 
+get_source () { 
+url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
+if [ ! -f $path/privacy-filter.list ]
+then wget $url -O $path/privacy-filter.list; fi }
+
+check_path () {
+if [ ! -d "$path" ]; then
+     path='/tmp'
+     echo "path is not found using $path using as failover"
+     check_failover
+else check_failover; fi }
+
+check_failover () {
+if [ ! -d "$path" ]; then
+    echo "failed to set failover path"
+    exit 1
+else get_source; fi }
+
 run_ipv4_block () {
 if [ -f $path/privacy-filter_ipv4.blocklist ]; then rm $path/privacy-filter_ipv4.blocklist; fi
-    if [ -z "$(which hostip)" ]; then
+	if [ -z "$(which hostip)" ]; then
         for i in `cat $path/privacy-filter.list`; do traceroute -4 $i | head -1 | grep -oE "$regexp_v4" >> $path/privacy-filter_ipv4.tmplist; done
         else for i in `cat $path/privacy-filter.list`; do hostip $i >> $path/privacy-filter_ipv4.prelist; done fi
-    if [ -f $path/privacy-filter_ipv4.tmplist ]; then
+	if [ -f $path/privacy-filter_ipv4.tmplist ]; then
        awk $local_v4 $path/privacy-filter_ipv4.tmplist > $path/privacy-filter_ipv4.prelist; fi
        if [ -f $path/privacy-filter_ipv4.prelist ]; then sort -u $path/privacy-filter_ipv4.prelist > $path/privacy-filter_ipv4.blocklist; fi
        if [ -f $path/privacy-filter_ipv4.tmplist ]; then rm $path/privacy-filter_ipv4.tmplist; fi
        if [ -f $path/privacy-filter_ipv4.prelist ]; then rm $path/privacy-filter_ipv4.prelist; fi }
 
-run_ipv6_block () {
+	   run_ipv6_block () {
 if [ -f $path/privacy-filter_ipv6.blocklist ]; then rm $path/privacy-filter_ipv6.blocklist; fi
-    if [ -z "$(which hostip)" ]; then
+	if [ -z "$(which hostip)" ]; then
         for i in `cat $path/privacy-filter.list`; do traceroute -6 $i | head -1 | grep -oE "$regexp_v6" >> $path/privacy-filter_ipv6.tmplist; done
         else for i in `cat $path/privacy-filter.list`; do hostip -6 $i >> $path/privacy-filter_ipv6.prelist; done fi
-    if [ -f $path/privacy-filter_ipv6.tmplist ]; then
+	if [ -f $path/privacy-filter_ipv6.tmplist ]; then
        awk $local_v6 $path/privacy-filter_ipv6.tmplist > $path/privacy-filter_ipv6.prelist; fi
        if [ -f $path/privacy-filter_ipv6.prelist ]; then sort -u $path/privacy-filter_ipv6.prelist > $path/privacy-filter_ipv6.blocklist; fi
        if [ -f $path/privacy-filter_ipv6.tmplist ]; then rm $path/privacy-filter_ipv6.tmplist; fi
        if [ -f $path/privacy-filter_ipv6.prelist ]; then rm $path/privacy-filter_ipv6.prelist; fi }
 
-run_ipset_4 () {
+	   run_ipset_4 () {
 ipset -L privacy-filter_ipv4 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
    if [ "$(ipset --swap privacy-filter_ipv4 privacy-filter_ipv4 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
@@ -491,6 +509,7 @@ else
    nice -n 2 ipset $SWAPPED privacy-update_ipv6 privacy-filter_ipv6
    nice -n 2 ipset $DESTROYED privacy-update_ipv6
 fi
+
 iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
    nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
@@ -511,6 +530,7 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) if [ "$(cat /proc/net/if_inet6 | wc -l)" -gt "0" ]; then run_ipset_6; fi  ;;
 esac }
 
+check_path
 run_blocklists
 run_ipset
 
