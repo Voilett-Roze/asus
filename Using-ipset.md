@@ -283,22 +283,18 @@ save it this will make malware-block run every 12th hour and update the router.
 # Author: Toast
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife
 # Testers: shooter40sw
-# Revision 13
-
+# Revision 14
 path=/opt/var/cache/malware-filter                      # Set your path here
 retries=3                                               # Set number of tries here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
-
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) # Value for ARM Routers
-
     MATCH_SET='--match-set'
     HASH='hash:ip'
     SYNTAX='add'
     SWAPPED='swap'
     DESTROYED='destroy'
     OPTIONAL='family inet hashsize 2048 maxelem 65536'
-
      ipsetv=6
      lsmod | grep "xt_set" > /dev/null 2>&1 || \
      for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
@@ -306,16 +302,13 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
           insmod $module
      done
 ;;
-
 *v4) # Value for Mips Routers
-
     MATCH_SET='--set'
     HASH='iphash'
     SYNTAX='-q -A'
     SWAPPED='-W'
     DESTROYED='--destroy'
     OPTIONAL=''
-
     ipsetv=4
      lsmod | grep "ipt_set" > /dev/null 2>&1 || \
      for module in ip_set ip_set_nethash ip_set_iphash ipt_set
@@ -324,8 +317,22 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
      done
 ;;
 esac
-
-get_list () {
+get_source () {
+url=https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter.list
+if [ ! -f $path/malware-filter.list ]
+then wget $url -O $path/malware-filter.list; fi }
+check_path () {
+if [ ! -d "$path" ]; then
+     path='/tmp'
+     echo "path is not found using $path using as failover"
+     check_failover
+else check_failover; fi }
+check_failover () {
+if [ ! -d "$path" ]; then
+     echo "failed to set failover path"
+     exit 1
+else get_source; fi }
+get_source () {
         mkdir -p $path
         wget -q --tries=$retries --show-progress -i $path/malware-filter.list -O $path/malware-list.tmp
 		awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' $path/malware-list.tmp > $path/malware-list.pre
@@ -333,13 +340,9 @@ get_list () {
 		if [ -f $path/malware-list.tmp ]; then rm $path/malware-list.tmp; fi
 		if [ -f $path/malware-list.pre ]; then rm $path/malware-list.pre; fi
  }
-
 run_ipset () {
-
-get_list
-
+check_path
 echo "adding ipset rule to firewall this will take time."
-
 ipset -L malware-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
@@ -356,7 +359,6 @@ else
     nice -n 2 ipset $SWAPPED malware-update malware-filter
     nice -n 2 ipset $DESTROYED malware-update
 fi
-
 iptables -L | grep malware-filter > /dev/null 2>&1
 if [ $? -ne 0 ]; then
     nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
@@ -365,9 +367,7 @@ else
     nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
 fi
 }
-
 run_ipset
-
 logger -s -t system "Malware Filter loaded $(cat $path/malware-filter.blocklist | wc -l) unique ip addresses."
 exit $?
 ```
