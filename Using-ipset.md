@@ -457,7 +457,7 @@ run_ipv4_block () {
 if [ -f $path/privacy-filter_ipv4.blocklist ]; then rm $path/privacy-filter_ipv4.blocklist; fi
     if [ -z "$(which hostip)" ]; then
         if [ -z "$(which /opt/bin/xargs)" ]
-            then cat $path/privacy-filter.list | /opt/bin/xargs -n 5 -I {} sh -c "traceroute -4 {} | head -1 >> "$path/privacy-filter_ipv4.tmplist1""
+            then cat $path/privacy-filter.list | xargs -n 5 -I {} sh -c "traceroute -4 {} | head -1 >> "$path/privacy-filter_ipv4.tmplist1""
             else cat $path/privacy-filter.list | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "traceroute -4 {} | head -1 >> "$path/privacy-filter_ipv4.tmplist1""; fi
                  cat $path/privacy-filter_ipv4.tmplist1 | grep -oE "$regexp_v4" >> $path/privacy-filter_ipv4.tmplist2
 else    if [ -z "$(which /opt/bin/xargs)" ]
