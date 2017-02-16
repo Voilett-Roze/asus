@@ -393,7 +393,7 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 10
+# Revision 11
 
 path=/opt/var/cache/privacy-filter    # Set your path here
 
@@ -434,19 +434,16 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
     done
 ;;
 esac
-
 get_source () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
 if [ ! -f $path/privacy-filter.list ]
 then wget $url -O $path/privacy-filter.list; fi }
-
 check_path () {
 if [ ! -d "$path" ]; then
      path='/tmp'
      echo "path is not found using $path using as failover"
      check_failover
 else check_failover; fi }
-
 check_failover () {
 if [ ! -d "$path" ]; then
      echo "failed to set failover path"
@@ -464,13 +461,12 @@ else    if [ -z "$(which /opt/bin/xargs)" ]
             then cat $path/privacy-filter.list | xargs -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv4.prelist""
             else cat $path/privacy-filter.list | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv4.prelist""; fi
         fi
-    
+        
     if [ -f $path/privacy-filter_ipv4.tmplist2 ]; then
         awk $local_v4 $path/privacy-filter_ipv4.tmplist2 > $path/privacy-filter_ipv4.prelist; fi
         if [ -f $path/privacy-filter_ipv4.prelist ]; then sort -u $path/privacy-filter_ipv4.prelist > $path/privacy-filter_ipv4.blocklist; fi
-        if [ -f $path/privacy-filter_ipv4.tmplist2 ]; then rm $path/privacy-filter_ipv4.tmplist*; fi
-        if [ -f $path/privacy-filter_ipv4.prelist ]; then rm $path/privacy-filter_ipv4.prelist; fi }
-    
+}
+        
 run_ipv6_block () {
 if [ -f $path/privacy-filter_ipv6.blocklist ]; then rm $path/privacy-filter_ipv6.blocklist; fi
     if [ -z "$(which hostip)" ]; then
@@ -482,13 +478,12 @@ else if [ -z "$(which /opt/bin/xargs)" ]
             then cat $path/privacy-filter.list | xargs -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv6.prelist""
             else cat $path/privacy-filter.list | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv6.prelist""; fi
         fi
-    
+        
     if [ -f $path/privacy-filter_ipv6.tmplist2 ]; then
         awk $local_v6 $path/privacy-filter_ipv6.tmplist2 > $path/privacy-filter_ipv6.prelist; fi
         if [ -f $path/privacy-filter_ipv6.prelist ]; then sort -u $path/privacy-filter_ipv6.prelist > $path/privacy-filter_ipv6.blocklist; fi
-        if [ -f $path/privacy-filter_ipv6.tmplist2 ]; then rm $path/privacy-filter_ipv6.tmplist*; fi
-        if [ -f $path/privacy-filter_ipv6.prelist ]; then rm $path/privacy-filter_ipv6.prelist; fi }
-    
+}
+        
 run_ipset_4 () {
 ipset -L privacy-filter_ipv4 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -525,10 +520,10 @@ else
 fi
 iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
 else
-   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+   nice -n 2 ip6tables -D FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
 fi }
 
 run_blocklists () {
@@ -543,9 +538,14 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) if [ "$(cat /proc/net/if_inet6 | wc -l)" -gt "0" ]; then run_ipset_6; fi  ;;
 esac }
 
+cleanup () {
+find $path -type f ! -name 'privacy-filter.list' -delete
+}
+
 check_path
 run_blocklists
 run_ipset
+cleanup
 
 exit $?
 ```
