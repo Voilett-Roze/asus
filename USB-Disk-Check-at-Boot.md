@@ -62,7 +62,7 @@ a)  There are certain popular add-on applications that require and/or enforce th
 b)  Certain routers (the RT-N66U is one such example) can utilize an SD card for the entware volume and when configured this way, has a different boot sequence than routers employing strictly USB storage volumes.  It's been reported that the change recommended below is incompatible with such configurations, so the below method would not apply.
 
 The above caveats aside, I, and others before me, have advocated for eliminating the services-start script altogether and move the entware rc.unslung  call to post-mount, in the same block, after the '/tmp/opt' link is made, and after swap is enabled (if installed).
-It looks something like this (substitute the 'sys' in /tmp/mnt/sys for whatever label you chose to use for your "entware volume"):
+It looks something like this (substitute the 'sys' in _/tmp/mnt/sys_ for whatever label you chose to use for your "entware volume", and the 'entware' in _$1/entware_ for whatever you named that directory):
     
     #!/bin/sh
     #
@@ -71,7 +71,7 @@ It looks something like this (substitute the 'sys' in /tmp/mnt/sys for whatever 
     
     if [ "$1" = "/tmp/mnt/sys" ] ; then
         # set up and run Entware
-        ln -nsf $1/opt /tmp/opt
+        ln -nsf $1/entware /tmp/opt
     
         logger "$0:" "Enabling swap on /opt/swap"
         swapon /opt/swap
