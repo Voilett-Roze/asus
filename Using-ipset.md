@@ -434,16 +434,20 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
     done
 ;;
 esac
+
 get_source () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
 if [ ! -f $path/privacy-filter.list ]
 then wget $url -O $path/privacy-filter.list; fi }
+
 check_path () {
 if [ ! -d "$path" ]; then
-     path='/tmp'
+     mkdir /tmp/privacy-filter
+     path='/tmp/privacy-filter'
      echo "path is not found using $path using as failover"
      check_failover
 else check_failover; fi }
+
 check_failover () {
 if [ ! -d "$path" ]; then
      echo "failed to set failover path"
