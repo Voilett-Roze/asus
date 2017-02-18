@@ -287,7 +287,7 @@ save it this will make malware-block run every 12th hour and update the router, 
 # Revision 16
 
 blocklist=/jffs/malware-filter.list                     # Set your path here
-interface=eth0                                          # Change this value if this is not your internet interface
+interface=$(nvram get wan0_ifname)                      # Change this value if this is not your internet interface
 retries=3                                               # Set number of tries here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
