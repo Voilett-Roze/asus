@@ -282,7 +282,7 @@ save it this will make malware-block run every 12th hour and update the router, 
 ```
 #!/bin/sh
 # Author: Toast
-# Contributers: Octopus, Tomsk, Neurophile, jimf, spalife
+# Contributers: Octopus, Tomsk, Neurophile, jimf, spalife, visortgw
 # Testers: shooter40sw
 # Revision 17
 
