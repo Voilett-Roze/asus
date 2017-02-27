@@ -284,10 +284,10 @@ save it this will make malware-block run every 12th hour and update the router, 
 # Author: Toast
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife
 # Testers: shooter40sw
-# Revision 16
+# Revision 17
 
 blocklist=/jffs/malware-filter.list                     # Set your path here
-interface=$(nvram get wan0_ifname)                      # Change this value if this is not your internet interface
+failover=eth0                                           # Change only if WAN interface is not detected.
 retries=3                                               # Set number of tries here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
@@ -323,22 +323,29 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 esac
 
 check_online () {
-iface=`grep "$interface" /proc/net/dev`
-if  [ -n "$iface" ]; then
-    if [ $(curl -s https://4.ifcfg.me/ | grep -oE "$regexp") ]
-    then get_list; fi
-    else exit 1; fi
-}
+if [ -z "$(which nvram)" ]; then
+iface=`grep "$failover" /proc/net/dev`
+if   [ -n "$iface" ]; then
+     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b") ]
+     then get_list; fi
+     else exit 1; fi
+else iface=`nvram get wan0_ifname`
+if   [ -n "$iface" ]; then
+     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b") ]
+     then get_list; fi
+     else exit 1; fi
+fi }
 
 get_list () {
 url=https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter.list
 if [ ! -f $blocklist ]
-then wget $url -O $blocklist; get_source; else get_source; fi }
+then wget $url -O $blocklist; get_source; else get_source; fi 
+}
 
 get_source () {
-    wget -q --tries=$retries --show-progress -i $blocklist -O $TMP/malware_filter_raw.part
-    awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' $TMP/malware_filter_raw.part > $TMP/malware_filter_presort.part
-    cat $TMP/malware_filter_presort.part | grep -oE "$regexp" | sort -u > $TMP/malware_filter_sorted.part
+    wget -q --tries=$retries --show-progress -i $blocklist -O /tmp/malware-filter-raw.part
+        awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' /tmp/malware-filter-raw.part > /tmp/malware-filter-presort.part
+    cat /tmp/malware-filter-presort.part | grep -oE "$regexp" | sort -u > /tmp/malware-filter-sorted.part
 }
 
 run_ipset () {
@@ -348,14 +355,14 @@ if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
     nice -n 2 ipset -N malware-filter $HASH $OPTIONAL
     if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $TMP/malware_filter_sorted.part nice -n 2 ipset $SYNTAX malware-filter PARAM
-    else cat $TMP/malware_filter_sorted.part | xargs -I {} ipset $SYNTAX malware-filter {}; fi
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset $SYNTAX malware-filter PARAM
+    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $SYNTAX malware-filter {}; fi
 fi
 else
     nice -n 2 ipset -N malware-update $HASH $OPTIONAL
     if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a $TMP/malware_filter_sorted.part nice -n 2 ipset $SYNTAX malware-update PARAM
-    else cat $TMP/malware_filter_sorted.part | xargs -I {} ipset $SYNTAX malware-update {}; fi
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset $SYNTAX malware-update PARAM
+    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $SYNTAX malware-update {}; fi
     nice -n 2 ipset $SWAPPED malware-update malware-filter
     nice -n 2 ipset $DESTROYED malware-update
 fi
@@ -368,8 +375,8 @@ else
 fi }
 
 cleanup () {
-logger -s -t system "Malware Filter loaded $(cat $TMP/malware_filter_sorted.part | wc -l) unique ip addresses."
-find $TMP -type f -name 'malware_filter_*.part' -delete
+logger -s -t system "Malware Filter loaded $(cat /tmp/malware-filter-sorted.part | wc -l) unique ip addresses."
+find /tmp -type f -name 'malware-filter-*.part' -delete
 }
 
 check_online
