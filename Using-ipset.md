@@ -125,7 +125,7 @@ if $(ipset $SWAP MicrosoftSpyServers MicrosoftSpyServers 2>&1 | grep -q "$SETNOT
   done
   logger -t Firewall "$0: Added MicrosoftSpyServers list ($entryCount entries)"
 fi
-iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers src,dst -j DROP
+iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers dst -j DROP
 
 # Block traffic from custom block list
 if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
@@ -160,19 +160,20 @@ then make it executable:
 ```
 chmod +x /jffs/scripts/create-ipset-lists.sh
 ```
-and then call this at the end of your existing /jffs/firewall-start:
+and then call this at the end of your existing /jffs/services-start:
 ```
 # Load ipset filter rules
 sh /jffs/scripts/create-ipset-lists.sh
 ```
+The reason you need to call it in `/jffs/services-start` and not in `/jffs/firewall-start` is because the script wants the ntpclient to set the system datetime as it checks for cached files older than a particular date.
 
-You may run `/jffs/scripts/create-ipset-lists.sh` from command line or reboot router to apply new blocking rules immediately. 
+You may also run `/jffs/scripts/create-ipset-lists.sh` from command line or reboot router to apply new blocking rules immediately. 
 
 You can create a handy alias in your profile (in /opt/etc/profile or /jffs/configs/profile.add)
 
 If you have ipset v4:
 ```
-alias blockstats='iptables -L -v | grep " set"; ip6tables -L -v | grep " set"'
+alias blockstats='iptables -L -v | grep " set"'
 ```
 If you have ipset v6:
 ```
