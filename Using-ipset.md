@@ -5,7 +5,7 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * to dynamically update iptables rules against IP addresses or ports without performance penalty;
 * to express complex IP address and ports based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
-> **NOTE:** _Most scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
+> **NOTE:** _Some of the scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
 
 # Tor and Countries Block
 Supports both IPSET 4 and 6
