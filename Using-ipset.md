@@ -65,7 +65,7 @@ fi
 iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j DROP
 
 # Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
-country_list="au br ca cn de fr gb jp kr pk ru sa sc tr tw ua vn"
+country_list="au br cn jp kr pk ru sa sc tr tw ua vn"
 if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE BlockedCountries $NETHASH
   for country in ${country_list}; do
@@ -87,12 +87,18 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
       entryCount=0
       [ $(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] || wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
       for IP6 in $(cat $IPSET_LISTS_DIR/${country}6.lst); do
-        [ -n "$NETHASH6" ] && ipset $ADD BlockedCountries6 $IP6
-        [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ] && ip6tables -A INPUT -s $IP6 -j DROP
+        if [ -n "$NETHASH6" ]; then 
+          ipset $ADD BlockedCountries6 $IP6
+        elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
+          ip6tables -A INPUT -s $IP6 -j DROP
+        fi
         [ $? -eq 0 ] && entryCount=$((entryCount+1))
       done
-      [ -n "$NETHASH6" ] && logger -t Firewall "$0: Added country [$country] to BlockedCountries6 list ($entryCount entries)"
-      [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ] && logger -t Firewall "$0: Added country [$country] to ip6tables rules ($entryCount entries)"
+      if [ -n "$NETHASH6" ]; then 
+        logger -t Firewall "$0: Added country [$country] to BlockedCountries6 list ($entryCount entries)"
+      elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
+        logger -t Firewall "$0: Added country [$country] to ip6tables rules ($entryCount entries)"
+      fi
     done
   fi
   if [ -n "$NETHASH6" ]; then
