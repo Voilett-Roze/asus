@@ -498,9 +498,11 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 11
+# Revision 12
 
-path=/opt/var/cache/privacy-filter    # Set your path here
+blocklist=/jffs/privacy-filter.list                     # Set your path here
+retries=3                                               # Set number of tries here
+failover=eth0                                           # Change only if WAN interface is not detected.
 
 # Dont change this value
 regexp_v4=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
@@ -540,57 +542,57 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 ;;
 esac
 
-get_source () {
+check_online () {
+if [ -z "$(which nvram)" ]; then
+iface=`grep "$failover" /proc/net/dev`
+if   [ -n "$iface" ]; then
+     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "$regexp_v4") ]
+     then get_list; fi
+     else exit 1; fi
+else iface=`nvram get wan0_ifname`
+if   [ -n "$iface" ]; then
+     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "$regexp_v4") ]
+     then get_list; fi
+     else exit 1; fi
+fi }
+
+get_list () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
-if [ ! -f $path/privacy-filter.list ]
-then wget $url -O $path/privacy-filter.list; fi }
-
-check_path () {
-if [ ! -d "$path" ]; then
-     mkdir /tmp/privacy-filter
-     path='/tmp/privacy-filter'
-     echo "path is not found using $path using as failover"
-     check_failover
-else check_failover; fi }
-
-check_failover () {
-if [ ! -d "$path" ]; then
-     echo "failed to set failover path"
-     exit 1
-else get_source; fi }
+if [ ! -f $blocklist ]
+then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
 
 run_ipv4_block () {
-if [ -f $path/privacy-filter_ipv4.blocklist ]; then rm $path/privacy-filter_ipv4.blocklist; fi
+if [ -f /tmp/privacy-filter_ipv4_sorted.part ]; then rm /tmp/privacy-filter_ipv4_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
         if [ -z "$(which /opt/bin/xargs)" ]
-            then cat $path/privacy-filter.list | xargs -n 5 -I {} sh -c "traceroute -4 {} | head -1 >> "$path/privacy-filter_ipv4.tmplist1""
-            else cat $path/privacy-filter.list | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "traceroute -4 {} | head -1 >> "$path/privacy-filter_ipv4.tmplist1""; fi
-                 cat $path/privacy-filter_ipv4.tmplist1 | grep -oE "$regexp_v4" >> $path/privacy-filter_ipv4.tmplist2
+            then cat $blocklist | xargs -n 5 -I {} sh -c "traceroute -4 {} | head -1 >> "/tmp/privacy-filter_ipv4_raw.part""
+            else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "traceroute -4 {} | head -1 >> "/tmp/privacy-filter_ipv4_raw.part""; fi
+                 cat /tmp/privacy-filter_ipv4_raw.part | grep -oE "$regexp_v4" >> /tmp/privacy-filter_ipv4_presort.part
 else    if [ -z "$(which /opt/bin/xargs)" ]
-            then cat $path/privacy-filter.list | xargs -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv4.prelist""
-            else cat $path/privacy-filter.list | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv4.prelist""; fi
+            then cat $blocklist | xargs -n 5 -I {} sh -c "hostip {} >> "/tmp/privacy-filter_ipv4.prelist""
+            else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip {} >> "/tmp/privacy-filter_ipv4.prelist""; fi
         fi
         
-    if [ -f $path/privacy-filter_ipv4.tmplist2 ]; then
-        awk $local_v4 $path/privacy-filter_ipv4.tmplist2 > $path/privacy-filter_ipv4.prelist; fi
-        if [ -f $path/privacy-filter_ipv4.prelist ]; then sort -u $path/privacy-filter_ipv4.prelist > $path/privacy-filter_ipv4.blocklist; fi
+    if [ -f /tmp/privacy-filter_ipv4_presort.part ]; then
+        awk $local_v4 /tmp/privacy-filter_ipv4_presort.part > /tmp/privacy-filter_ipv4.prelist; fi
+        if [ -f /tmp/privacy-filter_ipv4.prelist ]; then sort -u /tmp/privacy-filter_ipv4.prelist > /tmp/privacy-filter_ipv4_sorted.part; fi
 }
         
 run_ipv6_block () {
-if [ -f $path/privacy-filter_ipv6.blocklist ]; then rm $path/privacy-filter_ipv6.blocklist; fi
+if [ -f /tmp/privacy-filter_ipv6_sorted.part ]; then rm /tmp/privacy-filter_ipv6_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
         if [ -z "$(which /opt/bin/xargs)" ]
-            then cat $path/privacy-filter.list | xargs -I {} sh -c "traceroute -6 {} | head -1 >> "$path/privacy-filter_ipv6.tmplist1""
-            else cat $path/privacy-filter.list | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "traceroute -6 {} | head -1 >> "$path/privacy-filter_ipv6.tmplist1""; fi
-                 cat $path/privacy-filter_ipv6.tmplist1 | grep -oE "$regexp_v6" >> $path/privacy-filter_ipv6.tmplist2
-else if [ -z "$(which /opt/bin/xargs)" ]
-            then cat $path/privacy-filter.list | xargs -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv6.prelist""
-            else cat $path/privacy-filter.list | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip {} >> "$path/privacy-filter_ipv6.prelist""; fi
+            then cat $blocklist | xargs -n 5 -I {} sh -c "traceroute -6 {} | head -1 >> "/tmp/privacy-filter_ipv6_raw.part""
+            else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "traceroute -6 {} | head -1 >> "/tmp/privacy-filter_ipv6_raw.part""; fi
+                 cat /tmp/privacy-filter_ipv6_raw.part | grep -oE "$regexp_v6" >> /tmp/privacy-filter_ipv6_presort.part
+else    if [ -z "$(which /opt/bin/xargs)" ]
+            then cat $blocklist | xargs -n 5 -I {} sh -c "hostip -6 {} >> "/tmp/privacy-filter_ipv6.prelist""
+            else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip -6 {} >> "/tmp/privacy-filter_ipv6.prelist""; fi
         fi
         
-    if [ -f $path/privacy-filter_ipv6.tmplist2 ]; then
-        awk $local_v6 $path/privacy-filter_ipv6.tmplist2 > $path/privacy-filter_ipv6.prelist; fi
-        if [ -f $path/privacy-filter_ipv6.prelist ]; then sort -u $path/privacy-filter_ipv6.prelist > $path/privacy-filter_ipv6.blocklist; fi
+    if [ -f /tmp/privacy-filter_ipv6_presort.part ]; then
+        awk $local_v6 /tmp/privacy-filter_ipv6_presort.part > /tmp/privacy-filter_ipv6.prelist; fi
+        if [ -f /tmp/privacy-filter_ipv6.prelist ]; then sort -u /tmp/privacy-filter_ipv6.prelist > /tmp/privacy-filter_ipv6_sorted.part; fi
 }
         
 run_ipset_4 () {
@@ -598,11 +600,11 @@ ipset -L privacy-filter_ipv4 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
    if [ "$(ipset --swap privacy-filter_ipv4 privacy-filter_ipv4 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
    nice ipset -N privacy-filter_ipv4 $HASH
-   cat $path/privacy-filter_ipv4.blocklist | xargs -I {} ipset $SYNTAX privacy-filter_ipv4 {}
+   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $SYNTAX privacy-filter_ipv4 {}
 fi
 else
    nice -n 2 ipset -N privacy-update_ipv4 $HASH
-   cat $path/privacy-filter_ipv4.blocklist | xargs -I {} ipset $SYNTAX privacy-update_ipv4 {}
+   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $SYNTAX privacy-update_ipv4 {}
    nice -n 2 ipset $SWAPPED privacy-update_ipv4 privacy-filter_ipv4
    nice -n 2 ipset $DESTROYED privacy-update_ipv4
 fi
@@ -619,11 +621,11 @@ ipset -L privacy-filter_ipv6 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
    if [ "$(ipset --swap privacy-filter_ipv6 privacy-filter_ipv6 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
    nice ipset -N privacy-filter_ipv6 $HASH $INET6
-   cat $path/privacy-filter_ipv6.blocklist | xargs -I {} ipset $SYNTAX privacy-filter_ipv6 {}
+   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $SYNTAX privacy-filter_ipv6 {}
 fi
 else
    nice -n 2 ipset -N privacy-update_ipv6 $HASH $INET6
-   cat $path/privacy-filter_ipv6.blocklist | xargs -I {} ipset $SYNTAX privacy-update_ipv6 {}
+   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $SYNTAX privacy-update_ipv6 {}
    nice -n 2 ipset $SWAPPED privacy-update_ipv6 privacy-filter_ipv6
    nice -n 2 ipset $DESTROYED privacy-update_ipv6
 fi
@@ -648,120 +650,15 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 esac }
 
 cleanup () {
-find $path -type f ! -name 'privacy-filter.list' -delete
+find /tmp -type f -name 'privacy-filter_ipv*.part' -delete
 }
 
-check_path
+check_online
 run_blocklists
 run_ipset
 cleanup
 
 exit $?
 ```
-save this list as privacy-filter.list in your path on the router the script will resolve dns to ip and block the ip with a ipset.
-
-```
-a.rad.msn.com
-a-0001.a-msedge.net
-a-0002.a-msedge.net
-a-0003.a-msedge.net
-a-0004.a-msedge.net
-a-0005.a-msedge.net
-a-0006.a-msedge.net
-a-0007.a-msedge.net
-a-0008.a-msedge.net
-a-0009.a-msedge.net
-ac3.msn.com
-aidps.atdmt.com
-aka-cdn-ns.adtech.de
-b.ads1.msn.com
-b.rad.msn.com
-bs.serving-sys.com
-c.atdmt.com
-c.msn.com
-choice.microsoft.com
-choice.microsoft.com.nsatc.net
-corp.sts.microsoft.com
-corpext.msitadfs.glbdns2.microsoft.com
-db3aqu.atdmt.com
-df.telemetry.microsoft.com
-diagnostics.support.microsoft.com
-fe2.update.microsoft.com.akadns.net
-feedback.microsoft-hohm.com
-feedback.search.microsoft.com
-feedback.windows.com
-flex.msn.com
-g.msn.com
-h1.msn.com
-i1.services.social.microsoft.com
-lb1.www.ms.akadns.net
-live.rads.msn.com
-m.adnxs.com
-msedge.net
-msnbot-65-55-108-23.search.msn.com
-msntest.serving-sys.com
-oca.telemetry.microsoft.com
-pre.footprintpredict.com
-preview.msn.com
-rad.live.com
-rad.msn.com
-redir.metaservices.microsoft.com
-reports.wes.df.telemetry.microsoft.com
-s.gateway.messenger.live.com
-s0.2mdn.net
-schemas.microsoft.akadns.net
-secure.adnxs.com
-secure.flashtalking.com
-services.wes.df.telemetry.microsoft.com
-settings-sandbox.data.microsoft.com
-settings-win.data.microsoft.com
-sls.update.microsoft.com.akadns.net
-sqm.df.telemetry.microsoft.com
-sqm.telemetry.microsoft.com
-sqm.telemetry.microsoft.com.nsatc.net
-static.2mdn.net
-statsfe1.ws.microsoft.com
-statsfe2.update.microsoft.com.akadns.net
-statsfe2.ws.microsoft.com
-survey.watson.microsoft.com
-telecommand.telemetry.microsoft.com
-telemetry.appex.bing.net
-telemetry.microsoft.com
-telemetry.urs.microsoft.com
-view.atdmt.com
-vortex.data.microsoft.com
-vortex-sandbox.data.microsoft.com
-vortex-win.data.microsoft.com
-watson.live.com
-watson.microsoft.com
-watson.ppe.telemetry.microsoft.com
-watson.telemetry.microsoft.com
-wes.df.telemetry.microsoft.com
-www.msftncsi.com
-nametests.com
-oyag.lhzbdvm.com
-oyag.prugskh.net
-oyag.prugskh.com
-census1.shodan.io
-census2.shodan.io
-census3.shodan.io
-census4.shodan.io
-census5.shodan.io
-census6.shodan.io
-census7.shodan.io
-census8.shodan.io
-census9.shodan.io
-census10.shodan.io
-census11.shodan.io
-census12.shodan.io
-atlantic.census.shodan.io
-pacific.census.shodan.io
-rim.census.shodan.io
-pirate.census.shodan.io
-ninja.census.shodan.io
-border.census.shodan.io
-burger.census.shodan.io
-atlantic.dns.shodan.io
-hello.data.shodan.io
-```
+Note: save this list as [privacy-filter.list](https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list) in your path on the router, if you set this file in the wrong place the script will automatically download a new copy and set it at either path or failover path.
 
