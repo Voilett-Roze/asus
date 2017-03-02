@@ -29,7 +29,7 @@ USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=enabled
 IPSET_LISTS_DIR=/jffs/ipset_lists
 [ -d "$IPSET_LISTS_DIR" ] || mkdir -p $IPSET_LISTS_DIR
 # Check dependencies exist
-[ -n "$(which ip6tables-save)" ] && LIST6TABLE="ip6tables-save" || LIST6TABLE="ip6tables -L"
+[ -n "$(which ip6tables-save 2>/dev/null)" ] && LIST6TABLE="ip6tables-save" || LIST6TABLE="ip6tables -L"
 
 # Different routers got different iptables and ipset syntax
 case $(ipset -v | grep -o "v[4,6]") in
