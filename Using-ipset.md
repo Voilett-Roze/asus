@@ -8,86 +8,171 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 > **NOTE:** _Most scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
 
 # Tor and Countries Block
-Supports only IPSET 4 
+Supports both IPSET 4 and 6
 
 This is an example of using [ipset utility](http://manpages.ubuntu.com/manpages/lucid/man8/ipset.8.html) with two different set types: iphash and nethash. The example shows how to block incoming connection form [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
 
-Please, enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI, place this content to `/jffs/scripts/firewall-start`
+Please, enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI, place this content to `/jffs/scripts/create-ipset-lists.sh`
 
 ```
 #!/bin/sh
 
-# Loading ipset modules
-lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-for module in ip_set ip_set_nethash ip_set_iphash ipt_set
-do
-    insmod $module
-done
+# Re-download blocklist if locally saved blocklist is older than this many days
+BLOCKLISTS_SAVE_DAYS=15
+
+# For the users of mips routers (kernel 2.x): You can now block sources with IPv6 with country blocklists
+# Disable if you don't want to add huge country IPv6 netmask lists directly into ip6tables rules. Also, enabling this will add a *lot* of processing time!
+# Note: This has no effect if you have ipset v6: It will always use ipset v6 for IPv6 coultry blocklists regardless of whether this is enabled or not.
+USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=enabled
 
 # Preparing folder to cache downloaded files
 IPSET_LISTS_DIR=/jffs/ipset_lists
 [ -d "$IPSET_LISTS_DIR" ] || mkdir -p $IPSET_LISTS_DIR
+# Check dependencies exist
+[ -n "$(which ip6tables-save)" ] && LIST6TABLE="ip6tables-save" || LIST6TABLE="ip6tables -L"
 
-# Different routers got different iptables syntax
-case $(uname -m) in
-  armv7l)
-    MATCH_SET='--match-set'
-    ;;
-  mips)
-    MATCH_SET='--set'
-    ;;
+# Different routers got different iptables and ipset syntax
+case $(ipset -v | grep -o "v[4,6]") in
+  v6)
+    MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; NETHASH='hash:net family inet'; NETHASH6='hash:net family inet6'; SETNOTFOUND='name does not exist'
+    # Loading ipset modules
+    lsmod | grep -q "xt_set" || \
+    for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
+      insmod $module
+    done;;
+  v4)
+    MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; NETHASH='nethash'; SETNOTFOUND='Unknown set'
+    # Loading ipset modules
+    lsmod | grep -q "ipt_set" || \
+    for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
+      insmod $module
+    done;;
+  *)
+    logger -t Firewall "$0: Unknown ipset version: $(ipset -v). Exiting."
+    exit 1;;
 esac
 
-# Block traffic from Tor nodes
-if [ "$(ipset --swap TorNodes TorNodes 2>&1 | grep 'Unknown set')" != "" ]
-then
-    ipset -N TorNodes iphash
-    [ -e $IPSET_LISTS_DIR/tor.lst ] || wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
-    for IP in $(cat $IPSET_LISTS_DIR/tor.lst)
-    do
-        ipset -A TorNodes $IP
-    done
+# Block traffic from Tor nodes [IPv4 nodes only]
+if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
+  ipset $CREATE TorNodes $IPHASH
+  [ $(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] || wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
+  for IP in $(cat $IPSET_LISTS_DIR/tor.lst); do
+    ipset $ADD TorNodes $IP
+    [ $? -eq 0 ] && entryCount=$((entryCount+1))
+  done
+  logger -t Firewall "$0: Added TorNodes list ($entryCount entries)"
 fi
-[ -z "$(iptables-save | grep TorNodes)" ] && iptables -I INPUT -m set $MATCH_SET TorNodes src -j DROP
+iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j DROP
 
 # Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
-if [ "$(ipset --swap BlockedCountries BlockedCountries 2>&1 | grep 'Unknown set')" != "" ]
-then
-    ipset -N BlockedCountries nethash
-    for country in pk cn
-    do
-        [ -e $IPSET_LISTS_DIR/$country.lst ] || wget -q -O $IPSET_LISTS_DIR/$country.lst http://www.ipdeny.com/ipblocks/data/countries/$country.zone
-        for IP in $(cat $IPSET_LISTS_DIR/$country.lst)
-        do
-            ipset -A BlockedCountries $IP
-        done
+country_list="au br ca cn de fr gb jp kr pk ru sa sc tr tw ua vn"
+if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"); then
+  ipset $CREATE BlockedCountries $NETHASH
+  for country in ${country_list}; do
+    entryCount=0
+    [ $(find $IPSET_LISTS_DIR/$country.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] || wget -q -O $IPSET_LISTS_DIR/$country.lst http://www.ipdeny.com/ipblocks/data/aggregated/$country-aggregated.zone
+    for IP in $(cat $IPSET_LISTS_DIR/$country.lst); do
+      ipset $ADD BlockedCountries $IP
+      [ $? -eq 0 ] && entryCount=$((entryCount+1))
     done
+    logger -t Firewall "$0: Added country [$country] to BlockedCountries list ($entryCount entries)"
+  done
 fi
-[ -z "$(iptables-save | grep BlockedCountries)" ] && iptables -I INPUT -m set $MATCH_SET BlockedCountries src -j DROP
-
-# Block Microsoft telemetry spying servers
-if [ "$(ipset --swap MicrosoftSpyServers MicrosoftSpyServers 2>&1 | grep 'Unknown set')" != "" ]
-then
-    ipset -N MicrosoftSpyServers iphash
-    for IP in 23.99.10.11 63.85.36.35 63.85.36.50 64.4.6.100 64.4.54.22 64.4.54.32 64.4.54.254 \
-              65.52.100.7 65.52.100.9 65.52.100.11 65.52.100.91 65.52.100.92 65.52.100.93 65.52.100.94 \
-              65.55.29.238 65.55.39.10 65.55.44.108 65.55.163.222 65.55.252.43 65.55.252.63 65.55.252.71 \
-              65.55.252.92 65.55.252.93 66.119.144.157 93.184.215.200 104.76.146.123 111.221.29.177 \
-              131.107.113.238 131.253.40.37 134.170.52.151 134.170.58.190 134.170.115.60 134.170.115.62 \
-              134.170.188.248 157.55.129.21 157.55.133.204 157.56.91.77 168.62.187.13 191.234.72.183 \
-              191.234.72.186 191.234.72.188 191.234.72.190 204.79.197.200 207.46.223.94 207.68.166.254
-    do
-        ipset -A MicrosoftSpyServers $IP
+iptables-save | grep -q BlockedCountries || iptables -I INPUT -m set $MATCH_SET BlockedCountries src -j DROP
+if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
+  if $(ipset $SWAP BlockedCountries6 BlockedCountries6 2>&1 | grep -q "$SETNOTFOUND"); then
+    [  -n "$NETHASH6" ] && ipset $CREATE BlockedCountries6 $NETHASH6
+    for country in ${country_list}; do
+      [ -e "/tmp/ipv6_country_blocks_loaded" ] && logger -t Firewall "$0: Country block rules have already beed loaded into ip6tables... Skipping." && break
+      entryCount=0
+      [ $(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] || wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
+      for IP6 in $(cat $IPSET_LISTS_DIR/${country}6.lst); do
+        [ -n "$NETHASH6" ] && ipset $ADD BlockedCountries6 $IP6
+        [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ] && ip6tables -A INPUT -s $IP6 -j DROP
+        [ $? -eq 0 ] && entryCount=$((entryCount+1))
+      done
+      [ -n "$NETHASH6" ] && logger -t Firewall "$0: Added country [$country] to BlockedCountries6 list ($entryCount entries)"
+      [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ] && logger -t Firewall "$0: Added country [$country] to ip6tables rules ($entryCount entries)"
     done
+  fi
+  if [ -n "$NETHASH6" ]; then
+    $LIST6TABLE | grep -q BlockedCountries6 || ip6tables -I INPUT -m set $MATCH_SET BlockedCountries6 src -j DROP
+  elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" -a ! -e "/tmp/ipv6_country_blocks_loaded" ]; then
+    logger -t Firewall "$0: Creating [/tmp/ipv6_country_blocks_loaded] to prevent accidental reloading of country blocklists in ip6table rules."
+    touch /tmp/ipv6_country_blocks_loaded
+  fi
 fi
-[ -z "$(iptables-save | grep MicrosoftSpyServers)" ] && iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers dst -j DROP
-```
-and make it executable:
-```
-chmod +x /jffs/scripts/firewall-start
-```
-You may run `/jffs/scripts/firewall-start` from command line or reboot router to apply new blocking rules immediately. 
 
+# Block Microsoft telemetry spying servers [IPv4 only]
+if $(ipset $SWAP MicrosoftSpyServers MicrosoftSpyServers 2>&1 | grep -q "$SETNOTFOUND"); then
+  ipset $CREATE MicrosoftSpyServers $IPHASH
+  [ $? -eq 0 ] && entryCount=0
+  for IP in 23.99.10.11 63.85.36.35 63.85.36.50 64.4.6.100 64.4.54.22 64.4.54.32 64.4.54.254 \
+        65.52.100.7 65.52.100.9 65.52.100.11 65.52.100.91 65.52.100.92 65.52.100.93 65.52.100.94 \
+        65.55.29.238 65.55.39.10 65.55.44.108 65.55.163.222 65.55.252.43 65.55.252.63 65.55.252.71 \
+        65.55.252.92 65.55.252.93 66.119.144.157 93.184.215.200 104.76.146.123 111.221.29.177 \
+        131.107.113.238 131.253.40.37 134.170.52.151 134.170.58.190 134.170.115.60 134.170.115.62 \
+        134.170.188.248 157.55.129.21 157.55.133.204 157.56.91.77 168.62.187.13 191.234.72.183 \
+        191.234.72.186 191.234.72.188 191.234.72.190 204.79.197.200 207.46.223.94 207.68.166.254; do
+    ipset $ADD MicrosoftSpyServers $IP
+    [ $? -eq 0 ] && entryCount=$((entryCount+1))
+  done
+  logger -t Firewall "$0: Added MicrosoftSpyServers list ($entryCount entries)"
+fi
+iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers src,dst -j DROP
+
+# Block traffic from custom block list
+if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
+  if $(ipset $SWAP CustomBlock CustomBlock 2>&1 | grep -q "$SETNOTFOUND"); then
+    ipset $CREATE CustomBlock $IPHASH
+    [ $? -eq 0 ] && entryCount=0
+    for IP in $(cat $IPSET_LISTS_DIR/custom.lst); do
+      ipset $ADD CustomBlock $IP
+      [ $? -eq 0 ] && entryCount=$((entryCount+1))
+    done
+    logger -t Firewall "$0: Added CustomBlock list ($entryCount entries)"
+  fi
+  iptables-save | grep -q CustomBlock || iptables -I INPUT -m set $MATCH_SET CustomBlock src -j DROP
+fi
+
+# Allow traffic from Whitelist [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
+if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
+  if $(ipset $SWAP Whitelist Whitelist 2>&1 | grep -q "$SETNOTFOUND"); then
+    ipset $CREATE Whitelist $NETHASH
+    [ $? -eq 0 ] && entryCount=0
+    for IP in $(cat $IPSET_LISTS_DIR/whitelist.lst); do
+      [ "${IP##*/}" == "$IP" ] && ipset $ADD Whitelist $IP/31 || ipset $ADD Whitelist $IP
+      [ $? -eq 0 ] && entryCount=$((entryCount+1))
+    done
+    logger -t Firewall "$0: Added Whitelist ($entryCount entries)"
+  fi
+  iptables-save | grep -q Whitelist || iptables -I INPUT -m set $MATCH_SET Whitelist src -j ACCEPT
+fi
+```
+
+then make it executable:
+```
+chmod +x /jffs/scripts/create-ipset-lists.sh
+```
+and then call this at the end of your existing /jffs/firewall-start:
+```
+# Load ipset filter rules
+sh /jffs/scripts/create-ipset-lists.sh
+```
+
+You may run `/jffs/scripts/create-ipset-lists.sh` from command line or reboot router to apply new blocking rules immediately. 
+
+You can create a handy alias in your profile (in /opt/etc/profile or /jffs/configs/profile.add)
+
+If you have ipset v4:
+```
+alias blockstats='iptables -L -v | grep " set"; ip6tables -L -v | grep " set"'
+```
+If you have ipset v6:
+```
+alias blockstats='iptables -L -v | grep "match-set"; ip6tables -L -v | grep "match-set"'
+```
+Then you can just issue 'blockstats' from the command prompt to see how well your blocklists are doing (see blocked packet count and byte count)
 
 ***
 ## Peer Guardian
