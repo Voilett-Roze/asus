@@ -55,7 +55,7 @@ esac
 # Block traffic from Tor nodes [IPv4 nodes only]
 if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE TorNodes $IPHASH
-  [ $(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] || wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
+  [ $(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] && wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
   for IP in $(cat $IPSET_LISTS_DIR/tor.lst); do
     ipset $ADD TorNodes $IP
     [ $? -eq 0 ] && entryCount=$((entryCount+1))
@@ -70,7 +70,7 @@ if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"
   ipset $CREATE BlockedCountries $NETHASH
   for country in ${country_list}; do
     entryCount=0
-    [ $(find $IPSET_LISTS_DIR/$country.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] || wget -q -O $IPSET_LISTS_DIR/$country.lst http://www.ipdeny.com/ipblocks/data/aggregated/$country-aggregated.zone
+    [ $(find $IPSET_LISTS_DIR/$country.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] && wget -q -O $IPSET_LISTS_DIR/$country.lst http://www.ipdeny.com/ipblocks/data/aggregated/$country-aggregated.zone
     for IP in $(cat $IPSET_LISTS_DIR/$country.lst); do
       ipset $ADD BlockedCountries $IP
       [ $? -eq 0 ] && entryCount=$((entryCount+1))
@@ -85,7 +85,7 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
     for country in ${country_list}; do
       [ -e "/tmp/ipv6_country_blocks_loaded" ] && logger -t Firewall "$0: Country block rules have already beed loaded into ip6tables... Skipping." && break
       entryCount=0
-      [ $(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] || wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
+      [ $(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
       for IP6 in $(cat $IPSET_LISTS_DIR/${country}6.lst); do
         if [ -n "$NETHASH6" ]; then 
           ipset $ADD BlockedCountries6 $IP6
@@ -160,12 +160,11 @@ then make it executable:
 ```
 chmod +x /jffs/scripts/create-ipset-lists.sh
 ```
-and then call this at the end of your existing /jffs/services-start:
+and then call this at the end of your existing /jffs/firewall-start:
 ```
 # Load ipset filter rules
 sh /jffs/scripts/create-ipset-lists.sh
 ```
-The reason you need to call it in `/jffs/services-start` and not in `/jffs/firewall-start` is because the script wants the ntpclient to set the system datetime as it checks for cached files older than a particular date.
 
 You may also run `/jffs/scripts/create-ipset-lists.sh` from command line or reboot router to apply new blocking rules immediately. 
 
