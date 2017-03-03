@@ -1,9 +1,9 @@
 # Using ipset
 
 Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) feature has been implemented. This is a Netfilter extension which should be able to:
-* store multiple IP addresses or port numbers and match against the collection by iptables at one swoop;
-* dynamically update iptables rules against IP addresses or ports without performance penalty;
-* express complex IP address and ports based rulesets with one single iptables rule and benefit from the speed of IP sets.
+* store multiple IP addresses and/or port numbers and match against a filter list using iptables;
+* dynamically update iptables rules against IP addresses or ports without a significant performance penalty;
+* express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
 > **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
 
