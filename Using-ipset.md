@@ -21,9 +21,10 @@ Please, enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JF
 BLOCKLISTS_SAVE_DAYS=15
 
 # For the users of mips routers (kernel 2.x): You can now block sources with IPv6 with country blocklists
-# Disable if you don't want to add huge country IPv6 netmask lists directly into ip6tables rules. Also, enabling this will add a *lot* of processing time!
+# Enable if you want to add huge country IPv6 netmask lists directly into ip6tables rules.
+# Also, enabling this will add a *lot* of processing time!
 # Note: This has no effect if you have ipset v6: It will always use ipset v6 for IPv6 coultry blocklists regardless of whether this is enabled or not.
-USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=enabled
+USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
 
 # Preparing folder to cache downloaded files
 IPSET_LISTS_DIR=/jffs/ipset_lists
