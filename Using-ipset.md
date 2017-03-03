@@ -30,7 +30,7 @@ BLOCKLISTS_SAVE_DAYS=15
 USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
 
 # Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
-BLOCKED_COUNTRY_LIST="au br ca cn de fr gb jp kr pk ru sa sc tr tw ua vn"
+BLOCKED_COUNTRY_LIST="au br cn jp kr pk ru sa sc tr tw ua vn"
 
 # Preparing folder to cache downloaded files
 IPSET_LISTS_DIR=/jffs/ipset_lists
@@ -86,6 +86,7 @@ if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
 fi
 iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j DROP
 
+# Country blocking by nethashes [Both IPv4 and IPv6 sources]
 if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE BlockedCountries $NETHASH
   for country in ${BLOCKED_COUNTRY_LIST}; do
