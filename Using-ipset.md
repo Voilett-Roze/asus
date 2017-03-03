@@ -17,14 +17,20 @@ Please, enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JF
 ```
 #!/bin/sh
 
+# snbforums thread:
+# https://www.snbforums.com/threads/country-blocking-script.36732/page-2#post-311407
+
 # Re-download blocklist if locally saved blocklist is older than this many days
 BLOCKLISTS_SAVE_DAYS=15
 
 # For the users of mips routers (kernel 2.x): You can now block sources with IPv6 with country blocklists
 # Enable if you want to add huge country IPv6 netmask lists directly into ip6tables rules.
 # Also, enabling this will add a *lot* of processing time!
-# Note: This has no effect if you have ipset v6: It will always use ipset v6 for IPv6 country blocklists regardless of whether this is enabled or not.
+# Note: This has no effect *if* you have ipset v6: It will always use ipset v6 for IPv6 country blocklists regardless of whether this is enabled or not.
 USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
+
+# Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
+BLOCKED_COUNTRY_LIST="au br ca cn de fr gb jp kr pk ru sa sc tr tw ua vn"
 
 # Preparing folder to cache downloaded files
 IPSET_LISTS_DIR=/jffs/ipset_lists
@@ -55,6 +61,20 @@ case $(ipset -v | grep -o "v[4,6]") in
 esac
 
 # Block traffic from Tor nodes [IPv4 nodes only]
+# Allow traffic from Whitelist [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
+if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
+  if $(ipset $SWAP Whitelist Whitelist 2>&1 | grep -q "$SETNOTFOUND"); then
+    ipset $CREATE Whitelist $NETHASH
+    [ $? -eq 0 ] && entryCount=0
+    for IP in $(cat $IPSET_LISTS_DIR/whitelist.lst); do
+      [ "${IP##*/}" == "$IP" ] && ipset $ADD Whitelist $IP/31 || ipset $ADD Whitelist $IP
+      [ $? -eq 0 ] && entryCount=$((entryCount+1))
+    done
+    logger -t Firewall "$0: Added Whitelist ($entryCount entries)"
+  fi
+  iptables-save | grep -q Whitelist || iptables -I INPUT -m set $MATCH_SET Whitelist src -j ACCEPT
+fi
+
 if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE TorNodes $IPHASH
   [ ! -e "$IPSET_LISTS_DIR/tor.lst" -o -n "$(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
@@ -66,11 +86,9 @@ if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
 fi
 iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j DROP
 
-# Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
-country_list="au br cn jp kr pk ru sa sc tr tw ua vn"
 if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE BlockedCountries $NETHASH
-  for country in ${country_list}; do
+  for country in ${BLOCKED_COUNTRY_LIST}; do
     entryCount=0
     [ ! -e "$IPSET_LISTS_DIR/$country.lst" -o -n "$(find $IPSET_LISTS_DIR/$country.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/$country.lst http://www.ipdeny.com/ipblocks/data/aggregated/$country-aggregated.zone
     for IP in $(cat $IPSET_LISTS_DIR/$country.lst); do
@@ -84,7 +102,7 @@ iptables-save | grep -q BlockedCountries || iptables -I INPUT -m set $MATCH_SET 
 if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
   if $(ipset $SWAP BlockedCountries6 BlockedCountries6 2>&1 | grep -q "$SETNOTFOUND"); then
     [  -n "$NETHASH6" ] && ipset $CREATE BlockedCountries6 $NETHASH6
-    for country in ${country_list}; do
+    for country in ${BLOCKED_COUNTRY_LIST}; do
       [ -e "/tmp/ipv6_country_blocks_loaded" ] && logger -t Firewall "$0: Country block rules has already been loaded into ip6tables... Skipping." && break
       entryCount=0
       [ ! -e "$IPSET_LISTS_DIR/${country}6.lst" -o -n "$(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
@@ -129,7 +147,7 @@ if $(ipset $SWAP MicrosoftSpyServers MicrosoftSpyServers 2>&1 | grep -q "$SETNOT
 fi
 iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers dst -j DROP
 
-# Block traffic from custom block list
+# Block traffic from custom block list [IPv4 only]
 if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
   if $(ipset $SWAP CustomBlock CustomBlock 2>&1 | grep -q "$SETNOTFOUND"); then
     ipset $CREATE CustomBlock $IPHASH
@@ -141,20 +159,6 @@ if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
     logger -t Firewall "$0: Added CustomBlock list ($entryCount entries)"
   fi
   iptables-save | grep -q CustomBlock || iptables -I INPUT -m set $MATCH_SET CustomBlock src -j DROP
-fi
-
-# Allow traffic from Whitelist [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
-if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
-  if $(ipset $SWAP Whitelist Whitelist 2>&1 | grep -q "$SETNOTFOUND"); then
-    ipset $CREATE Whitelist $NETHASH
-    [ $? -eq 0 ] && entryCount=0
-    for IP in $(cat $IPSET_LISTS_DIR/whitelist.lst); do
-      [ "${IP##*/}" == "$IP" ] && ipset $ADD Whitelist $IP/31 || ipset $ADD Whitelist $IP
-      [ $? -eq 0 ] && entryCount=$((entryCount+1))
-    done
-    logger -t Firewall "$0: Added Whitelist ($entryCount entries)"
-  fi
-  iptables-save | grep -q Whitelist || iptables -I INPUT -m set $MATCH_SET Whitelist src -j ACCEPT
 fi
 ```
 
