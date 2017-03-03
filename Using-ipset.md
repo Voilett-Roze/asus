@@ -1,9 +1,9 @@
 # Using ipset
 
-Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) feature has been implemented. This is an Netfilter extension which able:
-* to store multiple IP addresses or port numbers and match against the collection by iptables at one swoop;
-* to dynamically update iptables rules against IP addresses or ports without performance penalty;
-* to express complex IP address and ports based rulesets with one single iptables rule and benefit from the speed of IP sets.
+Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) feature has been implemented. This is a Netfilter extension which should be able to:
+* store multiple IP addresses or port numbers and match against the collection by iptables at one swoop;
+* dynamically update iptables rules against IP addresses or ports without performance penalty;
+* express complex IP address and ports based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
 > **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
 
@@ -23,7 +23,7 @@ BLOCKLISTS_SAVE_DAYS=15
 # For the users of mips routers (kernel 2.x): You can now block sources with IPv6 with country blocklists
 # Enable if you want to add huge country IPv6 netmask lists directly into ip6tables rules.
 # Also, enabling this will add a *lot* of processing time!
-# Note: This has no effect if you have ipset v6: It will always use ipset v6 for IPv6 coultry blocklists regardless of whether this is enabled or not.
+# Note: This has no effect if you have ipset v6: It will always use ipset v6 for IPv6 country blocklists regardless of whether this is enabled or not.
 USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
 
 # Preparing folder to cache downloaded files
