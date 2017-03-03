@@ -24,11 +24,12 @@ BLOCKLISTS_SAVE_DAYS=15
 # Enable if you want to add huge country IPv6 netmask lists directly into ip6tables rules.
 # Also, enabling this will add a *lot* of processing time!
 # Note: This has no effect if you have ipset v6: It will always use ipset v6 for IPv6 coultry blocklists regardless of whether this is enabled or not.
-USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
+USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disbled]
 
 # Preparing folder to cache downloaded files
 IPSET_LISTS_DIR=/jffs/ipset_lists
 [ -d "$IPSET_LISTS_DIR" ] || mkdir -p $IPSET_LISTS_DIR
+
 # Check dependencies exist
 [ -n "$(which ip6tables-save 2>/dev/null)" ] && LIST6TABLE="ip6tables-save" || LIST6TABLE="ip6tables -L"
 
@@ -56,7 +57,7 @@ esac
 # Block traffic from Tor nodes [IPv4 nodes only]
 if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE TorNodes $IPHASH
-  [ $(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] && wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
+  [ ! -e "$IPSET_LISTS_DIR/tor.lst" -o -n "$(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
   for IP in $(cat $IPSET_LISTS_DIR/tor.lst); do
     ipset $ADD TorNodes $IP
     [ $? -eq 0 ] && entryCount=$((entryCount+1))
@@ -71,7 +72,7 @@ if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"
   ipset $CREATE BlockedCountries $NETHASH
   for country in ${country_list}; do
     entryCount=0
-    [ $(find $IPSET_LISTS_DIR/$country.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] && wget -q -O $IPSET_LISTS_DIR/$country.lst http://www.ipdeny.com/ipblocks/data/aggregated/$country-aggregated.zone
+    [ ! -e "$IPSET_LISTS_DIR/$country.lst" -o -n "$(find $IPSET_LISTS_DIR/$country.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/$country.lst http://www.ipdeny.com/ipblocks/data/aggregated/$country-aggregated.zone
     for IP in $(cat $IPSET_LISTS_DIR/$country.lst); do
       ipset $ADD BlockedCountries $IP
       [ $? -eq 0 ] && entryCount=$((entryCount+1))
@@ -86,16 +87,16 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
     for country in ${country_list}; do
       [ -e "/tmp/ipv6_country_blocks_loaded" ] && logger -t Firewall "$0: Country block rules have already beed loaded into ip6tables... Skipping." && break
       entryCount=0
-      [ $(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null) ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
+      [ ! -e "$IPSET_LISTS_DIR/${country}6.lst" -o -n "$(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
       for IP6 in $(cat $IPSET_LISTS_DIR/${country}6.lst); do
-        if [ -n "$NETHASH6" ]; then 
+        if [ -n "$NETHASH6" ]; then
           ipset $ADD BlockedCountries6 $IP6
         elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
           ip6tables -A INPUT -s $IP6 -j DROP
         fi
         [ $? -eq 0 ] && entryCount=$((entryCount+1))
       done
-      if [ -n "$NETHASH6" ]; then 
+      if [ -n "$NETHASH6" ]; then
         logger -t Firewall "$0: Added country [$country] to BlockedCountries6 list ($entryCount entries)"
       elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
         logger -t Firewall "$0: Added country [$country] to ip6tables rules ($entryCount entries)"
