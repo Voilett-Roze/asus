@@ -36,9 +36,6 @@ BLOCKED_COUNTRY_LIST="au br cn jp kr pk ru sa sc tr tw ua vn"
 IPSET_LISTS_DIR=/jffs/ipset_lists
 [ -d "$IPSET_LISTS_DIR" ] || mkdir -p $IPSET_LISTS_DIR
 
-# Check dependencies exist
-[ -n "$(which ip6tables-save 2>/dev/null)" ] && LIST6TABLE="ip6tables-save" || LIST6TABLE="ip6tables -L"
-
 # Different routers got different iptables and ipset syntax
 case $(ipset -v | grep -o "v[4,6]") in
   v6)
@@ -60,21 +57,21 @@ case $(ipset -v | grep -o "v[4,6]") in
     exit 1;;
 esac
 
-# Block traffic from Tor nodes [IPv4 nodes only]
-# Allow traffic from Whitelist [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
+# Allow traffic from AcceptList [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
 if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
-  if $(ipset $SWAP Whitelist Whitelist 2>&1 | grep -q "$SETNOTFOUND"); then
-    ipset $CREATE Whitelist $NETHASH
+  if $(ipset $SWAP AcceptList AcceptList 2>&1 | grep -q "$SETNOTFOUND"); then
+    ipset $CREATE AcceptList $NETHASH
     [ $? -eq 0 ] && entryCount=0
     for IP in $(cat $IPSET_LISTS_DIR/whitelist.lst); do
-      [ "${IP##*/}" == "$IP" ] && ipset $ADD Whitelist $IP/31 || ipset $ADD Whitelist $IP
+      [ "${IP##*/}" == "$IP" ] && ipset $ADD AcceptList $IP/31 || ipset $ADD AcceptList $IP
       [ $? -eq 0 ] && entryCount=$((entryCount+1))
     done
-    logger -t Firewall "$0: Added Whitelist ($entryCount entries)"
+    logger -t Firewall "$0: Added AcceptList ($entryCount entries)"
   fi
-  iptables-save | grep -q Whitelist || iptables -I INPUT -m set $MATCH_SET Whitelist src -j ACCEPT
+  iptables-save | grep -q AcceptList || iptables -I INPUT -m set $MATCH_SET AcceptList src -j ACCEPT
 fi
 
+# Block traffic from Tor nodes [IPv4 nodes only]
 if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE TorNodes $IPHASH
   [ ! -e "$IPSET_LISTS_DIR/tor.lst" -o -n "$(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
@@ -108,14 +105,14 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
       entryCount=0
       [ ! -e "$IPSET_LISTS_DIR/${country}6.lst" -o -n "$(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
       for IP6 in $(cat $IPSET_LISTS_DIR/${country}6.lst); do
-        if [ -n "$NETHASH6" ]; then
+        if [ -n "$NETHASH6" ]; then 
           ipset $ADD BlockedCountries6 $IP6
         elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
           ip6tables -A INPUT -s $IP6 -j DROP
         fi
         [ $? -eq 0 ] && entryCount=$((entryCount+1))
       done
-      if [ -n "$NETHASH6" ]; then
+      if [ -n "$NETHASH6" ]; then 
         logger -t Firewall "$0: Added country [$country] to BlockedCountries6 list ($entryCount entries)"
       elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
         logger -t Firewall "$0: Added country [$country] to ip6tables rules ($entryCount entries)"
@@ -123,7 +120,7 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
     done
   fi
   if [ -n "$NETHASH6" ]; then
-    $LIST6TABLE | grep -q BlockedCountries6 || ip6tables -I INPUT -m set $MATCH_SET BlockedCountries6 src -j DROP
+    ip6tables -L | grep -q BlockedCountries6 || ip6tables -I INPUT -m set $MATCH_SET BlockedCountries6 src -j DROP
   elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" -a ! -e "/tmp/ipv6_country_blocks_loaded" ]; then
     logger -t Firewall "$0: Creating [/tmp/ipv6_country_blocks_loaded] to prevent accidental reloading of country blocklists in ip6table rules."
     touch /tmp/ipv6_country_blocks_loaded
