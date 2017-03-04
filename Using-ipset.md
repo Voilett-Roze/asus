@@ -105,14 +105,14 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
       entryCount=0
       [ ! -e "$IPSET_LISTS_DIR/${country}6.lst" -o -n "$(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
       for IP6 in $(cat $IPSET_LISTS_DIR/${country}6.lst); do
-        if [ -n "$NETHASH6" ]; then 
+        if [ -n "$NETHASH6" ]; then
           ipset $ADD BlockedCountries6 $IP6
         elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
           ip6tables -A INPUT -s $IP6 -j DROP
         fi
         [ $? -eq 0 ] && entryCount=$((entryCount+1))
       done
-      if [ -n "$NETHASH6" ]; then 
+      if [ -n "$NETHASH6" ]; then
         logger -t Firewall "$0: Added country [$country] to BlockedCountries6 list ($entryCount entries)"
       elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
         logger -t Firewall "$0: Added country [$country] to ip6tables rules ($entryCount entries)"
@@ -170,7 +170,7 @@ and then call this at the end of your existing /jffs/firewall-start:
 sh /jffs/scripts/create-ipset-lists.sh
 ```
 
-You may also run `/jffs/scripts/create-ipset-lists.sh` from command line or reboot router to apply new blocking rules immediately. 
+You may also run `/jffs/scripts/create-ipset-lists.sh` from command line or reboot router to apply new blocking rules immediately. Note that if you change the script country list or any other part, it would need a router reboot to take effect: _There are checks to prevent it from reloading the sets if the sets are already existing._
 
 You can create a handy alias in your profile (in /opt/etc/profile or /jffs/configs/profile.add)
 
