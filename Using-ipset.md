@@ -97,7 +97,7 @@ if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"
   done
 fi
 iptables-save | grep -q BlockedCountries || iptables -I INPUT -m set $MATCH_SET BlockedCountries src -j DROP
-if [ $(nvram get ipv6_fw_enable) -eq 1 ]; then
+if [ $(nvram get ipv6_fw_enable) -eq 1 -a $(cat /proc/net/if_inet6 | wc -l) -gt 0 ]; then
   if $(ipset $SWAP BlockedCountries6 BlockedCountries6 2>&1 | grep -q "$SETNOTFOUND"); then
     [  -n "$NETHASH6" ] && ipset $CREATE BlockedCountries6 $NETHASH6
     for country in ${BLOCKED_COUNTRY_LIST}; do
