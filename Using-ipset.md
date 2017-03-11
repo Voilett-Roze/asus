@@ -496,11 +496,10 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 # Author: Toast
 # Contributers: Tomsk
 # Supporters: lesandie
-# Revision 13
+# Revision 14
 
 blocklist=/jffs/privacy-filter.list                     # Set your path here 
 retries=3                                               # Set number of tries here
-failover=eth0                                           # Change only if WAN interface is not detected.
 
 # Dont change this value
 regexp_v4=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
@@ -529,15 +528,19 @@ check_online () {
   ping -q -c 1 google.com >/dev/null 2>&1 && get_list || exit 1
 }
 
+check_ipv6 () {
+  ping6 -q -c 1 google.com >/dev/null 2>&1 && $1 || echo
+}
+
 get_list () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
 if [ ! -f $blocklist ]
 then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
-
 fix_list () {
 if [ -f $blocklist ]
 then dos2unix $blocklist; fi
 }
+
 run_ipv4_block () {
 if [ -f /tmp/privacy-filter_ipv4_sorted.part ]; then rm /tmp/privacy-filter_ipv4_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
@@ -549,12 +552,12 @@ else    if [ -z "$(which /opt/bin/xargs)" ]
             then cat $blocklist | xargs -n 5 -I {} sh -c "hostip {} >> "/tmp/privacy-filter_ipv4.prelist""
             else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip {} >> "/tmp/privacy-filter_ipv4.prelist""; fi
         fi
-        
+       
     if [ -f /tmp/privacy-filter_ipv4_presort.part ]; then
         awk $local_v4 /tmp/privacy-filter_ipv4_presort.part > /tmp/privacy-filter_ipv4.prelist; fi
         if [ -f /tmp/privacy-filter_ipv4.prelist ]; then sort -u /tmp/privacy-filter_ipv4.prelist > /tmp/privacy-filter_ipv4_sorted.part; fi
 }
-        
+       
 run_ipv6_block () {
 if [ -f /tmp/privacy-filter_ipv6_sorted.part ]; then rm /tmp/privacy-filter_ipv6_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
@@ -566,12 +569,12 @@ else    if [ -z "$(which /opt/bin/xargs)" ]
             then cat $blocklist | xargs -n 5 -I {} sh -c "hostip -6 {} >> "/tmp/privacy-filter_ipv6.prelist""
             else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip -6 {} >> "/tmp/privacy-filter_ipv6.prelist""; fi
         fi
-        
+       
     if [ -f /tmp/privacy-filter_ipv6_presort.part ]; then
         awk $local_v6 /tmp/privacy-filter_ipv6_presort.part > /tmp/privacy-filter_ipv6.prelist; fi
         if [ -f /tmp/privacy-filter_ipv6.prelist ]; then sort -u /tmp/privacy-filter_ipv6.prelist > /tmp/privacy-filter_ipv6_sorted.part; fi
 }
-        
+       
 run_ipset_4 () {
 ipset -L privacy-filter_ipv4 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -616,22 +619,23 @@ fi }
 run_blocklists () {
 run_ipv4_block
 case $(ipset -v | grep -oE "ipset v[0-9]") in
-*v6) if [ "$(cat /proc/net/if_inet6 | wc -l)" -gt "0" ]; then run_ipv6_block; fi ;;
+*v6) check_ipv6 run_ipv6_block ;;
 esac }
 
 run_ipset () {
 run_ipset_4
 case $(ipset -v | grep -oE "ipset v[0-9]") in
-*v6) if [ "$(cat /proc/net/if_inet6 | wc -l)" -gt "0" ]; then run_ipset_6; fi  ;;
+*v6) check_ipv6 run_ipset_6 ;;
 esac }
+
+logipv6 () {
+logger -s -t system "Privacy Filter loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses."
+}
 
 cleanup () {
 find /tmp -name 'privacy-filter_ipv*.part' -exec rm {} +
 logger -s -t system "Privacy Filter loaded $(ipset -L  privacy-filter_ipv4 | wc -l | awk '{print $1-7}') unique ip addresses."
-iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-logger -s -t system "Privacy Filter loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses."
-fi
+check_ipv6 logipv6
 }
 
 check_online
@@ -639,7 +643,6 @@ fix_list
 run_blocklists
 run_ipset
 cleanup
-
 exit $?
 ```
 Note: save this list as [privacy-filter.list](https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list) in your path on the router, if you set this file in the wrong place the script will automatically download a new copy and set it at either path or failover path.
