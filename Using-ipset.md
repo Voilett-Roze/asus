@@ -30,7 +30,7 @@ BLOCKLISTS_SAVE_DAYS=15
 USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
 
 # Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
-BLOCKED_COUNTRY_LIST="au br ca cn de fr gb jp kr pk ru sa sc tr tw ua vn"
+BLOCKED_COUNTRY_LIST="br cn jp kr pk sa sc tr tw ua vn"
 
 # Use DROP or REJECT for iptable rule for the ipset. Briefly, for DROP, attacker (or IP being blocked) will get no response and timeout, and REJECT will send immediate response of destination-unreachable (Attacker will know your IP is actively rejecting requests)
 # See: http://www.chiark.greenend.org.uk/~peterb/network/drop-vs-reject and http://serverfault.com/questions/157375/reject-vs-drop-when-using-iptables
