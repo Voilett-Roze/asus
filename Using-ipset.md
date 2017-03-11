@@ -30,7 +30,11 @@ BLOCKLISTS_SAVE_DAYS=15
 USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
 
 # Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
-BLOCKED_COUNTRY_LIST="au br cn jp kr pk ru sa sc tr tw ua vn"
+BLOCKED_COUNTRY_LIST="au br ca cn de fr gb jp kr pk ru sa sc tr tw ua vn"
+
+# Use DROP or REJECT for iptable rule for the ipset. Briefly, for DROP, attacker (or IP being blocked) will get no response and timeout, and REJECT will send immediate response of destination-unreachable (Attacker will know your IP is actively rejecting requests)
+# See: http://www.chiark.greenend.org.uk/~peterb/network/drop-vs-reject and http://serverfault.com/questions/157375/reject-vs-drop-when-using-iptables
+IPTABLES_RULE_TAREGT=DROP # [DROP|REJECT]
 
 # Preparing folder to cache downloaded files
 IPSET_LISTS_DIR=/jffs/ipset_lists
@@ -71,9 +75,23 @@ if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
   iptables-save | grep -q AcceptList || iptables -I INPUT -m set $MATCH_SET AcceptList src -j ACCEPT
 fi
 
+# Block traffic from known brute-force ssh login attempters [IPv4 nodes only]
+if $(ipset $SWAP BruteForceLogins BruteForceLogins 2>&1 | grep -q "$SETNOTFOUND"); then
+  ipset $CREATE BruteForceLogins $IPHASH
+  [ $? -eq 0 ] && entryCount=0
+  [ ! -e "$IPSET_LISTS_DIR/brute.lst" -o -n "$(find $IPSET_LISTS_DIR/brute.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/brute.lst https://lists.blocklist.de/lists/bruteforcelogin.txt
+  for IP in $(cat $IPSET_LISTS_DIR/brute.lst); do
+    ipset $ADD BruteForceLogins $IP
+    [ $? -eq 0 ] && entryCount=$((entryCount+1))
+  done
+  logger -t Firewall "$0: Added BruteForceLogins list ($entryCount entries)"
+fi
+iptables-save | grep -q BruteForceLogins || iptables -I INPUT -m set $MATCH_SET BruteForceLogins src -j $IPTABLES_RULE_TAREGT
+
 # Block traffic from Tor nodes [IPv4 nodes only]
 if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE TorNodes $IPHASH
+  [ $? -eq 0 ] && entryCount=0
   [ ! -e "$IPSET_LISTS_DIR/tor.lst" -o -n "$(find $IPSET_LISTS_DIR/tor.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/tor.lst http://torstatus.blutmagie.de/ip_list_all.php/Tor_ip_list_ALL.csv
   for IP in $(cat $IPSET_LISTS_DIR/tor.lst); do
     ipset $ADD TorNodes $IP
@@ -81,7 +99,7 @@ if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   done
   logger -t Firewall "$0: Added TorNodes list ($entryCount entries)"
 fi
-iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j DROP
+iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j $IPTABLES_RULE_TAREGT
 
 # Country blocking by nethashes [Both IPv4 and IPv6 sources]
 if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"); then
@@ -96,7 +114,7 @@ if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"
     logger -t Firewall "$0: Added country [$country] to BlockedCountries list ($entryCount entries)"
   done
 fi
-iptables-save | grep -q BlockedCountries || iptables -I INPUT -m set $MATCH_SET BlockedCountries src -j DROP
+iptables-save | grep -q BlockedCountries || iptables -I INPUT -m set $MATCH_SET BlockedCountries src -j $IPTABLES_RULE_TAREGT
 if [ $(nvram get ipv6_fw_enable) -eq 1 -a "$(nvram get ipv6_service)" != "disabled" ]; then
   if $(ipset $SWAP BlockedCountries6 BlockedCountries6 2>&1 | grep -q "$SETNOTFOUND"); then
     [  -n "$NETHASH6" ] && ipset $CREATE BlockedCountries6 $NETHASH6
@@ -108,7 +126,7 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 -a "$(nvram get ipv6_service)" != "disabl
         if [ -n "$NETHASH6" ]; then
           ipset $ADD BlockedCountries6 $IP6
         elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
-          ip6tables -A INPUT -s $IP6 -j DROP
+          ip6tables -A INPUT -s $IP6 -j $IPTABLES_RULE_TAREGT
         fi
         [ $? -eq 0 ] && entryCount=$((entryCount+1))
       done
@@ -120,7 +138,7 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 -a "$(nvram get ipv6_service)" != "disabl
     done
   fi
   if [ -n "$NETHASH6" ]; then
-    ip6tables -L | grep -q BlockedCountries6 || ip6tables -I INPUT -m set $MATCH_SET BlockedCountries6 src -j DROP
+    ip6tables -L | grep -q BlockedCountries6 || ip6tables -I INPUT -m set $MATCH_SET BlockedCountries6 src -j $IPTABLES_RULE_TAREGT
   elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" -a ! -e "/tmp/ipv6_country_blocks_loaded" ]; then
     logger -t Firewall "$0: Creating [/tmp/ipv6_country_blocks_loaded] to prevent accidental reloading of country blocklists in ip6table rules."
     touch /tmp/ipv6_country_blocks_loaded
@@ -143,7 +161,7 @@ if $(ipset $SWAP MicrosoftSpyServers MicrosoftSpyServers 2>&1 | grep -q "$SETNOT
   done
   logger -t Firewall "$0: Added MicrosoftSpyServers list ($entryCount entries)"
 fi
-iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers dst -j DROP
+iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers dst -j $IPTABLES_RULE_TAREGT
 
 # Block traffic from custom block list [IPv4 only]
 if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
@@ -156,7 +174,7 @@ if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
     done
     logger -t Firewall "$0: Added CustomBlock list ($entryCount entries)"
   fi
-  iptables-save | grep -q CustomBlock || iptables -I INPUT -m set $MATCH_SET CustomBlock src -j DROP
+  iptables-save | grep -q CustomBlock || iptables -I INPUT -m set $MATCH_SET CustomBlock src -j $IPTABLES_RULE_TAREGT
 fi
 ```
 
