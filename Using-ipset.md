@@ -395,59 +395,34 @@ save it this will make malware-block run every 12th hour and update the router, 
 ```
 #!/bin/sh
 # Author: Toast
-# Contributers: Octopus, Tomsk, Neurophile, jimf, spalife, visortgw
+# Contributers: Octopus, Tomsk, Neurophile, jimf, spalife, visortgw, Cedarhillguy, redhat27
 # Testers: shooter40sw
-# Revision 17
+# Supporters: lesandie
+# Revision 19
 
 blocklist=/jffs/malware-filter.list                     # Set your path here
-failover=eth0                                           # Change only if WAN interface is not detected.
 retries=3                                               # Set number of tries here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
-case $(ipset -v | grep -oE "ipset v[0-9]") in
-*v6) # Value for ARM Routers
-    MATCH_SET='--match-set'
-    HASH='hash:ip'
-    SYNTAX='add'
-    SWAPPED='swap'
-    DESTROYED='destroy'
-    OPTIONAL='family inet hashsize 2048 maxelem 65536'
-     ipsetv=6
-     lsmod | grep "xt_set" > /dev/null 2>&1 || \
-     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
-     do
-          insmod $module
-     done
-;;
-*v4) # Value for Mips Routers
-    MATCH_SET='--set'
-    HASH='iphash'
-    SYNTAX='-q -A'
-    SWAPPED='-W'
-    DESTROYED='--destroy'
-    OPTIONAL=''
-    ipsetv=4
-     lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-     for module in ip_set ip_set_nethash ip_set_iphash ipt_set
-     do
-          insmod $module
-     done
-;;
+case $(ipset -v | grep -o "v[4,6]") in
+  v6)
+    MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; NETHASH='hash:net family inet'; FLUSH='flush'; DESTROY='destroy';
+    lsmod | grep -q "xt_set" || \
+    for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
+      insmod $module
+    done;;
+  v4)
+    MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; NETHASH='nethash'; FLUSH='--flush'; DESTROY='--destroy'
+    lsmod | grep -q "ipt_set" || \
+    for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
+      insmod $module
+    done;;
+  *) echo "unsupported version"; exit 1 ;;
 esac
 
 check_online () {
-if [ -z "$(which nvram)" ]; then
-iface=`grep "$failover" /proc/net/dev`
-if   [ -n "$iface" ]; then
-     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b") ]
-     then get_list; fi
-     else exit 1; fi
-else iface=`nvram get wan0_ifname`
-if   [ -n "$iface" ]; then
-     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b") ]
-     then get_list; fi
-     else exit 1; fi
-fi }
+  ping -q -c 1 google.com >/dev/null 2>&1 && get_list || exit 1
+}
 
 get_list () {
 url=https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter.list
@@ -456,8 +431,8 @@ then wget $url -O $blocklist; get_source; else get_source; fi
 }
 
 get_source () {
-    wget -q --tries=$retries --show-progress -i $blocklist -O /tmp/malware-filter-raw.part
-        awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' /tmp/malware-filter-raw.part > /tmp/malware-filter-presort.part
+wget -q --tries=$retries --show-progress -i $blocklist -O /tmp/malware-filter-raw.part
+    awk '!/(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/' /tmp/malware-filter-raw.part > /tmp/malware-filter-presort.part
     cat /tmp/malware-filter-presort.part | grep -oE "$regexp" | sort -u > /tmp/malware-filter-sorted.part
 }
 
@@ -466,18 +441,18 @@ echo "adding ipset rule to firewall this will take time."
 ipset -L malware-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    nice -n 2 ipset -N malware-filter $HASH $OPTIONAL
+    nice -n 2 ipset $CREATE malware-filter $IPHASH 
     if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset $SYNTAX malware-filter PARAM
-    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $SYNTAX malware-filter {}; fi
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset  $ADD malware-filter PARAM
+    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $ADD malware-filter {}; fi
 fi
 else
-    nice -n 2 ipset -N malware-update $HASH $OPTIONAL
+    nice -n 2 ipset $CREATE malware-update $IPHASH 
     if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset $SYNTAX malware-update PARAM
-    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $SYNTAX malware-update {}; fi
-    nice -n 2 ipset $SWAPPED malware-update malware-filter
-    nice -n 2 ipset $DESTROYED malware-update
+    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset  $ADD malware-update PARAM
+    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $ADD malware-update {}; fi
+    nice -n 2 ipset $SWAP malware-update malware-filter
+    nice -n 2 ipset $DESTROY malware-update
 fi
 iptables -L | grep malware-filter > /dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -488,8 +463,8 @@ else
 fi }
 
 cleanup () {
-logger -s -t system "Malware Filter loaded $(cat /tmp/malware-filter-sorted.part | wc -l) unique ip addresses."
-find /tmp -type f -name 'malware-filter-*.part' -delete
+logger -s -t system "Malware Filter loaded $(ipset -L malware-filter | wc -l | awk '{print $1-7}') unique ip addresses."
+find /tmp -name 'malware-filter-*.part' -exec rm {} +
 }
 
 check_online
@@ -520,9 +495,10 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
-# Revision 12
+# Supporters: lesandie
+# Revision 13
 
-blocklist=/jffs/privacy-filter.list                     # Set your path here
+blocklist=/jffs/privacy-filter.list                     # Set your path here 
 retries=3                                               # Set number of tries here
 failover=eth0                                           # Change only if WAN interface is not detected.
 
@@ -533,56 +509,35 @@ regexp_v6=`echo "^(([0-9a-f]){1,4}:)+(:)?(([0-9a-f]){1,4}:)+(:)?(([0-9a-f]){1,4}
 local_v6=`echo "!(^(fc00::)"`
 # Dont change this value
 
-case $(ipset -v | grep -oE "ipset v[0-9]") in
-*v6) # Value for ARM Routers
-   MATCH_SET='--match-set'
-   HASH='hash:ip'
-   SYNTAX='add'
-   SWAPPED='swap'
-   DESTROYED='destroy'
-   INET6='family inet6'
-   ipsetv=6
-    lsmod | grep "xt_set" > /dev/null 2>&1 || \
-    for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set
-    do
-         insmod $module
-    done
-;;
-*v4) # Value for Mips Routers
-   MATCH_SET='--set'
-   HASH='iphash'
-   SYNTAX='-q -A'
-   SWAPPED='-W'
-   DESTROYED='--destroy'
-   IPV6=''
-    ipsetv=4
-    lsmod | grep "ipt_set" > /dev/null 2>&1 || \
-    for module in ip_set ip_set_nethash ip_set_iphash ipt_set
-    do
-         insmod $module
-    done
-;;
+case $(ipset -v | grep -o "v[4,6]") in
+  v6)
+    MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; NETHASH='hash:net family inet'; FLUSH='flush'; DESTROY='destroy'; INET6='family inet6';
+    lsmod | grep -q "xt_set" || \
+    for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
+      insmod $module
+    done;;
+  v4)
+    MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; NETHASH='nethash'; FLUSH='--flush'; DESTROY='--destroy' INET6=''
+    lsmod | grep -q "ipt_set" || \
+    for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
+      insmod $module
+    done;;
+  *) echo "unsupported version"; exit 1 ;;
 esac
 
 check_online () {
-if [ -z "$(which nvram)" ]; then
-iface=`grep "$failover" /proc/net/dev`
-if   [ -n "$iface" ]; then
-     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "$regexp_v4") ]
-     then get_list; fi
-     else exit 1; fi
-else iface=`nvram get wan0_ifname`
-if   [ -n "$iface" ]; then
-     if [ $(curl -s https://4.ifcfg.me/ | grep -oE "$regexp_v4") ]
-     then get_list; fi
-     else exit 1; fi
-fi }
+  ping -q -c 1 google.com >/dev/null 2>&1 && get_list || exit 1
+}
 
 get_list () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
 if [ ! -f $blocklist ]
 then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
 
+fix_list () {
+if [ -f $blocklist ]
+then dos2unix $blocklist; fi
+}
 run_ipv4_block () {
 if [ -f /tmp/privacy-filter_ipv4_sorted.part ]; then rm /tmp/privacy-filter_ipv4_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
@@ -620,15 +575,15 @@ else    if [ -z "$(which /opt/bin/xargs)" ]
 run_ipset_4 () {
 ipset -L privacy-filter_ipv4 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-   if [ "$(ipset --swap privacy-filter_ipv4 privacy-filter_ipv4 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-   nice ipset -N privacy-filter_ipv4 $HASH
-   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $SYNTAX privacy-filter_ipv4 {}
+   if [ "$(ipset $SWAP privacy-filter_ipv4 privacy-filter_ipv4 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+   nice ipset $CREATE privacy-filter_ipv4 $IPHASH
+   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $ADD privacy-filter_ipv4 {}
 fi
 else
-   nice -n 2 ipset -N privacy-update_ipv4 $HASH
-   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $SYNTAX privacy-update_ipv4 {}
-   nice -n 2 ipset $SWAPPED privacy-update_ipv4 privacy-filter_ipv4
-   nice -n 2 ipset $DESTROYED privacy-update_ipv4
+   nice -n 2 ipset $CREATE privacy-update_ipv4 $IPHASH
+   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv4 {}
+   nice -n 2 ipset $SWAP privacy-update_ipv4 privacy-filter_ipv4
+   nice -n 2 ipset $DESTROY privacy-update_ipv4
 fi
 iptables -L | grep privacy-filter_ipv4 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -637,19 +592,18 @@ else
    nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
    nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
 fi }
-
 run_ipset_6 () {
 ipset -L privacy-filter_ipv6 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-   if [ "$(ipset --swap privacy-filter_ipv6 privacy-filter_ipv6 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-   nice ipset -N privacy-filter_ipv6 $HASH $INET6
-   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $SYNTAX privacy-filter_ipv6 {}
+   if [ "$(ipset $SWAP privacy-filter_ipv6 privacy-filter_ipv6 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
+   nice ipset $CREATE privacy-filter_ipv6 $IPHASH $INET6
+   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $ADD privacy-filter_ipv6 {}
 fi
 else
-   nice -n 2 ipset -N privacy-update_ipv6 $HASH $INET6
-   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $SYNTAX privacy-update_ipv6 {}
-   nice -n 2 ipset $SWAPPED privacy-update_ipv6 privacy-filter_ipv6
-   nice -n 2 ipset $DESTROYED privacy-update_ipv6
+   nice -n 2 ipset -N privacy-update_ipv6 $IPHASH $INET6
+   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv6 {}
+   nice -n 2 ipset $SWAP privacy-update_ipv6 privacy-filter_ipv6
+   nice -n 2 ipset $DESTROY privacy-update_ipv6
 fi
 iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -672,10 +626,16 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 esac }
 
 cleanup () {
-find /tmp -type f -name 'privacy-filter_ipv*.part' -delete
+find /tmp -name 'privacy-filter_ipv*.part' -exec rm {} +
+logger -s -t system "Privacy Filter loaded $(ipset -L  privacy-filter_ipv4 | wc -l | awk '{print $1-7}') unique ip addresses."
+iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+logger -s -t system "Privacy Filter loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses."
+fi
 }
 
 check_online
+fix_list
 run_blocklists
 run_ipset
 cleanup
