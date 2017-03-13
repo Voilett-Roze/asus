@@ -65,7 +65,7 @@ esac
 while ! ping -q -c 1 google.com >/dev/null 2>&1; do
   sleep 1
   WaitSeconds=$((WaitSeconds+1))
-  [ WaitSeconds -gt 300 ] && logger -t Firewall "$0: Warning: Router not online! Aborting after a wait of 5 minutes..." && exit 1
+  [ $WaitSeconds -gt 300 ] && logger -t Firewall "$0: Warning: Router not online! Aborting after a wait of 5 minutes..." && exit 1
 done
 
 # Allow traffic from AcceptList [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
