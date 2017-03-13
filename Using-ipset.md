@@ -209,9 +209,21 @@ alias blockstats='iptables -L -v | grep "match-set"; ip6tables -L -v | grep "mat
 ```
 Then you can just issue 'blockstats' from the command prompt to see how well your blocklists are doing (see blocked packet count and byte count)
 
+Note that every time you do something on the web UI or through your [android app] (https://play.google.com/store/apps/details?id=com.asus.aihome) to control your router _that affects reloading the firewall rules_, `/jffs/scripts/firewall-start` will be called, so the iptables rules that are defined outside will be wiped out. To reinstate the rules as defined by this script, you'd need to add this to your _existing_ `/jffs/scripts/firewall-start`:
+```
+# Reinstate the ipset rules if they have been created already
+for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
+  case $ipSet in
+    AcceptList) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set --set $ipSet src -j ACCEPT;;
+    BruteForceLogins|TorNodes|BlockedCountries|CustomBlock) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set --set $ipSet src -j DROP;;
+    MicrosoftSpyServers) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set --set $ipSet dst -j DROP;;
+    *) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set --set $ipSet src,dst -j DROP;;
+  esac
+done
+```
 ***
 ## Peer Guardian
-Supports only IPSET 4 
+Supports only IPSET 4 (For IPSET 6, see [here](https://www.snbforums.com/threads/peer-guardian-rewrite-for-ipset-v6.37929/), the actual script [here](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader.sh))
 
 Another example is a [PeerGuardian](http://en.wikipedia.org/wiki/PeerGuardian) functionality right on router.
 
