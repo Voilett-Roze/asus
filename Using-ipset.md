@@ -61,6 +61,13 @@ case $(ipset -v | grep -o "v[4,6]") in
     exit 1;;
 esac
 
+# Wait if this is run early on (before the router has internet connectivity) [Needed for wget to download files]
+while ! ping -q -c 1 google.com >/dev/null 2>&1; do
+  sleep 1
+  WaitSeconds=$((WaitSeconds+1))
+  [ WaitSeconds -gt 300 ] && logger -t Firewall "$0: Warning: Router not online! Aborting after a wait of 5 minutes..." && exit 1
+done
+
 # Allow traffic from AcceptList [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
 if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
   if $(ipset $SWAP AcceptList AcceptList 2>&1 | grep -q "$SETNOTFOUND"); then
