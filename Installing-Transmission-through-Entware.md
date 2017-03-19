@@ -86,7 +86,7 @@ Everything is now configured.  You can manually start it immediately (it will au
 /opt/etc/init.d/S88transmission start
 ```
 
-Access it through http://asus.router.com:9091/transmission 
+Access it through http://router.asus.com:9091/transmission 
 ### EMAIL NOTIFICATIONS
 If you have a slow internet connection and you want to be notified when a torrent has finished downloading, place the following script which I called _tmail.sh_ in /jffs/scripts but first don't forget to fill: SMTP, FROM, TO, USER and PASS with your credentials.
 
