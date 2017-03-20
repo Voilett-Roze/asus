@@ -5,7 +5,7 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty;
 * express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
-> **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x. If you want to use IPSET 6.x for Peer Guardian and/or other block lists from [iblocklist.com] (https://www.iblocklist.com/lists), you can check out [this] (https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) thread_
+> **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x. If you want to use IPSET 6.x for Peer Guardian and/or other block lists from [iblocklist.com](https://www.iblocklist.com/lists), you can check out [this](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) thread_
 
 # Tor, Countries, M$ Telemetry, BruteForceLogins Block 
 Supports both IPSET 4 and 6
