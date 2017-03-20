@@ -432,24 +432,27 @@ fi
 This scripts add Loopia support using curl just edit hostname and cred.
 ```
 #!/bin/sh
-# https://support.loopia.com/wiki/CURL
-# Add your credentials here
-cred=username:password
-hostname=domain.com
-# Don't edit anything beyond this point
-burl=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
-wanip=$(curl -s ipecho.net/plain)
-url="$burl"'?hostname='"$hostname"'&'myip="$wanip&wildcard=NOCHG"
+#https://support.loopia.com/wiki/CURL
+url=							# add the domain name here (example: test.com)
+credentials=					# add username and password here (example: username:password)
+
+resolver=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
+wanip=`nvram get wan_ipaddr`
 
 loopia_dns_update() {
-  CMD=$(curl -s --user "$cred" "$url")
-  logger -s -t ddns "ddns status: $CMD"
-  case "$CMD" in
+for domain in $url
+do
+   redirect="$resolver"'?hostname='"$domain"'&'myip="$wanip&wildcard=NOCHG"
+   status=$(curl -s --user "$credentials" "$redirect")
+   logger -s -t ddns "The following domain $domain reports $status"
+done
+case "$status" in
     good*|nochg*) /sbin/ddns_custom_updated 1 ;;
     abuse) /sbin/ddns_custom_updated 1 ;;
     *) /sbin/ddns_custom_updated 0 ;;
-  esac
+esac
 }
+
 loopia_dns_update
 exit 0
 ```
