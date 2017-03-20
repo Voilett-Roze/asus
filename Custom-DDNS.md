@@ -433,8 +433,8 @@ This scripts add Loopia support using curl just edit hostname and cred.
 ```
 #!/bin/sh
 #https://support.loopia.com/wiki/CURL
-url=							# add the domain name here (example: test.com)
-credentials=					# add username and password here (example: username:password)
+url=                                            # add the domain name here (example: test.com)
+credentials=                                    # add username and password here (example: username:password)
 
 resolver=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
 wanip=`nvram get wan_ipaddr`
