@@ -49,7 +49,7 @@ Script called at the end of a DDNS update process.  This script is also called w
 also responsible for reporting the success or failure of the update process.  See the [Custom DDNS](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS) section for more information.
 
 ### update-notification
-Script called when the scheduled new firmware version availability check detects there's a new firmware available for download.
+Script called when the scheduled new firmware version availability check detects there's a new firmware available for download. See [update notification example](https://github.com/RMerl/asuswrt-merlin/wiki/update-notification-example) for more info.
 
 
 ## Postconf scripts
