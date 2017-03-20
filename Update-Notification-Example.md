@@ -1,6 +1,7 @@
 Here is an update notification with Pushbullet/Pushover/Mail Notifications feel free to modify and append upon this script, set the script to location below and make it executable and in the webui in the meny "Tools > Other Settings" set the value "New firmware version check" to "Yes" the script will check every 48 hours.
  
-> /jffs/scripts/update-notification 
+> /jffs/scripts/update-notification
+
 > chmod +x /jffs/scripts/update-notification 
 
 
