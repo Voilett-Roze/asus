@@ -35,21 +35,27 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 5. [Policy-based routing - manual method](/RMerl/asuswrt-merlin/wiki/Policy-based-routing-(manual-method))
 
 ### External software repositories
+
+#### Entware
 1. [Setting up Entware](/RMerl/asuswrt-merlin/wiki/Entware) (Optware alternative)
 2. [Setting up New Generation Entware](https://github.com/Entware-ng/Entware-ng/wiki/Install-on-asuswrt-merlin-firmware) (External link)
-3. [Setting up New Generation Optware](http://www.hqt.ro/how-to-install-new-generation-optware/) (External link)
-4. [Setting up Optware](/RMerl/asuswrt-merlin/wiki/Initialize-OPTWARE)
-5. [Installing Transmission through Optware](/RMerl/asuswrt-merlin/wiki/Transmission-through-Optware)
-6. [Installing Transmission through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Transmission-through-Entware)
-7. [Cherokee Web Server](http://www.hqt.ro/cherokee-web-server-through-optware) (External link)
-8. [PyLoad Download Manager through Optware](http://www.hqt.ro/pyload-download-manager-through-optware) (External link)
-9. [Lighttpd web server with PHP support through Entware](/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware)
-10. [Minidlna Upnp Media Server through debian](/RMerl/asuswrt-merlin/wiki/Media-Server-through-debian) (link list)
-11. [Installing RuTorrent through Entware](http://www.hqt.ro/rutorrent-on-asuswrt-router-through-entware) (External link)
-12. [Webcam video surveillance Optware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer) (External link)
-13. [Installing Deluge through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Deluge-through-Entware)
-14. [Webcam video surveillance Entware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer-entware/) (External link)
-15. [Plex Media Server on Arm Routers](http://www.hqt.ro/plex-media-server-through-debian-arm/) (External link)
+3. [Installing Transmission through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Transmission-through-Entware)
+4. [Lighttpd web server with PHP support through Entware](/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware)
+5. [Installing RuTorrent through Entware](http://www.hqt.ro/rutorrent-on-asuswrt-router-through-entware) (External link)
+6. [Installing Deluge through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Deluge-through-Entware)
+7. [Webcam video surveillance Entware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer-entware/) (External link)
+
+#### Optware
+1. [Setting up New Generation Optware](http://www.hqt.ro/how-to-install-new-generation-optware/) (External link)
+2. [Setting up Optware](/RMerl/asuswrt-merlin/wiki/Initialize-OPTWARE)
+3. [Installing Transmission through Optware](/RMerl/asuswrt-merlin/wiki/Transmission-through-Optware)
+4. [Cherokee Web Server](http://www.hqt.ro/cherokee-web-server-through-optware) (External link)
+5. [PyLoad Download Manager through Optware](http://www.hqt.ro/pyload-download-manager-through-optware) (External link)
+6. [Webcam video surveillance Optware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer) (External link)
+
+#### Chroot Debian
+1. [Plex Media Server on Arm Routers](http://www.hqt.ro/plex-media-server-through-debian-arm/) (External link)
+2. [Minidlna Upnp Media Server through debian](/RMerl/asuswrt-merlin/wiki/Media-Server-through-debian) (link list)
 
 ### Development
 1. [Download the latest source code from GitHub](/RMerl/asuswrt-merlin/wiki/Download-the-latest-source-code-from-GitHub)
