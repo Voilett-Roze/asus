@@ -5,7 +5,7 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty;
 * express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
-> **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x_
+> **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x. If you want to use IPSET 6.x for Peer Guardian and/or other block lists from [iblocklist.com] (https://www.iblocklist.com/lists), you can check out [this] (https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) thread_
 
 # Tor, Countries, M$ Telemetry, BruteForceLogins Block 
 Supports both IPSET 4 and 6
@@ -30,11 +30,11 @@ BLOCKLISTS_SAVE_DAYS=15
 USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE=disabled # [enabled|disabled]
 
 # Block incoming traffic from some countries. cn and pk is for China and Pakistan. See other countries code at http://www.ipdeny.com/ipblocks/
-BLOCKED_COUNTRY_LIST="br cn jp kr pk sa sc tr tw ua vn"
+BLOCKED_COUNTRY_LIST="br cn kp kr pk sa tr tw ua vn"
 
 # Use DROP or REJECT for iptable rule for the ipset. Briefly, for DROP, attacker (or IP being blocked) will get no response and timeout, and REJECT will send immediate response of destination-unreachable (Attacker will know your IP is actively rejecting requests)
 # See: http://www.chiark.greenend.org.uk/~peterb/network/drop-vs-reject and http://serverfault.com/questions/157375/reject-vs-drop-when-using-iptables
-IPTABLES_RULE_TAREGT=DROP # [DROP|REJECT]
+IPTABLES_RULE_TARGET=DROP # [DROP|REJECT]
 
 # Preparing folder to cache downloaded files
 IPSET_LISTS_DIR=/jffs/ipset_lists
@@ -61,8 +61,8 @@ case $(ipset -v | grep -o "v[4,6]") in
     exit 1;;
 esac
 
-# Wait if this is run early on (before the router has internet connectivity) [Needed for wget to download files]
-while ! ping -q -c 1 google.com >/dev/null 2>&1; do
+# Wait if this is run early on (before the router has internet connectivity) [Needed by wget to download files]
+while ! ping -q -c 1 google.com &>/dev/null; do
   sleep 1
   WaitSeconds=$((WaitSeconds+1))
   [ $WaitSeconds -gt 300 ] && logger -t Firewall "$0: Warning: Router not online! Aborting after a wait of 5 minutes..." && exit 1
@@ -93,7 +93,7 @@ if $(ipset $SWAP BruteForceLogins BruteForceLogins 2>&1 | grep -q "$SETNOTFOUND"
   done
   logger -t Firewall "$0: Added BruteForceLogins list ($entryCount entries)"
 fi
-iptables-save | grep -q BruteForceLogins || iptables -I INPUT -m set $MATCH_SET BruteForceLogins src -j $IPTABLES_RULE_TAREGT
+iptables-save | grep -q BruteForceLogins || iptables -I INPUT -m set $MATCH_SET BruteForceLogins src -j $IPTABLES_RULE_TARGET
 
 # Block traffic from Tor nodes [IPv4 nodes only]
 if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
@@ -106,7 +106,7 @@ if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   done
   logger -t Firewall "$0: Added TorNodes list ($entryCount entries)"
 fi
-iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j $IPTABLES_RULE_TAREGT
+iptables-save | grep -q TorNodes || iptables -I INPUT -m set $MATCH_SET TorNodes src -j $IPTABLES_RULE_TARGET
 
 # Country blocking by nethashes [Both IPv4 and IPv6 sources]
 if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"); then
@@ -121,7 +121,7 @@ if $(ipset $SWAP BlockedCountries BlockedCountries 2>&1 | grep -q "$SETNOTFOUND"
     logger -t Firewall "$0: Added country [$country] to BlockedCountries list ($entryCount entries)"
   done
 fi
-iptables-save | grep -q BlockedCountries || iptables -I INPUT -m set $MATCH_SET BlockedCountries src -j $IPTABLES_RULE_TAREGT
+iptables-save | grep -q BlockedCountries || iptables -I INPUT -m set $MATCH_SET BlockedCountries src -j $IPTABLES_RULE_TARGET
 if [ $(nvram get ipv6_fw_enable) -eq 1 -a "$(nvram get ipv6_service)" != "disabled" ]; then
   if $(ipset $SWAP BlockedCountries6 BlockedCountries6 2>&1 | grep -q "$SETNOTFOUND"); then
     [  -n "$NETHASH6" ] && ipset $CREATE BlockedCountries6 $NETHASH6
@@ -133,7 +133,7 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 -a "$(nvram get ipv6_service)" != "disabl
         if [ -n "$NETHASH6" ]; then
           ipset $ADD BlockedCountries6 $IP6
         elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
-          ip6tables -A INPUT -s $IP6 -j $IPTABLES_RULE_TAREGT
+          ip6tables -A INPUT -s $IP6 -j $IPTABLES_RULE_TARGET
         fi
         [ $? -eq 0 ] && entryCount=$((entryCount+1))
       done
@@ -145,7 +145,7 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 -a "$(nvram get ipv6_service)" != "disabl
     done
   fi
   if [ -n "$NETHASH6" ]; then
-    ip6tables -L | grep -q BlockedCountries6 || ip6tables -I INPUT -m set $MATCH_SET BlockedCountries6 src -j $IPTABLES_RULE_TAREGT
+    ip6tables -L | grep -q BlockedCountries6 || ip6tables -I INPUT -m set $MATCH_SET BlockedCountries6 src -j $IPTABLES_RULE_TARGET
   elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" -a ! -e "/tmp/ipv6_country_blocks_loaded" ]; then
     logger -t Firewall "$0: Creating [/tmp/ipv6_country_blocks_loaded] to prevent accidental reloading of country blocklists in ip6table rules."
     touch /tmp/ipv6_country_blocks_loaded
@@ -168,7 +168,7 @@ if $(ipset $SWAP MicrosoftSpyServers MicrosoftSpyServers 2>&1 | grep -q "$SETNOT
   done
   logger -t Firewall "$0: Added MicrosoftSpyServers list ($entryCount entries)"
 fi
-iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers dst -j $IPTABLES_RULE_TAREGT
+iptables-save | grep -q MicrosoftSpyServers || iptables -I FORWARD -m set $MATCH_SET MicrosoftSpyServers dst -j $IPTABLES_RULE_TARGET
 
 # Block traffic from custom block list [IPv4 only]
 if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
@@ -181,7 +181,7 @@ if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
     done
     logger -t Firewall "$0: Added CustomBlock list ($entryCount entries)"
   fi
-  iptables-save | grep -q CustomBlock || iptables -I INPUT -m set $MATCH_SET CustomBlock src -j $IPTABLES_RULE_TAREGT
+  iptables-save | grep -q CustomBlock || iptables -I INPUT -m set $MATCH_SET CustomBlock src -j $IPTABLES_RULE_TARGET
 fi
 ```
 
