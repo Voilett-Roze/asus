@@ -1,4 +1,3 @@
-# update-notification example
 Here is an update notification with Pushbullet/Pushover/Mail Notifications feel free to modify and append upon this script.
 
 ```
