@@ -93,11 +93,12 @@ source /usr/sbin/helper.sh
 pc_replace "dhcp-lease-max=253" "dhcp-lease-max=100" $CONFIG
 ```
 
-Three functions are currently available through _helper.sh_:
+The following functions are currently available through _helper.sh_:
 
 ```
 pc_replace "original string" "new string" "config filename"
 pc_insert "string to locate" "string to insert after" "config filename"
 pc_append "string to append" "config filename"
+pc_delete "string within line to delete" "config filename"
 ```
 Note that postconf scripts are blocking the firmware while they run, to ensure the service only gets started once the script is done.  Make sure those scripts do exit properly, or the router will be stuck during boot, requiring a factory default reset to recover it.
