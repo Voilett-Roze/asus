@@ -90,8 +90,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 9. [Setting-up-FreeRadius2-through-Entware](/RMerl/asuswrt-merlin/wiki/Setting-up-FreeRadius2-through-Entware)
 10. [User NVRAM Save/Restore](/RMerl/asuswrt-merlin/wiki/Can-I-restore-my-settings-after-a-factory-reset%3F--Can-I-restore-my-settings-to-a-different-router%3F)
 11. [Transfer (sync) a backup to a remote location using Rsync through a SSH tunnel between 2 Asus routers](/RMerl/asuswrt-merlin/wiki/Transfer-(sync)-a-backup-to-a-remote-location-using-Rsync-through-a-SSH-tunnel-between-2-Asus-routers)
-12. [Setting a random password for guest wifi]
-(/RMerl/asuswrt-merlin/wiki/Setting-a-random-password-for-guest-wifi)
+12. [Setting a random password for guest wifi](/RMerl/asuswrt-merlin/wiki/Setting-a-random-password-for-guest-wifi)
 13. [Tinc VPN on AsusWRT-Merlin](http://nwgat.ninja/tinc-vpn-on-asuswrt-merlin/) (External Link)
 14. [LUKS Encrypted USB Drive HOWTO](LUKS-Encrypted-USB-Drive-HOWTO)
 15. [Disk Check at Boot](/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot)
