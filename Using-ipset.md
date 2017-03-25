@@ -418,36 +418,39 @@ save it this will make malware-block run every 12th hour and update the router, 
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife, visortgw, Cedarhillguy, redhat27
 # Testers: shooter40sw
 # Supporters: lesandie
-# Revision 19
+# Revision 20
 
 blocklist=/jffs/malware-filter.list                     # Set your path here
+fwoption=REJECT                                         # DROP/REJECT    (Default Value: REJECT)
 retries=3                                               # Set number of tries here
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
 case $(ipset -v | grep -o "v[4,6]") in
-  v6)
-    MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; NETHASH='hash:net family inet'; FLUSH='flush'; DESTROY='destroy';
-    lsmod | grep -q "xt_set" || \
-    for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
-      insmod $module
-    done;;
-  v4)
-    MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; NETHASH='nethash'; FLUSH='--flush'; DESTROY='--destroy'
-    lsmod | grep -q "ipt_set" || \
-    for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
-      insmod $module
-    done;;
-  *) echo "unsupported version"; exit 1 ;;
+  v6)   MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; DESTROY='destroy';
+        lsmod | grep -q "xt_set" || \
+        for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
+            insmod $module
+        done ;;
+  v4)   MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; DESTROY='--destroy';
+        lsmod | grep -q "ipt_set" || \
+        for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
+            insmod $module
+        done ;;
+  *)    logger -t system "$0 unsupported ipset version"; exit 1 ;;
 esac
 
 check_online () {
-  ping -q -c 1 google.com >/dev/null 2>&1 && get_list || exit 1
+while ! ping -q -c 1 google.com >/dev/null 2>&1; do
+    sleep 1
+    WaitSeconds=$((WaitSeconds+1))
+    [ $WaitSeconds -gt 300 ] && logger -t system "$0 Router not online! Aborting after a wait of 5 minutes..." && exit 1
+done
 }
 
 get_list () {
 url=https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter.list
 if [ ! -f $blocklist ]
-then wget $url -O $blocklist; get_source; else get_source; fi 
+then wget $url -O $blocklist; get_source; else get_source; fi
 }
 
 get_source () {
@@ -461,13 +464,13 @@ echo "adding ipset rule to firewall this will take time."
 ipset -L malware-filter >/dev/null 2>&1
 if [ $? -ne 0 ]; then
     if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    nice -n 2 ipset $CREATE malware-filter $IPHASH 
+    nice -n 2 ipset $CREATE malware-filter $IPHASH
     if [ -f /opt/bin/xargs ]; then
     /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset  $ADD malware-filter PARAM
     else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $ADD malware-filter {}; fi
 fi
 else
-    nice -n 2 ipset $CREATE malware-update $IPHASH 
+    nice -n 2 ipset $CREATE malware-update $IPHASH
     if [ -f /opt/bin/xargs ]; then
     /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset  $ADD malware-update PARAM
     else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $ADD malware-update {}; fi
@@ -476,18 +479,19 @@ else
 fi
 iptables -L | grep malware-filter > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j $fwoption
 else
-    nice -n 2 iptables -D FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j REJECT
+    nice -n 2 iptables -D FORWARD -m set $MATCH_SET malware-filter src,dst -j $fwoption
+    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j $fwoption
 fi }
 
 cleanup () {
-logger -s -t system "Malware Filter loaded $(ipset -L malware-filter | wc -l | awk '{print $1-7}') unique ip addresses."
+logger -t system "$0 loaded $(ipset -L malware-filter | wc -l | awk '{print $1-7}') unique ip addresses."
 find /tmp -name 'malware-filter-*.part' -exec rm {} +
 }
 
 check_online
+get_list
 run_ipset
 cleanup
 
