@@ -516,10 +516,11 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 # Author: Toast
 # Contributers: Tomsk
 # Supporters: lesandie
-# Revision 14
+# Revision 15
 
 blocklist=/jffs/privacy-filter.list                     # Set your path here 
 retries=3                                               # Set number of tries here
+fwoption=REJECT                                         # DROP/REJECT    (Default Value: REJECT)
 
 # Dont change this value
 regexp_v4=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`
@@ -545,7 +546,11 @@ case $(ipset -v | grep -o "v[4,6]") in
 esac
 
 check_online () {
-  ping -q -c 1 google.com >/dev/null 2>&1 && get_list || exit 1
+while ! ping -q -c 1 google.com >/dev/null 2>&1; do
+  sleep 1
+  WaitSeconds=$((WaitSeconds+1))
+  [ $WaitSeconds -gt 300 ] && logger -t system "$0: Warning: Router not online! Aborting after a wait of 5 minutes..." && exit 1
+done
 }
 
 check_ipv6 () {
@@ -556,6 +561,7 @@ get_list () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
 if [ ! -f $blocklist ]
 then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
+
 fix_list () {
 if [ -f $blocklist ]
 then dos2unix $blocklist; fi
@@ -610,11 +616,12 @@ else
 fi
 iptables -L | grep privacy-filter_ipv4 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j $fwoption
 else
-   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j REJECT
+   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j $fwoption
+   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j $fwoption
 fi }
+
 run_ipset_6 () {
 ipset -L privacy-filter_ipv6 >/dev/null 2>&1
 if [ $? -ne 0 ]; then
@@ -630,10 +637,10 @@ else
 fi
 iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j $fwoption
 else
-   nice -n 2 ip6tables -D FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
-   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j REJECT
+   nice -n 2 ip6tables -D FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j $fwoption
+   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j $fwoption
 fi }
 
 run_blocklists () {
@@ -649,12 +656,12 @@ case $(ipset -v | grep -oE "ipset v[0-9]") in
 esac }
 
 logipv6 () {
-logger -s -t system "Privacy Filter loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses."
+logger -s -t system "Privacy Filter (ipv6) loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses."
 }
 
 cleanup () {
 find /tmp -name 'privacy-filter_ipv*.part' -exec rm {} +
-logger -s -t system "Privacy Filter loaded $(ipset -L  privacy-filter_ipv4 | wc -l | awk '{print $1-7}') unique ip addresses."
+logger -s -t system "Privacy Filter (ipv4) loaded $(ipset -L  privacy-filter_ipv4 | wc -l | awk '{print $1-7}') unique ip addresses."
 check_ipv6 logipv6
 }
 
@@ -663,6 +670,7 @@ fix_list
 run_blocklists
 run_ipset
 cleanup
+
 exit $?
 ```
 Note: save this list as [privacy-filter.list](https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list) in your path on the router, if you set this file in the wrong place the script will automatically download a new copy and set it at either path or failover path.
