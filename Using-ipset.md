@@ -418,7 +418,7 @@ save it this will make malware-block and make it executable run every 12th hour 
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife, visortgw, Cedarhillguy, redhat27
 # Testers: shooter40sw
 # Supporters: lesandie
-# Revision 20
+# Revision 21
 
 blocklist=/jffs/malware-filter.list                     # Set your path here
 fwoption=REJECT                                         # DROP/REJECT    (Default Value: REJECT)
@@ -460,30 +460,28 @@ wget -q --tries=$retries --show-progress -i $blocklist -O /tmp/malware-filter-ra
 }
 
 run_ipset () {
-echo "adding ipset rule to firewall this will take time."
-ipset -L malware-filter >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-    if [ "$(ipset --swap malware-filter malware-filter 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-    nice -n 2 ipset $CREATE malware-filter $IPHASH
-    if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset  $ADD malware-filter PARAM
-    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $ADD malware-filter {}; fi
-fi
-else
-    nice -n 2 ipset $CREATE malware-update $IPHASH
-    if [ -f /opt/bin/xargs ]; then
-    /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 2 ipset  $ADD malware-update PARAM
-    else cat /tmp/malware-filter-sorted.part | xargs -I {} ipset $ADD malware-update {}; fi
-    nice -n 2 ipset $SWAP malware-update malware-filter
-    nice -n 2 ipset $DESTROY malware-update
-fi
-iptables -L | grep malware-filter > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j $fwoption
-else
-    nice -n 2 iptables -D FORWARD -m set $MATCH_SET malware-filter src,dst -j $fwoption
-    nice -n 2 iptables -I FORWARD -m set $MATCH_SET malware-filter src,dst -j $fwoption
+echo "adding malware-filter rules to firewall this will take time."
+! ipset list malware-filter &>/dev/null
+if [ $? -ne 0 ]
+then    nice -n 15 ipset $CREATE malware-update $IPHASH
+        if [ -f /opt/bin/xargs ]; then
+        /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 15 ipset $ADD malware-update PARAM
+        else cat /tmp/malware-filter-sorted.part | xargs -I {} nice -n 15 ipset $ADD malware-update {}; fi
+        nice -n 15 ipset $SWAP malware-update malware-filter
+        nice -n 15 ipset $DESTROY malware-update
+else    nice -n 15 ipset $CREATE malware-filter $IPHASH
+        if [ -f /opt/bin/xargs ]; then
+        /opt/bin/xargs -P10 -I "PARAM" -n1 -a /tmp/malware-filter-sorted.part nice -n 15 ipset $ADD malware-filter PARAM
+        else cat /tmp/malware-filter-sorted.part | xargs -I {} nice -n 15 ipset $ADD malware-filter {}; fi
 fi }
+
+set_firewall () {
+for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
+    case $ipSet in
+        malware-filter) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet src,dst -j $fwoption ;;
+    esac
+done
+}
 
 cleanup () {
 logger -t system "$0 loaded $(ipset -L malware-filter | wc -l | awk '{print $1-7}') unique ip addresses."
@@ -493,6 +491,7 @@ find /tmp -name 'malware-filter-*.part' -exec rm {} +
 check_online
 get_list
 run_ipset
+set_firewall
 cleanup
 
 exit $?
