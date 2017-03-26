@@ -410,7 +410,7 @@ and append
 
 > cru a malware-filter "0 */12 * * * /jffs/scripts/malware-block"
 
-save it this will make malware-block run every 12th hour and update the router, for all the temporary files it uses TMP dir for storage this will not cause wear and tear.
+save it this will make malware-block and make it executable run every 12th hour and update the router, for all the temporary files it uses TMP dir for storage this will not cause wear and tear.
 
 ```
 #!/bin/sh
