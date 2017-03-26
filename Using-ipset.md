@@ -519,7 +519,7 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 # Author: Toast
 # Contributers: Tomsk
 # Supporters: lesandie
-# Revision 15
+# Revision 16
 
 blocklist=/jffs/privacy-filter.list                     # Set your path here 
 retries=3                                               # Set number of tries here
@@ -564,12 +564,8 @@ get_list () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
 if [ ! -f $blocklist ]
 then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
-
 fix_list () {
-if [ -f $blocklist ]
-then dos2unix $blocklist; fi
-}
-
+if [ -f $blocklist ]; then dos2unix $blocklist; fi }
 run_ipv4_block () {
 if [ -f /tmp/privacy-filter_ipv4_sorted.part ]; then rm /tmp/privacy-filter_ipv4_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
@@ -605,45 +601,25 @@ else    if [ -z "$(which /opt/bin/xargs)" ]
 }
        
 run_ipset_4 () {
-ipset -L privacy-filter_ipv4 >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-   if [ "$(ipset $SWAP privacy-filter_ipv4 privacy-filter_ipv4 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-   nice ipset $CREATE privacy-filter_ipv4 $IPHASH
-   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $ADD privacy-filter_ipv4 {}
-fi
-else
-   nice -n 2 ipset $CREATE privacy-update_ipv4 $IPHASH
-   cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv4 {}
-   nice -n 2 ipset $SWAP privacy-update_ipv4 privacy-filter_ipv4
-   nice -n 2 ipset $DESTROY privacy-update_ipv4
-fi
-iptables -L | grep privacy-filter_ipv4 > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j $fwoption
-else
-   nice -n 2 iptables -D FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j $fwoption
-   nice -n 2 iptables -I FORWARD -m set $MATCH_SET privacy-filter_ipv4 src,dst -j $fwoption
+! ipset list privacy-filter_ipv4 &>/dev/null 
+if [ $? -ne 0 ]
+then    nice -n 15 ipset $CREATE privacy-update_ipv4 $IPHASH
+        cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv4 {}
+        nice -n 15 ipset $SWAP privacy-update_ipv4 privacy-filter_ipv4
+        nice -n 15 ipset $DESTROY privacy-update_ipv4
+else    nice -n 15 ipset $CREATE privacy-filter_ipv4 $IPHASH
+        cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $ADD privacy-filter_ipv4 {}
 fi }
 
 run_ipset_6 () {
-ipset -L privacy-filter_ipv6 >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-   if [ "$(ipset $SWAP privacy-filter_ipv6 privacy-filter_ipv6 2>&1 | grep -E 'Unknown set|The set with the given name does not exist')" != "" ]; then
-   nice ipset $CREATE privacy-filter_ipv6 $IPHASH $INET6
-   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $ADD privacy-filter_ipv6 {}
-fi
-else
-   nice -n 2 ipset -N privacy-update_ipv6 $IPHASH $INET6
-   cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv6 {}
-   nice -n 2 ipset $SWAP privacy-update_ipv6 privacy-filter_ipv6
-   nice -n 2 ipset $DESTROY privacy-update_ipv6
-fi
-iptables -L | grep privacy-filter_ipv6 > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j $fwoption
-else
-   nice -n 2 ip6tables -D FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j $fwoption
-   nice -n 2 ip6tables -I FORWARD -m set $MATCH_SET privacy-filter_ipv6 src,dst -j $fwoption
+! ipset list privacy-filter_ipv6 &>/dev/null 
+if [ $? -ne 0 ] 
+then    nice -n 15 ipset $CREATE privacy-update_ipv6 $IPHASH $INET6
+        cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv6 {}
+        nice -n 15 ipset $SWAP privacy-update_ipv6 privacy-filter_ipv6
+        nice -n 15 ipset $DESTROY privacy-update_ipv6
+else    nice -n 15 ipset $CREATE privacy-filter_ipv6 $IPHASH $INET6
+        cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $ADD privacy-filter_ipv6 {}
 fi }
 
 run_blocklists () {
@@ -657,6 +633,15 @@ run_ipset_4
 case $(ipset -v | grep -oE "ipset v[0-9]") in
 *v6) check_ipv6 run_ipset_6 ;;
 esac }
+
+set_firewall () {
+for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
+    case $ipSet in
+        privacy-filter_ipv4) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet src,dst -j $fwoption ;;
+        privacy-filter_ipv6) iptables-save | grep -q "$ipSet" || ip6tables -I FORWARD -m set $MATCH_SET $ipSet src,dst -j $fwoption ;;
+    esac
+done    
+}
 
 logipv6 () {
 logger -s -t system "Privacy Filter (ipv6) loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses."
@@ -672,6 +657,7 @@ check_online
 fix_list
 run_blocklists
 run_ipset
+set_firewall
 cleanup
 
 exit $?
