@@ -564,8 +564,10 @@ get_list () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
 if [ ! -f $blocklist ]
 then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
+
 fix_list () {
 if [ -f $blocklist ]; then dos2unix $blocklist; fi }
+
 run_ipv4_block () {
 if [ -f /tmp/privacy-filter_ipv4_sorted.part ]; then rm /tmp/privacy-filter_ipv4_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
