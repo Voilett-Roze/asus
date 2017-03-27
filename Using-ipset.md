@@ -5,7 +5,7 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty;
 * express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
-# Tor, Countries, M$ Telemetry, BruteForceLogins Block 
+# Tor and Countries Block 
 Supports both IPSET 4 and 6
 
 This is an example of using [ipset utility](http://manpages.ubuntu.com/manpages/lucid/man8/ipset.8.html) with two different set types: iphash and nethash. The example shows how to block incoming connection from [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
@@ -66,33 +66,6 @@ while ! ping -q -c 1 google.com &>/dev/null; do
   [ $WaitSeconds -gt 300 ] && logger -t Firewall "$0: Warning: Router not online! Aborting after a wait of 5 minutes..." && exit 1
 done
 
-# Allow traffic from AcceptList [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
-if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
-  if $(ipset $SWAP AcceptList AcceptList 2>&1 | grep -q "$SETNOTFOUND"); then
-    ipset $CREATE AcceptList $NETHASH
-    [ $? -eq 0 ] && entryCount=0
-    for IP in $(cat $IPSET_LISTS_DIR/whitelist.lst); do
-      [ "${IP##*/}" == "$IP" ] && ipset $ADD AcceptList $IP/31 || ipset $ADD AcceptList $IP
-      [ $? -eq 0 ] && entryCount=$((entryCount+1))
-    done
-    logger -t Firewall "$0: Added AcceptList ($entryCount entries)"
-  fi
-  iptables-save | grep -q AcceptList || iptables -I INPUT -m set $MATCH_SET AcceptList src -j ACCEPT
-fi
-
-# Block traffic from known brute-force ssh login attempters [IPv4 nodes only]
-if $(ipset $SWAP BruteForceLogins BruteForceLogins 2>&1 | grep -q "$SETNOTFOUND"); then
-  ipset $CREATE BruteForceLogins $IPHASH
-  [ $? -eq 0 ] && entryCount=0
-  [ ! -e "$IPSET_LISTS_DIR/brute.lst" -o -n "$(find $IPSET_LISTS_DIR/brute.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/brute.lst https://lists.blocklist.de/lists/bruteforcelogin.txt
-  for IP in $(cat $IPSET_LISTS_DIR/brute.lst); do
-    ipset $ADD BruteForceLogins $IP
-    [ $? -eq 0 ] && entryCount=$((entryCount+1))
-  done
-  logger -t Firewall "$0: Added BruteForceLogins list ($entryCount entries)"
-fi
-iptables-save | grep -q BruteForceLogins || iptables -I INPUT -m set $MATCH_SET BruteForceLogins src -j $IPTABLES_RULE_TARGET
-
 # Block traffic from Tor nodes [IPv4 nodes only]
 if $(ipset $SWAP TorNodes TorNodes 2>&1 | grep -q "$SETNOTFOUND"); then
   ipset $CREATE TorNodes $IPHASH
@@ -126,12 +99,12 @@ if [ $(nvram get ipv6_fw_enable) -eq 1 -a "$(nvram get ipv6_service)" != "disabl
     for country in ${BLOCKED_COUNTRY_LIST}; do
       [ -e "/tmp/ipv6_country_blocks_loaded" ] && logger -t Firewall "$0: Country block rules has already been loaded into ip6tables... Skipping." && break
       entryCount=0
-      [ ! -e "$IPSET_LISTS_DIR/${country}6.lst" -o -n "$(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
+      [  -n "$NETHASH6" -o $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ] && [ ! -e "$IPSET_LISTS_DIR/${country}6.lst" -o -n "$(find $IPSET_LISTS_DIR/${country}6.lst -mtime +$BLOCKLISTS_SAVE_DAYS -print 2>/dev/null)" ] && wget -q -O $IPSET_LISTS_DIR/${country}6.lst http://www.ipdeny.com/ipv6/ipaddresses/aggregated/${country}-aggregated.zone
       for IP6 in $(cat $IPSET_LISTS_DIR/${country}6.lst); do
         if [ -n "$NETHASH6" ]; then
           ipset $ADD BlockedCountries6 $IP6
         elif [ $USE_IP6TABLES_IF_IPSETV6_UNAVAILABLE = "enabled" ]; then
-          ip6tables -A INPUT -s $IP6 -j $IPTABLES_RULE_TARGET
+          ip6tables -I INPUT -s $IP6 -j $IPTABLES_RULE_TARGET
         fi
         [ $? -eq 0 ] && entryCount=$((entryCount+1))
       done
@@ -181,6 +154,20 @@ if [ -e $IPSET_LISTS_DIR/custom.lst ]; then
   fi
   iptables-save | grep -q CustomBlock || iptables -I INPUT -m set $MATCH_SET CustomBlock src -j $IPTABLES_RULE_TARGET
 fi
+
+# Allow traffic from AcceptList [IPv4 only] [$IPSET_LISTS_DIR/whitelist.lst can contain a combination of IPv4 IP or IPv4 netmask]
+if [ -e $IPSET_LISTS_DIR/whitelist.lst ]; then
+  if $(ipset $SWAP AcceptList AcceptList 2>&1 | grep -q "$SETNOTFOUND"); then
+    ipset $CREATE AcceptList $NETHASH
+    [ $? -eq 0 ] && entryCount=0
+    for IP in $(cat $IPSET_LISTS_DIR/whitelist.lst); do
+      [ "${IP##*/}" == "$IP" ] && ipset $ADD AcceptList $IP/31 || ipset $ADD AcceptList $IP
+      [ $? -eq 0 ] && entryCount=$((entryCount+1))
+    done
+    logger -t Firewall "$0: Added AcceptList ($entryCount entries)"
+  fi
+  iptables-save | grep -q AcceptList || iptables -I INPUT -m set $MATCH_SET AcceptList src -j ACCEPT
+fi
 ```
 
 then make it executable:
@@ -207,14 +194,14 @@ alias blockstats='iptables -L -v | grep "match-set"; ip6tables -L -v | grep "mat
 ```
 Then you can just issue 'blockstats' from the command prompt to see how well your blocklists are doing (see blocked packet count and byte count)
 
-Note that every time you do something on the web UI or through your [android app] (https://play.google.com/store/apps/details?id=com.asus.aihome) to control your router _that affects reloading the firewall rules_, `/jffs/scripts/firewall-start` will be called, so the iptables rules that are defined outside will be wiped out. To reinstate the rules as defined by this script, you'd need to add this to your _existing_ `/jffs/scripts/firewall-start`:
+Note that every time you do something on the web UI or through your [android app](https://play.google.com/store/apps/details?id=com.asus.aihome) to control your router _that affects reloading the firewall rules_, `/jffs/scripts/firewall-start` will be called, so the iptables rules that are defined outside will be wiped out. To reinstate the rules as defined by this script, you'd need to add this to your _existing_ `/jffs/scripts/firewall-start`:
 ```
 # Reinstate the ipset rules if they have been created already
 [ "$(uname -m)" = "mips" ] && MATCH_SET='--set' || MATCH_SET='--match-set'
 for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
   case $ipSet in
     AcceptList) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set $MATCH_SET $ipSet src -j ACCEPT;;
-    BruteForceLogins|TorNodes|BlockedCountries|CustomBlock) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set $MATCH_SET $ipSet src -j DROP;;
+    TorNodes|BlockedCountries|CustomBlock) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set $MATCH_SET $ipSet src -j DROP;;
     MicrosoftSpyServers) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet dst -j DROP;;
     *) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet src,dst -j DROP;;
   esac
