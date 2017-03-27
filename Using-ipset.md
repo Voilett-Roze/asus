@@ -44,7 +44,7 @@ case $(ipset -v | grep -o "v[4,6]") in
     MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; NETHASH='hash:net family inet'; NETHASH6='hash:net family inet6'; SETNOTFOUND='name does not exist'
     # Loading ipset modules
     lsmod | grep -q "xt_set" || \
-    for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
+    for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set; do
       insmod $module
     done;;
   v4)
