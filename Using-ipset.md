@@ -507,7 +507,7 @@ So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-1
 # Author: Toast
 # Contributers: Tomsk
 # Supporters: lesandie
-# Revision 16
+# Revision 17
 
 blocklist=/jffs/privacy-filter.list                     # Set your path here 
 retries=3                                               # Set number of tries here
@@ -521,19 +521,15 @@ local_v6=`echo "!(^(fc00::)"`
 # Dont change this value
 
 case $(ipset -v | grep -o "v[4,6]") in
-  v6)
-    MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; NETHASH='hash:net family inet'; FLUSH='flush'; DESTROY='destroy'; INET6='family inet6';
-    lsmod | grep -q "xt_set" || \
-    for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
-      insmod $module
-    done;;
-  v4)
-    MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; NETHASH='nethash'; FLUSH='--flush'; DESTROY='--destroy' INET6=''
-    lsmod | grep -q "ipt_set" || \
-    for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
-      insmod $module
-    done;;
-  *) echo "unsupported version"; exit 1 ;;
+  v6)   MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; NETHASH='hash:net family inet'; FLUSH='flush'; DESTROY='destroy'; INET6='family inet6'; LIST='list'; 
+        lsmod | grep -q "xt_set" || \
+        for module in ip_set ip_set_nethash ip_set_iphash xt_set
+        do insmod $module; done ;;
+  v4)   MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; NETHASH='nethash'; FLUSH='--flush'; DESTROY='--destroy' INET6=''; LIST='--list'; 
+        lsmod | grep -q "ipt_set" || \
+        for module in ip_set ip_set_nethash ip_set_iphash ipt_set
+        do insmod $module; done ;;
+  *)    logger -t system "Privacy-filter detected an unsupported ipset version"; exit 1 ;;
 esac
 
 check_online () {
@@ -550,8 +546,7 @@ check_ipv6 () {
 
 get_list () {
 url=https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter.list
-if [ ! -f $blocklist ]
-then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
+if [ ! -f $blocklist ]; then wget -q --tries=$retries --show-progress $url -O $blocklist; fi }
 
 fix_list () {
 if [ -f $blocklist ]; then dos2unix $blocklist; fi }
@@ -567,12 +562,12 @@ else    if [ -z "$(which /opt/bin/xargs)" ]
             then cat $blocklist | xargs -n 5 -I {} sh -c "hostip {} >> "/tmp/privacy-filter_ipv4.prelist""
             else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip {} >> "/tmp/privacy-filter_ipv4.prelist""; fi
         fi
-       
+        
     if [ -f /tmp/privacy-filter_ipv4_presort.part ]; then
         awk $local_v4 /tmp/privacy-filter_ipv4_presort.part > /tmp/privacy-filter_ipv4.prelist; fi
         if [ -f /tmp/privacy-filter_ipv4.prelist ]; then sort -u /tmp/privacy-filter_ipv4.prelist > /tmp/privacy-filter_ipv4_sorted.part; fi
 }
-       
+        
 run_ipv6_block () {
 if [ -f /tmp/privacy-filter_ipv6_sorted.part ]; then rm /tmp/privacy-filter_ipv6_sorted.part; fi
     if [ -z "$(which hostip)" ]; then
@@ -584,14 +579,14 @@ else    if [ -z "$(which /opt/bin/xargs)" ]
             then cat $blocklist | xargs -n 5 -I {} sh -c "hostip -6 {} >> "/tmp/privacy-filter_ipv6.prelist""
             else cat $blocklist | /opt/bin/xargs -P 10 -n 5 -I {} sh -c "hostip -6 {} >> "/tmp/privacy-filter_ipv6.prelist""; fi
         fi
-       
+        
     if [ -f /tmp/privacy-filter_ipv6_presort.part ]; then
         awk $local_v6 /tmp/privacy-filter_ipv6_presort.part > /tmp/privacy-filter_ipv6.prelist; fi
         if [ -f /tmp/privacy-filter_ipv6.prelist ]; then sort -u /tmp/privacy-filter_ipv6.prelist > /tmp/privacy-filter_ipv6_sorted.part; fi
 }
-       
+        
 run_ipset_4 () {
-! ipset list privacy-filter_ipv4 &>/dev/null 
+! ipset $LIST privacy-filter_ipv4 &>/dev/null 
 if [ $? -ne 0 ]
 then    nice -n 15 ipset $CREATE privacy-update_ipv4 $IPHASH
         cat /tmp/privacy-filter_ipv4_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv4 {}
@@ -602,7 +597,7 @@ else    nice -n 15 ipset $CREATE privacy-filter_ipv4 $IPHASH
 fi }
 
 run_ipset_6 () {
-! ipset list privacy-filter_ipv6 &>/dev/null 
+! ipset $LIST privacy-filter_ipv6 &>/dev/null 
 if [ $? -ne 0 ] 
 then    nice -n 15 ipset $CREATE privacy-update_ipv6 $IPHASH $INET6
         cat /tmp/privacy-filter_ipv6_sorted.part | xargs -I {} ipset $ADD privacy-update_ipv6 {}
@@ -630,16 +625,16 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
         privacy-filter_ipv4) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet src,dst -j $fwoption ;;
         privacy-filter_ipv6) iptables-save | grep -q "$ipSet" || ip6tables -I FORWARD -m set $MATCH_SET $ipSet src,dst -j $fwoption ;;
     esac
-done    
+done 
 }
 
 logipv6 () {
-logger -s -t system "Privacy Filter (ipv6) loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses."
+logger -s -t system "Privacy Filter (ipv6) loaded $(ipset -L  privacy-filter_ipv6 | wc -l | awk '{print $1-7}') unique ip addresses that will be rejected from contacting your router."
 }
 
 cleanup () {
 find /tmp -name 'privacy-filter_ipv*.part' -exec rm {} +
-logger -s -t system "Privacy Filter (ipv4) loaded $(ipset -L  privacy-filter_ipv4 | wc -l | awk '{print $1-7}') unique ip addresses."
+logger -s -t system "Privacy Filter (ipv4) loaded $(ipset -L  privacy-filter_ipv4 | wc -l | awk '{print $1-7}') unique ip addresses that will be rejected from contacting your router."
 check_ipv6 logipv6
 }
 
