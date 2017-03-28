@@ -406,7 +406,7 @@ save it this will make malware-block and make it executable run every 12th hour 
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife, visortgw, Cedarhillguy, redhat27
 # Testers: shooter40sw
 # Supporters: lesandie
-# Revision 21
+# Revision 22
 
 blocklist=/jffs/malware-filter.list                     # Set your path here
 fwoption=REJECT                                         # DROP/REJECT    (Default Value: REJECT)
@@ -414,17 +414,15 @@ retries=3                                               # Set number of tries he
 regexp=`echo "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"`         # Dont change this value
 
 case $(ipset -v | grep -o "v[4,6]") in
-  v6)   MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; DESTROY='destroy';
+  v6)   MATCH_SET='--match-set'; CREATE='create'; ADD='add'; SWAP='swap'; IPHASH='hash:ip'; DESTROY='destroy'; LIST='list';
         lsmod | grep -q "xt_set" || \
-        for module in ip_set ip_set_nethash ip_set_iphash xt_set; do
-            insmod $module
-        done ;;
-  v4)   MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; DESTROY='--destroy';
+        for module in ip_set ip_set_nethash ip_set_iphash xt_set
+        do insmod $module; done ;;
+  v4)   MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; DESTROY='--destroy'; LIST='--list'; 
         lsmod | grep -q "ipt_set" || \
-        for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
-            insmod $module
-        done ;;
-  *)    logger -t system "$0 unsupported ipset version"; exit 1 ;;
+        for module in ip_set ip_set_nethash ip_set_iphash ipt_set
+        do insmod $module; done ;;
+  *)    logger -t system "Malware-filter detected an unsupported ipset version"; exit 1 ;;
 esac
 
 check_online () {
@@ -437,8 +435,7 @@ done
 
 get_list () {
 url=https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter.list
-if [ ! -f $blocklist ]
-then wget $url -O $blocklist; get_source; else get_source; fi
+if [ ! -f $blocklist ]; then wget $url -O $blocklist; get_source; else get_source; fi
 }
 
 get_source () {
@@ -449,7 +446,7 @@ wget -q --tries=$retries --show-progress -i $blocklist -O /tmp/malware-filter-ra
 
 run_ipset () {
 echo "adding malware-filter rules to firewall this will take time."
-! ipset list malware-filter &>/dev/null
+! ipset $LIST malware-filter &>/dev/null
 if [ $? -ne 0 ]
 then    nice -n 15 ipset $CREATE malware-update $IPHASH
         if [ -f /opt/bin/xargs ]; then
@@ -472,7 +469,7 @@ done
 }
 
 cleanup () {
-logger -t system "$0 loaded $(ipset -L malware-filter | wc -l | awk '{print $1-7}') unique ip addresses."
+logger -t system "Malware-filter loaded $(ipset -L malware-filter | wc -l | awk '{print $1-7}') unique ip addresses that will be rejected from contacting your router."
 find /tmp -name 'malware-filter-*.part' -exec rm {} +
 }
 
