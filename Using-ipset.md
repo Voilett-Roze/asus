@@ -7,23 +7,23 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 
 Newer router has Ipset version 6 support while older routers supports Ipset v4, consult the chart below to see your ipset version.
 
-| Routers    | Ipset 4 | Ipset 6 |
-|------------|:-------:|:-------:|
-| RT-N66U    | x       |         |
-| RT-AC56U   |         | x       |
-| RT-AC66U   |         |         |
-| RT-AC66U_B1|         |         |
-| RT-AC68U   |         | x       |
-| RT-AC68P   |         | x       |
-| RT-AC68UF  |         | x       |
-| RT-AC87U   |         | x       |
-| RT-AC88U   |         | x       |
-| RT-AC1750  |         |         |
-| RT-AC1900  |         |         |
-| RT-AC1900P |         |         |
-| RT-AC3100  |         | x       |
-| RT-AC3200  |         | x       |
-| RT-AC5300  |         | x       |
+| `Routers`    |`Ipset 4`|`Ipset 6`|
+|--------------|:-------:|:-------:|
+| `RT-N66U`    | x       |         |
+| `RT-AC56U`   |         | x       |
+| `RT-AC66U`   |         |         |
+| `RT-AC66U_B1`|         |         |
+| `RT-AC68U`   |         | x       |
+| `RT-AC68P`   |         | x       |
+| `RT-AC68UF`  |         | x       |
+| `RT-AC87U`   |         | x       |
+| `RT-AC88U`   |         | x       |
+| `RT-AC1750`  |         |         |
+| `RT-AC1900`  |         |         |
+| `RT-AC1900P` |         |         |
+| `RT-AC3100`  |         | x       |
+| `RT-AC3200`  |         | x       |
+| `RT-AC5300`  |         | x       |
 
 
 # Tor and Countries Block 
