@@ -5,6 +5,27 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty;
 * express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
+Newer router has Ipset version 6 support while older routers supports Ipset v4, consult the chart below to see your ipset version.
+
+| Routers    | Ipset 4 | Ipset 6 |
+|------------|:-------:|:-------:|
+| RT-N66U    | x       |         |
+| RT-AC56U   |         | x       |
+| RT-AC66U   |         |         |
+| RT-AC66U_B1|         |         |
+| RT-AC68U   |         |         |
+| RT-AC68P   |         |         |
+| RT-AC68UF  |         |         |
+| RT-AC87U   |         | x       |
+| RT-AC88U   |         | x       |
+| RT-AC1750  |         |         |
+| RT-AC1900  |         |         |
+| RT-AC1900P |         |         |
+| RT-AC3100  |         |         |
+| RT-AC3200  |         |         |
+| RT-AC5300  |         | x       |
+
+
 # Tor and Countries Block 
 Supports both IPSET 4 and 6
 
