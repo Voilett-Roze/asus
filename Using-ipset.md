@@ -27,6 +27,17 @@ _Consult the chart below to see your ipset version._
 | `RT-AC3200`  |         | x       |
 | `RT-AC5300`  |         | x       |
 
+There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers 
+
+| `Scriptname` |`Ipset 4`|`Ipset 6`|`Maintained by`|`Supports other platforms`|Description|
+|--------------|:-------:|:-------:|:-------------:|:------------------------:|:----------:
+|[Tor and Countries Block](https://www.snbforums.com/threads/country-blocking-script.36732/)|x|x|redhat27|no|Block Tor or Countries| 
+|[iblocklist-loader](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/)|x|x|redhat27|no|Peerguardian Replacement| 
+|[Malware Filter](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/)|x|x|swetoast|yes|Malware Blocking|
+|[Privacy Filter](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/)|x|x|swetoast|yes|Privacy|
+|[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#peer-guardian)|x| | |no|Peerguardian|
+|[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#peer-guardian-v2)|x| | |no|Peerguardian|
+|[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#peer-guardian-v3)|x| | |no|Peerguardian|
 
 # Tor and Countries Block 
 Supports both IPSET 4 and 6
@@ -231,7 +242,8 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
 done
 ```
 ***
-## Peer Guardian
+
+# Peer Guardian
 
 > **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x. If you want to use IPSET 6.x for Peer Guardian and/or other block lists from [iblocklist.com](https://www.iblocklist.com/lists), you can check out [this](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) thread_
 
@@ -280,7 +292,7 @@ sh /jffs/scripts/peerguardian.sh
 Please don't close SSH-session until it finishes. Script will blocks [over 8 000 000 IP's addresses](http://www.iblocklist.com/list.php?list=bt_level1) which anti-p2p activity has been seen from.
 
 ***
-## Peer Guardian V2
+# Peer Guardian V2
 Supports only IPSET 4 
 
 Below is a speed optimized version of the peerguardian.sh script above. It does the same thing, but takes less than 30 seconds to run (the shortest run took 20 seconds on my RT-N66U). It might now be possible to run it from `/jffs/scripts/firewall-start`.
@@ -329,11 +341,11 @@ nice ipset --destroy BluetackLevel2
 
 exit $?
 ```
-
-##Peerguardian V3
+***
+# Peer Guardian V3
 Supports only IPSET 4 
 
-If you want to have different blocklist, grouped by one, then this is a variant, where you can add multiple blocklists in one script...
+If you want to have different blocklist, grouped by one, then this is a variant, where you can add multiple blocklists in one script.
 
 ```
 #!/bin/sh
@@ -405,7 +417,7 @@ May 29 09:03:22 admin: Destroy this transient set just in case
 May 29 09:03:22 admin: Load the latest rule(s)
 May 29 09:04:04 admin: exiting Peerguarding rules
 ```
-## Malware Filter
+# Malware Filter
 * Support Thread: https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/
 * Supports both IPSET 4 and 6
 
@@ -515,7 +527,7 @@ https://lists.blocklist.de/lists/ssh.txt
 https://lists.blocklist.de/lists/bots.txt
 ```
 
-## Privacy Filter
+# Privacy Filter
 * Support thread: https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/
 * Supports both IPSET 4 and 6
 * Optional: Entware (hostip) package
