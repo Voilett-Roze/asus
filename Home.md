@@ -41,7 +41,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 2. [Setting up New Generation Entware](https://github.com/Entware-ng/Entware-ng/wiki/Install-on-asuswrt-merlin-firmware) (External link)
 3. [Installing Transmission through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Transmission-through-Entware)
 4. [Lighttpd web server with PHP support through Entware](/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware)
-5. [Installing RuTorrent through Entware](http://www.hqt.ro/rutorrent-on-asuswrt-router-through-entware) (External link)
+5. [Installing RTorrent through Entware](https://github.com/Entware-ng/Entware-ng/wiki/Using-Rtorrent) (External link)
 6. [Installing Deluge through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Deluge-through-Entware)
 7. [Webcam video surveillance Entware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer-entware/) (External link)
 
