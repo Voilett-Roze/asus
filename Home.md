@@ -38,7 +38,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 
 #### Entware
 1. [Setting up Entware](/RMerl/asuswrt-merlin/wiki/Entware) (Optware alternative)
-2. [Setting up New Generation Entware](https://github.com/Entware-ng/Entware-ng/wiki/Install-on-asuswrt-merlin-firmware) (External link)
+2. [Setting up Entware](https://github.com/Entware-ng/Entware-ng/wiki/Install-on-asuswrt-merlin-firmware) (External link)
 3. [Installing Transmission through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Transmission-through-Entware)
 4. [Lighttpd web server with PHP support through Entware](/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware)
 5. [Installing RTorrent through Entware](https://github.com/Entware-ng/Entware-ng/wiki/Using-Rtorrent) (External link)
