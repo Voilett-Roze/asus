@@ -420,8 +420,8 @@ and append
 > cru a malware-filter "0 */12 * * * /jffs/scripts/malware-block"
 
 save it this will make malware-block and make it executable run every 12th hour and update the router, for all the temporary files it uses TMP dir for storage this will not cause wear and tear.
-
-```
+	
+```shell
 #!/bin/sh
 # Author: Toast
 # Contributers: Octopus, Tomsk, Neurophile, jimf, spalife, visortgw, Cedarhillguy, redhat27
@@ -520,7 +520,7 @@ https://lists.blocklist.de/lists/bots.txt
 
 So this script tries to block [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/) and some Chinese data collection centers for [Android rootkits](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/) along with shodan.io scanners.
 
-```
+```shell
 #!/bin/sh
 # Author: Toast
 # Contributers: Tomsk
