@@ -27,7 +27,7 @@ _Consult the chart below to see your ipset version._
 | `RT-AC3200`  |         | x       |
 | `RT-AC5300`  |         | x       |
 
-There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers 
+There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers and getting support on those scripts can be tricky.
 
 | `Scriptname` |`Ipset 4`|`Ipset 6`|`Maintained by`|`Supports other platforms`|Description|
 |--------------|:-------:|:-------:|:-------------:|:------------------------:|:----------:
