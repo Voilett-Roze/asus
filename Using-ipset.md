@@ -6,6 +6,7 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
 Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) while older routers has [ipset version 4](http://ipset.netfilter.org/iptables.man.html) 
+
 _Consult the chart below to see your ipset version._
 
 | `Routers`    |`Ipset 4`|`Ipset 6`|
