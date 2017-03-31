@@ -46,7 +46,7 @@ _As with any Wiki, this documentation is a constant work-in-progress.  If you ha
 7. [Webcam video surveillance Entware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer-entware/) (External link)
 
 #### Optware
-1. [Setting up New Generation Optware](http://www.hqt.ro/how-to-install-new-generation-optware/) (External link)
+1. [Setting up New Generation Optware](https://github.com/Optware/Optware-ng) (External link)
 2. [Setting up Optware](/RMerl/asuswrt-merlin/wiki/Initialize-OPTWARE)
 3. [Installing Transmission through Optware](/RMerl/asuswrt-merlin/wiki/Transmission-through-Optware)
 4. [Cherokee Web Server](http://www.hqt.ro/cherokee-web-server-through-optware) (External link)
