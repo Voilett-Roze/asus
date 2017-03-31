@@ -13,7 +13,7 @@ _Consult the chart below to see your ipset version._
 |--------------|:-------:|:-------:|
 | `RT-N66U`    | x       |         |
 | `RT-AC56U`   |         | x       |
-| `RT-AC66U`   |         |         |
+| `RT-AC66U`   | x       |         |
 | `RT-AC66U_B1`|         |         |
 | `RT-AC68U`   |         | x       |
 | `RT-AC68P`   |         | x       |
@@ -68,14 +68,14 @@ case $(ipset -v | grep -o "v[4,6]") in
     # Loading ipset modules
     lsmod | grep -q "xt_set" || \
     for module in ip_set ip_set_hash_net ip_set_hash_ip xt_set; do
-      insmod $module
+      modprobe $module
     done;;
   v4)
     MATCH_SET='--set'; CREATE='--create'; ADD='--add'; SWAP='--swap'; IPHASH='iphash'; NETHASH='nethash'; SETNOTFOUND='Unknown set'
     # Loading ipset modules
     lsmod | grep -q "ipt_set" || \
     for module in ip_set ip_set_nethash ip_set_iphash ipt_set; do
-      insmod $module
+      modprobe $module
     done;;
   *)
     logger -t Firewall "$0: Unknown ipset version: $(ipset -v). Exiting."
