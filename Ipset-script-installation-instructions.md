@@ -86,7 +86,7 @@ chmod +x /jffs/scripts/malware-block
 ```
 * then append the following line to /jffs/scripts/services-start:
 ```
-cru a malware-filter "0 */12 * * * /opt/bin/malware-block"
+cru a malware-filter "0 */12 * * * /jffs/scripts/malware-block"
 ```
 This will make Malware-Filter run on a schedule it will run every 12th hour, to verify that the entry works after its added just type:
 
@@ -97,6 +97,10 @@ cru l
 ```
 # Load ipset filter rules
 sh /jffs/scripts/malware-block
+```
+* To run this manually just type this command:
+```
+/jffs/scripts/malware-block
 ```
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
 ___
@@ -115,7 +119,7 @@ chmod +x /jffs/scripts/privacy-filter
 ```
 * then append the following line to /jffs/scripts/services-start:
 ```
-cru a privacy-filter "0 */12 * * * /opt/bin/privacy-filter"
+cru a privacy-filter "0 */12 * * * /jffs/scripts/privacy-filter"
 ```
 This will make privacy-filter run on a schedule it will run every 12th hour, to verify that the entry works after its added just type:
 
