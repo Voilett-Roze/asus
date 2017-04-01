@@ -101,8 +101,7 @@ This will make privacy-filter run on a schedule it will run every 12th hour, to 
 ```
 cru l
 ```
-* F
-Finally call this at the end of your existing /jffs/firewall-start:
+* Finally call this at the end of your existing /jffs/firewall-start:
 ```
 # Load ipset filter rules
 sh /jffs/scripts/privacy-filter
