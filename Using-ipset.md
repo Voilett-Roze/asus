@@ -8,7 +8,7 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 
 ## Ipset Version and Router Models
 
-Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) while older routers has ipset version 4. Consult the chart below to see your ipset version.
+Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) while older routers has ipset version 4 , ipset cant just be updated as a normal application it relies heavily on the kernel so please consult the chart below to see your ipset version.
 
 | `Routers`    |`Ipset 4`|`Ipset 6`|
 |--------------|:-------:|:-------:|
