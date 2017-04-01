@@ -51,6 +51,25 @@ For support on this script please visit this [forum thread](https://www.snbforum
 
 ___
 
+# iblocklist-loader
+
+**Description**: This is a perfect replacement for the old [Peerguardian Scripts](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts) it blocks various sources and has support for both ranges and single ip addresses and it has both whitelist and blacklist functions.
+
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
+
+* Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader.sh) to `/jffs/scripts/iblocklist-loader.sh`
+
+* Then make it executable:
+```
+chmod +x /jffs/scripts/iblocklist-loader.sh
+
+* Finally call this at the end of your existing /jffs/firewall-start:
+```
+# Load ipset filter rules
+sh /jffs/scripts/iblocklist-loader.sh
+```
+For support on this script please visit this [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/#post-315199) on SnBForums
+___
 # Malware-Filter
 
 **Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network.
