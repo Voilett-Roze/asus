@@ -32,7 +32,7 @@ Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) wh
 
 There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers and getting support on those scripts can be tricky.
 
-> Note: The script with maintainers are linked in the chart to their respective installation instructions there on the wiki, within those instructions you will find information on how to install and where to get support. The Peerguardian scripts are considered legacy. Only use those if your router supports ipset version 4, if it doesn't consider using the iblocklist-loader instead.
+> Note: The script with maintainers are linked in the chart to their respective installation instructions there on the wiki, within those instructions you will find information on how to install and where to get support. The Peerguardian scripts are considered legacy. Only use those if your router supports ipset version 4 and your capable to manage on your own, if you don't then consider using the iblocklist-loader instead it supports both ipset versions and have an active maintainer.
 
 
 | `Scriptname` |`Ipset 4`|`Ipset 6`|`Maintained by`|`Supports other platforms`|Description|
