@@ -38,7 +38,7 @@ There is a full list of script that are maintained by users, most of the scripts
 | `Scriptname` |`Ipset 4`|`Ipset 6`|`Maintained by`|`Supports other platforms`|Description|
 |--------------|:-------:|:-------:|:-------------:|:------------------------:|:----------:
 |[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions)|x|x|redhat27|no|Blocks Tor nodes or countries| 
-|[iblocklist-loader](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/)|x|x|redhat27|yes|Block or allow using any list from iblocklist| 
+|[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|x|x|redhat27|yes|Block or allow using any list from iblocklist| 
 |[Malware Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#malware-filter)|x|x|swetoast|yes|Blocks Malware Spreading ip addresses daily|
 |[Privacy Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#privacy-filter)|x|x|swetoast|yes|Blocks Telemetry, Trackers and Shodian.io|
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian)|x| | |no|Peerguardian|
