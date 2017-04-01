@@ -5,7 +5,7 @@ Starting with 378.50, this option is enabled by default.  If for some reason you
 I do not recommend doing frequent writes to this area, as it will prematurely wear out the flash chip.  This is a good place to put files that are written once like scripts or kernel modules, or that rarely get written to.  Do not put files that get constantly written to (such as high activity logfiles) - store these on a USB disk instead.  Replacing a worn out USB flash disk is much cheaper than replacing the whole router if flash sectors get worn out - they have a limited number of write cycles.
 
 # Backing up the JFFS Partition
-Backing up the JFFS Partition is an easy thing to do under the firmware its recommended to do if your planning to update your firmware to a newer version or if your changing scripts or configurations on your router is located under the menu 
+Backing up the JFFS Partition is an easy thing to do under the firmware its recommended to do if your planning to update your firmware to a newer version or if your changing scripts or configurations, Openvpn keys on your router is located under the menu 
 
 Administration - Restore/Save/Upload Setting
 
