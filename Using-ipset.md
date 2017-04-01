@@ -33,7 +33,7 @@ Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) wh
 
 There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers and getting support on those scripts can be tricky.
 
->ATTENTION: Scripters feel free to append to this list and then link installation instructions on the [installation instructions page](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions), please dont add full scripts to that page cause it gets messy "keep it light", also remember not to write to [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) due to wear and tear.
+>ATTENTION: Scripters, feel free to append to this list and then link installation instructions on the [installation instructions page](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions), please dont add full scripts to that page cause it gets messy "keep it light", also remember not to write to [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) due to wear and tear.
 
 | `Scriptname` |`Ipset 4`|`Ipset 6`|`Maintained by`|`Supports other platforms`|Description|
 |--------------|:-------:|:-------:|:-------------:|:------------------------:|:----------:
