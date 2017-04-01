@@ -5,6 +5,8 @@ Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) featu
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty
 * express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
+# Ipset Version and Router Models
+
 Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) while older routers has ipset version 4. 
 
 _Consult the chart below to see your ipset version._
