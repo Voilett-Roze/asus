@@ -1,5 +1,7 @@
 # Using ipset
 
+> NOTE: For more documentation about the various commands using the ipset utility, please visit [this link](http://ipset.netfilter.org/)
+
 Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) feature has been implemented. This is a Netfilter extension which should be able to:
 * store multiple IP addresses and/or port numbers and match against a filter list using iptables;
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty
@@ -45,5 +47,3 @@ There is a full list of script that are maintained by users, most of the scripts
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian)|x| | |no|Peerguardian|
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v2)|x| | |no|Peerguardian|
 |[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v3)|x| | |no|Peerguardian|
-
-> NOTE: For learning how to script for use the following link to the [ipset utility](http://manpages.ubuntu.com/manpages/lucid/man8/ipset.8.html) 
