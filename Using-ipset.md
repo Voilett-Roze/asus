@@ -46,3 +46,4 @@ There is a full list of script that are maintained by users, most of the scripts
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v2)|x| | |no|Peerguardian|
 |[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v3)|x| | |no|Peerguardian|
 
+> NOTE: For learning how to script for use the following link to the [ipset utility](http://manpages.ubuntu.com/manpages/lucid/man8/ipset.8.html) 
