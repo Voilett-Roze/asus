@@ -37,10 +37,10 @@ There is a full list of script that are maintained by users, most of the scripts
 
 | `Scriptname` |`Ipset 4`|`Ipset 6`|`Maintained by`|`Supports other platforms`|Description|
 |--------------|:-------:|:-------:|:-------------:|:------------------------:|:----------:
-|[Tor and Countries Block](https://www.snbforums.com/threads/country-blocking-script.36732/#post-311248)|x|x|redhat27|no|Block Tor or Countries| 
+|[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions)|x|x|redhat27|no|Blocks Tor nodes or countries| 
 |[iblocklist-loader](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/)|x|x|redhat27|yes|Block or allow using any list from iblocklist| 
-|[Malware Filter](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/)|x|x|swetoast|yes|Malware Blocking|
-|[Privacy Filter](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/)|x|x|swetoast|yes|Privacy|
+|[Malware Filter](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/)|x|x|swetoast|yes|Blocks Malware Spreading ip addresses daily|
+|[Privacy Filter](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/)|x|x|swetoast|yes|Blocks Telemetry, Trackers and Shodian.io|
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian)|x| | |no|Peerguardian|
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v2)|x| | |no|Peerguardian|
 |[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v3)|x| | |no|Peerguardian|
