@@ -1,6 +1,6 @@
 This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware designed for Asus routers.
 
-_As with any Wiki, this documentation is a constant work-in-progress.  If you have the time and the willingness to help with this Wiki, please let me know._
+>Note: _As with any Wiki, this documentation is a constant work-in-progress.  If you have the time and the willingness to help with this Wiki, please let me know and remember please use internal links before external as they might have updated documentation relevant to the current firmware._
 
 ### About
 1. [About Asuswrt and Asuswrt-merlin](/RMerl/asuswrt-merlin/wiki/About-Asuswrt/)
