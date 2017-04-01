@@ -45,6 +45,8 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
   esac
 done
 ```
+For support on this script please visit this [forum thread](https://www.snbforums.com/threads/country-blocking-script.36732
+/) on SnBForums
 
 # Malware-Filter
 
@@ -72,5 +74,4 @@ cru l
 # Load ipset filter rules
 sh /jffs/scripts/malware-block
 ```
-
-For support on this script please visit this [forum thread](www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
+For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
