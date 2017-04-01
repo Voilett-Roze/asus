@@ -1,10 +1,7 @@
-> These scripts are considered legacy scripts, they have no maintainers and getting support on them might get tricky
+> These scripts are considered legacy scripts, they have no maintainers and getting support on them might get tricky, they also only supports ipset version 4 so if you have a new router these scripts will not work, please consult the chart on [here](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset)
 
 # Peer Guardian
 
-> **NOTE:** _Peer Guardian scripts on this page supports only IPSET 4.x that will result in scripts not working on newer routers with IPSET 6.x. If you want to use IPSET 6.x for Peer Guardian and/or other block lists from [iblocklist.com](https://www.iblocklist.com/lists), you can check out [this](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) thread_
-
-Supports only IPSET 4 (For IPSET 6, see [here](https://www.snbforums.com/threads/peer-guardian-rewrite-for-ipset-v6.37929/), the actual script [here](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader.sh))
 
 Another example is a [PeerGuardian](http://en.wikipedia.org/wiki/PeerGuardian) functionality right on router.
 
