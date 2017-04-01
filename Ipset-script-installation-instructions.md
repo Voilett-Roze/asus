@@ -1,5 +1,7 @@
 ___
 > **NOTE:** This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
+
+>**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs#backing-up-the-jffs-partition) incase something goes wrong.
 ___
 
 # Tor and Countries Block 
