@@ -62,8 +62,10 @@ ___
 * Then make it executable:
 ```
 chmod +x /jffs/scripts/iblocklist-loader.sh
+```
 
 * Finally call this at the end of your existing /jffs/firewall-start:
+
 ```
 # Load ipset filter rules
 sh /jffs/scripts/iblocklist-loader.sh
