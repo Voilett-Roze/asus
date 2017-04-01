@@ -102,6 +102,11 @@ sh /jffs/scripts/malware-block
 ```
 /jffs/scripts/malware-block
 ```
+* Malware filter will also print to syslog so you dont have to check ssh to see if its working it should read something like this:
+```
+Apr  1 00:06:39 system: Malware-filter loaded 46822 unique ip addresses that will be rejected from contacting your router.
+````
+
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
 ___
 
@@ -131,5 +136,14 @@ cru l
 # Load ipset filter rules
 sh /jffs/scripts/privacy-filter
 ```
+* To run this manually just type this command:
+```
+/jffs/scripts/privacy-filter
+```
+* Privacy filter will also print to syslog so you dont have to check ssh to see if its working it should read something like this:
+```
+Apr  1 00:00:06 system: Privacy Filter (ipv4) loaded 190 unique ip addresses that will be rejected from contacting your  router.
+````
+
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/) on SnBForums
 ___
