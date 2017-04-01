@@ -1,7 +1,6 @@
 > This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
 
 # Tor and Countries Block 
-Supports both IPSET 4 and 6
 
 This is an example of using [ipset utility](http://manpages.ubuntu.com/manpages/lucid/man8/ipset.8.html) with two different set types: iphash and nethash. The example shows how to block incoming connection from [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
 
@@ -46,3 +45,32 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
   esac
 done
 ```
+
+# Malware-Filter
+
+**Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network.
+
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
+
+* Then place [**this content**](https://gitlab.com/swe_toast/malware-filter/raw/master/malware-block) to `/jffs/scripts/malware-block`
+
+* Then make it executable:
+```
+chmod +x /jffs/scripts//malware-block
+```
+* then append the following line to /jffs/scripts/services-start:
+```
+cru a malware-filter "0 */12 * * * /opt/bin/malware-block"
+```
+This will make Malware-Filter run on a schedule it will run every 12th hour, to verify that the entry works after its added just type:
+
+```
+cru l
+```
+* Finally call this at the end of your existing /jffs/firewall-start:
+```
+# Load ipset filter rules
+sh /jffs/scripts/malware-block
+```
+
+For support on this script please visit this [forum thread](www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
