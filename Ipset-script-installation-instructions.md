@@ -1,5 +1,7 @@
 > This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
 
+___
+
 # Tor and Countries Block 
 
 This is an example of using [ipset utility](http://manpages.ubuntu.com/manpages/lucid/man8/ipset.8.html) with two different set types: iphash and nethash. The example shows how to block incoming connection from [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
@@ -46,6 +48,8 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
 done
 ```
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/country-blocking-script.36732/) on SnBForums
+
+___
 
 # Malware-Filter
 
