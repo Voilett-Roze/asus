@@ -61,7 +61,7 @@ ___
 
 * Then make it executable:
 ```
-chmod +x /jffs/scripts//malware-block
+chmod +x /jffs/scripts/malware-block
 ```
 * then append the following line to /jffs/scripts/services-start:
 ```
@@ -90,7 +90,7 @@ ___
 
 * Then make it executable:
 ```
-chmod +x /jffs/scripts//privacy-filter
+chmod +x /jffs/scripts/privacy-filter
 ```
 * then append the following line to /jffs/scripts/services-start:
 ```
