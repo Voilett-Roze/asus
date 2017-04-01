@@ -44,3 +44,5 @@ There is a full list of script that are maintained by users, most of the scripts
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian)|x| | |no|Peerguardian|
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v2)|x| | |no|Peerguardian|
 |[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v3)|x| | |no|Peerguardian|
+
+>_NOTE: Scripters feel free to append to this list and then link installation instructions on the installation instructions page, please dont add full scripts to that page cause it gets messy "keep it light"_
