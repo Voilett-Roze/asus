@@ -50,7 +50,6 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
 done
 ```
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/country-blocking-script.36732/) on SnBForums
-
 ___
 
 # iblocklist-loader
