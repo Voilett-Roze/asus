@@ -1,5 +1,5 @@
-> This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
-
+___
+> **NOTE:** This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
 ___
 
 # Tor and Countries Block 
@@ -78,3 +78,34 @@ cru l
 sh /jffs/scripts/malware-block
 ```
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
+___
+
+# Privacy-Filter
+
+**Description**: This script blocks [Telemetry](http://www.zdnet.com/article/windows-10-telemetry-secrets/), Shodan.io crawlers and an [Android Rootkit](http://arstechnica.com/security/2016/11/powerful-backdoorrootkit-found-preinstalled-on-3-million-android-phones/), it supports both ipv4 and ipv6 out of the box.
+
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
+
+* Then place [**this content**](https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter) to `/jffs/scripts/privacy-filter`
+
+* Then make it executable:
+```
+chmod +x /jffs/scripts//privacy-filter
+```
+* then append the following line to /jffs/scripts/services-start:
+```
+cru a privacy-filter "0 */12 * * * /opt/bin/privacy-filter"
+```
+This will make privacy-filter run on a schedule it will run every 12th hour, to verify that the entry works after its added just type:
+
+```
+cru l
+```
+* F
+Finally call this at the end of your existing /jffs/firewall-start:
+```
+# Load ipset filter rules
+sh /jffs/scripts/privacy-filter
+```
+For support on this script please visit this [forum thread](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/) on SnBForums
+___
