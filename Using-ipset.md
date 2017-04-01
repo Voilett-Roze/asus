@@ -3,7 +3,7 @@ ___
 ___
 
 Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) feature has been implemented. This is a Netfilter extension which should be able to:
-* store multiple IP addresses and/or port numbers and match against a filter list using iptables;
+* store multiple IP addresses and/or port numbers and match against a filter list using iptables
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty
 * express complex IP address and port based rulesets with one single iptables rule and benefit from the speed of IP sets.
 
