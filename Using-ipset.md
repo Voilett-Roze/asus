@@ -29,6 +29,8 @@ _Consult the chart below to see your ipset version._
 | `RT-AC3200`  |         | x       |
 | `RT-AC5300`  |         | x       |
 
+# Ipset Scripts 
+
 There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers and getting support on those scripts can be tricky.
 
 > Note: The script with maintainers are linked in the chart to their respective support thread on snbforums if you have questions or suggestions.
