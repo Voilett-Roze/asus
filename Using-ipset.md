@@ -1,6 +1,5 @@
 > NOTE: For more documentation about the various commands using the ipset utility, please visit [this link](http://ipset.netfilter.org/)
 
-
 Since 3.0.0.4_270.26 [ipset](http://en.wikipedia.org/wiki/Netfilter#ipset) feature has been implemented. This is a Netfilter extension which should be able to:
 * store multiple IP addresses and/or port numbers and match against a filter list using iptables
 * dynamically update iptables rules against IP addresses or ports without a significant performance penalty
@@ -34,6 +33,7 @@ There is a full list of script that are maintained by users, most of the scripts
 
 > Note: The script with maintainers are linked in the chart to their respective installation instructions there on the wiki, within those instructions you will find information on how to install and where to get support. The Peerguardian scripts are considered legacy. Only use those if your router supports ipset version 4 and your capable to manage on your own, if you don't then consider using the iblocklist-loader instead it supports both ipset versions and have an active maintainer.
 
+>ATTENTION: Scripters feel free to append to this list and then link installation instructions on the installation instructions page, please dont add full scripts to that page cause it gets messy "keep it light", also remember not to write to [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) due to wear and tear.
 
 | `Scriptname` |`Ipset 4`|`Ipset 6`|`Maintained by`|`Supports other platforms`|Description|
 |--------------|:-------:|:-------:|:-------------:|:------------------------:|:----------:
@@ -44,5 +44,3 @@ There is a full list of script that are maintained by users, most of the scripts
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian)|x| | |no|Peerguardian|
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v2)|x| | |no|Peerguardian|
 |[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v3)|x| | |no|Peerguardian|
-
->_NOTE: Scripters feel free to append to this list and then link installation instructions on the installation instructions page, please dont add full scripts to that page cause it gets messy "keep it light", also remember not to write to [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) due to wear and tear._
