@@ -170,6 +170,8 @@ May 29 09:03:22 admin: Destroy this transient set just in case
 May 29 09:03:22 admin: Load the latest rule(s)
 May 29 09:04:04 admin: exiting Peerguarding rules
 ```
+***
+# Disable Windows10 Tracking
 _Please note, this how-to will work only on asuswrt-merlin releases newer than 378.55. 380.57 or newer is recommended._
 
 This solution consists of two parts:
