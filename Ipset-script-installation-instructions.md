@@ -8,7 +8,7 @@ ___
 
 This example shows how to block incoming connection from [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
 
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/create-ipset-lists.sh) to `/jffs/scripts/create-ipset-lists.sh`
 
@@ -54,13 +54,15 @@ ___
 
 # iblocklist-loader
 
-**Description**: This is a perfect replacement for the old [[Peerguardian|Legacy-Ipset-Scripts]] Scripts it blocks various sources and has support for both ranges and single ip addresses and it has both [whitelist](https://github.com/shounak-de/iblocklist-loader/blob/master/whitelist-domains.txt) and [blacklist](https://github.com/shounak-de/iblocklist-loader/blob/master/blacklist-domains.txt) functionality.
+**Description**: This is a multi-purpose blocking script, and can be a replacement for the old [[Peerguardian|Legacy-Ipset-Scripts]] Scripts.
 
-In addition, this script can be used to block hackers, spiders, bogon ips, various organisations and ISPs, This also blocks Tor and proxies as well. The full list of what it can block is available on the [iblocklist](https://www.iblocklist.com/lists) site. You can see the free lists on that site and their descriptions (by clicking on the list name).
+In addition, this script can also be used to block hackers, spiders, bogon ips, various organisations and ISPs, etc. This also blocks Tor and proxies as well. The full list of what it can block is available on the [iblocklist](https://www.iblocklist.com/lists) site. You can see the free lists on that site and their descriptions (by clicking on the list name).
+
+The script uses the zipped IP range data from the iblocklist site and creates single ip sets and CIDR sets from that for ipset 6.x and uses iptreemap for ipset 4.x It also has both [WhitelistDomains](https://github.com/shounak-de/iblocklist-loader/blob/master/whitelist-domains.txt) and [BlacklistDomains](https://github.com/shounak-de/iblocklist-loader/blob/master/blacklist-domains.txt) functionality to explicitly handle any domains that you'd want to allow or block.
 
 Follow the general script installation instructions:
 
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader-v2.sh) to `/jffs/scripts/iblocklist-loader.sh`
 
@@ -83,7 +85,7 @@ ___
 
 **Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network.
 
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://gitlab.com/swe_toast/malware-filter/raw/master/malware-block) to `/jffs/scripts/malware-block`
 
@@ -121,7 +123,7 @@ ___
 
 **Description**: This script blocks [Telemetry](https://en.wikipedia.org/wiki/Criticism_of_Microsoft_Windows#Data_collection), [Shodan.io crawlers](https://www.shodan.io/) and an [Android Rootkit](https://www.kb.cert.org/vuls/id/624539), it supports both ipv4 and ipv6 out of the box however ipv6 blocking will only work on routers with [ipset version 6](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) installed.
 
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter) to `/jffs/scripts/privacy-filter`
 
