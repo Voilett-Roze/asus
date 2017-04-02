@@ -41,7 +41,7 @@ There is a full list of script that are maintained by users, most of the scripts
 |[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|x|x|redhat27|yes|Block or allow using any list from iblocklist| 
 |[Malware Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#malware-filter)|x|x|swetoast|yes|Blocks Malware Spreading ip addresses daily|
 |[Privacy Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#privacy-filter)|x|x|swetoast|yes|Blocks Telemetry, Trackers and Shodian.io|
-|[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian)|x| | |no|Peerguardian|
-|[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v2)|x| | |no|Peerguardian|
-|[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts#peer-guardian-v3)|x| | |no|Peerguardian|
-|[Disable Windows 10 Tracking](https://github.com/RMerl/asuswrt-merlin/wiki/Disable-Windows-10-tracking)|x| | |no|Blocks Telemetry|
+|[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian)|x| | |no|Peerguardian|
+|[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|x| | |no|Peerguardian|
+|[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v3)|x| | |no|Peerguardian|
+|[Disable Windows 10 Tracking](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#disable-windows10-tracking)|x| | |no|Blocks Telemetry|
