@@ -88,7 +88,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 7. [Network Image Scanning With Sane](/RMerl/asuswrt-merlin/wiki/Network-Scanning-With-Sane)
 8. [Delay start of minidlna to wait for the USB disk mount](/RMerl/asuswrt-merlin/wiki/delay-start-of-minidlna-to-wait-for-the-USB-disk-mount)
 9. [Setting-up-FreeRadius2-through-Entware](/RMerl/asuswrt-merlin/wiki/Setting-up-FreeRadius2-through-Entware)
-10. [User NVRAM Save/Restore](/RMerl/asuswrt-merlin/wiki/Can-I-restore-my-settings-after-a-factory-reset%3F--Can-I-restore-my-settings-to-a-different-router%3F)
+10. [User NVRAM Save/Restore](/RMerl/asuswrt-merlin/wiki/NVRAM-Save-Restore-Utility)
 11. [Transfer (sync) a backup to a remote location using Rsync through a SSH tunnel between 2 Asus routers](/RMerl/asuswrt-merlin/wiki/Transfer-(sync)-a-backup-to-a-remote-location-using-Rsync-through-a-SSH-tunnel-between-2-Asus-routers)
 12. [Setting a random password for guest wifi](/RMerl/asuswrt-merlin/wiki/Setting-a-random-password-for-guest-wifi)
 13. [Tinc VPN on AsusWRT-Merlin](http://nwgat.ninja/tinc-vpn-on-asuswrt-merlin/) (External Link)
