@@ -13,4 +13,4 @@ On that menu you can either Backup JFFS partition with every file and config on 
 
 its highly recommended if you have a configuration or a script that you like that you store a copy of your jffs partition incase if the router resetting or an accidental wipe.
 
-See also: [Restore Settings / Factory Reset / Migrating Settings](https://github.com/RMerl/asuswrt-merlin/wiki/User-NVRAM-Save-Restore-Utility) for backing/restore up NVRam Settings
+See also: [NVRAM Save Restore Utility](https://github.com/RMerl/asuswrt-merlin/wiki/User-NVRAM-Save-Restore-Utility) for backing/restore up NVRam Settings
