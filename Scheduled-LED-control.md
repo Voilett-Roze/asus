@@ -53,14 +53,14 @@ case ${option} in
                     nvram set led_disable=0
                     service restart_leds
                     echo "Leds are now on"
-                    logger "Leds: on"
+                    logger -s -t leds "on"
                 ;;
 
                 -off)
                     nvram set led_disable=1
                     service restart_leds
                     echo "Leds are now off"
-                    logger "Leds: off"
+                    logger -s -t leds "off"
                 ;;
 
                 *) show_help
