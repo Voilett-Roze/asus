@@ -1,5 +1,3 @@
-# Sample Scripts
-
 
 ### afraid.org
 
