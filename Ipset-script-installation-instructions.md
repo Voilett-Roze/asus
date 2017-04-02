@@ -49,16 +49,22 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
   esac
 done
 ```
-For support on this script please visit this [forum thread](https://www.snbforums.com/threads/country-blocking-script.36732/) on SnBForums
+For support on this script please visit this [forum thread](https://www.snbforums.com/threads/country-blocking-script.36732/page-2) on SnBForums
 ___
 
 # iblocklist-loader
 
-**Description**: This is a perfect replacement for the old [Peerguardian Scripts](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts) it blocks various sources and has support for both ranges and single ip addresses and it has both whitelist and blacklist functions.
+**Description**: This is a perfect replacement for the old [Peerguardian Scripts](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts) it blocks various sources and has support for both ranges and single ip addresses and it has both [whitelist](https://github.com/shounak-de/iblocklist-loader/blob/master/whitelist-domains.txt) and [blacklist](https://github.com/shounak-de/iblocklist-loader/blob/master/blacklist-domains.txt) functionality.
+
+In addition, this script can be used to block hackers, spiders, bogon ips, various organisations and ISPs, This also blocks Tor and proxies as well. The full list of what it can block is available on the [iblocklist](https://www.iblocklist.com/lists) site. You can see the free lists on that site and their descriptions (by clicking on the list name).
+
+Follow the general script installation instructions:
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
 
-* Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader.sh) to `/jffs/scripts/iblocklist-loader.sh`
+* Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader.sh) to `/jffs/scripts/iblocklist-loader-v2.sh`
+
+After you decide what sources you'd like to block, these are the steps to use the script: Identify the lists in the script [in the top section](https://github.com/shounak-de/iblocklist-loader/blob/master/iblocklist-loader-v2.sh#L10-L79) and note the indexes (the number after the word `List`) You can than add your chosen indexes in the line that reads `BLOCKLIST_INDEXES=` 
 
 * Then make it executable:
 ```
@@ -71,7 +77,7 @@ chmod +x /jffs/scripts/iblocklist-loader.sh
 # Load ipset filter rules
 sh /jffs/scripts/iblocklist-loader.sh
 ```
-For support on this script please visit this [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/#post-315199) on SnBForums
+There are other settings on the script that is documented within the script itself that should be self explanatory. If you have questions or need further details, please ask on the [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) on SnBForums
 ___
 # Malware-Filter
 
