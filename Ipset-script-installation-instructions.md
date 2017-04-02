@@ -28,11 +28,11 @@ You can create a handy alias in your profile (in /opt/etc/profile or /jffs/confi
 
 If you have ipset v4:
 ```
-alias blockstats='iptables -L -v | grep " set"'
+alias blockstats='iptables -L -v | sed "2q;d"; iptables -L -v | grep " set"'
 ```
 If you have ipset v6:
 ```
-alias blockstats='iptables -L -v | grep "match-set"; ip6tables -L -v | grep "match-set"'
+alias blockstats='iptables -L -v | sed "2q;d"; iptables -L -v | grep "match-set"; ip6tables -L -v | grep "match-set"'
 ```
 Then you can just issue 'blockstats' from the command prompt to see how well your blocklists are doing (see blocked packet count and byte count)
 
@@ -62,7 +62,7 @@ Follow the general script installation instructions:
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first,
 
-* Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader.sh) to `/jffs/scripts/iblocklist-loader-v2.sh`
+* Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader-v2.sh) to `/jffs/scripts/iblocklist-loader.sh`
 
 After you decide what sources you'd like to block, these are the steps to use the script: Identify the lists in the script [in the top section](https://github.com/shounak-de/iblocklist-loader/blob/master/iblocklist-loader-v2.sh#L10-L79) and note the indexes (the number after the word `List`) You can than add your chosen indexes in the line that reads `BLOCKLIST_INDEXES=` 
 
