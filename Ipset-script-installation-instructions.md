@@ -54,7 +54,7 @@ ___
 
 # iblocklist-loader
 
-**Description**: This is a perfect replacement for the old [Peerguardian Scripts](https://github.com/RMerl/asuswrt-merlin/wiki/Peerguardian-Scripts) it blocks various sources and has support for both ranges and single ip addresses and it has both [whitelist](https://github.com/shounak-de/iblocklist-loader/blob/master/whitelist-domains.txt) and [blacklist](https://github.com/shounak-de/iblocklist-loader/blob/master/blacklist-domains.txt) functionality.
+**Description**: This is a perfect replacement for the old [[Peerguardian|Legacy-Ipset-Scripts]] Scripts it blocks various sources and has support for both ranges and single ip addresses and it has both [whitelist](https://github.com/shounak-de/iblocklist-loader/blob/master/whitelist-domains.txt) and [blacklist](https://github.com/shounak-de/iblocklist-loader/blob/master/blacklist-domains.txt) functionality.
 
 In addition, this script can be used to block hackers, spiders, bogon ips, various organisations and ISPs, This also blocks Tor and proxies as well. The full list of what it can block is available on the [iblocklist](https://www.iblocklist.com/lists) site. You can see the free lists on that site and their descriptions (by clicking on the list name).
 
