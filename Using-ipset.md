@@ -37,7 +37,7 @@ There is a full list of script that are maintained by users, most of the scripts
 
 | `Scriptname` |`Ipset Version`|`Maintained by`|`Supports other platforms`|Description|
 |--------------|:-------:|:-------------:|:------------------------:|:----------:
-|[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions)|4,6|redhat27|no|Blocks Tor nodes or countries| 
+|[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|no|Blocks Tor nodes or countries| 
 |[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|yes|Block or allow using any list from iblocklist| 
 |[Malware Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#malware-filter)|4,6|swetoast|yes|Blocks Malware Spreading ip addresses daily|
 |[Privacy Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#privacy-filter)|4,6|swetoast|yes|Blocks Telemetry, Trackers and Shodian.io|
