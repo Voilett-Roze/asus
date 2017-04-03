@@ -418,7 +418,7 @@ url=                                            # add the domain name here (exam
 credentials=                                    # add username and password here (example: username:password)
 
 resolver=https://dns.loopia.se/XDynDNSServer/XDynDNS.php
-wanip=`nvram get wan_ipaddr`
+wanip=`nvram get wan0_ipaddr`
 
 loopia_dns_update() {
 for domain in $url
