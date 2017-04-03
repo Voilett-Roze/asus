@@ -95,7 +95,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 14. [Disk Check at Boot](/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot)
 15. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions)
 16. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
-
+17. [[Setting up a NTP Server for your LAN|Setting-up-a-NTP-Server-for-your-local-lan]]
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin/wiki/FAQ)
 2. [Credits](/RMerl/asuswrt-merlin/wiki/Credits/)
