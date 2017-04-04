@@ -114,6 +114,7 @@ sh /jffs/scripts/malware-filter
 * Malware filter will also print to syslog so you dont have to check ssh to see if its working it should read something like this:
 ```
 Apr  1 00:06:39 system: Malware-filter loaded 46822 unique ip addresses that will be rejected from contacting your router.
+Apr  1 00:06:39 system: Malware-Filter loaded 64 unique ip ranges that will be rejected from contacting your router.
 ````
 
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
