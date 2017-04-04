@@ -87,15 +87,15 @@ ___
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
-* Then place [**this content**](https://gitlab.com/swe_toast/malware-filter/raw/master/malware-block) to `/jffs/scripts/malware-block`
+* Then place [**this content**](https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter) to `/jffs/scripts/malware-filter`
 
 * Then make it executable:
 ```
-chmod +x /jffs/scripts/malware-block
+chmod +x /jffs/scripts/malware-filter
 ```
 * then append the following line to /jffs/scripts/services-start:
 ```
-cru a malware-filter "0 */12 * * * /jffs/scripts/malware-block"
+cru a malware-filter "0 */12 * * * /jffs/scripts/malware-filter"
 ```
 This will make Malware-Filter run on a schedule it will run every 12th hour, to verify that the entry works after its added just type:
 
@@ -105,11 +105,11 @@ cru l
 * Finally call this at the end of your existing /jffs/firewall-start:
 ```
 # Load ipset filter rules
-sh /jffs/scripts/malware-block
+sh /jffs/scripts/malware-filter
 ```
 * To run this manually just type this command:
 ```
-/jffs/scripts/malware-block
+/jffs/scripts/malware-filter
 ```
 * Malware filter will also print to syslog so you dont have to check ssh to see if its working it should read something like this:
 ```
