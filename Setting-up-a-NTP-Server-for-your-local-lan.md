@@ -1,7 +1,15 @@
 Here is a simple guide for syncing your time from your router instead of from the internet
 
 * Perform the following command `nano /jffs/scripts/services-start`
-* append `/usr/sbin/ntpd -l`
+* append the following content
+
+```
+if [ "$(nvram get ntp_ready)" == "1" ];then  # Only start the NTP server if router has itself synchronised with Internet
+   ntpd   -l
+else
+   logger -st "($(basename $0))" $$ "***ERROR Router cannot get initialise NTP Server!"
+fi
+```
 
 then set point your devices that needs NTP service towards your routers IP
 
