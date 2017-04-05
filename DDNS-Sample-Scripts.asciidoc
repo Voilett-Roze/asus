@@ -1,38 +1,41 @@
+:toc:
 
-### afraid.org
+[[afraid.org]]
+afraid.org
+^^^^^^^^^^
 
-Here is a working example, for afraid.org's free DDNS (you must update the URL to use your private API key from afraid.org). 
+Here is a working example, for afraid.org's free DDNS (you must update
+the URL to use your private API key from afraid.org).
 
-```
------ HTTPS -----                                                                                                           
+[source,shell]
+....
+                                                                                      
 #!/bin/sh
 
+# ----- HTTPS -----  
 curl -k "https://freedns.afraid.org/dynamic/update.php?PASTE_YOUR_KEY_HERE" >/dev/null 2>&1 &
 
-if [ $? -eq 0 ]; then
-    /sbin/ddns_custom_updated 1
-else
-    /sbin/ddns_custom_updated 0
-fi
-
---- OR non-HTTPS --- (not recommended as your password is in plain hash).
-
-#!/bin/sh
-
-wget -q http://freedns.afraid.org/dynamic/update.php?your-private-key-goes-here -O - >/dev/null 2>&1 &
+# OR non-HTTPS --- (not recommended as your password is in plain hash)
+#wget -q http://freedns.afraid.org/dynamic/update.php?your-private-key-goes-here -O - >/dev/null 2>&1 &
 
 if [ $? -eq 0 ]; then
     /sbin/ddns_custom_updated 1
 else
     /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### [dnsExit.com](http://www.dnsexit.com/Direct.sv?cmd=dynDns)
-* **_NOTE: the example below uses non-HTTPS which isn't recommended.  dnsExit.com doesn't have HTTPS method available._**
+[[dnsexit.com]]
+http://www.dnsexit.com/Direct.sv?cmd=dynDns[dnsExit.com]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* *_NOTE: the example below uses non-HTTPS which isn't recommended.
+dnsExit.com doesn't have HTTPS method available._*
 
 Free DNS server that also offers DDNS services.
-```
+
+[source,shell]
+....
 #!/bin/sh
 USER=
 PASS=
@@ -43,11 +46,16 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### Google Domains
+[[google-domains]]
+Google Domains
+^^^^^^^^^^^^^^
+
 Transfer your domain to Google and enjoy free DDNS and other features.
-```
+
+[source,shell]
+....
 #!/bin/sh
 
 set -u
@@ -70,14 +78,20 @@ google_dns_update() {
 google_dns_update $U $P $H
 
 exit 0
+....
 
-```
+[[dyns]]
+http://dyns.cx[DyNS]
+^^^^^^^^^^^^^^^^^^^^
 
-### [DyNS](http://dyns.cx)
-* **_NOTE: the example below uses non-HTTPS which isn't recommended.  See example for afraid above._**
+* *_NOTE: the example below uses non-HTTPS which isn't recommended. See
+example for afraid above._*
 
-provide a number of free and premium DNS related services for home or office use.
-```
+provide a number of free and premium DNS related services for home or
+office use.
+
+[source,shell]
+....
 #!/bin/sh
 #
 # http://dyns.cx/documentation/technical/protocol/v1.1.php
@@ -103,11 +117,17 @@ if [ $? -eq 0 ]; then
 else                         
   /sbin/ddns_custom_updated 0
 fi                           
-```
+....
 
-### CloudFlare
-If you use CloudFlare for your domains, this script can update any A record on your account.
-```
+[[cloudflare]]
+CloudFlare
+^^^^^^^^^^
+
+If you use CloudFlare for your domains, this script can update any A
+record on your account.
+
+[source,shell]
+....
 #!/bin/sh
 
 EMAIL= # Your CloudFlare E-mail address
@@ -129,15 +149,21 @@ curl -fs -o /dev/null https://www.cloudflare.com/api_json.html \
   -d "content=$IP"
 
 if [ $? -eq 0 ]; then
-	/sbin/ddns_custom_updated 1
+    /sbin/ddns_custom_updated 1
 else
-	/sbin/ddns_custom_updated 0
+    /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### CloudFlare (another variant)
-If you use CloudFlare for your domains, this script can update any A record on your account.
-```
+[[cloudflare-another-variant]]
+CloudFlare (another variant)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you use CloudFlare for your domains, this script can update any A
+record on your account.
+
+[source,shell]
+....
 #!/bin/sh
  
 EMAIL= # Your Email
@@ -158,11 +184,14 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### [Inernet.bs](http://www.internet.bs)
+[[inernet.bs]]
+http://www.internet.bs[Inernet.bs]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-```
+[source,shell]
+....
 #!/bin/sh
 
 USER=username-goes-here
@@ -176,12 +205,18 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
+....
 
-```
+[[pdd.yandex.ru]]
+https://domain.yandex.com[pdd.yandex.ru]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-### [pdd.yandex.ru](https://domain.yandex.com)
-If you use domain.yandex.com for your domains, this script can update any A/AAAA record on your account. Replace `router.yourdomain.com`, `token` and `id` with your own values.
-```
+If you use domain.yandex.com for your domains, this script can update
+any A/AAAA record on your account. Replace `router.yourdomain.com`,
+`token` and `id` with your own values.
+
+[source,shell]
+....
 #!/bin/sh
 # Get token at https://pddimp.yandex.ru/token/index.xml?domain=yourdomain.com
 token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -197,11 +232,22 @@ then
 else
     /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### [Namecheap](https://www.namecheap.com)
-If you use Namecheap for your domains, this script can update any A record on your account. The script is currently (as of Aug 1 2015) required because the built-in script uses HTTP, while Namecheap requires HTTPS. To use this, replace `HOSTNAME`, `DOMAIN` and `PASSWORD` with your own values. You can refer to the [DDNS FAQ at Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/36/11/how-do-i-start-using-dynamic-dns) for steps required. 
-```
+[[namecheap]]
+https://www.namecheap.com[Namecheap]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you use Namecheap for your domains, this script can update any A
+record on your account. The script is currently (as of Aug 1 2015)
+required because the built-in script uses HTTP, while Namecheap requires
+HTTPS. To use this, replace `HOSTNAME`, `DOMAIN` and `PASSWORD` with
+your own values. You can refer to the
+https://www.namecheap.com/support/knowledgebase/article.aspx/36/11/how-do-i-start-using-dynamic-dns[DDNS
+FAQ at Namecheap] for steps required.
+
+[source,shell]
+....
 #!/bin/sh
 # Update the following variables:
 HOSTNAME=hostname
@@ -215,16 +261,32 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### [DNS-O-Matic](https://www.dnsomatic.com)
-If you use DNS-O-Matic to update your domains, this script can update all or a single host record on your account.  To use this, replace `dnsomatic_username`, `dnsomatic_password` with your own values. You can refer to the [DNS-O-Matic API Documentation](https://www.dnsomatic.com/wiki/api#sample_updates) for additional info.
+[[dns-o-matic]]
+https://www.dnsomatic.com[DNS-O-Matic]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Note: the HOSTNAME specified in the script below will update all records setup in your DNS-O-Matic account to have it only update a single host you will need to modify it accordingly.  In some cases this may require you to specify the host entry, sometimes the domain entry.  
+If you use DNS-O-Matic to update your domains, this script can update
+all or a single host record on your account. To use this, replace
+`dnsomatic_username`, `dnsomatic_password` with your own values. You can
+refer to the
+https://www.dnsomatic.com/wiki/api#sample_updates[DNS-O-Matic API
+Documentation] for additional info.
 
-To troubleshoot update issues you can run the curl command directly from the command line by passing in your details and removing the --silent option.  If you get back good and your IP address back you've got it setup correctly.  If you get back nohost, you're not passing in the correct hostname value.
- 
-```
+Note: the HOSTNAME specified in the script below will update all records
+setup in your DNS-O-Matic account to have it only update a single host
+you will need to modify it accordingly. In some cases this may require
+you to specify the host entry, sometimes the domain entry.
+
+To troubleshoot update issues you can run the curl command directly from
+the command line by passing in your details and removing the --silent
+option. If you get back good and your IP address back you've got it
+setup correctly. If you get back nohost, you're not passing in the
+correct hostname value.
+
+[source,shell]
+....
 #!/bin/sh
 # Update the following variables:
 USERNAME=dnsomatic_username
@@ -238,14 +300,28 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
-```
-**Note:** It seems that the DNS-O-Matic API (at least when using a single https command) does _not_ like an email address as the user name and will fail. DNS-O-Matic no longer allows the creation of a separate user name. However there is a workaround: Your DNS-O-Matic account is the same as your OpenDNS account. If you go to _my account_ at [opendns.com](opendns.com) and choose _display name_ (purportedly for forum use), this will also work in this script for user name. The suggestion above about running the _curl_ command directly from the command line to test is really useful!
+....
 
-### [Duck DNS](https://www.duckdns.org)
+*Note:* It seems that the DNS-O-Matic API (at least when using a single
+https command) does _not_ like an email address as the user name and
+will fail. DNS-O-Matic no longer allows the creation of a separate user
+name. However there is a workaround: Your DNS-O-Matic account is the
+same as your OpenDNS account. If you go to _my account_ at opendns.com
+and choose _display name_ (purportedly for forum use), this will also
+work in this script for user name. The suggestion above about running
+the _curl_ command directly from the command line to test is really
+useful!
 
-Just replace ``yoursubdomain`` and ``your-token`` with the values you got from duckdns. The hostname you set up in the GUI doesn't matter, but I recommend setting it to your subdomain anyway.
+[[duck-dns]]
+https://www.duckdns.org[Duck DNS]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-```shell
+Just replace `yoursubdomain` and `your-token` with the values you got
+from duckdns. The hostname you set up in the GUI doesn't matter, but I
+recommend setting it to your subdomain anyway.
+
+[source,shell]
+----
 #!/bin/sh
 
 # register a subdomain at https://www.duckdns.org/ to get your token
@@ -260,17 +336,21 @@ then
 else
     /sbin/ddns_custom_updated 0
 fi
-```
+----
 
-### [EasyDNS] (https://www.easydns.com/)
-```
+[[easydns]]
+https://www.easydns.com/[EasyDNS]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[source,shell]
+....
 #!/bin/sh
 #
 # This script provides dynamic DNS update support for the EasyDNS service on
 # the Merlin asuswrt router firmware.
 #
 #  
-#	Command Line examples you can try in your web browser or CLI
+#   Command Line examples you can try in your web browser or CLI
 # wget -qO - "http://api.cp.easydns.com/dyn/tomato.php?login=EDIT-ME&password=EDIT-ME&wildcard=no&hostname=EDIT.ME.EM&0ED.IT0.0ME.TOO"
 #
 # curl -k "http://EDIT-USER:EDIT-PASSWORD@api.cp.easydns.com/dyn/tomato.php?&wildcard=no&hostname=EDIT-ME&myip=0ED.IT0.0ME.TOO"
@@ -282,7 +362,7 @@ echo "$#: $*" >> /tmp/ddns-start.log
 # This should be the domain (or hostname) to be updated.
 # Seems as you can add more DDNS with this method, This works for me very well
 # as I need two A records to be updated from DDNS.
-# 	You should be able to add a C, D, etc if needed. 
+#   You should be able to add a C, D, etc if needed. 
 DOMAIN_A=ADD DOMAIN HERE
 DOMAIN_B=ADD 2nd DOMAIN HERE
 
@@ -321,12 +401,19 @@ if [ $? -eq 0 ]; then
 else
         /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### [Dy.fi] (http://www.dy.fi/)
-Just edit USERNAME, PASSWORD and HOSTNAME according to your setup, and you should be good to go. Dy.fi drops hosts after 7 days of inactivity, so I'd also recommend setting the "Forced refresh interval (in days)" setting in the web ui to 7.
+[[dy.fi]]
+http://www.dy.fi/[Dy.fi]
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-```
+Just edit USERNAME, PASSWORD and HOSTNAME according to your setup, and
+you should be good to go. Dy.fi drops hosts after 7 days of inactivity,
+so I'd also recommend setting the "Forced refresh interval (in days)"
+setting in the web ui to 7.
+
+[source,shell]
+....
 #!/bin/sh
 # http://www.dy.fi/page/specification
 
@@ -341,30 +428,40 @@ if [ $? -eq 0 ]; then
 else
         /sbin/ddns_custom_updated 0
 fi
+....
 
-```
-### CloudFlare IMPROVED and working as of Dec 30th 2015
-If you use CloudFlare for your domains, this script can update any A record on your account. Something was broke in the old script above. If you are having trouble, use this one. To get your record ID use:
-```
+[[cloudflare-improved-and-working-as-of-dec-30th-2015]]
+CloudFlare IMPROVED and working as of Dec 30th 2015
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you use CloudFlare for your domains, this script can update any A
+record on your account. Something was broke in the old script above. If
+you are having trouble, use this one. To get your record ID use:
+
+[source,shell]
+....
 curl https://www.cloudflare.com/api_json.html -d 'a=rec_load_all' \
-  -d 'tkn=YOUR_API_KEY’ \
-  -d 'email=YOUR_EMAIL_ADDRESS’ \
-  -d 'z=YOUR_DOMAIN_NAME’
-```
+  -d 'tkn=YOUR_API_KEY' \
+  -d 'email=YOUR_EMAIL_ADDRESS' \
+  -d 'z=YOUR_DOMAIN_NAME'
+....
+
 /jffs/scripts/ddns-start
-```
+
+[source,shell]
+....
 #!/bin/sh
 
 NEW_IP=`wget http://ipinfo.io/ip -qO -`
 
         curl https://www.cloudflare.com/api_json.html \
           -d 'a=rec_edit' \
-          -d 'tkn=YOUR_API_KEY_HERE’ \
-          -d 'email=YOUR_ACCOUNT_EMAIL_HERE’ \
-          -d 'z=ZONE_OR_ROOT_DOMAIN_NAME’ \
-          -d 'id=RECORD_ID’ \
+          -d 'tkn=YOUR_API_KEY_HERE' \
+          -d 'email=YOUR_ACCOUNT_EMAIL_HERE' \
+          -d 'z=ZONE_OR_ROOT_DOMAIN_NAME' \
+          -d 'id=RECORD_ID' \
           -d 'type=A' \
-          -d 'name=DOMAIN_NAME’ \
+          -d 'name=DOMAIN_NAME' \
           -d 'ttl=1' \
           -d "content=$NEW_IP"
         echo $NEW_IP > /var/tmp/current_ip.txt
@@ -374,10 +471,19 @@ if [ $? -eq 0 ]; then
 else
     /sbin/ddns_custom_updated 0
 fi
-```
-### BIND9 DDNS using nsupdate
-If you run your own DNS server with BIND9, this script uses nsupdate to update an A record.  This requires that you are updating a zone configured for use with dynamic updates rather than the standard zone config files.
-```
+....
+
+[[bind9-ddns-using-nsupdate]]
+BIND9 DDNS using nsupdate
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you run your own DNS server with BIND9, this script uses nsupdate to
+update an A record. This requires that you are updating a zone
+configured for use with dynamic updates rather than the standard zone
+config files.
+
+[source,shell]
+....
 #!/opt/bin/bash
 # A bash script to update BIND9 DDNS using nsupdate and tsig key
 # Tested with bash and bind-client to be installed from entware-ng
@@ -403,15 +509,20 @@ wait $!
 echo $?
 
 if [ $?==0 ]; then
-	/sbin/ddns_custom_updated 1
+    /sbin/ddns_custom_updated 1
 else
-	/sbin/ddns_custom_updated 0
+    /sbin/ddns_custom_updated 0
 fi
-```
+....
 
-### Loopia 
+[[loopia]]
+Loopia
+^^^^^^
+
 This scripts add Loopia support using curl just edit hostname and cred.
-```
+
+[source,shell]
+....
 #!/bin/sh
 #https://support.loopia.com/wiki/CURL
 url=                                            # add the domain name here (example: test.com)
@@ -436,11 +547,17 @@ esac
 
 loopia_dns_update
 exit 0
-```
+....
 
-### DNSimple
-This script adds DNSimple support, get token and record_id from the site and edit all the variables.
-```
+[[dnsimple]]
+DNSimple
+^^^^^^^^
+
+This script adds DNSimple support, get token and record_id from the site
+and edit all the variables.
+
+[source,shell]
+....
 #!/bin/bash
  
 LOGIN="your@email"
@@ -462,11 +579,20 @@ if [ $? -eq 0 ]; then
 else
     /sbin/ddns_custom_updated 0
 fi
-``` 
+....
 
-### Double NAT - External IP Example
-This script first retrieves the external IP rather than using the one passed to it from the Custom DDNS settings.  This may be necessary if your ASUS router is double NATed behind your ISP's router.  Example makes use of DNS-O-Matic but could be modified to work with other DDNS providers.
-```
+[[double-nat---external-ip-example]]
+Double NAT - External IP Example
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This script first retrieves the external IP rather than using the one
+passed to it from the Custom DDNS settings. This may be necessary if
+your ASUS router is double NATed behind your ISP's router. Example makes
+use of DNS-O-Matic but could be modified to work with other DDNS
+providers.
+
+[source,shell]
+....
 #!/bin/sh
 USER="YourEmail%40domain.com" # replace @ symbol with URL safe %40
 PASS="YourPassword"
@@ -486,14 +612,29 @@ then
 else
   /sbin/ddns_custom_updated 0
 fi
-``` 
+....
 
-### DigitalOcean
-DigitalOcean DNS has a more involved JSON-based API, but [do-ddns](https://github.com/mieko/do-ddns) can update records with only sh and curl as system dependencies.  It has automatic support for executing `/sbin/ddns_custom_updated` on success or failure.
+[[digitalocean]]
+DigitalOcean
+^^^^^^^^^^^^
 
-### ChangeIP
-Here is a very basic script for ChangeIP.com. The "curl" command is needed instead of "wget" because secured https is being utilized. This is just the minimal required and a work in progress, feel free to improve on it. Replace "USERNAME," "PASSWORD," and "YourDomainName" with your relevant info.
-```
+DigitalOcean DNS has a more involved JSON-based API, but
+https://github.com/mieko/do-ddns[do-ddns] can update records with only
+sh and curl as system dependencies. It has automatic support for
+executing `/sbin/ddns_custom_updated` on success or failure.
+
+[[changeip]]
+ChangeIP
+^^^^^^^^
+
+Here is a very basic script for ChangeIP.com. The "curl" command is
+needed instead of "wget" because secured https is being utilized. This
+is just the minimal required and a work in progress, feel free to
+improve on it. Replace "USERNAME," "PASSWORD," and "YourDomainName" with
+your relevant info.
+
+[source,shell]
+....
 #!/bin/sh
 
 
@@ -504,13 +645,20 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
+....
 
-```
-### Joker.com
+[[joker.com]]
+Joker.com
+^^^^^^^^^
 
-Activate Dynamic DNS Authentication from DNS control panel in order to get authentication details that you will need in the following example. Create a DYNA or DYNAAAA record and choose your subdomain. Your IP is detected automatically at this point, but you can change it, so you can confirm your setup is working.
+Activate Dynamic DNS Authentication from DNS control panel in order to
+get authentication details that you will need in the following example.
+Create a DYNA or DYNAAAA record and choose your subdomain. Your IP is
+detected automatically at this point, but you can change it, so you can
+confirm your setup is working.
 
-```
+[source,shell]
+....
 #!/bin/sh
 USERNAME=your_username
 PASSWORD=your_password
@@ -522,11 +670,14 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
+....
 
-```
-### DNS Made Easy
+[[dns-made-easy]]
+DNS Made Easy
+^^^^^^^^^^^^^
 
-```
+[source,shell]
+....
 #!/bin/sh
 #---------------------------------------------------------------------------
 # Update using dnsmadeeasy.com API
@@ -563,14 +714,21 @@ DYNDNS_PASSWORD="set to your dyn DNS record password"
 DYNDNS_URL="https://www.dnsmadeeasy.com/servlet/updateip?id=$DYNDNS_ID&password=$DYNDNS_PASSWORD&ip=$WAN_IP_ADDRESS"
 
 update_dynamic_dns
-```
+....
 
-### AWS Route53
+[[aws-route53]]
+AWS Route53
+^^^^^^^^^^^
 
-[Gist link](https://gist.github.com/venator85/0b677e535dd35e2cd02c54ed445221ed)
+https://gist.github.com/venator85/0b677e535dd35e2cd02c54ed445221ed[Gist
+link]
 
-### Dynu
-```
+[[dynu]]
+Dynu
+^^^^
+
+[source,shell]
+....
 #!/bin/sh
 #
 # https://www.dynu.com/en-US/DynamicDNS/IP-Update-Protocol
@@ -588,4 +746,4 @@ if [ "$ANSWER" == "good" ] || [ "$ANSWER" == "nochg" ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
-```
+....
