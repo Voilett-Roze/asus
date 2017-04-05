@@ -122,7 +122,7 @@ ___
 
 # Privacy-Filter
 
-**Description**: This script blocks [Telemetry](https://en.wikipedia.org/wiki/Criticism_of_Microsoft_Windows#Data_collection), [Shodan.io crawlers](https://www.shodan.io/) and an [Android Rootkit](https://www.kb.cert.org/vuls/id/624539), it supports both ipv4 and ipv6 out of the box however ipv6 blocking will only work on routers with [ipset version 6](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) installed.
+**Description**: This script blocks [Telemetry](https://technet.microsoft.com/itpro/windows/configure/basic-level-windows-diagnostic-events-and-fields), [Shodan.io crawlers](https://www.shodan.io/) and an [Android Rootkit](https://www.kb.cert.org/vuls/id/624539), it supports both ipv4 and ipv6 out of the box however ipv6 blocking will only work on routers with [ipset version 6](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) installed.
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
