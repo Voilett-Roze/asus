@@ -116,6 +116,8 @@ sh /jffs/scripts/malware-filter
 Apr  1 00:06:39 system: Malware-filter loaded 46822 unique ip addresses that will be rejected from contacting your router.
 Apr  1 00:06:39 system: Malware-Filter loaded 851 unique ip ranges that will be rejected from contacting your router.
 ````
+Additional notes
+DD-WRT users should replace iptables-save to iptables -L in order to use this script.
 
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
 ___
