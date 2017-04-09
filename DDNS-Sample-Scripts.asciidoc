@@ -750,6 +750,6 @@ fi
 
 [[Oray花生壳]]
 Oray花生壳
+^^^^^^^
 
-https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Github
-link]
+https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Github link]
