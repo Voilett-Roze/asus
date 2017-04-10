@@ -748,8 +748,10 @@ else
 fi
 ....
 
-[[Oray花生壳]]
+[[oray花生壳]]
 Oray花生壳
 ^^^^^^^
+https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Oray花生壳]
 
-https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Github link]
+* Support Oray default
+* You can add functions and add them to the update_all_ddns function to support other DDNS service providers
