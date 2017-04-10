@@ -155,6 +155,7 @@ sh /jffs/scripts/privacy-filter
 ```
 Apr  1 00:00:06 system: Privacy Filter (ipv4) loaded 190 unique ip addresses that will be rejected from contacting your  router.
 ````
+**Additional Notes**: DD-WRT users should replace iptables-save to iptables -L in order to use this script, DD-WRT/OpenWRT/Padavan users must [change path](https://gitlab.com/swe_toast/privacy-filter/blob/master/privacy-filter#L7) for this script to work.
 
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/) on SnBForums
 ___
