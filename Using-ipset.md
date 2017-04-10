@@ -33,15 +33,15 @@ Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) wh
 
 There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers and getting support on those scripts can be tricky.
 
->ATTENTION: Scripters, feel free to append to this list and then link installation instructions on the [installation instructions page](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions), please dont add full scripts to that page cause it gets messy "keep it light", also remember not to write to [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) due to wear and tear.
+>ATTENTION: Scripters, feel free to append to this list and then link installation instructions on the [installation instructions page](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions), please dont add full scripts to that page cause it gets messy "keep it light".
 
-| `Scriptname` |`Ipset Version`|`Maintained by`|`Supports other platforms`|Description|
-|--------------|:-------:|:-------------:|:------------------------:|:----------:
-|[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|no|Blocks Tor nodes or countries| 
-|[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|yes|Block or allow using any list from iblocklist| 
-|[Malware Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#malware-filter)|4,6|swetoast|yes|Blocks Malware Spreading ip addresses daily|
-|[Privacy Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#privacy-filter)|4,6|swetoast|yes|Blocks Telemetry, Trackers and Shodian.io|
-|[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian)|4| |no|Peerguardian|
-|[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|4| |no|Peerguardian|
-|[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v3)|4| |no|Peerguardian|
-|[Disable Windows 10 Tracking](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#disable-windows10-tracking)|4| |no|Blocks Telemetry|
+| `Scriptname` |`Ipset Version`|`Maintained by`|Description|
+|--------------|:-------:|:-------------:|:----------------------------------:
+|[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|Blocks Tor nodes or countries| 
+|[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist| 
+|[Malware Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#malware-filter)|4,6|swetoast|Blocks Malware Spreading ip addresses daily|
+|[Privacy Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#privacy-filter)|4,6|swetoast|Blocks Telemetry, Trackers and Shodian.io|
+|[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian)|4| |Peerguardian|
+|[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|4| |Peerguardian|
+|[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v3)|4| |Peerguardian|
+|[Disable Windows 10 Tracking](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#disable-windows10-tracking)|4| |Blocks Telemetry|
