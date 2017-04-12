@@ -10,7 +10,7 @@ This example shows how to block incoming connection from [Tor](https://www.torpr
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
-* Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/create-ipset-lists.sh) to `/jffs/scripts/create-ipset-lists.sh`
+* Then place [**this content**](https://raw.githubusercontent.com/shounak-de/misc-scripts/master/create-ipset-lists.sh) to `/jffs/scripts/create-ipset-lists.sh`
 
 * Then make it executable:
 ```
