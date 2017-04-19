@@ -1,9 +1,16 @@
+// include a table of contents
 :toc:
+// set the default syntax highlighting to shell
 :source-language: shell
+// define the icons for admonitions
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
 
-[[afraid.org]]
-http://freedns.afraid.org/[afraid.org]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== afraid.org
+^http://freedns.afraid.org/^
 
 Here is a working example, for afraid.org's free DDNS (you can find your API key http://freedns.afraid.org/dynamic/[here]).
 
@@ -23,15 +30,12 @@ else
 fi
 ....
 
-[[aws-route53]]
-https://aws.amazon.com/route53/[AWS Route53]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== AWS Route53
+^https://aws.amazon.com/route53/^
 
 https://gist.github.com/venator85/0b677e535dd35e2cd02c54ed445221ed[Gist link]
 
-[[bind9-ddns-using-nsupdate]]
-BIND9 DDNS using nsupdate
-^^^^^^^^^^^^^^^^^^^^^^^^^
+== BIND9 DDNS using nsupdate
 
 If you run your own DNS server with BIND9, this script uses nsupdate to
 update an A record. This requires that you are updating a zone
@@ -71,9 +75,8 @@ else
 fi
 ....
 
-[[changeip]]
-https://www.changeip.com/dns.php[ChangeIP]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== ChangeIP
+^https://www.changeip.com/dns.php^
 
 Here is a very basic script for ChangeIP.com.
 
@@ -93,9 +96,8 @@ else
 fi
 ....
 
-[[cloudflare]]
-https://www.cloudflare.com/dns/[CloudFlare]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== CloudFlare
+^https://www.cloudflare.com/dns/^
 
 If you use CloudFlare for your domains, this script can update any A
 record on your account.
@@ -124,18 +126,15 @@ else
 fi
 ....
 
-[[digitalocean]]
-DigitalOcean
-^^^^^^^^^^^^
+== DigitalOcean
 
 DigitalOcean DNS has a more involved JSON-based API, but
 https://github.com/mieko/do-ddns[do-ddns] can update records with only
 sh and curl as system dependencies. It has automatic support for
 executing `/sbin/ddns_custom_updated` on success or failure.
 
-[[dns-made-easy]]
-http://www.dnsmadeeasy.com/integration/dynamicdns/[DNS Made Easy]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== DNS Made Easy
+^http://www.dnsmadeeasy.com/integration/dynamicdns/^
 
 [source]
 ....
@@ -177,9 +176,8 @@ DYNDNS_URL="https://www.dnsmadeeasy.com/servlet/updateip?id=$DYNDNS_ID&password=
 update_dynamic_dns
 ....
 
-[[dns-o-matic]]
-https://www.dnsomatic.com[DNS-O-Matic]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== DNS-O-Matic
+^https://www.dnsomatic.com^
 
 If you use DNS-O-Matic to update your domains, this script can update
 all or a single host record on your account. To use this, replace
@@ -224,12 +222,10 @@ work in this script for user name. The suggestion above about running
 the _curl_ command directly from the command line to test is really
 useful!
 
-[[dnsexit.com]]
-http://www.dnsexit.com/Direct.sv?cmd=dynDns[dnsExit.com]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== dnsExit.com
+^http://www.dnsexit.com/Direct.sv?cmd=dynDns^
 
-* *_NOTE: the example below uses non-HTTPS which isn't recommended.
-dnsExit.com doesn't have HTTPS method available._*
+NOTE: The example below uses non-HTTPS which isn't recommended. dnsExit.com doesn't have HTTPS method available.
 
 Free DNS server that also offers DDNS services.
 
@@ -247,9 +243,8 @@ else
 fi
 ....
 
-[[dnsimple]]
-https://developer.dnsimple.com/[DNSimple]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== DNSimple
+^https://developer.dnsimple.com^
 
 WARNING: DNSimple API v1 is deprecated and in maintenance-only. API v1 will be discontinued on October 1st, 2017.
 
@@ -281,9 +276,8 @@ else
 fi
 ....
 
-[[duck-dns]]
-https://www.duckdns.org[Duck DNS]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== Duck DNS
+^https://www.duckdns.org^
 
 Just replace `yoursubdomain` and `your-token` with the values you got
 from duckdns. The hostname you set up in the GUI doesn't matter, but I
@@ -307,9 +301,8 @@ else
 fi
 ----
 
-[[dy.fi]]
-http://www.dy.fi/[Dy.fi]
-^^^^^^^^^^^^^^^^^^^^^^^^
+== Dy.fi
+^http://www.dy.fi/^
 
 Just edit USERNAME, PASSWORD and HOSTNAME according to your setup, and
 you should be good to go. Dy.fi drops hosts after 7 days of inactivity,
@@ -334,12 +327,10 @@ else
 fi
 ....
 
-[[dyns]]
-http://dyns.cx[DyNS]
-^^^^^^^^^^^^^^^^^^^^
+== DyNS
+^http://dyns.cx^
 
-* *_NOTE: the example below uses non-HTTPS which isn't recommended. See
-example for afraid above._*
+NOTE: the example below uses non-HTTPS which isn't recommended. See example for afraid above.
 
 provide a number of free and premium DNS related services for home or
 office use.
@@ -373,9 +364,8 @@ else
 fi                           
 ....
 
-[[dynu]]
-https://www.dynu.com/DynamicDNS[Dynu]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== Dynu
+^https://www.dynu.com/DynamicDNS^
 
 [source]
 ....
@@ -398,9 +388,8 @@ else
 fi
 ....
 
-[[easydns]]
-https://www.easydns.com/[EasyDNS]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== EasyDNS
+^https://www.easydns.com/^
 
 [source]
 ....
@@ -463,9 +452,8 @@ else
 fi
 ....
 
-[[gandi]]
-http://doc.livedns.gandi.net/[Gandi]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== Gandi
+^http://doc.livedns.gandi.net/^
 
 WARNING: Beta API methods and resources are not fully stabilized and may yet change.
 
@@ -498,9 +486,7 @@ else
 fi
 ....
 
-[[google-domains]]
-Google Domains
-^^^^^^^^^^^^^^
+== Google Domains
 
 Transfer your domain to Google and enjoy free DDNS and other features.
 
@@ -530,9 +516,8 @@ google_dns_update $U $P $H
 exit 0
 ....
 
-[[inernet.bs]]
-http://www.internet.bs[Inernet.bs]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== Inernet.bs
+^http://www.internet.bs^
 
 [source]
 ....
@@ -551,9 +536,8 @@ else
 fi
 ....
 
-[[joker.com]]
-https://joker.com/[Joker.com]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== Joker.com
+^https://joker.com/^
 
 Activate Dynamic DNS Authentication from DNS control panel in order to
 get authentication details that you will need in the following example.
@@ -576,9 +560,7 @@ else
 fi
 ....
 
-[[loopia]]
-Loopia
-^^^^^^
+== Loopia
 
 This scripts add Loopia support using curl just edit hostname and cred.
 
@@ -610,9 +592,8 @@ loopia_dns_update
 exit 0
 ....
 
-[[namecheap]]
-https://www.namecheap.com[Namecheap]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== Namecheap
+^https://www.namecheap.com^
 
 If you use Namecheap for your domains, this script can update any A
 record on your account. The script is currently (as of Aug 1 2015)
@@ -639,18 +620,15 @@ else
 fi
 ....
 
-[[oray花生壳]]
-Oray花生壳
-^^^^^^^
+== Oray花生壳
 
 https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Oray花生壳]
 
 * Support Oray default
 * You can add functions and add them to the update_all_ddns function to support other DDNS service providers
 
-[[pdd.yandex.ru]]
-https://domain.yandex.com[pdd.yandex.ru]
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== pdd.yandex.ru
+^https://domain.yandex.com^
 
 If you use domain.yandex.com for your domains, this script can update
 any A/AAAA record on your account. Replace `router.yourdomain.com`,
