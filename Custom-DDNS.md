@@ -14,6 +14,19 @@ Finally, like all [[user scripts|User-scripts]], the option to support custom sc
 
 After enabling custom scripts, place the contents of your update script in `/jffs/scripts/ddns-start` 
 
+# Using a DDNS with Double NAT
+If your ASUS router is double NATed behind your ISP's router, you may need to
+retrieve your external IP rather than using the one passed to it from the
+Custom DDNS settings. Find the line in your update script where the IP is used
+```
+IP=${1}
+```
+and change it to get the IP from an external source
+```
+IP=$(wget -O - -q http://myip.dnsomatic.com/)
+```
+The above uses dnsomatic, but it can be modified to work with any source. The OpenWrt wiki provides a list [[here|https://wiki.openwrt.org/doc/howto/ddns.client#detecting_local_ip]].
+
 # Using a DDNS with VPN
 Here is an example of a script for redirecting a DDNS to a VPN IP, in openvpn-event script, add:
 ```
