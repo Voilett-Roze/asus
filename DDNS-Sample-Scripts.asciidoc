@@ -9,6 +9,7 @@
 :caution-caption: :fire:
 :warning-caption: :warning:
 
+[[afraidorg]]
 == afraid.org
 ^http://freedns.afraid.org/^
 
@@ -222,6 +223,7 @@ work in this script for user name. The suggestion above about running
 the _curl_ command directly from the command line to test is really
 useful!
 
+[[dnsexitcom]]
 == dnsExit.com
 ^http://www.dnsexit.com/Direct.sv?cmd=dynDns^
 
@@ -301,6 +303,7 @@ else
 fi
 ----
 
+[[dyfi]]
 == Dy.fi
 ^http://www.dy.fi/^
 
@@ -516,6 +519,7 @@ google_dns_update $U $P $H
 exit 0
 ....
 
+[[inernetbs]]
 == Inernet.bs
 ^http://www.internet.bs^
 
@@ -536,6 +540,7 @@ else
 fi
 ....
 
+[[jokercom]]
 == Joker.com
 ^https://joker.com/^
 
@@ -627,6 +632,7 @@ https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Oray花生壳]
 * Support Oray default
 * You can add functions and add them to the update_all_ddns function to support other DDNS service providers
 
+[[pddyandexru]]
 == pdd.yandex.ru
 ^https://domain.yandex.com^
 
