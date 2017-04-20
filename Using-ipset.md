@@ -15,7 +15,7 @@ Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) wh
 | `RT-N66U`    | x       |         |
 | `RT-AC56U`   |         | x       |
 | `RT-AC66U`   | x       |         |
-| `RT-AC66U_B1`|         |         |
+| `RT-AC66U_B1`|         | x       |
 | `RT-AC68U`   |         | x       |
 | `RT-AC68P`   |         | x       |
 | `RT-AC68UF`  |         | x       |
