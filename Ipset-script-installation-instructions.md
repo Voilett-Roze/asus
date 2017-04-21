@@ -130,7 +130,7 @@ ___
 
 **Description**: This script blocks [Telemetry](https://technet.microsoft.com/itpro/windows/configure/basic-level-windows-diagnostic-events-and-fields), [Shodan.io crawlers](https://www.shodan.io/) and an [Android Rootkit](https://www.kb.cert.org/vuls/id/624539), it supports both ipv4 and ipv6 out of the box however ipv6 blocking will only work on routers with [ipset version 6](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) installed.
 
-**Important**: For users that has AB-Solution active on their router may experience less hits on the privacy filter there is a [workaround](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/page-14#post-319171) on the forum but its not a must since the filter blocks the ones not redirected by AB-Solution.
+**Important**: For users using and ad-blocking script such as AB-Solution, you may have to disable ad-blocking while updating the privacy rules for getting more hits on Privacy-Filter.
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
