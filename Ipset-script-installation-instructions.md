@@ -4,6 +4,12 @@ ___
 >**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs#backing-up-the-jffs-partition) incase something goes wrong.
 ___
 
+### Table of Contents  
+[Tor and Countries Block](#tor-and-countries-block)  
+[iblocklist-loader](#iblocklist-loader)  
+[Malware-Filter](#malware-filter)  
+[Privacy-Filter](#privacy-filter)  
+
 # Tor and Countries Block 
 
 This example shows how to block incoming connection from [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
