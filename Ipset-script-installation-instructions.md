@@ -1,14 +1,13 @@
 ___
 > **NOTE:** This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
-
 >**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs#backing-up-the-jffs-partition) incase something goes wrong.
 ___
 
 ### Table of Contents  
-[Tor and Countries Block](#tor-and-countries-block)  
-[iblocklist-loader](#iblocklist-loader)  
-[Malware-Filter](#malware-filter)  
-[Privacy-Filter](#privacy-filter)  
+* [Tor and Countries Block](#tor-and-countries-block)  
+* [iblocklist-loader](#iblocklist-loader)  
+* [Malware-Filter](#malware-filter)  
+* [Privacy-Filter](#privacy-filter)  
 
 # Tor and Countries Block 
 
