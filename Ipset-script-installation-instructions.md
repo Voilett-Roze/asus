@@ -84,11 +84,11 @@ chmod +x /jffs/scripts/iblocklist-loader.sh
 # Load ipset filter rules
 sh /jffs/scripts/iblocklist-loader.sh
 ```
-There are other settings on the script that is documented within the script itself that should be self explanatory. If you have questions or need further details, please ask on the [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) on SnBForums. Malware-Filter supports IPv4 and IPv6 (No default blocklists are added yet however for IPv6).
+There are other settings on the script that is documented within the script itself that should be self explanatory. If you have questions or need further details, please ask on the [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) on SnBForums.
 ___
 # Malware-Filter
 
-**Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network.
+**Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network. Malware-Filter supports IPv4 and IPv6 (No default blocklists are added yet however for IPv6).
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
