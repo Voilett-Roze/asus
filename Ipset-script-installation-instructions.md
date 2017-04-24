@@ -9,7 +9,7 @@ ___
 * [iblocklist-loader](#iblocklist-loader)  
 * [Malware-Filter](#malware-filter)  
 * [Privacy-Filter](#privacy-filter) 
-* [Dynamically Ban Malicious IP's](nothereyet) 
+* [Dynamically Ban Malicious IP's](#dynamically-ban-malicious-ips) 
 
 # Tor and Countries Block 
 
@@ -198,4 +198,9 @@ then append the following line to /jffs/scripts/services-start:
 cru a IPSET_SAVE   "0 * * * * /jffs/scripts/IPSET_Block.sh save"    #Every hour
 cru a IPSET_BACKUP "0 5 * * * /jffs/scripts/IPSET_Block.sh backup"  #05:00 every day
 ````
+This will make this script run on a schedule it will run every at 00:00 , to verify that the entry works after its added just type:
 
+````
+cru l
+````
+____
