@@ -41,6 +41,7 @@ There is a full list of script that are maintained by users, most of the scripts
 |[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist| 
 |[Malware Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#malware-filter)|4,6|swetoast|Blocks Malware Spreading ip addresses daily|
 |[Privacy Filter](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#privacy-filter)|4,6|swetoast|Blocks Telemetry, Trackers and Shodian.io|
+|[Dynamically Ban Malicious IP's](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#dynamically-ban-malicious-ips)|4,6|martineu|N/A|
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian)|4| |Peerguardian|
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|4| |Peerguardian|
 |[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v3)|4| |Peerguardian|
