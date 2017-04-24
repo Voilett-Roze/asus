@@ -8,7 +8,8 @@ ___
 * [Tor and Countries Block](#tor-and-countries-block)  
 * [iblocklist-loader](#iblocklist-loader)  
 * [Malware-Filter](#malware-filter)  
-* [Privacy-Filter](#privacy-filter)  
+* [Privacy-Filter](#privacy-filter) 
+* [Dynamically Ban Malicious IP's](nothereyet) 
 
 # Tor and Countries Block 
 
@@ -175,3 +176,26 @@ If Asuswrt-Merlin or Asuswrt users run into issues, there is a [debug tool](http
 ````
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/) on SnBForums
 ___
+# Dynamically Ban Malicious IP's
+**Description**: N/A
+
+Enable and format JFFS through WEB UI first (if not already enabled)
+
+Then place the [content](https://raw.githubusercontent.com/MartineauUK/IPSET_Block/master/IPSET_Block.sh) to /jffs/scripts/IPSET_Block.sh
+
+Then make it executable:
+````
+chmod +x /jffs/scripts/IPSET_Block.sh
+````
+
+Finally call this at the end of your existing /jffs/firewall-start:
+````
+# Load ipset filter rules
+sh /jffs/scripts/IPSET_Block.sh init nolog
+````
+then append the following line to /jffs/scripts/services-start:
+````
+cru a IPSET_SAVE   "0 * * * * /jffs/scripts/IPSET_Block.sh save"    #Every hour
+cru a IPSET_BACKUP "0 5 * * * /jffs/scripts/IPSET_Block.sh backup"  #05:00 every day
+````
+
