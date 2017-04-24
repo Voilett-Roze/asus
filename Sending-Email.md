@@ -31,7 +31,7 @@ rm /tmp/mail.txt
 If your SMTP server requires authentication, you can pass them as additional arguments.  To see the available options, just run "sendmail -h".
 
 ***
-If you don't have a smtp email account from your ISP, [JANGO SMTP](https://www.jangosmtp.com/) could be the solution, it ofers 200 emails to send per month for free and should be enough.
+If you don't have a smtp email account from your ISP, [JANGO SMTP](https://www.jangosmtp.com/) could be the solution, it offers 200 emails to send per month for free and should be enough.
 Just [signup](https://www.jangosmtp.com/Free-Account.asp) for a free account, and after email confirmation, go to Settings/Advanced/FromAddresses and create one or more "from address".
 
 ![acc](http://i46.tinypic.com/i1iu5w.png)
