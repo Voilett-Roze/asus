@@ -473,19 +473,14 @@ DOMAIN="example.com" # The domain to be updated
 IP=${1}
 
 curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
-            -H "X-Api-Key: ${APIKEY}" \
-            -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
-            "https://dns.beta.gandi.net/api/v5/domains/${DOMAIN}/records/*/A"
-
-curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
-            -H "X-Api-Key: ${APIKEY}" \
-            -d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
-            "https://dns.beta.gandi.net/api/v5/domains/${DOMAIN}/records/@/A"
+	-H "X-Api-Key: ${APIKEY}" \
+	-d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
+	"https://dns.beta.gandi.net/api/v5/domains/${DOMAIN}/records/{@,*}/A"
 
 if [ $? -eq 0 ]; then
-    /sbin/ddns_custom_updated 1
+	/sbin/ddns_custom_updated 1
 else
-    /sbin/ddns_custom_updated 0
+	/sbin/ddns_custom_updated 0
 fi
 ....
 
