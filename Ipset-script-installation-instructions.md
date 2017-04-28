@@ -127,7 +127,7 @@ Apr  1 00:06:39 system: Malware-Filter loaded 851 unique ip ranges that will be 
 
 If Asuswrt-Merlin or Asuswrt users run into issues, there is a [debug tool](https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh) available to help both developer and end user to figure out what the issue is. Here is how to use the debug tool then paste the link that the script produces at the end in the thread when you seek support.
 ````shell
- wget https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh && sh debugtool.sh && rm debugtool.sh
+wget --no-check-certificate https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh && sh debugtool.sh && rm debugtool.sh
 ````
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
 ___
@@ -172,7 +172,7 @@ Apr  1 00:00:06 system: Privacy Filter (ipv4) loaded 190 unique ip addresses tha
 
 If Asuswrt-Merlin or Asuswrt users run into issues, there is a [debug tool](https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh) available to help both developer and end user to figure out what the issue is. Here is how to use the debug tool then paste the link that the script produces at the end in the thread when you seek support.
 ````shell
- wget https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh && sh debugtool.sh && rm debugtool.sh
+wget --no-check-certificate https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh && sh debugtool.sh && rm debugtool.sh
 ````
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/) on SnBForums
 ___
