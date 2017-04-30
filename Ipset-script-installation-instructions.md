@@ -23,7 +23,7 @@ This example shows how to block incoming connection from [Tor](https://www.torpr
 ```
 chmod +x /jffs/scripts/create-ipset-lists.sh
 ```
-* Finally call this at the end of your existing /jffs/firewall-start:
+* Finally call this at the end of your existing /jffs/scripts/firewall-start:
 ```
 # Load ipset filter rules
 sh /jffs/scripts/create-ipset-lists.sh
