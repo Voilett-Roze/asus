@@ -1,7 +1,7 @@
 ___
 > **NOTE:** This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
 
->**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs#backing-up-the-jffs-partition) incase something goes wrong.
+>**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs#backing-up-the-jffs-partition) in case something goes wrong. If your using multiple scripts from this make sure they dont run all at the same time that will decrease performance, use sleep command to make the script run at separate times or use && to make them run after each other.
 ___
 
 ### Table of Contents  
