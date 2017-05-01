@@ -179,6 +179,8 @@ ___
 # Dynamically Ban Malicious IP's
 **Description**: N/A
 
+NOTE: If you define a USB disk location for the $DIR variable in my IPSET_Block.sh script, it will allow the script to restore the Banned list of IPs rather than create an empty Blacklist IPSET each time you reboot.
+
 Enable and format JFFS through WEB UI first (if not already enabled)
 
 Then place the [content](https://raw.githubusercontent.com/MartineauUK/IPSET_Block/master/IPSET_Block.sh) to /jffs/scripts/IPSET_Block.sh
