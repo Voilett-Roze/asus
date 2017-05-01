@@ -181,26 +181,26 @@ ___
 
 ***NOTE:*** If you define a USB disk location for the $DIR variable in my IPSET_Block.sh script, it will allow the script to restore the Banned list of IPs rather than create an empty Blacklist IPSET each time you reboot.
 
-Enable and format JFFS through WEB UI first (if not already enabled)
+* Enable and format JFFS through WEB UI first (if not already enabled)
 
-Then place the [content](https://raw.githubusercontent.com/MartineauUK/IPSET_Block/master/IPSET_Block.sh) to /jffs/scripts/IPSET_Block.sh
+* Then place the [content](https://raw.githubusercontent.com/MartineauUK/IPSET_Block/master/IPSET_Block.sh) to /jffs/scripts/IPSET_Block.sh
 
-Then make it executable:
+* Then make it executable:
 ````
 chmod +x /jffs/scripts/IPSET_Block.sh
 ````
 
-Finally call this at the end of your existing /jffs/firewall-start:
+* Finally call this at the end of your existing /jffs/firewall-start:
 ````
 # Load ipset filter rules
 sh /jffs/scripts/IPSET_Block.sh init nolog
 ````
-then append the following line to /jffs/scripts/services-start:
+* then append the following line to /jffs/scripts/services-start:
 ````
 cru a IPSET_SAVE   "0 * * * * /jffs/scripts/IPSET_Block.sh save"    #Every hour
 cru a IPSET_BACKUP "0 5 * * * /jffs/scripts/IPSET_Block.sh backup"  #05:00 every day
 ````
-This will make this script run on a schedule it will run every at 00:00 , to verify that the entry works after its added just type:
+* This will make this script run on a schedule it will run every at 00:00 , to verify that the entry works after its added just type:
 
 ````
 cru l
