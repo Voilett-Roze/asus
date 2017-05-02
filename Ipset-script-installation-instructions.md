@@ -80,7 +80,7 @@ After you decide what sources you'd like to block, these are the steps to use th
 chmod +x /jffs/scripts/iblocklist-loader.sh
 ```
 
-* Finally call this at the end of your existing /jffs/firewall-start:
+* Finally call this at the end of your existing /jffs/scripts/firewall-start:
 
 ```
 # Load ipset filter rules
