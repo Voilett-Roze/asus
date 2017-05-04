@@ -92,6 +92,8 @@ ___
 
 **Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network. Malware-Filter supports IPv4 and IPv6 (No default blocklists are added yet however for IPv6).
 
+***NOTE:*** Dynamically Ban Malicious IP's (adamm version) is incompatible with malware-filter dont use both.
+
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter) to `/jffs/scripts/malware-filter`
@@ -136,7 +138,7 @@ ___
 
 **Description**: This script blocks [Telemetry](https://technet.microsoft.com/itpro/windows/configure/basic-level-windows-diagnostic-events-and-fields), [Shodan.io crawlers](https://www.shodan.io/) and an [Android Rootkit](https://www.kb.cert.org/vuls/id/624539), it supports both ipv4 and ipv6 out of the box however ipv6 blocking will only work on routers with [ipset version 6](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) installed.
 
-**NOTE**: For users using an ad-blocking script, you may have to disable ad-blocking while updating the privacy rules to get the full list. Note: The latest version of [AB-Solution](https://www.ab-solution.info/) (v3.8.1) has built in checks and exclusions and is not affected by this.
+**NOTE**: iblocklist-loader is incompatible with Privacy-filter so don't use both
 
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
@@ -176,6 +178,7 @@ wget --no-check-certificate https://gitlab.com/swe_toast/debugtool/raw/master/de
 ````
 For support on this script please visit this [forum thread](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/) on SnBForums
 ___
+
 # Dynamically Ban Malicious IP's
 **Description**: N/A
 
