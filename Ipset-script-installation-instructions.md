@@ -92,8 +92,6 @@ ___
 
 **Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network. Malware-Filter supports IPv4 and IPv6 (No default blocklists are added yet however for IPv6).
 
-***NOTE:*** Dynamically Ban Malicious IP's (adamm version) is incompatible with malware-filter dont use both.
-
 * Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter) to `/jffs/scripts/malware-filter`
