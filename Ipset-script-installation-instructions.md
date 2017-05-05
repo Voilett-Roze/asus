@@ -7,8 +7,6 @@ ___
 ### Table of Contents  
 * [Tor and Countries Block](#tor-and-countries-block)  
 * [iblocklist-loader](#iblocklist-loader)  
-* [Malware-Filter](#malware-filter)  
-* [Privacy-Filter](#privacy-filter) 
 * [Dynamically Ban Malicious IP's](#dynamically-ban-malicious-ips) 
 
 # Tor and Countries Block 
@@ -88,95 +86,6 @@ sh /jffs/scripts/iblocklist-loader.sh
 ```
 There are other settings on the script that is documented within the script itself that should be self explanatory. If you have questions or need further details, please ask on the [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) on SnBForums.
 ___
-# Malware-Filter
-
-**Description**: This script checks security firms list over malware spreading ip addresses and blocks them both outgoing and incoming connections from contacting your network. Malware-Filter supports IPv4 and IPv6 (No default blocklists are added yet however for IPv6).
-
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
-
-* Then place [**this content**](https://gitlab.com/swe_toast/malware-filter/raw/master/malware-filter) to `/jffs/scripts/malware-filter`
-
-* Then make it executable:
-```
-chmod +x /jffs/scripts/malware-filter
-```
-* then append the following line to /jffs/scripts/services-start:
-```
-cru a malware-filter "0 */12 * * * /jffs/scripts/malware-filter"
-```
-This will make Malware-Filter run on a schedule it will run every 12th hour, to verify that the entry works after its added just type:
-
-```
-cru l
-```
-* Finally call this at the end of your existing /jffs/scripts/firewall-start:
-```
-# Load ipset filter rules
-sh /jffs/scripts/malware-filter
-```
-* To run this manually just type this command:
-```
-/jffs/scripts/malware-filter
-```
-* Malware filter will also print to syslog so you dont have to check ssh to see if its working it should read something like this:
-```
-Apr  1 00:06:39 system: Malware-filter loaded 46822 unique ip addresses that will be rejected from contacting your router.
-Apr  1 00:06:39 system: Malware-Filter loaded 851 unique ip ranges that will be rejected from contacting your router.
-````
-**Additional Notes**: DD-WRT users should replace iptables-save to iptables -L in order to use this script, DD-WRT/OpenWRT/Padavan users must [change path](https://gitlab.com/swe_toast/malware-filter/blob/master/malware-filter#L8) for this script to work to /opt/bin instead of /jffs/scripts/ for all paths in the installation instructions an in the script.
-
-If Asuswrt-Merlin or Asuswrt users run into issues, there is a [debug tool](https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh) available to help both developer and end user to figure out what the issue is. Here is how to use the debug tool then paste the link that the script produces at the end in the thread when you seek support.
-````shell
-wget --no-check-certificate https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh && sh debugtool.sh && rm debugtool.sh
-````
-For support on this script please visit this [forum thread](https://www.snbforums.com/threads/malware-filter-bad-host-ipset.35423/) on SnBForums
-___
-
-# Privacy-Filter
-
-**Description**: This script blocks [Telemetry](https://technet.microsoft.com/itpro/windows/configure/basic-level-windows-diagnostic-events-and-fields), [Shodan.io crawlers](https://www.shodan.io/) and an [Android Rootkit](https://www.kb.cert.org/vuls/id/624539), it supports both ipv4 and ipv6 out of the box however ipv6 blocking will only work on routers with [ipset version 6](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) installed.
-
-**NOTE**: iblocklist-loader is incompatible with Privacy-filter so don't use both
-
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
-
-* Then place [**this content**](https://gitlab.com/swe_toast/privacy-filter/raw/master/privacy-filter) to `/jffs/scripts/privacy-filter`
-
-* Then make it executable:
-```
-chmod +x /jffs/scripts/privacy-filter
-```
-* then append the following line to /jffs/scripts/services-start:
-```
-cru a privacy-filter "0 */12 * * * /jffs/scripts/privacy-filter"
-```
-This will make privacy-filter run on a schedule it will run every 12th hour, to verify that the entry works after its added just type:
-
-```
-cru l
-```
-* Finally call this at the end of your existing /jffs/scripts/firewall-start:
-```
-# Load ipset filter rules
-sh /jffs/scripts/privacy-filter
-```
-* To run this manually just type this command:
-```
-/jffs/scripts/privacy-filter
-```
-* Privacy filter will also print to syslog so you dont have to check ssh to see if its working it should read something like this:
-```
-Apr  1 00:00:06 system: Privacy Filter (ipv4) loaded 190 unique ip addresses that will be rejected from contacting your  router.
-````
-**Additional Notes**: DD-WRT users should replace iptables-save to iptables -L in order to use this script, DD-WRT/OpenWRT/Padavan users must [change path](https://gitlab.com/swe_toast/privacy-filter/blob/master/privacy-filter#L7) for this script to work to /opt/bin instead of /jffs/scripts/ for all paths in the installation instructions an in the script.
-
-If Asuswrt-Merlin or Asuswrt users run into issues, there is a [debug tool](https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh) available to help both developer and end user to figure out what the issue is. Here is how to use the debug tool then paste the link that the script produces at the end in the thread when you seek support.
-````shell
-wget --no-check-certificate https://gitlab.com/swe_toast/debugtool/raw/master/debugtool.sh && sh debugtool.sh && rm debugtool.sh
-````
-For support on this script please visit this [forum thread](https://www.snbforums.com/threads/privacy-filter-another-ipset-script.36801/) on SnBForums
-___
-
 # Dynamically Ban Malicious IP's
 **Description**: N/A
 
