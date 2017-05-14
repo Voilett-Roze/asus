@@ -63,7 +63,7 @@ MatchIP() { # Check IP against ipset lists
 MatchIP 8.8.8.8
 ```
 ```
-#Sample output
+# Sample output
 8.8.8.8 not found in YAMalwareBlock1IP
 8.8.8.8 not found in YAMalwareBlock2IP
 8.8.8.8 not found in YAMalwareBlockCIDR
