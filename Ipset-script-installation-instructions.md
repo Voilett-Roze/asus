@@ -4,10 +4,56 @@ ___
 >**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs#backing-up-the-jffs-partition) in case something goes wrong. If your using multiple scripts from this make sure they dont run all at the same time that will decrease performance, use sleep command to make the script run at separate times or use && to make them run after each other.
 ___
 
-### Table of Contents  
+### Table of Contents
+* [Search IPSet lists for an IP](#search-ipset-lists-for-an-ip)  
 * [Tor and Countries Block](#tor-and-countries-block)  
 * [iblocklist-loader](#iblocklist-loader)  
 * [Dynamically Ban Malicious IP's](#dynamically-ban-malicious-ips) 
+
+# Search IPset lists for an IP
+
+When using ipset lists, there is a chance that a site/IP address you regularly access ends up being blocked, and depending on how many scripts you are using, it can be time consuming to try and determine which ipset list is causing the block. The below steps will show you how to add a command you can run that will search all of the ipset lists in use, irrespective of their script source, for a provided IP.
+
+This assumes you have entware installed.
+
+First, install the coreutils-paste package using the following command
+```
+opkg install coreutils-paste
+```
+
+Then, using your favourite text editor (e.g. nano), add the below functions into your /jffs/configs/profile.add
+Please make sure you only add the function that applies to the version of ipset that your router runs (see ....)
+
+* For ipset-v4:
+```
+MatchIP() { # Check IP against ipset lists
+  if [ -z "$1" ]; then
+    echo "Specify IP to check through ipset lists. Exiting."
+  else
+    GREEN='\033[0;32m'
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+    for TestList in $( (iptables -L -t raw && iptables -L) | grep " set" | tr -s ' ' | cut -d' ' -f7 | paste -s); do
+      ipset -q --test $TestList $1 && echo -e "$1 found in ${GREEN}${TestList}${NC}" || echo -e "$1 not found in ${RED}${TestList}${NC}"
+    done
+  fi
+}
+```
+* For ipset v6:
+```
+MatchIP() { # Check IP against ipset lists
+  if [ -z "$1" ]; then
+    echo "Specify IP to check through ipset lists. Exiting."
+  else
+    GREEN='\033[0;32m'
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+    for TestList in $( (iptables -L -t raw && iptables -L) | grep "match-set" | tr -s ' ' | cut -d' ' -f7 | paste -s); do
+      ipset -q test $TestList $1 && echo -e "$1 found in ${GREEN}${TestList}${NC}" || echo -e "$1 not found in ${RED}${TestList}${NC}"
+    done
+  fi
+}
+```
 
 # Tor and Countries Block 
 
