@@ -18,7 +18,7 @@ The below steps will show you how to add a command you can run that will search 
 
 Follow the general script installation instructions:
 
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
+* Enable and format [**JFFS**](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Install [**entware**](https://github.com/RMerl/asuswrt-merlin/wiki/Entware) (if not already installed)
 
