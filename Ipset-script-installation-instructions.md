@@ -16,7 +16,7 @@ When using the scripts from this page, there is a chance that a site/IP address 
 
 The below steps will show you how to add a command you can run that will search all of the ipset lists in use, irrespective of their script source, for a provided IP.
 
-* This assumes you have [**entware**](https://github.com/RMerl/asuswrt-merlin/wiki/Entware) installed.
+This assumes you have [**entware**](https://github.com/RMerl/asuswrt-merlin/wiki/Entware) installed.
 
 * First, install the coreutils-paste package
 ```
