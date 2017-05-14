@@ -23,7 +23,7 @@ First, install the coreutils-paste package using the following command
 opkg install coreutils-paste
 ```
 
-Then, using your favourite text editor (e.g. nano), add the below functions into **/jffs/configs/profile.add**
+Then, using your favourite text editor (e.g. nano), add the below code into **/jffs/configs/profile.add**
 
 Please make sure you only add the function that applies to the [**version of ipset**](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) that your router supports.
 
