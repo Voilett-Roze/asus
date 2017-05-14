@@ -56,6 +56,27 @@ MatchIP() { # Check IP against ipset lists
   fi
 }
 ```
+* Restart your SSH session to pull in the profile change
+
+* Use the command as below
+```
+MatchIP 8.8.8.8
+```
+```
+#Sample output
+8.8.8.8 not found in YAMalwareBlock1IP
+8.8.8.8 not found in YAMalwareBlock2IP
+8.8.8.8 not found in YAMalwareBlockCIDR
+8.8.8.8 not found in WhitelistDomains
+8.8.8.8 not found in BlacklistDomains
+8.8.8.8 not found in I-BlocklistTheOnionRouterCIDR
+8.8.8.8 not found in I-BlocklistTheOnionRouterSingle
+8.8.8.8 not found in BluetackDshieldCIDR
+8.8.8.8 not found in BluetackDshieldSingle
+8.8.8.8 not found in BluetackSpiderCIDR
+8.8.8.8 not found in BluetackSpiderSingle
+```
+
 
 # Tor and Countries Block 
 
