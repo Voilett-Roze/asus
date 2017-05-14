@@ -39,6 +39,11 @@ If you have ipset v6:
 ```
 alias blockstats='iptables -L -v | sed "2q;d"; iptables -L -v | grep "match-set"; ip6tables -L -v | grep "match-set"'
 ```
+If you have ipset v6 + latest version of scripts that use the raw table:
+```
+alias blockstats='iptables -t raw -L -v | sed "2q;d"; iptables -t raw -L -v | grep "match-set"; ip6tables -L -v | grep "match-set"'
+```
+
 Then you can just issue 'blockstats' from the command prompt to see how well your blocklists are doing (see blocked packet count and byte count)
 
 Note that every time you do something on the web UI or through your [android app](https://play.google.com/store/apps/details?id=com.asus.aihome) or [ios app](https://appsto.re/gb/8hNN9.i) to control your router _that affects reloading the firewall rules_, `/jffs/scripts/firewall-start` will be called, so the iptables rules that are defined outside will be wiped out. To reinstate the rules as defined by this script, you'd need to add this to your _existing_ `/jffs/scripts/firewall-start`:
