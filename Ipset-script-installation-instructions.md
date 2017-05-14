@@ -12,20 +12,19 @@ ___
 
 # Search IPset lists for an IP
 
-When using ipset lists, there is a chance that a site/IP address you regularly access ends up being blocked, and depending on how many scripts you are using, it can be time consuming to try and determine which ipset list is causing the block. 
+When using the scripts from this page, there is a chance that a site/IP address you regularly access ends up being blocked. Depending on how many scripts you are using, it can be time consuming to try and determine which ipset list is causing the block. 
 
 The below steps will show you how to add a command you can run that will search all of the ipset lists in use, irrespective of their script source, for a provided IP.
 
-This assumes you have entware installed. If you don't see https://github.com/RMerl/asuswrt-merlin/wiki/Entware to install it.
+*This assumes you have [**entware**](https://github.com/RMerl/asuswrt-merlin/wiki/Entware) installed.
 
-First, install the coreutils-paste package using the following command
+*First, install the coreutils-paste package
 ```
 opkg install coreutils-paste
 ```
+*Then, using your favourite text editor (e.g. nano), add the below code into **/jffs/configs/profile.add**
 
-Then, using your favourite text editor (e.g. nano), add the below code into **/jffs/configs/profile.add**
-
-Please make sure you only add the function that applies to the [**version of ipset**](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) that your router supports.
+*Please make sure you only add the function that applies to the [**version of ipset**](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) that your router supports.
 
 * For ipset-v4:
 ```
