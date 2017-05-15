@@ -30,7 +30,7 @@ opkg install coreutils-paste
 
 * Please make sure you only add the function that applies to the [**version of ipset**](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) that your router supports.
 
-* For ipset-v4:
+* For ipset v4:
 ```
 MatchIP() { # Check IP against ipset lists
   if [ -z "$1" ]; then
@@ -106,15 +106,11 @@ You can create a handy alias in your profile (in /opt/etc/profile or /jffs/confi
 
 If you have ipset v4:
 ```
-alias blockstats='iptables -L -v | sed "2q;d"; iptables -L -v | grep " set"'
+alias blockstats='iptables -vL | sed "2q;d"; (iptables -vL -t raw; iptables -vL) | grep -e " set"'
 ```
 If you have ipset v6:
 ```
-alias blockstats='iptables -L -v | sed "2q;d"; iptables -L -v | grep "match-set"; ip6tables -L -v | grep "match-set"'
-```
-If you have ipset v6 + latest version of scripts that use the raw table:
-```
-alias blockstats='iptables -t raw -L -v | sed "2q;d"; iptables -t raw -L -v | grep "match-set"; ip6tables -L -v | grep "match-set"'
+alias blockstats='iptables -vL | sed "2q;d"; (iptables -vL -t raw; iptables -vL) | grep "match-set"; ip6tables -vL | grep "match-set"'
 ```
 
 Then you can just issue 'blockstats' from the command prompt to see how well your blocklists are doing (see blocked packet count and byte count)
@@ -128,7 +124,8 @@ for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
     AcceptList) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set $MATCH_SET $ipSet src -j ACCEPT;;
     TorNodes|BlockedCountries|CustomBlock) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set $MATCH_SET $ipSet src -j DROP;;
     MicrosoftSpyServers) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet dst -j DROP;;
-    *) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet src,dst -j DROP;;
+    YAMalwareBlock*) iptables-save | grep -q "$ipSet" || iptables -t raw -I PREROUTING -m set $MATCH_SET $ipSet src -j DROP;;
+    *) iptables-save | grep -q "$ipSet" || iptables -t raw -I PREROUTING -m set $MATCH_SET $ipSet src,dst -j DROP;;
   esac
 done
 ```
