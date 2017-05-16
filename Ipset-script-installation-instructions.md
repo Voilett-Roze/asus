@@ -122,6 +122,7 @@ Note that every time you do something on the web UI or through your [android app
 for ipSet in $(ipset -L | sed -n '/^Name:/s/^.* //p'); do
   case $ipSet in
     AcceptList) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set $MATCH_SET $ipSet src -j ACCEPT;;
+    WhitelistDomains) iptables-save | grep -q "$ipSet" || iptables -t raw -I PREROUTING -m set $MATCH_SET $ipSet src,dst -j ACCEPT;;
     TorNodes|BlockedCountries|CustomBlock) iptables-save | grep -q "$ipSet" || iptables -I INPUT -m set $MATCH_SET $ipSet src -j DROP;;
     MicrosoftSpyServers) iptables-save | grep -q "$ipSet" || iptables -I FORWARD -m set $MATCH_SET $ipSet dst -j DROP;;
     YAMalwareBlock*) iptables-save | grep -q "$ipSet" || iptables -t raw -I PREROUTING -m set $MATCH_SET $ipSet src -j DROP;;
