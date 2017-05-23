@@ -27,7 +27,7 @@ wait = no
 disable = no  
 }
 ```
-* Edit file `/opt/etc/dbus-1/system.conf` and replace the following line:  
+* Edit file `/opt/share/dbus-1/system.conf` and replace the following line:  
 **`<user>root</user>`**  
 with  
 **`<user>admin</user>`**  
