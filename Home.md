@@ -77,6 +77,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 10. [How to have dedicated DHCP options bind to a specific SSID?](/RMerl/asuswrt-merlin/wiki/How-to-have-dedicated-DHCP-options-bind-to-a-specific-SSID%3F)
 11. [Custom domains with dnsmasq](/RMerl/asuswrt-merlin/wiki/Custom-domains-with-dnsmasq)
 12. [How to use Adblock using Pixelserv](https://github.com/RMerl/asuswrt-merlin/wiki/How-to-use-Adblock-using-Pixelserv)
+13. [How to block scanners, bots, malware, ransomware](https://github.com/RMerl/asuswrt-merlin/wiki/How-to-block-scanners,-bots,-malware,-ransomware)
 
 ### Misc HowTo and Guides
 1. [Scheduled Reboot](/RMerl/asuswrt-merlin/wiki/Scheduled-Reboot)
