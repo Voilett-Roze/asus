@@ -1,7 +1,7 @@
 It is possible to generate your certificates on the router itself if you don't have access to a Linux machine, or if you don't have a Windows client installed with Easy-RSA.  Easy-RSA is a simple to use environment that is bundled with OpenVPN, and has been included in Asuswrt-Merlin.
 
 ### Setting up the environment
-The first step is to initialize your work environment.  Ideally this should be done on a USB disk, but it can be done in /tmp (make sure you DO keep a copy of everything generated there, because it will be lost the next time you reboot the router!).  For this example, we will be using a USB disk mounted under /mnt/sda1.  First, copy the easy-rsa scripts by running the following command:
+The first step is to initialize your work environment.  Ideally this should be done on a USB disk (formatted to ext2, ext3 or ext4 (for ARM-based devices)), but it can be done in /tmp (make sure you DO keep a copy of everything generated there, because it will be lost the next time you reboot the router!).  For this example, we will be using a USB disk mounted under /mnt/sda1.  First, copy the easy-rsa scripts by running the following command:
 
 `setuprsa.sh /mnt/sda1`
 
