@@ -38,7 +38,8 @@ There is a full list of script that are maintained by users, most of the scripts
 | `Scriptname` |`Ipset Version`|`Maintained by`|Description|
 |--------------|:-------:|:-------------:|:----------------------------------:
 |[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|Blocks Tor nodes or countries| 
-|[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist| 
+|[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist|
+|[Skynet - Firewall Addition](https://github.com/Adamm00/IPSet_ASUS#installation)|6|Adamm|Complete Firewall Solution For IPSet v6| 
 |[Dynamically Ban Malicious IP's](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#dynamically-ban-malicious-ips)|4,6|Martineau|N/A|
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian)|4| |Peerguardian|
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|4| |Peerguardian|
