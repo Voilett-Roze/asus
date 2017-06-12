@@ -34,9 +34,14 @@ Normally the router will assign IP addresses on the fly and the IP addresses lis
 2. Click the “DHCP Server” tab.
 3. Under “Manually Assigned IP around the DHCP list (Max Limit : 128)” you can assign fixed IP addresses to the devices you want to include.
 4. Click the red arrow next to the empty window labeled “MAC Address” and you should see a list of all your connected devices.
-5. Choose the device you want to include to the VPN. Click the plus arrow.
+5. Choose the device you want to include to the VPN and change the IP address to a range below 192.168.1.100 Click the plus arrow. Read important notes below.
 6. Repeat until you have selected all the devices you want to include to the VPN.
 7. Now these devices will have permanent IP addresses, and you do not have to worry that they may change and mess up your script in the future.
+
+**important.
+You need to setup your IP pool in LAN/DHCP tab make sure to enter these values in IP Pool Starting Address 192.168.1.100 and IP Pool ending Address 192.168.1.256
+Make sure that when you manually assign DHCP address that you stay within the range of 192.168.1.2-192.168.1.100 for each device. If you use an address higher then 192.168.1.100 for example 192.168.1.105 things wont work properly.
+I suggest giving a Static IP address from the range of 192.168.1.2-192.168.1.100 for each device you want to go via the VPN and avoid confusion with DHCP manual assigned IP addresses.
 
 STEP D:
 
@@ -49,9 +54,15 @@ each device has the following command:
 
 iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.x.xxx -j MARK --set-mark 0
 
-All you need to do is replace “192.168.1.xxx” with the actual IP address of each of the devices you want to include to the VPN.
+All you need to do is replace “192.168.1.xxx” with the actual IP address of each of the devices you want to include to the VPN. If you have multiple devices on the VPN then you have to do the following.
 
-Copy the script below to your notepad ++ and make sure you change xx with your devices values.
+Assuming your Routers IP address is 192.168.1.1 and you need the following devices 192.168.1.30 and 192.168.1.31 to be permanently connected to the VPN
+Add a separate line for each device as in example below to the script.
+iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.30 -j MARK --set-mark 0
+iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.31 -j MARK --set-mark 0
+
+Copy the script below to your notepad ++ and make sure you change xx.xxx with your devices values.
+Add new line for each additional device like in the examples above.
 Now save the script as openvpn-event with no extension!
 
     #!/bin/sh
@@ -79,7 +90,8 @@ Now save the script as openvpn-event with no extension!
 
     iptables -t mangle -A PREROUTING -i br0 -j MARK --set-mark 1
 
-    iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.x.xxx -j MARK --set-mark 0
+    iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.xx.xxx -j MARK --set-mark 0
+    iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.xx.xxx -j MARK --set-mark 0
 
     exit 1
 
