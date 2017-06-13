@@ -57,9 +57,9 @@ by copying and pasting only the php source code section from above.
 ```
 /opt/etc/init.d/S80lighttpd start
 ```
-Go to [router.asus.com:81](http://router.asus.com:81) and if you see this page, the lighttpd web server is configured correctly
+Go to [router.asus.com:81](http://router.asus.com:81) and if you see this page, the lighttpd web server is configured correctly:
 
-![if](http://i47.tinypic.com/rm5it1.png)
+## lighttpd server is running.
 
 Go to [router.asus.com:81/test.php](http://router.asus.com:81/test.php) and if you see this page, the php-mod-fastcgi is configured correctly
 
