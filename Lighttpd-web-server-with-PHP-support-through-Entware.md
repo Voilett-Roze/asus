@@ -20,7 +20,7 @@ or
 and remove the commenting hash (#) prefix from the `server.port` line,
 and change the line that starts with `server.upload-dirs` from `/tmp` to `/opt/tmp`.
 
-###Create a plain html test page
+### Create a plain html test page
 ```
 cat >> /opt/share/www/index.html << EOF
 <html>
@@ -39,7 +39,7 @@ or
 ```
 and copy and paste the html source code lines from the section above.
 
-###Create a php dynamic test page
+### Create a php dynamic test page
 ```
 cat >> /opt/share/www/test.php << EOF
 <?php
@@ -53,7 +53,7 @@ or by using your favourite text editor:
 ```
 by copying and pasting only the php source code section from above.
 
-###Finally start lighttpd
+### Finally start lighttpd
 ```
 /opt/etc/init.d/S80lighttpd start
 ```
