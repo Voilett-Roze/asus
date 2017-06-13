@@ -65,21 +65,21 @@ Go to [router.asus.com:81/test.php](http://router.asus.com:81/test.php) and if y
 
 ![php](http://i50.tinypic.com/i5usfo.png)
 
-###TO ACCESS THE WEBSITE FROM WAN
+### To access the website from WAN
 ```
 opkg install nano
 nano /jffs/scripts/firewall-start
 ```
 
-Paste this lines
+Paste these lines
 ```
 #!/bin/sh
 iptables -I INPUT -p tcp --destination-port 81 -j ACCEPT
 ```
 
-Save with **CTRL-O** / **Enter** / and exit nano with **CTRL-X**
+Save with <kbd>Ctrl</kbd>+<kbd>O</kbd>, <kbd>Enter</kbd>, and exit nano with <kbd>Ctrl</kbd>+<kbd>X</kbd>
 
-Give right permission
+Give it firewall file the correct file permissions
 ```
 chmod a+rx /jffs/scripts/firewall-start
 ```
