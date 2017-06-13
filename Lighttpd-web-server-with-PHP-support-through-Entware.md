@@ -59,7 +59,9 @@ by copying and pasting only the php source code section from above.
 ```
 Go to [router.asus.com:81](http://router.asus.com:81) and if you see this page, the lighttpd web server is configured correctly:
 
-## lighttpd server is running.
+> 
+> lighttpd server is running.
+> 
 
 Go to [router.asus.com:81/test.php](http://router.asus.com:81/test.php) and if you see this page, the php-mod-fastcgi is configured correctly
 
