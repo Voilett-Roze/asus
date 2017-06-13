@@ -1,16 +1,60 @@
-First, setup Entware from [this](https://github.com/RMerl/asuswrt-merlin/wiki/Entware) guide.
+First, setup Entware from [github RMerl ususwrt-merlin guide](https://github.com/RMerl/asuswrt-merlin/wiki/Entware).
 
-Login to router with a terminal like putty and enter this commands:
-### The following _tinyurl.com_ links are no longer active. Please update this tutorial with working links/source. Better yet, if someone can explain each step in more detail, it would greatly help n00bs understand what's going on (more than copypasta instructions)!
+Login to router with a terminal like putty and enter the commands below.
 
-Since the links are deprecated, this URL helps with customization of the server. [https://wiki.openwrt.org/doc/howto/http.lighttpd](https://wiki.openwrt.org/doc/howto/http.lighttpd)
+Additional [the openwrt.org wiki helps with customization of the server](https://wiki.openwrt.org/doc/howto/http.lighttpd).
   
 ```
 opkg install lighttpd php5-cgi lighttpd-mod-fastcgi
-rm /opt/etc/lighttpd/lighttpd.conf
-wget -c -O /opt/etc/lighttpd/lighttpd.conf http://tinyurl.com/amvkxt3 --no-check-certificate
-wget -c -O /opt/share/www/index.html http://tinyurl.com/bxfxpq6 --no-check-certificate
-wget -c -O /opt/share/www/test.php http://tinyurl.com/b9b34kp --no-check-certificate
+```
+
+### Choose port 81 as lighttpd server port and fix the uploads directory.
+```
+sed -i 's/#server.port                 = 81/server.port                 = 81/g' "/opt/etc/lighttpd/lighttpd.conf"
+sed -i "/server.upload-dirs*/cserver.upload-dirs          = ( \"/opt/tmp\" )" "/opt/etc/lighttpd/lighttpd.conf"
+```
+or
+```
+# nano /opt/etc/lighttpd/lighttpd.conf
+```
+and remove the commenting hash (#) prefix from the `server.port` line,
+and change the line that starts with `server.upload-dirs` from `/tmp` to `/opt/tmp`.
+
+###Create a plain html test page
+```
+cat >> /opt/share/www/index.html << EOF
+<html>
+<head>
+<title>lighttpd default page</title>
+</head>
+<body>
+<h2>lighttpd server is running.</h2>
+</body>
+</html>
+EOF
+```
+or
+```
+# nano /opt/share/www/index.html
+```
+and copy and paste the html source code lines from the section above.
+
+###Create a php dynamic test page
+```
+cat >> /opt/share/www/test.php << EOF
+<?php
+phpinfo();
+?>
+EOF
+```
+or by using your favourite text editor:
+```
+# nano /opt/share/www/test.php
+```
+by copying and pasting only the php source code section from above.
+
+###Finally start lighttpd
+```
 /opt/etc/init.d/S80lighttpd start
 ```
 Go to [router.asus.com:81](http://router.asus.com:81) and if you see this page, the lighttpd web server is configured correctly
