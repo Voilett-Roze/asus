@@ -655,6 +655,7 @@ fi
 ....
 
 == Woima.fi
+[[woimafi]]
 ^https://woima.fi/dyndns/^
 
 Woima is a Finnish Dynamic DNS service, which you can get for free. After ordering you'll get the necessary info in an e-mail. Pay attention to URL. Every example I encountered had dyn.woima.fi/[b]update[/b], mine on the other hand had [b]nic/update[/b].
