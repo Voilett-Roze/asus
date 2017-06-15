@@ -653,3 +653,23 @@ else
     /sbin/ddns_custom_updated 0
 fi
 ....
+
+== Woima.fi
+^https://woima.fi/dyndns/^
+
+Woima is a Finnish Dynamic DNS service, which you can get for free. After ordering you'll get the necessary info in an e-mail. Pay attention to URL. Every example I encountered had dyn.woima.fi/[b]update[/b], mine on the other hand had [b]nic/update[/b].
+
+[source]
+....
+#!/bin/sh
+USERNAME=your_username
+PASSWORD=your_password
+HOSTNAME=your_domain (e.g. subdomain.dyn.woima.fi)
+curl -D - -4 --user $USERNAME:$PASSWORD  https://dyn.woima.fi/nic/update?$HOSTNAME >/dev/null 2>&1
+
+if [ $? -eq 0 ]; then
+        /sbin/ddns_custom_updated 1
+else
+        /sbin/ddns_custom_updated 0
+fi
+....
