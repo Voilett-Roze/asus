@@ -12,7 +12,7 @@ Note that you cannot use both Optware and Entware at the same time.
 
 The installation and configuration process must be done through telnet or SSH.  If that part scares you, then forget about Entware already: everything must be installed and configured through telnet/SSH.
 
-###The easy way
+### The easy way
 
 Starting with v3.0.0.4.270.25 a new script has been introduced to facilitate Entware installation. After installing a [USB drive](https://github.com/Entware/entware/wiki/USB-Storage-setup), just type in terminal:
 ```
