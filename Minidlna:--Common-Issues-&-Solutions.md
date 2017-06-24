@@ -110,7 +110,7 @@ https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts
 [Note _/opt_ is the entware directory, so I just created another directory within the entware structure I call "app" to hold application-specific data, then created another subdirectory within it for minidlna specific files.   This is purely a matter of personal preference, so set it up as you like.]
 
 4)  Copy the contents of the below code block to a new (UNIX-encoded) text file named _minidlna.conf.base_ located under _/opt/app/minidlna_ (your database directory).  Edit the 'db_dir' line to match your minidlna database directory if needed.
-`
+    
     # base custom minidlna config file (minidlna.conf.base)
     #
     # friendly_name, media_dir and other system fields are extracted by postconf
