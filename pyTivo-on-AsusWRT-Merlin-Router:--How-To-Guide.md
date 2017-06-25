@@ -1,7 +1,7 @@
 ## Disclaimer
 The solutions and opinions expressed in this guide are those of the author (latenitetech), unless or until someone else edits this particular wiki article.  This is not blessed by RMerlin or anyone else of authority, but provided by a relative noobie primarily aimed at other noobies to help them make the most of this amazing compilation of software.  Use at your own risk, or move on if this is too daunting for you.
 
-##Introduction
+## Introduction
 pyTivo is a media server for Tivo devices.  You can learn all about it here:   
 http://pytivo.sourceforge.net/wiki/index.php/PyTivo
 
@@ -17,10 +17,10 @@ If you've looked closely at minidlna, you might have noticed it also supports Ti
 
 Installing pyTivo is pretty straight-forward.  It is written in python, an interpreted language, so it doesn't require any native compilation.  It just requires a  python interpreter, which thankfully is readily available via Entware.  It's also strongly encouraged to install ffmpg, which is also available via Entware.  So basically, install the software components, make some fairly simple configuration changes on your router, and you're up and running.
 
-##Zeroconf (this is techie background - you can skip it if you like)
+## Zeroconf (this is techie background - you can skip it if you like)
 The zeroconf protocol utilizes Multicast DNS (mDNS), specifically using the multicast address space 224.0.0.0.  However, if you look at the default routing table on the router (the _route_ command) , you will see the AsusWRT firmware doesn't provide a default route for this mDNS broadcast traffic (which makes sence as it is unneeded for doing its primary role as a router).  However, out-of-the-box, this causes pyTivo to not work with current-generation Tivo boxes that depend on zeroconf.  (Older Tivos that use _Tivo Beacon_ work fine.)  It took me quite a bit of web searching and experimentation to figure this problem out, but once I found the elusive post that explained what was happening, the fix is trivial:  just add the one-line route to the routing table.  You'll see it below in the 'Step by Step' section.
 
-##Step by Step
+## Step by Step
 1)  Prerequisites:   
 * A Linux filesystem in which you've installed entware and a swap file (the latter isn't critical, but python does consume a bit of memory) 
 * You have _sh_ (command line) access to the router via _telnet_ or _ssh_.    
@@ -214,7 +214,7 @@ Re-enable logging by deleting (or renaming) _NOLOG_ and then restart pyTivo via 
 
 ***
 
-##Avahi-Daemon (Optional)
+## Avahi-Daemon (Optional)
 pyTivo, as implemented, is a self-contained, stand-alone zeroconf solution.  It does not depend on, or in any way use the built-in avahi-daemon process running by default under AsusWRT-Merlin.  Near as I can tell, the built-in avahi-daemon only exists to support the _iTunes_ and _Time Machine_ optional services (both targeted to Apple users), yet it runs by default on all routers even if you have both of the Apple-oriented services disabled.  There are comments in the pyTivo zeroconf code that says it's compatible with avahi-daemon, and I have no reason to doubt that, but since I don't use those Apple services,  I prefer to kill off the avahi-daemon process both to save system resources, and to ensure I don't get any undesirable interaction between those competing zeroconf stacks.  If you are using either Apple service, then you do indeed need the avahi-daemon process running, but fair warning you may see interaction between pyTivo and those Apple services.  Hopefully not, but I've not had experience one way or another.
 
 I'm not aware of a way to _not_ start the avahi-daemon process by default, as it's built into the firmware.  But I have learned that, like most Linux services, if a service starts up and doesn't find it's required _.conf_ file it will quietly exit.  So the easy fix is just remove the default  avahi-daemon.conf file at boot.  You will see it starting in the log file, but then it immediate exits and you won't see a trace of it running with _ps_ or _pgrep_.  At the time of this writing, I've been running this way for over a month with no observable downside, at least in my rig.
