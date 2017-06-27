@@ -1,6 +1,6 @@
 This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware designed for Asus routers.
 
->Note: _As with any Wiki, this documentation is a constant work-in-progress.  If you have the time and the willingness to help with this Wiki, please let me know and remember please use internal links before external (if available) as they might have updated documentation relevant to the current firmware._
+>Note: _As with any Wiki, this documentation is a constant work-in-progress.  Most of the content is contributed by the community - anyone with a Github account can edit it._
 
 ### About
 1. [About Asuswrt and Asuswrt-merlin](/RMerl/asuswrt-merlin/wiki/About-Asuswrt/)
@@ -25,6 +25,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 11. [NFS Exports](/RMerl/asuswrt-merlin/wiki/NFS-Exports)
 12. [DNS Filter](/RMerl/asuswrt-merlin/wiki/DNS-Filter)
 13. [Layer7-based Netfilter module](/RMerl/asuswrt-merlin/wiki/Layer7-based-Netfilter-module)
+14. [Using a custom SSL certificate on the webui](/RMerl/asuswrt-merlin/wiki/Custom-SSL-certificates-for-the-webui)
 
 
 ### OpenVPN
