@@ -57,9 +57,9 @@ LOGFILE="/var/log/ether-wake.log"
 
 while sleep $INTERVAL;do
 NEW=`dmesg | awk '/ACCEPT/ && /DST='"$TARGET"'/ {print }' | tail -1`
-SRC=`echo $NEW | awk -F'[=| ]' '{print $8}'`
-DPORT=`echo $NEW | awk -F'[=| ]' '{print $27}'`
-PROTO=`echo $NEW | awk -F'[=| ]' '{print $23}'`
+SRC=`echo $NEW | awk -F'[=| ]' '/SRC/{for(i=1;i<=NF;i++) if($i ~ /SRC/) print $(i+1)}'`
+DPORT=`echo $NEW | awk -F'[=| ]' '/DPT/{for(i=1;i<=NF;i++) if($i ~ /DPT/) print $(i+1)}'`
+PROTO=`echo $NEW | awk -F'[=| ]' '/PROTO/{for(i=1;i<=NF;i++) if($i ~ /PROTO/) print $(i+1)}'`
 
 if [ "$NEW" != "" -a "$NEW" != "$OLD" ]; then
 if ! ping -qc $NUMP $TARGET >/dev/null; then
@@ -134,9 +134,9 @@ LOGFILE="/var/log/ether-wake.log"
 
 while sleep $INTERVAL;do
 NEW=`dmesg | awk '/ACCEPT/ && /DST='"$TARGET"'/ && /DPT='"$PORT"'/ {print }' | tail -1`
-SRC=`echo $NEW | awk -F'[=| ]' '{print $8}'`
-DPORT=`echo $NEW | awk -F'[=| ]' '{print $27}'`
-PROTO=`echo $NEW | awk -F'[=| ]' '{print $23}'`
+SRC=`echo $NEW | awk -F'[=| ]' '/SRC/{for(i=1;i<=NF;i++) if($i ~ /SRC/) print $(i+1)}'`
+DPORT=`echo $NEW | awk -F'[=| ]' '/DPT/{for(i=1;i<=NF;i++) if($i ~ /DPT/) print $(i+1)}'`
+PROTO=`echo $NEW | awk -F'[=| ]' '/PROTO/{for(i=1;i<=NF;i++) if($i ~ /PROTO/) print $(i+1)}'`
 
 if [ "$NEW" != "" -a "$NEW" != "$OLD" ]; then
 if ! ping -qc $NUMP $TARGET >/dev/null; then
