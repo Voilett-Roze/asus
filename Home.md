@@ -25,7 +25,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 11. [NFS Exports](/RMerl/asuswrt-merlin/wiki/NFS-Exports)
 12. [DNS Filter](/RMerl/asuswrt-merlin/wiki/DNS-Filter)
 13. [Layer7-based Netfilter module](/RMerl/asuswrt-merlin/wiki/Layer7-based-Netfilter-module)
-14. [Using a custom webui/FTP SSL certificate(/RMerl/asuswrt-merlin/wiki/Custom-SSL-certificates)
+14. [Using a custom webui/FTP SSL certificate](/RMerl/asuswrt-merlin/wiki/Custom-SSL-certificates)
 
 
 ### OpenVPN
