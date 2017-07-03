@@ -1,4 +1,4 @@
-First, setup Entware from [github RMerl ususwrt-merlin guide](https://github.com/RMerl/asuswrt-merlin/wiki/Entware).
+First, setup Entware from [github RMerl asuswrt-merlin guide](https://github.com/RMerl/asuswrt-merlin/wiki/Entware).
 
 Login to router with a terminal like putty and enter the commands below.
 
