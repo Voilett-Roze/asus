@@ -198,6 +198,9 @@ aclocal
 cd ~/asuswrt-merlin/release/src/router/libxml2
 sed -i s/AM_C_PROTOTYPES/#AM_C_PROTOTYPES/g ~/asuswrt-merlin/release/src/router/libxml2/configure.in
 aclocal
+# fix broken configure script for libvorbis
+cd ~/asuswrt-merlin/release/src/router/libvorbis
+aclocal
 ```
 
 ## Automated all-in-one script
