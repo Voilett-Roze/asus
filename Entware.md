@@ -6,7 +6,8 @@ For those unfamiliar with Optware: it's a software repository that offers variou
 Note that you cannot use both Optware and Entware at the same time.
 
 **Important:** Asus's DownloadMaster is based on Optware, and therefore is NOT compatible with Entware.  You will have to uninstall DownloadMaster and look at the alternatives provided by Entware.
-After uninstalling, you should make sure "asusware.arm" dir on disk partition is deleted. Otherwise, Entware won't work properly.
+
+After uninstalling, you should make sure "asusware.arm" or "asusware.*" dir on mounted disk partition is deleted. Otherwise, Entware won't work properly.
 
 
 ### Setup
