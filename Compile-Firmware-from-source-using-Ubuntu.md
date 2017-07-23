@@ -33,8 +33,7 @@ Follow these steps :
 
 * Select Installer disc image file (iso) ( VMware Player will tell you something about easy install, that's okay )
 
-![Select Iso]
-(http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/installer%20disc%20iso.png)
+![Select Iso](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/installer%20disc%20iso.png)
 
 * When installing Ubuntu it asks for a username it's best if you just name it ''router'' without the quotes because then you can just copy and paste from this guide no need to make everything complicated.
 
