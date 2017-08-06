@@ -37,6 +37,7 @@ There is a full list of script that are maintained by users, most of the scripts
 
 | `Scriptname` |`Ipset Version`|`Maintained by`|Description|
 |--------------|:-------:|:-------------:|:----------------------------------:
+|[MatchIP Utility](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#matchip-utility---search-ipset-lists-for-an-ip)|4,6|Redhat27|Search ipsets for a specific IP|
 |[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|Blocks Tor nodes or countries| 
 |[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist|
 |[Skynet - Firewall Addition](https://github.com/Adamm00/IPSet_ASUS#installation)|6|Adamm|Dynamic Malware/Country/Manual IP Blocking| 
