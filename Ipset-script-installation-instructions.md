@@ -33,7 +33,7 @@ MatchIP() { # Check IP against ipset lists
     GREEN='\033[0;32m'
     RED='\033[0;31m'
     NC='\033[0m' # No Color
-    for TestList in $( (iptables -L -t raw && iptables -L) | grep " set" | tr -s ' ' | cut -d' ' -f7 | | tr '\n' ' '); do
+    for TestList in $( (iptables -L -t raw && iptables -L) | grep " set" | tr -s ' ' | cut -d' ' -f7 | tr '\n' ' '); do
       ipset -q --test $TestList $1 && echo -e "$1 found in ${GREEN}${TestList}${NC}" || echo -e "$1 not found in ${RED}${TestList}${NC}"
     done
   fi
