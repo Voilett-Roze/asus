@@ -5,7 +5,7 @@ ___
 ___
 
 ### Table of Contents
-* [MatchIP Utility - Search IPSet lists for an IP](#search-ipset-lists-for-an-ip)  
+* [MatchIP Utility - Search IPSet lists for an IP](#matchip-utility---search-ipset-lists-for-an-ip)  
 * [Tor and Countries Block](#tor-and-countries-block)  
 * [iblocklist-loader](#iblocklist-loader)  
 * [Dynamically Ban Malicious IP's](#dynamically-ban-malicious-ips) 
