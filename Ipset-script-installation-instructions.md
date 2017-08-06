@@ -20,12 +20,6 @@ Follow the general script installation instructions:
 
 * Enable and format [**JFFS**](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
 
-* Install [**entware**](https://github.com/RMerl/asuswrt-merlin/wiki/Entware) (if not already installed)
-
-* Install the coreutils-paste package
-```
-opkg install coreutils-paste
-```
 * Using your favourite text editor (e.g. nano), add the below into **/jffs/configs/profile.add**
 
 * Please make sure you only add the function that applies to the [**version of ipset**](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) that your router supports.
@@ -39,7 +33,7 @@ MatchIP() { # Check IP against ipset lists
     GREEN='\033[0;32m'
     RED='\033[0;31m'
     NC='\033[0m' # No Color
-    for TestList in $( (iptables -L -t raw && iptables -L) | grep " set" | tr -s ' ' | cut -d' ' -f7 | paste -s); do
+    for TestList in $( (iptables -L -t raw && iptables -L) | grep " set" | tr -s ' ' | cut -d' ' -f7 | | tr '\n' ' '); do
       ipset -q --test $TestList $1 && echo -e "$1 found in ${GREEN}${TestList}${NC}" || echo -e "$1 not found in ${RED}${TestList}${NC}"
     done
   fi
