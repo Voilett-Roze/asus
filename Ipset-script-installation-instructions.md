@@ -5,12 +5,12 @@ ___
 ___
 
 ### Table of Contents
-* [Search IPSet lists for an IP](#search-ipset-lists-for-an-ip)  
+* [MatchIP Utility - Search IPSet lists for an IP](#search-ipset-lists-for-an-ip)  
 * [Tor and Countries Block](#tor-and-countries-block)  
 * [iblocklist-loader](#iblocklist-loader)  
 * [Dynamically Ban Malicious IP's](#dynamically-ban-malicious-ips) 
 
-# Search IPset lists for an IP
+# MatchIP Utility - Search IPset lists for an IP
 
 When using the scripts from this page, there is a chance that a site/IP address you regularly access ends up being blocked. Depending on how many scripts you are using, it can be time consuming to try and determine which ipset list is causing the block. 
 
