@@ -87,8 +87,9 @@ Here is a very basic script for ChangeIP.com.
 
 USERNAME="user" # Your username
 PASSWORD="password" # Your password
+HOSTNAME="hostname" # Your DNS hostname
 
-curl -fs -o /dev/null "https://nic.changeip.com/nic/update?u=${USERNAME}&p=${PASSWORD}"
+curl -fs -o /dev/null "https://nic.changeip.com/nic/update?u=${USERNAME}&p=${PASSWORD}&hostname=${HOSTNAME}"
 
 if [ $? -eq 0 ]; then
   /sbin/ddns_custom_updated 1
