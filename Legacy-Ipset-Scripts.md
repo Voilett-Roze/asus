@@ -287,7 +287,7 @@ watson.telemetry.microsoft.com.nsatc.net
 wes.df.telemetry.microsoft.com
 www.msftncsi.com
 ```
-I took mine list from [here](http://forums.zyxmon.org/go.php?https://github.com/10se1ucgo/DisableWinTracking/blob/master/run.py#L208). Now put following content to `/jffs/scripts/firewall-start`:
+I took mine list from [here](https://github.com/10se1ucgo/DisableWinTracking/blob/master/dwt.py#L320). Now put following content to `/jffs/scripts/firewall-start`:
 ```
 #!/bin/sh
 JFFS_CONFIG_DIR=/jffs/configs
