@@ -41,6 +41,7 @@ Connect to your router through SSH (you can use PUTTY on windows). Default IP ad
 ## Last steps
 1. Reboot rooter with `reboot` command in ssh or through web interface
 2. Go to `Administration -> System` and disable `Enable SSH config option`
+(Rebooting is not necessary; restarting the dnsmasq service is sufficient: `service restart_dnsmasq`)
 
 # More
 * You can run webserver directly on the router [howto](/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware) 
