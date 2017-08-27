@@ -342,6 +342,6 @@ Alternatively, put the above script into `/jffs/scripts/windows-10-tracking-bloc
 ***
 # Windows Spy Blocker
 
-https://github.com/crazy-max is the author of a repository called [Windows Spy Blocker](https://github.com/crazy-max/WindowsSpyBlocker) that's used by various projects, notably [pi-hole](https://pi-hole.net/) and [LEDE Project](https://lede-project.org/).
+[Windows Spy Blocker](https://github.com/crazy-max/WindowsSpyBlocker) is a repository used by various projects, notably [pi-hole](https://pi-hole.net/) and [LEDE Project](https://lede-project.org/). It can be used with many tools, as DNSCrypt, OpenWrt or simplewall.
 
-There are many options and this specific [list for dnsmask](https://github.com/crazy-max/WindowsSpyBlocker/blob/master/data/openwrt/win10/spy/dnsmasq.conf) is currently updated and more recent than windows-10-tracking-hosts from the previous chapter about [Disable Win Tracking](https://github.com/10se1ucgo/DisableWinTracking). Windows Spy Blocker can be used with many tools, as DNSCrypt, OpenWrt or simplewall.
+Windows Spy Blocker blocking rules contain this specific [list for dnsmask](https://github.com/crazy-max/WindowsSpyBlocker/blob/master/data/openwrt/win10/spy/dnsmasq.conf) that's currently updated and more recent than `windows-10-tracking-hosts.txt` from the previous chapter about [Disable Win Tracking](https://github.com/10se1ucgo/DisableWinTracking).
