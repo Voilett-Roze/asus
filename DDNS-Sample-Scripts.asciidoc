@@ -392,6 +392,26 @@ else
 fi
 ....
 
+== EntryDNS
+^https://entrydns.net/^
+
+[source]
+.....
+#!/bin/sh
+# Update the following variables:
+TOKEN=your_real_token     
+
+# Should be no need to modify anything beyond this point
+resp=$(/usr/sbin/curl -s -k -X PUT -d "" https://entrydns.net/records/modify/$TOKEN)
+rcode=$?
+
+if [ "$rcode" == "0"  -a "$resp" == "OK" ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+.....
+
 == EasyDNS
 ^https://www.easydns.com/^
 
