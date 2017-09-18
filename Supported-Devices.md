@@ -12,6 +12,7 @@ The following devices are fully supported:
 * RT-AC87U
 * RT-AC88U
 * RT-AC1750 (use the RT-AC66U firmware)
+* RT-AC1750_B1 (use the RT-AC68U firmware)
 * RT-AC1900 (use the RT-AC68U firmware)
 * RT-AC1900P (use the RT-AC68U firmware)
 * RT-AC3100
