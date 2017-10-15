@@ -3,7 +3,7 @@
 Under **Tools -> Other Settings** are options that will allow you to save your traffic history to disk, preserving it between router reboots (by default it is currently kept in RAM, so it will disappear when you reboot).
 
 You can save it to a custom location (for example, "/jffs/", or /mnt/sda1/ if you have a USB disk plugged in (which is the recommended location). Save frequency is also configurable - it is recommended to keep that frequency lower (for example, once a day) if you are saving to jffs, to reduce wearing out your flash memory.  Make sure not to forget the
-trailing slash ad the end of the path.
+trailing slash (`/`) at the end of the path.
 
 Note that the first time you use that option, you must tell the router to create the data file.  Make sure you set "_Create or reset data files_" to "Yes".
 
