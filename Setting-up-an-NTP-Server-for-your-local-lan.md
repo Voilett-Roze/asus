@@ -9,7 +9,7 @@ server 0.de.pool.ntp.org iburst
 server 1.de.pool.ntp.org iburst
 server 2.de.pool.ntp.org iburst
 ```
-Please note that the rudimentary Busybox ntp implementation knows almost no commands as restrict, driftfile, interface...
+Please note that the rudimentary Busybox ntp-implementation knows almost no commands as restrict, driftfile, interface...
 * append the following content
 
 ```
