@@ -1,11 +1,25 @@
 Here is a simple guide for syncing your time from your router instead of from the internet
 
-* Perform the following command `nano /jffs/scripts/services-start`
+* Perform the following command `nano /jffs/scripts/post-mount`
+* Create directory `/jffs/ntp/` and create a suitable ntp.conf-file using command `nano /jffs/ntp/ntp.conf`. 
+This is required to recreate the ntpd-config-file `/etc/ntp.conf` after every router-reboot (as ram is volatile).
+* Example for ntp.conf:
+```
+server 0.de.pool.ntp.org iburst
+server 1.de.pool.ntp.org iburst
+server 2.de.pool.ntp.org iburst
+```
+Please note that the rudimentary Busybox ntp implementation knows almost no commands as restrict, driftfile, interface...
 * append the following content
 
 ```
-if [ "$(nvram get ntp_ready)" == "1" ];then  # Only start the NTP server if router has itself synchronised with Internet
+#!/bin/sh
+if [ "$(nvram get ntp_ready)" == "1" ];
+then  # Only start the NTP server if router has itself synchronised with Internet
+   cp /jffs/ntp/ntp.conf /etc/
+   logger -st "($(basename $0))" $$ "***SUCCESS Router copied ntp.conf-file to /etc!"
    ntpd   -l
+   logger -st "($(basename $0))" $$ "***SUCCESS Router initialized NTP Server!"
 else
    logger -st "($(basename $0))" $$ "***ERROR Router cannot get initialise NTP Server!"
 fi
