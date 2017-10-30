@@ -25,7 +25,9 @@ else
 fi
 ```
 
-then set point your devices that needs NTP service towards your routers IP
+* then set point your devices that needs NTP service towards your routers IP.
+* Don't forget to set the script as being executable: `chmod a+rx /jffs/scripts/*`
+
 
 # 3rd Party Addons
 
