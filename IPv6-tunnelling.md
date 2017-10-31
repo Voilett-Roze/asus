@@ -46,21 +46,23 @@ The next step: you need to somehow tell Hurricane Electric what your current IPv
 
 For the second method, you will need to enable the [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) partition and custom configs and scripts.  Once that's done, create a `/jffs/scripts/wan-start` [user script](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) that will take care of updating HE with your current WAN IP.  Here is an example script:
 
-NOTE: If your tunnel was made before 19th Jan 2014, you need to uncomment the second wget line in the script, and comment the first. That's because old tunnels need your md5'd password, and newer ones need the tunnel update key.
+NOTE: If your tunnel was made before 19th Jan 2014, you need to uncomment the second wget line in the script, and comment the first. That's because old tunnels need your md5'd password, and newer ones need the tunnel update key. The detailed API is updating on [website](https://forums.he.net/index.php?topic=3153.0). Check it if anything goes wrong.
 
 ```
 #!/bin/sh
-#v1.40-rm3 Mar 24, 2012
+#v1.40-rm3 Oct 31, 2017
 #***************************
 #Settings start here
 #***************************
 
 #account info to auto update endpoint
-USERID="this_is_your_hexadecimal_userid_from_tunnelbroker"
-#if tunnel made after 2014/01/19, insert tunnel update key here
-#found under the advanced tab of tunnel options.
-PASSWD="your_tunnelbroker_password_or_update_key"
-TUNNELID="tunnel_id_number_ex_12345_from_tunnelbroker"
+
+USERNAME="The account username used when login"
+UPDATEKEY=" Usage key as defined on the tunnel's Advanced tab"
+PASSWD="The account password"
+TUNNELID="Tunnel id #"
+DDNS="Your dynamic domain"
+EXTERNALIP=$(ping -c 1 ${DDNS} | awk -F" |:" '/from/{print $4}')
 
 #####Optional/Advanced Settings######
 
@@ -125,16 +127,17 @@ echo "configuring tunnel" >> $STARTUP_SCRIPT_LOG_FILE
 iptables -I INPUT 2 -s $HE_VERIFY_SERVER_IP -p icmp -j ACCEPT
 etime=`date +%s`
 
-#for new tunnels
-wget -q "http://ipv4.tunnelbroker.net/ipv4_end.php?ip=AUTO&pass=$PASSWD&apikey=$USERID&tid=$TUNNELID" -O /tmp/wget.tmp.$etime
+#for operate on a single tunnel
+wget --no-check-certificate -T10 -a - "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${UPDATEKEY}&hostname=${TUNNELID}&myip=${EXTERNALIP}" -O /tmp/wget.tmp.$etime
 
 #for old tunnels
-#wget -q "http://ipv4.tunnelbroker.net/ipv4_end.php?ip=AUTO&pass=$MD5PASSWD&apikey=$USERID&tid=$TUNNELID" -O /tmp/wget.tmp.$etime
+wget --no-check-certificate -T10 -a - "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWD}&hostname=${TUNNELID}&myip=${EXTERNALIP}" -O /tmp/wget.tmp.$etime
 
 
 cat /tmp/wget.tmp.$etime >> $STARTUP_SCRIPT_LOG_FILE
 echo "" >> $STARTUP_SCRIPT_LOG_FILE
 rm /tmp/wget.tmp.$etime
+
 ```
 
 and don't forget to make it executable:
