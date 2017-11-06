@@ -206,7 +206,7 @@ PASSWORD=dnsomatic_password
 HOSTNAME=all.dnsomatic.com
 
 # Should be no need to modify anything beyond this point
-/usr/sbin/curl -k --silent "https://$USERNAME:$PASSWORD@updates.dnsomatic.com/nic/update?hostname=$HOSTNAME&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG&myip=" > /dev/null 
+/usr/sbin/curl -k --silent -u "$USERNAME:$PASSWORD" "https://updates.dnsomatic.com/nic/update?hostname=$HOSTNAME&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG&myip=" > /dev/null 
 if [ $? -eq 0 ]; then
   /sbin/ddns_custom_updated 1
 else
