@@ -7,9 +7,10 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 2. [Features](https://asuswrt.lostrealm.ca/features) (External link)
 3. [Screenshots](https://asuswrt.lostrealm.ca/screenshots) (External link)
 4. [Supported devices](/RMerl/asuswrt-merlin/wiki/Supported-Devices)
-5. [Changelog](https://asuswrt.lostrealm.ca/changelog) (External link)
-6. [Installation](/RMerl/asuswrt-merlin/wiki/Installation)
-7. [Reverting](/RMerl/asuswrt-merlin/wiki/Reverting/)
+5. [Changelog 380.x](https://asuswrt.lostrealm.ca/changelog) (External link)
+6. [Changelog 382.x](https://asuswrt.lostrealm.ca/changelog-382) (External link)
+7. [Installation](/RMerl/asuswrt-merlin/wiki/Installation)
+8. [Reverting](/RMerl/asuswrt-merlin/wiki/Reverting/)
 
 ### Usage
 1. [User scripts](/RMerl/asuswrt-merlin/wiki/User-scripts)
