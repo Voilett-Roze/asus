@@ -254,12 +254,12 @@ and edit all the constant variables at the top of the script.
 
 [source]
 ....
-#!/bin/bash
+#!/bin/sh
 
-TOKEN="youroauth2token"  # The API v2 OAuth token
-ACCOUNT\_ID="123456789"        # Replace with your account ID
-ZONE\_ID="yourzone.id"  # The zone ID is the name of the zone (or domain)
-RECORD\_ID="123456789"       # Replace with the Record ID
+TOKEN="youroauth2token"   # The API v2 OAuth token
+ACCOUNT_ID="123456789"    # Replace with your account ID
+ZONE_ID="yourzoneid.com"  # The zone ID is the name of the zone (or domain)
+RECORD_ID="123456789"     # Replace with the Record ID
 IP=${1}
 
 curl --silent \
