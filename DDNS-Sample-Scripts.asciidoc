@@ -249,28 +249,26 @@ fi
 == DNSimple
 ^https://developer.dnsimple.com^
 
-WARNING: DNSimple API v1 is deprecated and in maintenance-only. API v1 will be discontinued on October 1st, 2017.
-
-This script adds DNSimple support, get token and record_id from the site
-and edit all the variables.
+This script adds DNSimple support, get token, account_id, zone_id and record_id from the site or API
+and edit all the constant variables at the top of the script.
 
 [source]
 ....
 #!/bin/bash
- 
-LOGIN="your@email"
-TOKEN="your-api-token"
-DOMAIN_ID="yourdomain.com"
-RECORD_ID="12345" # Replace with the Record ID
+
+TOKEN="youroauth2token"  # The API v2 OAuth token
+ACCOUNT\_ID="123456789"        # Replace with your account ID
+ZONE\_ID="yourzone.id"  # The zone ID is the name of the zone (or domain)
+RECORD\_ID="123456789"       # Replace with the Record ID
 IP=${1}
- 
+
 curl --silent \
-     -H "Accept: application/json" \
+     -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -H "X-DNSimple-Token: $LOGIN:$TOKEN" \
-     -X "PUT" \
-     -i "https://api.dnsimple.com/v1/domains/$DOMAIN_ID/records/$RECORD_ID" \
-     -d "{\"record\":{\"content\":\"$IP\"}}" > /dev/null
+     -H "Accept: application/json" \
+     -X "PATCH" \
+     -i "https://api.dnsimple.com/v2/$ACCOUNT_ID/zones/$ZONE_ID/records/$RECORD_ID" \
+     -d "{\"content\":\"$IP\"}" > /dev/null
 
 if [ $? -eq 0 ]; then
     /sbin/ddns_custom_updated 1
