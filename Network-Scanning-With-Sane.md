@@ -16,15 +16,15 @@ opkg install sane-backends sane-frontends sane-libs dbus xinetd
 ```
 service saned
 {
-type = UNLISTED
-port = 6566
-socket_type = stream
-server = /opt/sbin/saned
-protocol = tcp
-user = admin
-group = root
-wait = no
-disable = no  
+    type = UNLISTED
+    port = 6566
+    socket_type = stream
+    server = /opt/sbin/saned
+    protocol = tcp
+    user = admin
+    group = root
+    wait = no
+    disable = no
 }
 ```
 * Edit file `/opt/share/dbus-1/system.conf` and replace the following line:  
