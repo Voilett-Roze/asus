@@ -54,7 +54,7 @@ fi
 * Test the same way with the `scanimage` utility
 
 ### On The Client Side (Windows):
-* Download SaneTwain [http://sanetwain.ozuzo.net] (http://sanetwain.ozuzo.net)
+* Download SaneTwain [http://sanetwain.ozuzo.net](http://sanetwain.ozuzo.net)
 * On start-up put the router's ip/host
 
 Suggestions are always welcomed.
