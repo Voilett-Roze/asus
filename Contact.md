@@ -5,6 +5,6 @@
 * **Email:** rmerl (at) lostrealm (dot) ca
 * **IRC:** RMerlin on Freenode - #asuswrt channel
 
-Development news will be posted on SNBForums, and occasionally on Twitter.  You can also keep track of ongoing development through the Github repository.
+Development news will be posted on SNBForums, and occasionally on Twitter.  You can also keep track of ongoing development through the GitHub repository.
 
 The preferred support channel is through the community, on the public forums at SNBForums.
