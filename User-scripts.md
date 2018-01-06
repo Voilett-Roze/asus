@@ -69,7 +69,7 @@ And like any Linux script, they need to start with a shebang:
 #!/bin/sh
 ```
 
-Also, you must save files with a UNIX encoding.  Note that Windows's Notepad cannot save with a UNIX encoding - get Notepad++ instead.  You can also directly edit them on the router through SSH, by using _vi_ or _nano_, both included in the firmware.  These two will create files already encoded in the proper format.
+Also, you must save files with UNIX line endings.  Note that Windows's Notepad cannot save with UNIX line endings; use Notepad++ instead.  You can also directly edit them on the router through SSH, by using `vi` or `nano`, both included in the firmware; they will create files with the proper line endings.
 
 
 ## Troubleshooting scripts:
