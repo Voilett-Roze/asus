@@ -29,4 +29,4 @@ No longer supported:
  * RT-N16
 
 
-NOTE: all the "R" versions (for example RT-N66R) are the same as their "U" counterparts, they are just different packages aimed at large 
+NOTE: all the "R" versions (for example RT-N66R) are the same as their "U" counterparts, they are just different packages aimed at large retailers.
