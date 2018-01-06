@@ -16,13 +16,13 @@ Called after all other system services have been started at boot.  This is the b
 Called before all system services are stopped, usually on a reboot.
 
 ### wan-start
-Called after the WAN interface came up.  Good place to put scripts that depend on the WAN interface (for example, to update an IPv6 tunnel, or a dynamic DNS service).  The Internet connection is unlikely to be active when this script is run.  Add a `sleep` line to delay running until the connection is complete, or loop until your command succeeds.
+Called after the WAN interface came up.  Good place to put scripts that depend on the WAN interface (e.g. to update an IPv6 tunnel or a dynamic DNS service).  The Internet connection is unlikely to be active when this script is run.  Add a `sleep` line to delay running until the connection is complete, or loop until your command succeeds.
 
 ### firewall-start
 Called after the firewall got started and filtering rules have been applied.  This is where you will usually put your own custom rules in the filter table (but _not_ the NAT table).  The script receives the WAN interface name (e.g. `ppp0`) as an argument which can be used in the script using `$1`.
 
 ### nat-start
-Called after NAT rules (i.e. port forwards and such) have been applied to the NAT table.  This is where you will want to put your own NAT table custom rules.  For example, a port forward that only allows connections coming from a specific IP.
+Called after NAT rules (i.e. port forwards and such) have been applied to the NAT table.  This is where you will want to put your own NAT table custom rules (e.g. a port forward that only allows connections coming from a specific IP).
 
 ### init-start
 Called right after JFFS got mounted, and before any of the services get started. This is the earliest part of the boot process where you can insert something.
