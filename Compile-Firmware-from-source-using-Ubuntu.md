@@ -1,5 +1,7 @@
 # How to build `asuswrt-merlin` on Ubuntu
 
+# NOTE: If wanting to build for the new HND platform (RT-AC86U) some different instructions have been added and need to be followed.  
+
 ## Cautionary note
 
 > WARNING DESPITE THE FACT THAT IT IS POSSIBLE TO COMPILE YOUR OWN FIRMWARE,
@@ -43,7 +45,7 @@ Follow these steps :
 
 ![20gb](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/20gb.png)
 
-* Crank up some specs give it some more ram and procesing power, It doesn't sound as a heavy work load but making your .trx image for the router actually takes a long time on a slow processor
+* Crank up some specs give it some more ram and procesing power, It doesn't sound as a heavy work load but building your image for the router actually takes a long time on a slow processor
 
 ![customize](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/customiza%20hardware.png)
 
@@ -55,60 +57,44 @@ When the Ubuntu installer has finished you can fire up terminal
 
 ## Manually preparing the build environment
 
-We are going to make the root account active because if we don't do that it will give us a lot of errors during compilation.
-
-> **Note:** the `root` account is actually only required for certain parts of the whole procedure, specifically for the symlinking of the toolchain into `/opt` and installation of packages. If you fix up the hardcoded paths in some of the source files, you will be able to run the whole build procedure without superuser privileges. If you prefer to automate the following steps, scroll down to the section named *Automated all-in-one script*.
-
-Paste in the following lines in terminal
-
-```bash
-sudo passwd root 
-```
-
-* It will now ask you for your new `root` password (confirm this twice and be sure to remember it we need it later on!)
-
-Paste in
-
-```bash
-su
-```
-
-As you can see you are now running the terminal in root!
-
-![root](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/Root.png)
-
 * We are going to download some packages ( I am sure there are some you don't need, but this is how I got it working and you can delete Ubuntu afterward so who cares right ? )
 
 Paste in:
 
 ```bash
-apt-get install autoconf automake bash bison bzip2 diffutils file flex m4 \
-g++ gawk groff-base libncurses-dev libtool libslang2 make patch perl pkg-config \
-shtool subversion tar texinfo zlib1g zlib1g-dev git-core gettext libexpat1-dev \
-libssl-dev cvs gperf unzip python libxml-parser-perl gcc-multilib gconf-editor \
-libxml2-dev g++-4.4 g++-multilib gitk libncurses5 mtd-utils libncurses5-dev \
-libstdc++6-4.4-dev libvorbis-dev g++-4.4-multilib git autopoint autogen sed \
-build-essential intltool libelf1:i386 libglib2.0-dev xutils-dev
+sudo apt-get install libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison /
+bzip2 diffutils file flex m4 g++ gawk groff-base libncurses-dev libtool libslang2 make patch perl pkg-config shtool /
+subversion tar texinfo zlib1g zlib1g-dev git-core gettext libexpat1-dev libssl-dev cvs gperf unzip /
+python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++-multilib gitk libncurses5 mtd-utils /
+libncurses5-dev libvorbis-dev git autopoint autogen sed build-essential intltool libelf1:i386 libglib2.0-dev /
+xutils-dev lib32z1-dev lib32stdc++6
 ```
-Assuming you don't run as `root`, make sure to prepend a `sudo` to the above command line.
-
 If you have Ubuntu x64 edition then you need `lib32z1-dev` and `lib32stdc++6`
 
 ```bash
 sudo apt-get install lib32z1-dev lib32stdc++6
 ```
-If you are ready installing all these packages take a coffee or a beer.
+If you are ready, install these packages & make yourself a well deserved coffee or have a cold beer.
 
-We are going to download Merlins hard work with again some terminal commands.  It appears as if scripts published in support forums all assume the clone is done off of root, so first we change to the root directory.
+Now we are going to download RMerlin's hard work.
 
 **Note:** a very detailed guide on how to download the source code can be found [on this Wiki page](/RMerl/asuswrt-merlin/wiki/Download-the-latest-source-code-from-GitHub).
 
 ```bash
-cd /root
-git clone https://github.com/RMerl/asuswrt-merlin.git
+git clone https://github.com/RMerl/asuswrt-merlin      (legacy 380.xx branch)
 ```
 
-Be patient it takes some time
+Newer branch for the HND platform (RT-AC86u):
+
+```bash
+git clone https://github.com/RMerl/asuswrt-merlin.ng  (next generation 382.xx branch)
+```
+
+Also you'll need the toolchains
+
+```bash
+sudo ln -s ~/am-toolchains/brcm-arm-hnd /opt/toolchains
+```
 
 With these command you will build your environment which you will need to work with.
 
@@ -123,7 +109,21 @@ Adjust the `PATH` environment variable:
 export PATH=$PATH:/opt/brcm/hndtools-mipsel-linux/bin:/opt/brcm/hndtools-mipsel-uclibc/bin:/opt/brcm-arm/bin
 ```
 
-Set one more symlink:
+For the new HND platform (RT-AC86u):
+
+```bash
+sudo ln -sf bash /bin/sh
+
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
+
+echo "export TOOLCHAIN_BASE=/opt/toolchains" >> ~/.profile
+
+echo "PATH=\$PATH:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
+
+echo "PATH=\$PATH:/opt/toolchains/crosstools-aarch64-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/bin" >> ~/.profile
+```
+
+Set a few more symlinks:
 
 ```bash
 sudo mkdir -p /media/ASUSWRT/
@@ -131,6 +131,12 @@ sudo mkdir -p /media/ASUSWRT/
 
 ```bash
 sudo ln -s ~/asuswrt-merlin /media/ASUSWRT/asuswrt-merlin
+```
+
+For the new HND platform (RT-AC86u):
+
+```bash
+sudo ln -s ~/asuswrt-merlin.ng /media/ASUSWRT/asuswrt-merlin.ng
 ```
 
 ## Ready to build: manual approach
@@ -180,23 +186,37 @@ make rt-ac56u
 make rt-ac68u
 ```
 
+
+#### for RT-AC86U
+
+```bash
+cd ~/asuswrt-merlin.ng/release/src-rt-5.02hnd
+make rt-ac86u
+```
+
 ## Notes for Ubuntu 13.10 and later
 
 If you want to build in Ubuntu 13.10, before you `make clean` / `make [router]`, you might need to perform these steps due to the different version of `autoconf`.
 
 This works to build 3.0.0.4_374.38_1.
 
+NOTE: **For the new HND platform (RT-AC86u) routes will need to be changed accordingly, where asuswrt-merlin is stated chenge to asuswrt-merlin.ng
+
 ```bash
 sudo apt-get install libproxy-dev
+
 # fix neon missing proxy.h
 cp /usr/include/proxy.h ~/asuswrt-merlin/release/src/router/neon/
+
 # fix broken configure script for libdaemon
 cd ~/asuswrt-merlin/release/src/router/libdaemon
 aclocal
+
 # fix broken configure script for libxml2
 cd ~/asuswrt-merlin/release/src/router/libxml2
 sed -i s/AM_C_PROTOTYPES/#AM_C_PROTOTYPES/g ~/asuswrt-merlin/release/src/router/libxml2/configure.in
 aclocal
+
 # fix broken configure script for libvorbis
 cd ~/asuswrt-merlin/release/src/router/libvorbis
 aclocal
