@@ -150,7 +150,7 @@ sudo ln -s ~/asuswrt-merlin.ng /media/ASUSWRT/asuswrt-merlin.ng
 
 ## Ready to build: manual approach
 
-### RT-N16
+#### RT-N16
 
 ```
 cd ~/asuswrt-merlin/release/src-rt
@@ -158,7 +158,7 @@ make clean
 make rt-n16
 ```
 
-### RT-N66U & RT-AC66U
+#### RT-N66U & RT-AC66U
 
 ```
 cd ~/asuswrt-merlin/release/src-rt-6.x
@@ -177,7 +177,7 @@ make rt-n66u
 make rt-ac66u
 ```
 
-### RT-AC56U & RT-AC68U
+#### RT-AC56U & RT-AC68U
 
 ```bash
 cd ~/asuswrt-merlin/release/src-rt-6.x.4708
@@ -195,7 +195,6 @@ make rt-ac56u
 make rt-ac68u
 ```
 
-
 #### for RT-AC86U
 
 ```bash
@@ -211,25 +210,25 @@ This works to build 3.0.0.4_374.38_1.
 
 NOTE: **For the new HND platform (RT-AC86u) routes will need to be changed accordingly, where asuswrt-merlin is stated chenge to asuswrt-merlin.ng
 
-### fix neon missing proxy.h
+#### fix neon missing proxy.h
 ```bash
 cp /usr/include/proxy.h ~/asuswrt-merlin/release/src/router/neon/
 ```
 
-### fix broken configure script for libdaemon
+#### fix broken configure script for libdaemon
 ```bash
 cd ~/asuswrt-merlin/release/src/router/libdaemon
 aclocal
 ```
 
-### fix broken configure script for libxml2
+#### fix broken configure script for libxml2
 ```bash
 cd ~/asuswrt-merlin/release/src/router/libxml2
 sed -i s/AM_C_PROTOTYPES/#AM_C_PROTOTYPES/g ~/asuswrt-merlin/release/src/router/libxml2/configure.in
 aclocal
 ```
 
-### fix broken configure script for libvorbis
+#### fix broken configure script for libvorbis
 ```bash
 cd ~/asuswrt-merlin/release/src/router/libvorbis
 aclocal
