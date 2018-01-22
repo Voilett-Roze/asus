@@ -1,6 +1,13 @@
-# How to build `asuswrt-merlin` on Ubuntu
-
-# NOTE: If wanting to build for the new HND platform (RT-AC86U) some different instructions have been added and need to be followed.  
+# How to build asuswrt-merlin on Ubuntu
+.
+.
+.
+.
+### If wanting to build for the new HND platform (RT-AC86U), some different instructions have been added and need to be followed. ###
+.
+.
+.
+.
 
 ## Cautionary note
 
@@ -80,14 +87,16 @@ Now we are going to download RMerlin's hard work.
 
 **Note:** a very detailed guide on how to download the source code can be found [on this Wiki page](/RMerl/asuswrt-merlin/wiki/Download-the-latest-source-code-from-GitHub).
 
+Legacy 380.xx branch
+
 ```bash
-git clone https://github.com/RMerl/asuswrt-merlin      (legacy 380.xx branch)
+git clone https://github.com/RMerl/asuswrt-merlin
 ```
 
-Newer branch for the HND platform (RT-AC86u):
+Next Generation branch for the HND platform (RT-AC86u)
 
 ```bash
-git clone https://github.com/RMerl/asuswrt-merlin.ng  (next generation 382.xx branch)
+git clone https://github.com/RMerl/asuswrt-merlin.ng
 ```
 
 Also you'll need the toolchains
@@ -96,7 +105,7 @@ Also you'll need the toolchains
 sudo ln -s ~/am-toolchains/brcm-arm-hnd /opt/toolchains
 ```
 
-With these command you will build your environment which you will need to work with.
+With these command you will build your environment which you will need to work with.  Also at this point, if you wish to build for the HND platform you'll need to scroll on and follow some slightly different instructions.
 
 ```bash
 sudo ln -s ~/asuswrt-merlin/tools/brcm /opt/brcm
