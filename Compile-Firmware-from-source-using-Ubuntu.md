@@ -2,9 +2,7 @@
 .
 .
 .
-.
 ### If wanting to build for the new HND platform (RT-AC86U), some different instructions have been added and need to be followed. ###
-.
 .
 .
 .
@@ -105,7 +103,9 @@ Also you'll need the toolchains
 sudo ln -s ~/am-toolchains/brcm-arm-hnd /opt/toolchains
 ```
 
-With these command you will build your environment which you will need to work with.  Also at this point, if you wish to build for the HND platform you'll need to scroll on and follow some slightly different instructions.
+With these command you will build your environment which you will need to work with.  
+
+Also at this point, if you wish to build for the HND platform you'll need to scroll on and follow some slightly different instructions.
 
 ```bash
 sudo ln -s ~/asuswrt-merlin/tools/brcm /opt/brcm
