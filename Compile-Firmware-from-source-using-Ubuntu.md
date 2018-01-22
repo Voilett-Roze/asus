@@ -105,7 +105,7 @@ sudo ln -s ~/am-toolchains/brcm-arm-hnd /opt/toolchains
 
 With these command you will build your environment which you will need to work with.  
 
-Also at this point, if you wish to build for the HND platform you'll need to scroll on and follow some slightly different instructions.
+Also at this point, if building for the HND platform you'll need to move on and follow some slightly different instructions as stated.
 
 ```bash
 sudo ln -s ~/asuswrt-merlin/tools/brcm /opt/brcm
@@ -142,7 +142,7 @@ sudo mkdir -p /media/ASUSWRT/
 sudo ln -s ~/asuswrt-merlin /media/ASUSWRT/asuswrt-merlin
 ```
 
-For the new HND platform (RT-AC86u):
+For HND platform (RT-AC86u):
 
 ```bash
 sudo ln -s ~/asuswrt-merlin.ng /media/ASUSWRT/asuswrt-merlin.ng
