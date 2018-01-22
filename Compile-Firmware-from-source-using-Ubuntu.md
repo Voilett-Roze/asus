@@ -1,9 +1,7 @@
 # How to build asuswrt-merlin on Ubuntu
 .
 .
-.
 #### If wanting to build for the new HND platform (RT-AC86U), some different instructions have been added and need to be followed.
-.
 .
 .
 
