@@ -208,7 +208,7 @@ If you want to build in Ubuntu 13.10, before you `make clean` / `make [router]`,
 
 This works to build 3.0.0.4_374.38_1.
 
-NOTE: **For the new HND platform (RT-AC86u) routes will need to be changed accordingly, where asuswrt-merlin is stated chenge to asuswrt-merlin.ng
+NOTE: **For the new HND platform (RT-AC86u) routes will need to be changed accordingly, where asuswrt-merlin is stated change to asuswrt-merlin.ng
 
 #### fix neon missing proxy.h
 ```bash
