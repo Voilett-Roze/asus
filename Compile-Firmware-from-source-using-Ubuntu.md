@@ -211,22 +211,26 @@ This works to build 3.0.0.4_374.38_1.
 
 NOTE: **For the new HND platform (RT-AC86u) routes will need to be changed accordingly, where asuswrt-merlin is stated chenge to asuswrt-merlin.ng
 
-```bash
-sudo apt-get install libproxy-dev
-
 # fix neon missing proxy.h
+```bash
 cp /usr/include/proxy.h ~/asuswrt-merlin/release/src/router/neon/
+```
 
 # fix broken configure script for libdaemon
+```bash
 cd ~/asuswrt-merlin/release/src/router/libdaemon
 aclocal
+```
 
 # fix broken configure script for libxml2
+```bash
 cd ~/asuswrt-merlin/release/src/router/libxml2
 sed -i s/AM_C_PROTOTYPES/#AM_C_PROTOTYPES/g ~/asuswrt-merlin/release/src/router/libxml2/configure.in
 aclocal
+```
 
 # fix broken configure script for libvorbis
+```bash
 cd ~/asuswrt-merlin/release/src/router/libvorbis
 aclocal
 ```
