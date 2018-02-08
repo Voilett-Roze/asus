@@ -169,6 +169,13 @@ Another guide [here](https://www.hqt.ro/transmission-on-asuswrt-routers-through-
 ## Adding additional trackers to Transmission
 This small [script](https://github.com/DontBeAPadavan/add_trackers) provided @ryzhovau updates current active torrents with additional trackers if the hash matches upon adding it in settings.json as    
 > "script-torrent-added-filename": "/opt/bin/add_trackers.sh",
+
+Install Transmission remote tool:
+
+```
+opkg install transmission-remote-openssl
+```
+
 ```
 #!/bin/sh
 
