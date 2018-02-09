@@ -47,6 +47,7 @@ And, finally, get PHP Working:
 `EOF`
 
 (Again, for OpenWRT and others adapt path)
+If you have performance problem reduce PHP_FCGI_MAX_REQUESTS and PHP_FCGI_CHILDREN values.  
 
 ## Install COPS
 
@@ -113,7 +114,7 @@ It's possibile. It depends by your hardware, weight of the library, how many use
 On my RT-AC68U I never encountered problem.
 My target was to consult and download eBooks directly from my Kindle without have to use a PC. I got it. When I add o make high-management of ebook I use Calibre on NFS.
 
-If you need in COPS it's possible configure max contemporary users and thumbnail generation, to improve performance.
+If you need in COPS it's possible configure something about thumbnail generation and handling, to improve performance, listing, etc. 
 Adjust to your needs this lines in cops/config_local.php could improve performance. This are mine, they're a little CPU aggressive...configure on your needs!
 
 `    /*
@@ -151,5 +152,5 @@ Adjust to your needs this lines in cops/config_local.php could improve performan
      */
     $config['cops_recentbooks_limit'] = '50';
 
-
 `
+In webserver you could work on max contemporary access and call (see lighttpd man page), p.e. reducing PHP_FCGI_MAX_REQUESTS and PHP_FCGI_CHILDREN values in /opt/etc/lighttpd/conf.d/30-fastcgi.conf.
