@@ -1,6 +1,6 @@
-## Introduction and Preequisities
-This tutorial was developed on an Asus RT-AC68U with AsusWRT Merlin firmaware, but could be adapted to every router that uses Entware repo (opkg) with little modification.
-This guide is for users who already have a little experience witch Linux system. **Switch your mind on, don't be a sheep.**
+## Introduction and Prerequisites
+This tutorial was developed on an Asus RT-AC68U with AsusWRT Merlin firmware, but could be adapted to every router that uses Entware repo (opkg) with little modification.
+This guide is for users who already have a little experience with Linux system.
 
 You need: A router with ENTWARE repository activated and an hard-drive attached with your Calibre library, but if you are reading this tutorial probably you already have them.
 At this moment (Jan 2018) Optware has a too old version of the php engine, so you need to change and go to Entware.
@@ -11,7 +11,7 @@ Install and update ENTWARE. ( ASUS WRT Merlin: https://github.com/RMerl/asuswrt-
 `opkg update`
 
 ## Prepare the Webserver
-If you already have a webserver running, check if you have every packages. 99% problems that you could bump into are produced by a missing package.
+If you already have a webserver running, check if you have every package. 99% problems that you could bump into are produced by a missing package.
 
 Install a webserver, I choose lighttpd, PHP7, and the other packages needed. The official guide of COPS doesn't report every package needed because was written for Debian Distribution witch inglobate many libraries in the "common", so you need some "extra" packages. 
 Should work also with the php built in webserver ( https://github.com/seblucas/cops/wiki/Howto---PhpEmbeddedServer , but at this moment isn't available via opkg )
@@ -77,7 +77,7 @@ put the absolute path of your calibre db in $config['calibre_directory'] , for e
 `$config['calibre_directory'] = '/tmp/mnt/NAS/calibre/BiblioNAS/';`
 `?>`
 
-For all available the variables, check the file config_local.php.example (and config_default.php), for every one you want to modify set it into config_local.php at your desidered value, otherwise will lost the mod at the first update of COPS!
+For all available variables, check the file config_local.php.example (and config_default.php), for every one you want to modify set it into config_local.php at your desired value, otherwise will lost the mod at the first update of COPS!
 
 ### URL Rewrite for KOBO:
 If you want direct-download using Kobo you should also set $config['cops_use_url_rewriting'] to 1 (need for automatic download from your ebook-reader using onboard browser), put in the row before ?>
@@ -93,7 +93,7 @@ Let's start the server!
 
 `/opt/etc/init.d/S80lighttpd restart`
 
-(again, example is for AsusWRT Merlin, correct to your path if you have another firmaware)
+(again, example is for AsusWRT Merlin, correct to your path if you have another firmware)
 
 Go to your router ip on the port you choose, such as; http://router.asus.com:81/cops/checkconfig.php , everything should be marked as "OK"
 ![](https://www.snbforums.com/attachments/cops-ok-png.11428/)
@@ -110,12 +110,12 @@ Remember to Stop the webserver to prevent users to work on the DB while it's ope
 6) Lunch lighttpd.
 
 ## Will slow my router, my LAN, etc.?
-It's possibile. It depends by your hardware, weight of the library, how many users will access at same time, etc. 
-On my RT-AC68U I never encountered problem.
-My target was to consult and download eBooks directly from my Kindle without have to use a PC. I got it. When I add o make high-management of ebook I use Calibre on NFS.
+It's possible. It depends on your hardware, weight of the library, how many users will access at the same time, etc. 
+On my RT-AC68U I have not encountered any problems.
+My target was to consult and download eBooks directly from my Kindle without having to use a PC. I got it. When I add o make high-management of ebook I use Calibre on NFS.
 
-If you need in COPS it's possible configure something about thumbnail generation and handling, to improve performance, listing, etc. 
-Adjust to your needs this lines in cops/config_local.php could improve performance. This are mine, they're a little CPU aggressive...configure on your needs!
+If you need in COPS it's possible to configure something about thumbnail generation and handling, to improve performance, listing, etc. 
+Adjust to your needs this lines in cops/config_local.php could improve performance. This is mine, they're a little CPU aggressive...configure on your needs!
 
 `    /*
      * Update Epub metadata before download
