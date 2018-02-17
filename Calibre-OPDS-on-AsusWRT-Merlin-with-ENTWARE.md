@@ -23,8 +23,8 @@ Should work also with the php built in webserver ( https://github.com/seblucas/c
 Configure lighttpd : (from: https://github.com/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware )
 
 
-`sed -i 's/#server.port                 = 81/server.port                 = 81/g' "/opt/etc/lighttpd/lighttpd.conf"`
-`sed -i "/server.upload-dirs*/cserver.upload-dirs          = ( \"/opt/tmp\" )" "/opt/etc/lighttpd/lighttpd.conf"`
+	sed -i 's/#server.port                 = 81/server.port                 = 81/g' "/opt/etc/lighttpd/lighttpd.conf"
+	sed -i "/server.upload-dirs*/cserver.upload-dirs          = ( \"/opt/tmp\" )" "/opt/etc/lighttpd/lighttpd.conf"
 
 (For OpenWRT path see this: https://wiki.openwrt.org/doc/howto/http.lighttpd )
 
@@ -76,18 +76,18 @@ Get cops (example code for the 1.0.1 version):
 	mkdir cops
 	unzip cops-1.0.1.zip -d ./cops
 
-###URL Rewrite for KOBO:
+**_URL Rewrite for KOBO:_**
 Adding mod-rewriter (useful for Kobo users) (from: https://github.com/seblucas/cops/wiki/Url-Rewriting-with-COPS ):
 
-`nano -w /opt/etc/lighttpd/conf.d/10-cops_rewrite.conf`
+	nano -w /opt/etc/lighttpd/conf.d/10-cops_rewrite.conf
 
 With something like this (it's only one row), in my installation I put cops in /opt/var/share/cops/ (witch will be http://router.asus.com:81/cops) :
 
-`url.rewrite-once = ("/cops/download/(.*)/.*\.(.*)$" => "/cops/fetch.php?data=&type=", "^/cops/download/(\d+)/(\d+)/.*\.(.*)$" => "/cops/fetch.php?data=&db=&type=")`
+	url.rewrite-once = ("/cops/download/(.*)/.*\.(.*)$" => "/cops/fetch.php?data=&type=", "^/cops/download/(\d+)/(\d+)/.*\.(.*)$" => "/cops/fetch.php?data=&db=&type=")
 
 ## Configure COPS:
 
-`nano -w /opt/share/www/cops/config_local.php`
+	nano -w /opt/share/www/cops/config_local.php
 
 put the absolute path of your calibre db in $config['calibre_directory'] , for example:
 
@@ -99,7 +99,7 @@ put the absolute path of your calibre db in $config['calibre_directory'] , for e
 
 For all available variables, check the file config_local.php.example (and config_default.php), for every one you want to modify set it into config_local.php at your desired value, otherwise will lose the mod at the first update of COPS!
 
-## URL Rewrite for KOBO:
+**_URL Rewrite for KOBO:_**
 If you want direct-download using Kobo you should also set $config['cops_use_url_rewriting'] to 1 (need for automatic download from your ebook-reader using onboard browser), put in the row before ?>
 
 `$config['cops_use_url_rewriting'] = "1";`
@@ -111,7 +111,7 @@ and $config['cops_provide_kepub'] to 1 to have the ebook recognized as a Kepub (
 ## Ready? Go!
 Let's start the server!
 
-`/opt/etc/init.d/S80lighttpd restart`
+	/opt/etc/init.d/S80lighttpd restart
 
 (again, example is for AsusWRT Merlin, correct to your path if you have another firmware)
 
