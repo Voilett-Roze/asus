@@ -32,18 +32,34 @@ And, finally, get PHP Working:
 
 
 `cat >> /opt/etc/lighttpd/conf.d/30-fastcgi.conf  << EOF`
+`server.modules += ( "mod_scgi" )`
+`scgi.server = (`
+` "/RPC2" =>`
+`    ( "127.0.0.1" =>`
+`   (`
+`       "socket" => "/opt/var/rpc.socket",`
+`        "check-local" => "disable"`
+`      )`
+`    )`
+`)`
+``
 `server.modules += ( "mod_fastcgi" )`
-`fastcgi.server = ( ".php" =>`
-`( "localhost" =>`
-`( "socket" => "/tmp/php-fcgi.sock",`
-`"bin-path" => "/opt/bin/php-fcgi",`
-`"max-procs" => 1,`
-`"bin-environment" =>`
-`( "PHP_FCGI_CHILDREN" => "2",`
-`"PHP_FCGI_MAX_REQUESTS" => "1000" )`
+`fastcgi.server = (`
+`  ".php" =>`
+`    ( "localhost" =>`
+`      ( "socket" => "/tmp/php-fcgi.sock",`
+`        "bin-path" => "/opt/bin/php-fcgi",`
+`        "max-procs" => 1,`
+`        "bin-environment" =>`
+`          ( "PHP_FCGI_CHILDREN" => "1",`
+`             "PHP_FCGI_MAX_REQUESTS" => "100"`
+`          )`
+`      )`
+`    )`
 `)`
-`)`
-`)`
+``
+`server.port = 81`
+``
 `EOF`
 
 (Again, for OpenWRT and others adapt path)
@@ -77,7 +93,7 @@ put the absolute path of your calibre db in $config['calibre_directory'] , for e
 `$config['calibre_directory'] = '/tmp/mnt/NAS/calibre/BiblioNAS/';`
 `?>`
 
-For all available variables, check the file config_local.php.example (and config_default.php), for every one you want to modify set it into config_local.php at your desired value, otherwise will lost the mod at the first update of COPS!
+For all available variables, check the file config_local.php.example (and config_default.php), for every one you want to modify set it into config_local.php at your desired value, otherwise will lose the mod at the first update of COPS!
 
 ### URL Rewrite for KOBO:
 If you want direct-download using Kobo you should also set $config['cops_use_url_rewriting'] to 1 (need for automatic download from your ebook-reader using onboard browser), put in the row before ?>
@@ -153,4 +169,4 @@ Adjust to your needs this lines in cops/config_local.php could improve performan
     $config['cops_recentbooks_limit'] = '50';
 
 `
-In webserver you could work on max contemporary access and call (see lighttpd man page), p.e. reducing PHP_FCGI_MAX_REQUESTS and PHP_FCGI_CHILDREN values in /opt/etc/lighttpd/conf.d/30-fastcgi.conf.
+In webserver you could work on max contemporary access and call (see lighttpd man page), p.e. reducing PHP_FCGI_MAX_REQUESTS values in /opt/etc/lighttpd/conf.d/30-fastcgi.conf.
