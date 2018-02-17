@@ -31,36 +31,38 @@ Configure lighttpd : (from: https://github.com/RMerl/asuswrt-merlin/wiki/Lighttp
 And, finally, get PHP Working:
 
 
-`cat >> /opt/etc/lighttpd/conf.d/30-fastcgi.conf  << EOF
-server.modules += ( "mod_scgi" )
-scgi.server = (
-  "/RPC2" =>
-    ( "127.0.0.1" =>
-     (
-        "socket" => "/opt/var/rpc.socket",
-        "check-local" => "disable"
-      )
-    )
-)
 
-server.modules += ( "mod_fastcgi" )
-fastcgi.server = (
-  ".php" =>
-    ( "localhost" =>
-      ( "socket" => "/tmp/php-fcgi.sock",
-        "bin-path" => "/opt/bin/php-fcgi",
-        "max-procs" => 1,
-        "bin-environment" =>
-          ( "PHP_FCGI_CHILDREN" => "1",
-             "PHP_FCGI_MAX_REQUESTS" => "100"
-          )
-      )
-    )
-)
+	cat >> /opt/etc/lighttpd/conf.d/30-fastcgi.conf  << EOF
+	server.modules += ( "mod_scgi" )
+	scgi.server = (
+	"/RPC2" =>
+		( "127.0.0.1" =>
+		(
+					"socket" => "/opt/var/rpc.socket",
+							"check-local" => "disable"
+					)
+			)
+	)
 
-server.port = 81
+	server.modules += ( "mod_fastcgi" )
+	fastcgi.server = (
+		".php" =>
+			( "localhost" =>
+					( "socket" => "/tmp/php-fcgi.sock",
+						"bin-path" => "/opt/bin/php-fcgi",
+						"max-procs" => 1,
+						"bin-environment" =>
+								( "PHP_FCGI_CHILDREN" => "1",
+									"PHP_FCGI_MAX_REQUESTS" => "100"
+							)
+				)
+		)
+	)
 
-EOF`
+	server.port = 81
+
+	EOF
+
 
 (Again, for OpenWRT and others adapt path)
 If you have performance problem reduce PHP_FCGI_MAX_REQUESTS and PHP_FCGI_CHILDREN values.  
@@ -89,9 +91,11 @@ With something like this (it's only one row), in my installation I put cops in /
 
 put the absolute path of your calibre db in $config['calibre_directory'] , for example:
 
-`<?php`
-`$config['calibre_directory'] = '/tmp/mnt/NAS/calibre/BiblioNAS/';`
-`?>`
+
+	<?php
+	$config['calibre_directory'] = '/tmp/mnt/NAS/calibre/BiblioNAS/';
+	?>
+
 
 For all available variables, check the file config_local.php.example (and config_default.php), for every one you want to modify set it into config_local.php at your desired value, otherwise will lose the mod at the first update of COPS!
 
@@ -133,40 +137,40 @@ My target was to consult and download eBooks directly from my Kindle without hav
 If you need in COPS it's possible to configure something about thumbnail generation and handling, to improve performance, listing, etc. 
 Adjust to your needs this lines in cops/config_local.php could improve performance. This is mine, they're a little CPU aggressive...configure on your needs!
 
-`    /*
-     * Update Epub metadata before download
-     * 1 : Yes (enable)
-     * 0 : No
-     */
-    $config['cops_update_epub-metadata'] = "1";
+   /*
+					* Update Epub metadata before download
+					* 1 : Yes (enable)
+					* 0 : No
+					*/
+				$config['cops_update_epub-metadata'] = "1";
 
-    /*
-     * Thumbnails are generated on-the-fly so it can be problematic on servers with slow CPU (Raspberry Pi, Dockstar, Piratebox, ...).
-     * This configuration item allow to customize how thumbnail will be generated
-     * "" : Generate thumbnail (CPU hungry)
-     * "1" : always send the full size image (Network hungry)
-     * any url : Send a constant image as the thumbnail (you can try "images/bookcover.png")
-     */
-    $config['cops_thumbnail_handling'] = "1";
+				/*
+					* Thumbnails are generated on-the-fly so it can be problematic on servers with slow CPU (Raspberry Pi, Dockstar, Piratebox, ...).
+					* This configuration item allow to customize how thumbnail will be generated
+					* "" : Generate thumbnail (CPU hungry)
+					* "1" : always send the full size image (Network hungry)
+					* any url : Send a constant image as the thumbnail (you can try "images/bookcover.png")
+					*/
+				$config['cops_thumbnail_handling'] = "1";
 
-    /*
-     * Directory to keep resized thumbnails: allow to resize thumbnails only on first access, then use this cache.
-     * $config['cops_thumbnail_handling'] must be ""
-     * "" : don't cache thumbnail
-     * "/tmp/cache/" (example) : will generate thumbnails in /tmp/cache/
-     * BEWARE : it has to end with a /
-     */
-    $config['cops_thumbnail_cache_directory'] = "";
-    /*
-     * Max number of items per page
-     * -1 unlimited
-     */
-    $config['cops_max_item_per_page'] = "-1";
+				/*
+					* Directory to keep resized thumbnails: allow to resize thumbnails only on first access, then use this cache.
+					* $config['cops_thumbnail_handling'] must be ""
+					* "" : don't cache thumbnail
+					* "/tmp/cache/" (example) : will generate thumbnails in /tmp/cache/
+					* BEWARE : it has to end with a /
+					*/
+				$config['cops_thumbnail_cache_directory'] = "";
+				/*
+					* Max number of items per page
+					* -1 unlimited
+					*/
+				$config['cops_max_item_per_page'] = "-1";
 
-    /*
-     * Number of recent books to show
-     */
-    $config['cops_recentbooks_limit'] = '50';
+				/*
+					* Number of recent books to show
+					*/
+				$config['cops_recentbooks_limit'] = '50';
 
-`
+
 In webserver you could work on max contemporary access and call (see lighttpd man page), p.e. reducing PHP_FCGI_MAX_REQUESTS values in /opt/etc/lighttpd/conf.d/30-fastcgi.conf.
