@@ -31,36 +31,36 @@ Configure lighttpd : (from: https://github.com/RMerl/asuswrt-merlin/wiki/Lighttp
 And, finally, get PHP Working:
 
 
-`cat >> /opt/etc/lighttpd/conf.d/30-fastcgi.conf  << EOF`
-`server.modules += ( "mod_scgi" )`
-`scgi.server = (`
-` "/RPC2" =>`
-`    ( "127.0.0.1" =>`
-`   (`
-`       "socket" => "/opt/var/rpc.socket",`
-`        "check-local" => "disable"`
-`      )`
-`    )`
-`)`
-``
-`server.modules += ( "mod_fastcgi" )`
-`fastcgi.server = (`
-`  ".php" =>`
-`    ( "localhost" =>`
-`      ( "socket" => "/tmp/php-fcgi.sock",`
-`        "bin-path" => "/opt/bin/php-fcgi",`
-`        "max-procs" => 1,`
-`        "bin-environment" =>`
-`          ( "PHP_FCGI_CHILDREN" => "1",`
-`             "PHP_FCGI_MAX_REQUESTS" => "100"`
-`          )`
-`      )`
-`    )`
-`)`
-``
-`server.port = 81`
-``
-`EOF`
+`cat >> /opt/etc/lighttpd/conf.d/30-fastcgi.conf  << EOF
+server.modules += ( "mod_scgi" )
+scgi.server = (
+  "/RPC2" =>
+    ( "127.0.0.1" =>
+     (
+        "socket" => "/opt/var/rpc.socket",
+        "check-local" => "disable"
+      )
+    )
+)
+
+server.modules += ( "mod_fastcgi" )
+fastcgi.server = (
+  ".php" =>
+    ( "localhost" =>
+      ( "socket" => "/tmp/php-fcgi.sock",
+        "bin-path" => "/opt/bin/php-fcgi",
+        "max-procs" => 1,
+        "bin-environment" =>
+          ( "PHP_FCGI_CHILDREN" => "1",
+             "PHP_FCGI_MAX_REQUESTS" => "100"
+          )
+      )
+    )
+)
+
+server.port = 81
+
+EOF`
 
 (Again, for OpenWRT and others adapt path)
 If you have performance problem reduce PHP_FCGI_MAX_REQUESTS and PHP_FCGI_CHILDREN values.  
