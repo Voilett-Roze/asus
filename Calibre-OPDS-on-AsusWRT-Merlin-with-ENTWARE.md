@@ -16,7 +16,7 @@ If you already have a webserver running, check if you have every package. 99% pr
 Install a webserver, I choose lighttpd, PHP7, and the other packages needed. The official guide of COPS doesn't report every package needed because was written for Debian Distribution witch inglobate many libraries in the "common", so you need some "extra" packages. 
 Should work also with the php built in webserver ( https://github.com/seblucas/cops/wiki/Howto---PhpEmbeddedServer , but at this moment isn't available via opkg )
 
-`opkg install php7 php7-fastcgi php7-mod-ctype php7-mod-dom php7-mod-gd php7-mod-intl php7-mod-json php7-mod-mbstring php7-mod-mcrypt php7-mod-pdo php7-mod-pdo-sqlite php7-mod-simplexml php7-mod-sqlite3 php7-mod-xml libxml2 php7-mod-fileinfo lighttpd lighttpd-mod-fastcgi libsqlite3 php7-mod-xmlwriter`
+	opkg install php7 php7-fastcgi php7-mod-ctype php7-mod-dom php7-mod-gd php7-mod-intl php7-mod-json php7-mod-mbstring php7-mod-mcrypt php7-mod-pdo php7-mod-pdo-sqlite php7-mod-simplexml php7-mod-sqlite3 php7-mod-xml libxml2 php7-mod-fileinfo lighttpd lighttpd-mod-fastcgi libsqlite3 php7-mod-xmlwriter
 
 (Probably opkg will install some other packages as dependency for this)
 
@@ -71,10 +71,10 @@ If you have performance problem reduce PHP_FCGI_MAX_REQUESTS and PHP_FCGI_CHILDR
 
 Get cops (example code for the 1.0.1 version):
 
-`cd /opt/share/www`
-`wget https://github.com/seblucas/cops/releases/download/1.0.1/cops-1.0.1.zip`
-`mkdir cops`
-`unzip cops-1.0.1.zip -d ./cops`
+	cd /opt/share/www
+	wget https://github.com/seblucas/cops/releases/download/1.0.1/cops-1.0.1.zip
+	mkdir cops
+	unzip cops-1.0.1.zip -d ./cops
 
 ###URL Rewrite for KOBO:
 Adding mod-rewriter (useful for Kobo users) (from: https://github.com/seblucas/cops/wiki/Url-Rewriting-with-COPS ):
@@ -99,7 +99,7 @@ put the absolute path of your calibre db in $config['calibre_directory'] , for e
 
 For all available variables, check the file config_local.php.example (and config_default.php), for every one you want to modify set it into config_local.php at your desired value, otherwise will lose the mod at the first update of COPS!
 
-### URL Rewrite for KOBO:
+## URL Rewrite for KOBO:
 If you want direct-download using Kobo you should also set $config['cops_use_url_rewriting'] to 1 (need for automatic download from your ebook-reader using onboard browser), put in the row before ?>
 
 `$config['cops_use_url_rewriting'] = "1";`
