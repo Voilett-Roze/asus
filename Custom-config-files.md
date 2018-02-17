@@ -32,9 +32,9 @@ The list of available config overrides:
  * igmpproxy.conf
  * minidlna.conf
  * mt-daap.service
+ * nanorc (no .add support) - as documented [here](https://www.nano-editor.org/dist/v2.9/nano.html#Nanorc-Files) (External page).  384.3 or newer.
  * pptpd.conf
  * profile (shell profile, only profile.add supported)
- * radvd.conf
  * smb.conf
  * snmpd.conf
  * vsftpd.conf
