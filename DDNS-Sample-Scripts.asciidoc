@@ -672,6 +672,37 @@ else
     /sbin/ddns_custom_updated 0
 fi
 ....
+
+[[strato]]
+== Strato
+^https://www.strato.com/faq/en_us/article/671/This-is-how-easy-it-is-to-set-up-DynDNS-for-your-domains.html^
+
+Strato uses the DynDNS v2 protocol from dyndns.org to execute the DynDNS-update.
+
+* Server  : https://dyndns.strato.com/nic/update
+* Host    : the domain or subdomain that you want to refer to (example: myrouter.yourstratodomain.com)
+* User    : the domain from your contract (example: yourstratodomain.com)
+* Password: the Dynamic DNS-password that you have configured in your Security dashboard
+
+[source]
+....
+#!/bin/sh
+
+USERNAME="<my-username>"
+PASSWORD="<my-password>"
+HOSTNAME="<my-hostname>"
+
+# Should be no need to modify anything beyond this point
+
+curl -D - --user $USERNAME:$PASSWORD https://dyndns.strato.com/nic/update?hostname=$HOSTNAME >/dev/null 2>&1
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+....
+
 [[woimafi]]
 == Woima.fi
 ^https://woima.fi/dyndns^
