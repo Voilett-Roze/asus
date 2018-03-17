@@ -8,24 +8,26 @@ Each branch supports different models.  As Asus upgrades models to the new 382/3
 Devices supported on the legacy branch (380.xx):
  * RT-N66U
  * RT-AC66U
- * RT-AC66U_B1 (use the RT-AC68U firmware)
  * RT-AC56U
+ * RT-AC66U_B1 (use the RT-AC68U firmware)
  * RT-AC68U, RT-AC68P, RT-AC68UF (including HW revision C1 and E1)
- * RT-AC87U
+ * RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware)
  * RT-AC3200
+ * RT-AC87U
  * RT-AC88U
  * RT-AC3100
  * RT-AC5300
- * RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware)
 
 Devices supported on the new generation/current branch (382.xx and newer):
- * RT-AC66U_B1 (use the RT-AC68U firmware)
  * RT-AC56U
+ * RT-AC66U_B1 (use the RT-AC68U firmware)
  * RT-AC68U, RT-AC68P, RT-AC68UF (including HW revision C1 and E1)
  * RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware)
  * RT-AC3200
+ * RT-AC87U
  * RT-AC88U
  * RT-AC3100
+ * RT-AC5300
  * RT-AC86U
 
 No longer supported:
