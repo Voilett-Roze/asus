@@ -9,6 +9,34 @@
 :caution-caption: :fire:
 :warning-caption: :warning:
 
+== Asus
+
+Asus DDNS for use in multiple-NAT environment.
+
+[source]
+....
+                                                                                      
+#!/bin/sh
+# based on asuswrt-merlin.ng-master\release\src\router\rc\services.c
+# by DSR! - https://github.com/xchwarze
+
+# only for ddns_server_x === WWW.ASUS.COM
+host=$(nvram get ddns_hostname_x)
+ip=$(curl --silent http://api.ipify.org/)
+
+# nserver=$(nvram get ddns_serverhost_x)
+nserver="nwsrv-ns1.asus.com"
+
+ez-ipupdate -S dyndns -a $ip -h $host -A 2 -s $nserver -q > /dev/null 2>&1
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+
+....
+
 [[afraidorg]]
 == afraid.org
 ^http://freedns.afraid.org/^
