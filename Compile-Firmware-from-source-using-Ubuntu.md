@@ -70,7 +70,7 @@ bzip2 diffutils file flex m4 g++ gawk groff-base libncurses-dev libtool libslang
 subversion tar texinfo zlib1g zlib1g-dev git-core gettext libexpat1-dev libssl-dev cvs gperf unzip \
 python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++-multilib gitk libncurses5 mtd-utils \
 libncurses5-dev libvorbis-dev git autopoint autogen sed build-essential intltool libelf1:i386 libglib2.0-dev \
-xutils-dev lib32z1-dev lib32stdc++6
+xutils-dev lib32z1-dev lib32stdc++6 xsltproc gtk-doc-tools
 ```
 If you have Ubuntu x64 edition then you need `lib32z1-dev` and `lib32stdc++6`
 
