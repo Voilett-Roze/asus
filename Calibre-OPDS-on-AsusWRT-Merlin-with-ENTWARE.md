@@ -3,7 +3,7 @@ This tutorial was developed on an Asus RT-AC68U with AsusWRT Merlin firmware, bu
 This guide is for users who already have a little experience with Linux system.
 
 You need: A router with ENTWARE repository activated and an hard-drive attached with your Calibre library, but if you are reading this tutorial probably you already have them.
-At this moment (Jan 2018) Optware has a too old version of the php engine, so you need to change and go to Entware.
+At this moment (Apr 2018) Optware has a too old version of the php engine, so you need to change and go to Entware.
 
 ## Let's Start
 Install and update ENTWARE. ( ASUS WRT Merlin: https://github.com/RMerl/asuswrt-merlin/wiki/Entware , general: https://github.com/Entware-ng/Entware-ng/wiki )
@@ -19,6 +19,7 @@ Should work also with the php built in webserver ( https://github.com/seblucas/c
 	opkg install php7 php7-fastcgi php7-mod-ctype php7-mod-dom php7-mod-gd php7-mod-intl php7-mod-json php7-mod-mbstring php7-mod-mcrypt php7-mod-pdo php7-mod-pdo-sqlite php7-mod-simplexml php7-mod-sqlite3 php7-mod-xml libxml2 php7-mod-fileinfo lighttpd lighttpd-mod-fastcgi libsqlite3 php7-mod-xmlwriter
 
 (Probably opkg will install some other packages as dependency for this)
+
 
 Configure lighttpd : (from: https://github.com/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware )
 
@@ -72,18 +73,22 @@ If you have performance problem reduce PHP_FCGI_MAX_REQUESTS and PHP_FCGI_CHILDR
 Get cops (example code for the 1.0.1 version):
 
 	cd /opt/share/www
-	wget https://github.com/seblucas/cops/releases/download/1.0.1/cops-1.0.1.zip
+	wget https://github.com/seblucas/cops/releases/download/1.1.1/cops-1.1.1.zip
 	mkdir cops
 	unzip cops-1.0.1.zip -d ./cops
 
 **_URL Rewrite for KOBO:_**
-Adding mod-rewriter (useful for Kobo users) (from: https://github.com/seblucas/cops/wiki/Url-Rewriting-with-COPS ):
+Adding mod-rewrite (useful for Kobo users) (from: https://github.com/seblucas/cops/wiki/Url-Rewriting-with-COPS ):
+	opkg install lighttpd-mod-rewrite
 
-	nano -w /opt/etc/lighttpd/conf.d/10-cops_rewrite.conf
+	nano -w /opt/etc/lighttpd/conf.d/99-cops_rewrite.conf
 
-With something like this (it's only one row), in my installation I put cops in /opt/var/share/cops/ (witch will be http://router.asus.com:81/cops) :
+With something like this (it's only one row), in my installation I put cops in /opt/var/share/www/cops/ (witch will be http://router.asus.com:81/cops) :
 
-	url.rewrite-once = ("/cops/download/(.*)/.*\.(.*)$" => "/cops/fetch.php?data=&type=", "^/cops/download/(\d+)/(\d+)/.*\.(.*)$" => "/cops/fetch.php?data=&db=&type=")
+	cat >> /opt/etc/lighttpd/conf.d/99-cops_rewrite.conf << EOF
+	url.rewrite-once = ("/cops/download/(.*)/.*\.(.*)$" => "/cops/fetch.php?data=$1&type=$2", "^/cops/download/(\d+)/(\d+)/.*\.(.*)$" => "/cops/fetch.php?data=$1&db=$2&type=$3")
+	
+	EOF
 
 ## Configure COPS:
 
