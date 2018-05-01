@@ -12,7 +12,7 @@ If you can't determine the success or failure, then report it as a success to en
 
 Finally, like all [[user scripts|User-scripts]], the option to support custom scripts and config files must be enabled under Administration -> System.
 
-After enabling custom scripts, place the contents of your update script in `/jffs/scripts/ddns-start` and Enable the DDNS Client in WAN -> DDNS.
+After enabling custom scripts, place the contents of your update script in `/jffs/scripts/ddns-start` and Enable the DDNS Client in WAN -> DDNS and use `Custom` as Server.
 
 # Using a DDNS with Double NAT
 If your ASUS router is double NATed behind your ISP's router, you may need to
