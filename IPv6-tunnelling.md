@@ -50,103 +50,60 @@ NOTE: If your tunnel was made before 19th Jan 2014, you need to uncomment the se
 
 ```
 #!/bin/sh
-#v1.40-rm3 Oct 31, 2017
-#***************************
-#Settings start here
-#***************************
+#
+# v1.40-rm3 Oct 31, 2017
+# v1.41-gunnyst May 2, 2018
+#
 
-#account info to auto update endpoint
+# ***************************
+# settings
+# ***************************
 
-USERNAME="The account username used when login"
-UPDATEKEY=" Usage key as defined on the tunnel's Advanced tab"
-PASSWD="The account password"
-TUNNELID="Tunnel id #"
-DDNS="Your dynamic domain"
-EXTERNALIP=$(ping -c 1 ${DDNS} | awk -F" |:" '/from/{print $4}')
-
-#####Optional/Advanced Settings######
-
-#HE's endpoint verificiation server ip to add to whitelist
-HE_VERIFY_SERVER_IP="66.220.2.74"
-
-#logging settings (set to /dev/null for no logging)
-STARTUP_SCRIPT_LOG_FILE="/tmp/ipv6.log"
-
-#***************************
-#Settings end here
-#***************************
-
-#**********************************
-# pause until connection is ready #
-#**********************************
-
-#if ping test succeeds, log it and proceed to update tunnel.
+USERNAME="username used to log into your account"
+PASSWORD="your 'Update Key' defined on the 'Advanced' tab (newer tunnels) or password (old tunnels)"
+TUNNELID="your 'Tunnel ID' defined on the 'IPv6 Tunnel' tab"
+TIMEOUT="10"
+LOGFILE="/tmp/ipv6.log"
 
 
-if ping -c 1 "$HE_VERIFY_SERVER_IP" &>/dev/null
+# ***************************
+# advanced settings
+# ***************************
 
-then
+# assuming your WAN is configured as 'ppp0' this will quickly and reliably give you your public WAN IP address
+PUBLIC_IP=$(ip addr show ppp0 | awk '/inet /{gsub(/.*t/,"",$2);print$2}')
 
-    echo "" >> "$STARTUP_SCRIPT_LOG_FILE"
-    echo "Already Connected - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
+# accept PINGs from HE's endpoint verificiation server (or manually set public IP on https://www.tunnelbroker.net)
+iptables -I INPUT 1 -s 66.220.2.74 -p icmp -j ACCEPT
 
-#if ping test failed, pause until connection is ready.
 
+# ***************************
+# tunnel endpoing update
+# ***************************
+
+# update IP
+if [ -z "${PUBLIC_IP}" ]; then
+  wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNELID}" 2>&1
 else
-    i=0
-    while [ $i -le 50 ]
-    do
-        if ping -c 1 "$HE_VERIFY_SERVER_IP" &>/dev/null
-        then
-            echo "" >> "$STARTUP_SCRIPT_LOG_FILE"
-            echo "Now Connected, starting tunnel update - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
-            break
-        fi
-        echo >> "$STARTUP_SCRIPT_LOG_FILE"
-        echo "Not Connected, - $( date )" >> "$STARTUP_SCRIPT_LOG_FILE"
-        echo "connecting wait ..."
-
-        sleep 15
-
-    done
+  wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNELID}&myip=${PUBLIC_IP}" 2>&1
 fi
 
-########################
-#Tunnel endpoint update
-########################
-echo "" >> $STARTUP_SCRIPT_LOG_FILE
-echo "HE IPv6 Script started" >> $STARTUP_SCRIPT_LOG_FILE
-#get a hash of the plaintext password
-MD5PASSWD=`echo -n $PASSWD | md5sum | sed -e 's/  -//g'`
-echo `date` >> $STARTUP_SCRIPT_LOG_FILE
-echo "configuring tunnel" >> $STARTUP_SCRIPT_LOG_FILE
-
-
-#update HE endpoint
-#need to alllow wan ping or HE will not validate new endpoint
-iptables -I INPUT 2 -s $HE_VERIFY_SERVER_IP -p icmp -j ACCEPT
-etime=`date +%s`
-
-#for operate on a single tunnel
-wget --no-check-certificate -T10 -a - "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${UPDATEKEY}&hostname=${TUNNELID}&myip=${EXTERNALIP}" -O /tmp/wget.tmp.$etime
-
-#for old tunnels
-wget --no-check-certificate -T10 -a - "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWD}&hostname=${TUNNELID}&myip=${EXTERNALIP}" -O /tmp/wget.tmp.$etime
-
-
-cat /tmp/wget.tmp.$etime >> $STARTUP_SCRIPT_LOG_FILE
-echo "" >> $STARTUP_SCRIPT_LOG_FILE
-rm /tmp/wget.tmp.$etime
-
+# update IP (for old tunnels)
+# get a hash of the plaintext password
+# MD5PASSWD=`echo -n ${PASSWORD} | md5sum | sed -e 's/  -//g'`
+# if [ -z "${PUBLIC_IP}" ]; then
+#   wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNELID}" 2>&1
+# else
+#   wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNELID}&myip=${PUBLIC_IP}" 2>&1
+# fi
 ```
 
 and don't forget to make it executable:
 ```
 chmod +x /jffs/scripts/wan-start
 ```
-Edit the parameters at the top to enter your UserID (it's an hexadecimal value, found on the Main Page of your account info in Tunnel Broker - right after you log in), password (or update key for newer tunnels), and tunnelID (found on the page where you see all the details of your tunnel).
 
-You can manually execute the script, then check the content of /tmp/ipv6.log to ensure that the script is running correctly.
+Edit the first 3 parameters at the top: username, password (forolder tunnels)/update key (for newer tunnels) and tunnel ID. You can manually execute the script, then check if /tmp/ipv6.log contains your public IPv4 address to ensure that the script is running correctly.
 
 After that, you can test your tunnel by accessing, for example, http://www.whatismyipv6.com.  If you see an IPv6 (meaning a long hexadecimal string), then congratulations - you're set!
 
@@ -155,4 +112,3 @@ After that, you can test your tunnel by accessing, for example, http://www.whati
 ### Conclusion
 
 That pretty much covers it.  Tunnels are a great way for you to familiarize yourself with IPv6, regardless of what your ISP provides you.
-
