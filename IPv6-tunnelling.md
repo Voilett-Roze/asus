@@ -61,19 +61,27 @@ NOTE: If your tunnel was made before 19th Jan 2014, you need to uncomment the se
 
 USERNAME="username used to log into your account"
 PASSWORD="your 'Update Key' defined on the 'Advanced' tab (newer tunnels) or password (old tunnels)"
-TUNNELID="your 'Tunnel ID' defined on the 'IPv6 Tunnel' tab"
-TIMEOUT="10"
-LOGFILE="/tmp/ipv6.log"
+TUNNEL_ID="your 'Tunnel ID' defined on the 'IPv6 Tunnel' tab"
+TUNNEL_TYPE="new" # new/old tunnel type
 
 
 # ***************************
 # advanced settings
 # ***************************
 
+# optional settings
+LOGFILE="/tmp/ipv6.log"
+TIMEOUT="10" # if the WGET below takes longer you probably have an issue with IPTABLES
+
 # assuming your WAN is configured as 'ppp0' this will quickly and reliably give you your public WAN IP address
 PUBLIC_IP=$(ip addr show ppp0 | awk '/inet /{gsub(/.*t/,"",$2);print$2}')
 
-# accept PINGs from HE's endpoint verificiation server (or manually set public IP on https://www.tunnelbroker.net)
+# accept PINGs from HE's endpoint verificiation server
+#
+# NOTE: if you try to manually set the public IP on https://www.tunnelbroker.net
+#       you'll get a notice about the following IP not being able to ping your
+#       public IP as long as you run ASUSWRT with default settings
+#
 iptables -I INPUT 1 -s 66.220.2.74 -p icmp -j ACCEPT
 
 
@@ -81,21 +89,28 @@ iptables -I INPUT 1 -s 66.220.2.74 -p icmp -j ACCEPT
 # tunnel endpoing update
 # ***************************
 
-# update IP
-if [ -z "${PUBLIC_IP}" ]; then
-  wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNELID}" 2>&1
-else
-  wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNELID}&myip=${PUBLIC_IP}" 2>&1
-fi
+# update IP...
+if [ "${TUNNEL_TYPE}" = "new" ]; then
 
-# update IP (for old tunnels)
-# get a hash of the plaintext password
-# MD5PASSWD=`echo -n ${PASSWORD} | md5sum | sed -e 's/  -//g'`
-# if [ -z "${PUBLIC_IP}" ]; then
-#   wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNELID}" 2>&1
-# else
-#   wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNELID}&myip=${PUBLIC_IP}" 2>&1
-# fi
+  # ... for new tunnels ...
+  if [ -z "${PUBLIC_IP}" ]; then
+    wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNEL_ID}" 2>&1
+  else
+    wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNEL_ID}&myip=${PUBLIC_IP}" 2>&1
+  fi
+
+else
+
+  # ... or for old tunnels
+  # get a hash of the plaintext password
+  MD5PASSWD=`echo -n ${PASSWORD} | md5sum | sed -e 's/  -//g'`
+  if [ -z "${PUBLIC_IP}" ]; then
+    wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNEL_ID}" 2>&1
+  else
+    wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNEL_ID}&myip=${PUBLIC_IP}" 2>&1
+  fi
+
+fi
 ```
 
 and don't forget to make it executable:
