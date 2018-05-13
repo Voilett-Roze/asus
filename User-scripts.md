@@ -8,12 +8,16 @@ Those scripts are stored in the internal non-volatile flash in the [JFFS](https:
 
 These shell scripts will be run when certain events occur.  They must be saved in `/jffs/scripts/`.
 
+These scripts will usually run in parallel to the event itself, except when explicitly documented as being a blocking script.  In that case, the script will prevent the execution of the event itself until either the script completes, or it times out (current default timeout value is 120 seconds).
 
 ### services-start
 Called after all other system services have been started at boot.  This is the best place to stop one of these services and restart it with a different configuration, for example. (But be aware that anytime the service gets manually restarted it will revert back to the original setup.)
 
 ### services-stop
 Called before all system services are stopped, usually on a reboot.
+
+### service-event
+Called before a service event is called (i.e. restart_httpd, restart_wireless, etc...).  First argument is the event (typically _stop_, _start_ or _restart_), second argument is the target (_wireless_, _httpd_, etc...).  This is a blocking script, meaning that it will prevent the execution of the event itself until the script either completes or times out.
 
 ### wan-start
 Called after the WAN interface came up.  Good place to put scripts that depend on the WAN interface (e.g. to update an IPv6 tunnel or a dynamic DNS service).  The Internet connection is unlikely to be active when this script is run.  Add a `sleep` line to delay running until the connection is complete, or loop until your command succeeds.
@@ -28,7 +32,7 @@ Called after NAT rules (i.e. port forwards and such) have been applied to the NA
 Called right after JFFS got mounted, and before any of the services get started. This is the earliest part of the boot process where you can insert something.
 
 ### pre-mount
-Called just before a partition gets mounted.  This is run in a blocking call and will block the mounting of the partition for which it is invoked until its execution is complete.  This is done so that it can be used for things like running `e2fsck` on the partition before mounting.  This script is passed the device path being mounted (e.g. `/dev/sda1`) as an argument which can be used in the script using `$1`.
+Called just before a partition gets mounted.  This is run in a blocking call and will block the mounting of the partition for which it is invoked until its execution is complete or it times out.  This is done so that it can be used for things like running `e2fsck` on the partition before mounting.  This script is passed the device path being mounted (e.g. `/dev/sda1`) as an argument which can be used in the script using `$1`.
 
 ### post-mount
 Called just after a partition got mounted.  The script is passed the mount point (the filesystem path where the partition was mounted, e.g. `/tmp/mnt/OPT`) as an argument which can be used in the script using `$1`.
