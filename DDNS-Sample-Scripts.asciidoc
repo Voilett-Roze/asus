@@ -674,6 +674,48 @@ https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Oray花生壳]
 * Support Oray default
 * You can add functions and add them to the update_all_ddns function to support other DDNS service providers
 
+== OVH
+
+^https://www.ovh.es/^
+
+Tested and working on spanish version of OVH but should work in any language. This is a Domain/Hosting provider, if you have domains with them you can use their DDNS service with the following script. 
+
+[source]
+....
+#!/bin/sh
+
+###
+# Git development: 
+# https://gist.github.com/atais/9ea6595072096ab8077f619bd3648da8
+# Based on
+# https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS#google-domains
+# https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS#bind9-ddns-using-nsupdate
+###
+
+#set -u
+
+USER=YOUR USER IN DDNS CONFIG
+PASS=YOUR PASSWORD IN DDNS CONFIG
+HOST=mydomain.com
+
+# args: username password hostname ip
+ovh_dns_update() {
+  CMD=$(curl -s -u $1:$2 "https://www.ovh.com/nic/update?system=dyndns&hostname=$3&myip=$4")
+  logger "ovh-ddns-updated: $CMD"
+  case "$CMD" in
+    good*|nochg*) /sbin/ddns_custom_updated 1 ;;
+    *) /sbin/ddns_custom_updated 0 ;;
+  esac
+}
+
+IP=$1
+### you can obtain your external IP with this API
+#IP=$(curl -s ifconfig.co)
+ovh_dns_update $USER $PASS $HOST $IP
+
+exit 0
+....
+
 [[pddyandexru]]
 == pdd.yandex.ru
 ^https://domain.yandex.com^
