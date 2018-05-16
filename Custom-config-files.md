@@ -37,6 +37,7 @@ The list of available config overrides:
  * profile (shell profile, only profile.add supported)
  * smb.conf
  * snmpd.conf
+ * torrc
  * vsftpd.conf
  * upnp (for miniupnpd)
 
@@ -76,10 +77,10 @@ The list of available postconf scripts is:
  * openvpnserver1.postconf (1 or 2)
  * passwd.postconf
  * pptpd.postconf
- * radvd.postconf
  * shadow.postconf
  * smb.postconf
  * snmpd.postconf
+ * torrc.postconf
  * upnp.postconf
  * vsftpd.postconf
 
