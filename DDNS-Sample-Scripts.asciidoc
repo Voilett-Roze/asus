@@ -802,3 +802,29 @@ else
         /sbin/ddns_custom_updated 0
 fi
 ....
+
+[[godaddy]]
+== Godaddy
+^https://godaddy.com^
+
+[source]
+....
+#!/bin/sh
+
+IP=${1}
+APIKEY=""
+DOMAIN="example.com"
+SECRET_KEY=""
+
+curl -X PUT https://api.godaddy.com/v1/domains/$DOMAIN/records/A \
+  -H "Authorization: sso-key $APIKEY:$SECRET_KEY" \
+  -H "Content-Type: application/json" \
+  -d "[{\"name\": \"@\", \"ttl\": 600, \"data\": \"$IP\"}]"
+
+if [ $? -eq 0 ];
+then
+    /sbin/ddns_custom_updated 1
+else
+    /sbin/ddns_custom_updated 0
+fi
+....
