@@ -1,4 +1,4 @@
-A VPN is a Virtual Private Network. Using a public internet network, it is possible to build a virtual private network between a server and a client, often a PC but may be any intelligent device. The VPN circuitry will guaranty the communication between you and the accessed server cannot be understood by anyone else.
+A VPN is a Virtual Private Network. Using a public internet network, it is possible to build a virtual private network between a server and a client, often a PC but may be any intelligent device. The VPN circuitry will guarantee the communication between you and the accessed server cannot be understood by anyone else.
 
 There are many products distributed to build such a virtual channel. One of them is free and supported by the community: *[[http://openvpn.net][OpenVPN]]*
 
