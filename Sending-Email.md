@@ -15,9 +15,9 @@ TO="you@domain.com"
 
 echo "Subject: WAN state notification" >/tmp/mail.txt
 echo "From: \\"$FROMNAME\\"<$FROM>" >>/tmp/mail.txt
-echo "Date: `date -R`" >>/tmp/mail.txt
+echo "Date: $(date -R)" >>/tmp/mail.txt
 echo "I just got connected to the Interwebz." >>/tmp/mail.txt
-echo "My new IP is: `nvram get wan0_ipaddr`" >>/tmp/mail.txt
+echo "My new IP is: $(nvram get wan0_ipaddr)" >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
 echo "--- " >>/tmp/mail.txt
 echo "Your friendly router." >>/tmp/mail.txt
@@ -49,12 +49,12 @@ sleep 5
 
 echo "Subject: WAN state notification" >/tmp/mail.txt
 echo "From: \\"$FROMNAME\\"<$FROM>" >>/tmp/mail.txt
-echo "Date: `date -R`" >>/tmp/mail.txt
+echo "Date: $(date -R)" >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
 echo "I just got connected to the internet." >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
-echo "My WAN IP is: `nvram get wan0_ipaddr`" >>/tmp/mail.txt
-echo "Uptime is: `uptime | cut -d ',' -f1 | sed 's/^.\{12\}//g'`" >>/tmp/mail.txt
+echo "My WAN IP is: $(nvram get wan0_ipaddr)" >>/tmp/mail.txt
+echo "Uptime is: $(uptime | cut -d ',' -f1 | sed 's/^.\{12\}//g')" >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
 echo "---- " >>/tmp/mail.txt
 echo "Your friendly router." >>/tmp/mail.txt
@@ -85,12 +85,12 @@ sleep 5
 
 echo "Subject: WAN state notification" >/tmp/mail.txt
 echo "From: \\"$FROMNAME\\"<$FROM>" >>/tmp/mail.txt
-echo "Date: `date -R`" >>/tmp/mail.txt
+echo "Date: $(date -R)" >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
 echo "I just got connected to the internet." >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
-echo "My WAN IP is: `nvram get wan0_ipaddr`" >>/tmp/mail.txt
-echo "Uptime is: `uptime | cut -d ',' -f1 | sed 's/^.\{12\}//g'`" >>/tmp/mail.txt
+echo "My WAN IP is: $(nvram get wan0_ipaddr)" >>/tmp/mail.txt
+echo "Uptime is: $(uptime | cut -d ',' -f1 | sed 's/^.\{12\}//g')" >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
 echo "---- " >>/tmp/mail.txt
 echo "Your friendly router." >>/tmp/mail.txt
