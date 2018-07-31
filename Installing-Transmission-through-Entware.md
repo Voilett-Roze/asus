@@ -25,6 +25,14 @@ We need to install Transmission:
 opkg install transmission-web transmission-daemon-openssl
 ```
 
+We need to install the ca certificates bundle to connect to https trackers.
+
+```
+opkg install ca-bundle ca-certificates
+```
+
+
+
 Create the data directories (adjust as desired):
 
 ```
