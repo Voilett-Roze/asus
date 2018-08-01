@@ -31,12 +31,7 @@ TO_ADDRESS=""
 ### Do not change below
 # Retrieve version
 TMPVERS=$(nvram get webs_state_info)
-echo "$TMPVERS" | grep 382
-if [ $? -ne 0 ]; then
-        VERS=${TMPVERS:5:3}.${TMPVERS:8:10}
-else
-        VERS=$TMPVERS
-fi
+VERS=${TMPVERS:5:3}.${TMPVERS:8:10}
 ROUTER_IP=$(nvram get lan_ipaddr)
 
 email_message () {
