@@ -6,9 +6,9 @@ Asuswrt-Merlin is available in two separate branches:
 Each branch supports different models.  As Asus upgrades models to the new 382/384 code base, they will gradually be migrated to Asuswrt-Merlin's new gen branch, with the exception of the RT-N66U and RT-AC66U which will remain on the legacy 380 branch.  Development will gradually be abandoned for the legacy branch.
 
 ***
-
-**THE T-MOBILE TM-AC1900 IS NOT SUPPORTED!**
-If you own one of these, then stop reading this page. Please read this page instead: https://www.snbforums.com/threads/the-tm-ac1900-is-not-supported.48056/
+### THE T-MOBILE TM-AC1900 IS NOT SUPPORTED!
+If you own the above router, then stop reading this page.<br>
+Please read this page instead: https://www.snbforums.com/threads/the-tm-ac1900-is-not-supported.48056/
 
 ***
 
