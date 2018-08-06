@@ -8,6 +8,8 @@ Each branch supports different models.  As Asus upgrades models to the new 382/3
 **THE T-MOBILE TM-AC1900 IS NOT SUPPORTED!**
 
 
+
+
 | Device  | legacy branch<br>(380.xx) | new generation<br>current branch<br>(382.xx and newer) |
 | ------------- | :---: | :---: |
 | RT-N66U  | :white_check_mark: |  |
