@@ -73,8 +73,9 @@ TUNNEL_TYPE="new" # new/old tunnel type
 LOGFILE="/tmp/ipv6.log"
 TIMEOUT="10" # if the WGET below takes longer you probably have an issue with IPTABLES
 
-# assuming your WAN is configured as 'ppp0' this will quickly and reliably give you your public WAN IP address
+# assuming your WAN is configured as 'eth0' this will quickly and reliably give you your public WAN IP address
 PUBLIC_IP=$(ip addr show ppp0 | awk '/inet /{gsub(/.*t/,"",$2);print$2}')
+PUBLIC_IP=${PUBLIC_IP%/*}
 
 # accept PINGs from HE's endpoint verificiation server
 #
