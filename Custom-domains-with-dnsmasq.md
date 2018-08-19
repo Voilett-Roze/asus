@@ -5,7 +5,7 @@ With dnsmasq you are able to create custom domains within your network or route 
 
 1. Go to `Administration -> System`
 2. Enable: `Enable JFFS custom scripts and configs` config option
-3. Enable: `Enable SSH config option`
+3. Enable: `Enable SSH` config option
 4. Go to `AiProtection -> DNS Filtering` (`Parental Controls -> DNSFilter` on older models)
 5. Disable: `Enable DNS-based Filtering`
 
@@ -40,7 +40,7 @@ Connect to your router through SSH (you can use PUTTY on windows). Default IP ad
 
 ## Last steps
 1. Reboot rooter with `reboot` command in ssh or through web interface. (Rebooting is not strictly necessary; restarting the `dnsmasq` service is sufficient: `service restart_dnsmasq`)
-2. Go to `Administration -> System` and disable `Enable SSH config option`
+2. Go to `Administration -> System` and disable `Enable SSH` config option
 
 # More
 * You can run webserver directly on the router [howto](/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware) 
