@@ -265,8 +265,10 @@ Free DNS server that also offers DDNS services.
 #!/bin/sh
 USER=
 PASS=
-DOMAIN=
-wget -qO - "http://update.dnsexit.com/RemoteUpdate.sv?login=$USER&password=$PASS&host=$DOMAIN"
+DOMAIN="example.com;example.com"
+URL=$(wget -qO - "http://www.dnsexit.com/ipupdate/dyndata.txt"|grep -i url|cut -f2 -d=|tr -d '\r')
+set -o pipefail
+wget -qO - "$URL?login=$USER&password=$PASS&host=$DOMAIN" | logger -t ddns-start
 if [ $? -eq 0 ]; then
   /sbin/ddns_custom_updated 1
 else
