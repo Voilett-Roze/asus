@@ -420,6 +420,30 @@ else
 fi
 ....
 
+== Dynu-Double-Nat
+^https://www.dynu.com/DynamicDNS^
+
+[source]
+....
+#!/bin/sh
+#
+# https://www.dynu.com/en-US/DynamicDNS/IP-Update-Protocol
+
+HOSTNAME=YOUR-HOSTNAME.dynu.com
+PASSWORD=YOUR-SUPERSECRET-PASSWORD or can use MD5 hash of password
+IP=$(curl --silent http://api.ipify.org/)
+
+URL="https://api.dynu.com/nic/update?hostname=${HOSTNAME}&myip=${IP}&password=${PASSWORD}"
+
+ANSWER=$(wget -q -O - "$URL")
+
+if [ "$ANSWER" == "good" ] || [ "$ANSWER" == "nochg" ] || [ "$ANSWER" == "good ${IP}" ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+....
+
 == EntryDNS
 ^https://entrydns.net/^
 
