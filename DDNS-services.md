@@ -63,3 +63,5 @@ Whenever Asuswrt-Merlin will issue a ddns update, both the service on the webui 
 
 ## DDNS updates through either double NAT or a CGNAT connection
 Also starting with 384.7, Asuswrt-Merlin lets you choose between **Internal** or **External** IP check methods.  The **Internal** method is the same one that was used until now - the IP on your WAN interface is retrieved from nvram, and provided to In-a-dyn, which will provide it to the DDNS server (provided that server supports it).  The **External** method is new, and lets the DDNS service provider determine your WAN IP (based on the IP from which you connect with it).  This will allow your provider to retrieve your real public IP if your Asus router is behind another router, or your ISP uses CGNAT to provide you with a non-public IP.
+
+Note that this parameter only applies to the built-in services listed on the webui.  If you use a custom config or script, it will be up to you to handle how the IP is provided - that webui setting will have no effect.
