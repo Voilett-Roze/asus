@@ -38,7 +38,7 @@ Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your cu
 
 ```
 #!/bin/sh/
-/usr/sbin/inadyn -f /jffs/inadyn-custom.conf -e /sbin/ddns_updated --exec-nochg /sbin/ddns_updated
+/usr/sbin/inadyn -f /jffs/inadyn-custom.conf -e "/sbin/ddns_custom_updated 1" --exec-nochg "/sbin/ddns_custom_updated 1"
 ```
 
 Note In-a-dyn will take care of calling ddns_updated as appropriate if the update succeeded when using these parameters, so no need to explicitly run it manually after the update.
