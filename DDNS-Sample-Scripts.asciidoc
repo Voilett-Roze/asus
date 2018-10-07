@@ -10,6 +10,7 @@
 :warning-caption: :warning:
 
 == Asus
+NOTE: Starting with 384.7, you can now use AsusDDNS in a multiple NAT situation by switching to "External" WAN IP check method on the webui.  The following script will only work for previous versions, as the ez-ipupdate client has been replaced with In-a-Dyn.
 
 Asus DDNS for use in multiple-NAT environment.
 
@@ -40,6 +41,8 @@ fi
 [[afraidorg]]
 == afraid.org
 ^http://freedns.afraid.org/^
+
+NOTE: afraid.org is supported by the webui since 384.7.  The following only applies to older versions.
 
 Here is a working example, for afraid.org's free DDNS (you can find your API key http://freedns.afraid.org/dynamic/[here]).
 
@@ -614,6 +617,7 @@ fi
 ....
 
 == Google Domains
+NOTE: Asus added built-in Google Domains support at some point, so check first if your current firmware version offers it on the webui.
 
 Transfer your domain to Google and enjoy free DDNS and other features.
 
@@ -757,13 +761,6 @@ else
   /sbin/ddns_custom_updated 0
 fi
 ....
-
-== Oray花生壳
-
-https://github.com/ITXiaoPang/asuswrt-merlin-DDNS[Oray花生壳]
-
-* Support Oray default
-* You can add functions and add them to the update_all_ddns function to support other DDNS service providers
 
 == OVH
 
