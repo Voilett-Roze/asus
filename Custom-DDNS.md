@@ -1,3 +1,5 @@
+>Note: _This might need to be revised following the switch to In-a-Dyn with version 384.7._
+
 ### Introduction
 If you set the DDNS (dynamic DNS) service to "Custom", then you can fully control the update process through a `ddns-start` user script (which could launch a custom update client, or run a simple "wget" on a provider's update URL). The ddns-start script is passed the WAN IP as an argument.
 
