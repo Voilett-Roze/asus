@@ -30,6 +30,7 @@ The list of available config overrides:
  * group, gshadow, passwd, shadow (only .add versions supported)
  * hosts (for /etc/hosts)
  * igmpproxy.conf
+ * inadyn.conf
  * minidlna.conf
  * mt-daap.service
  * nanorc (no .add support) - as documented [here](https://www.nano-editor.org/dist/v2.9/nano.html#Nanorc-Files) (External page).  384.3 or newer.
@@ -71,6 +72,7 @@ The list of available postconf scripts is:
  * gshadow.postconf
  * hosts.postconf
  * igmpproxy.postconf
+ * inadyn.postconf
  * minidlna.postconf
  * mt-daap.postconf
  * openvpnclient1.postconf (1 through 5)
