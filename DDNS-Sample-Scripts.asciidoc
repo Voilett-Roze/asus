@@ -601,13 +601,14 @@ This updates the `@` and `*` `A` records while leaving any others intact.
 
 APIKEY="XXXXXXXXXXXXXXXXXXXXXXXX" # Your 24-character API key
 DOMAIN="example.com" # The domain to be updated
+SUBDOMAIN="{@,*}"    # The Sub-Domain to update, use {$@,*} to update base domain (*.example.com), or change to "home" for home.example.com
 
 IP=${1}
 
 curl -fs -o /dev/null -X PUT -H "Content-Type: application/json" \
 	-H "X-Api-Key: ${APIKEY}" \
 	-d "{\"rrset_ttl\": 10800, \"rrset_values\": [\"${IP}\"]}" \
-	"https://dns.beta.gandi.net/api/v5/domains/${DOMAIN}/records/{@,*}/A"
+	"https://dns.api.gandi.net/api/v5/domains/${DOMAIN}/records/${SUBDOMAIN}/A"
 
 if [ $? -eq 0 ]; then
 	/sbin/ddns_custom_updated 1
