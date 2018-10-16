@@ -590,9 +590,7 @@ fi
 == Gandi
 ^http://doc.livedns.gandi.net/^
 
-WARNING: Beta API methods and resources are not fully stabilized and may yet change.
-
-This updates the `@` and `*` `A` records while leaving any others intact.
+This updates the `@` and `*` `A` records while leaving any others intact by deafult. Change the SUBDOMAIN variable to update a specific A Record.
 
 [source]
 ....
