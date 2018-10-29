@@ -665,6 +665,31 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
+
+....
+
+[[INWX - InterNetworX]]
+== INWX
+^https://www.inwx.com/en/offer/dyndns^
+
+German registrar with great API for everything DNS. The domain to update is specified when setting up their DynDNS service. Each dyndns-domain gets a separate user & password. 1 domain is free.
+
+[source]
+....
+#!/bin/sh
+
+IP=$1
+USER=your_dyndns_user
+PASSWORD=your_dyndns_password
+
+curl -s -u $USER:$PASSWORD "https://dyndns.inwx.com/nic/update?myip=$IP"
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+
 ....
 
 [[jokercom]]
