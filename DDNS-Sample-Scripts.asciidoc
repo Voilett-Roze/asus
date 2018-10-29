@@ -665,11 +665,10 @@ if [ $? -eq 0 ]; then
 else
   /sbin/ddns_custom_updated 0
 fi
-
 ....
 
-[[INWX - InterNetworX]]
-== INWX
+[[INWX]]
+== INWX - InterNetworX
 ^https://www.inwx.com/en/offer/dyndns^
 
 German registrar with great API for everything DNS. The domain to update is specified when setting up their DynDNS service. Each dyndns-domain gets a separate user & password. 1 domain is free.
