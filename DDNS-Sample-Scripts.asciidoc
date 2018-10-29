@@ -667,7 +667,7 @@ else
 fi
 ....
 
-[[INWX]]
+[[inwx---internetworx]]
 == INWX - InterNetworX
 ^https://www.inwx.com/en/offer/dyndns^
 
