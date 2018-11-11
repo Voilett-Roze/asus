@@ -19,6 +19,8 @@ Here is an example for a complete In-a-dyn config file for a custom service, bas
 ```
 ca-trust-file   = /etc/ssl/certs/ca-certificates.crt
 iterations = 1
+period = 300
+
 custom selfhost {
 	ddns-server = carol.selfhost.de
 	ddns-path = "/nic/update?hostname=%%h&myip=%%i"
@@ -34,11 +36,17 @@ If you wish to use your local WAN IP instead of relying on the DDNS service's re
 checkip-command = "/usr/sbin/nvram get wan0_ipaddr"
 ```
 
+Verify the configuration using:
+
+```
+inadyn --check-config -f /jffs/inadyn.conf
+```
+
 Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your custom config.  Such a script would look like this:
 
 ```
 #!/bin/sh/
-/usr/sbin/inadyn -f /jffs/inadyn-custom.conf -e "/sbin/ddns_custom_updated 1" --exec-nochg "/sbin/ddns_custom_updated 1"
+/usr/sbin/inadyn -f /jffs/inadyn.conf -e "/sbin/ddns_custom_updated 1" --exec-nochg "/sbin/ddns_custom_updated 1"
 ```
 
 Note In-a-dyn will take care of calling ddns_updated as appropriate if the update succeeded when using these parameters, so no need to explicitly run it manually after the update.
