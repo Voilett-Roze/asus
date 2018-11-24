@@ -27,7 +27,7 @@ and change it to get the IP from an external source
 ```
 IP=$(wget -O - -q http://myip.dnsomatic.com/)
 ```
-The above uses dnsomatic, but it can be modified to work with any source. The OpenWrt wiki provides a list [here](https://openwrt.org/docs/guide-user/services/ddns/client?s[]=http&s[]=domains&s[]=google&s[]=checkip).
+The above uses dnsomatic, but it can be modified to work with any source. The OpenWrt wiki provides a list [here](https://openwrt.org/docs/guide-user/services/ddns/client?s[]=http&s[]=domains&s[]=google&s[]=checkip), see § Detecting public IP.
 
 # Using a DDNS with VPN
 Here is an example of a script for redirecting a DDNS to a VPN IP, in openvpn-event script, add:
