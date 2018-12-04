@@ -7,7 +7,7 @@ Note that you cannot use both Optware and Entware at the same time.
 
 **Important:** Asus's DownloadMaster is based on Optware, and therefore is NOT compatible with Entware.  You will have to uninstall DownloadMaster and look at the alternatives provided by Entware.
 
-After uninstalling, you should make sure "asusware.arm" or "asusware.*" dir on mounted disk partition is deleted. Otherwise, Entware won't work properly.
+After uninstalling, you should make sure "asusware.arm" or "asusware.*" dir on mounted disk partition is deleted. Otherwise, Entware won't work properly. After uninstalling DownloadMaster ensure the router is rebooted.
 
 
 ### Setup
@@ -16,7 +16,7 @@ The installation and configuration process must be done through telnet or SSH.  
 
 ### The easy way
 
-Starting with v3.0.0.4.270.25 a new script has been introduced to facilitate Entware installation. After installing a [USB drive](https://github.com/RMerl/asuswrt-merlin/wiki/Initialize-OPTWARE), just type in terminal:
+Starting with v3.0.0.4.270.25 a new script has been introduced to facilitate Entware installation. After installing a [USB drive](https://github.com/RMerl/asuswrt-merlin/wiki/Initialize-OPTWARE) (Do Not Install DownloadMaster), just type in terminal:
 ```
 entware-setup.sh
 ```
