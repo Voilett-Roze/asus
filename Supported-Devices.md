@@ -27,6 +27,7 @@ Please read this page instead: https://www.snbforums.com/threads/the-tm-ac1900-i
 | RT-AC88U |  :white_check_mark:  | :white_check_mark: |
 | RT-AC3100 |  :white_check_mark:  | :white_check_mark: |
 | RT-AC5300 |  :white_check_mark:  | :white_check_mark: |
+| RT-AX88U |   | :white_check_mark: |
 
 
 
