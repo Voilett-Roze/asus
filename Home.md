@@ -48,14 +48,6 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 6. [Installing Deluge through Entware](/RMerl/asuswrt-merlin/wiki/Installing-Deluge-through-Entware)
 7. [Webcam video surveillance Entware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer-entware/) (External link)
 
-#### Optware
-1. [Setting up Optware](/RMerl/asuswrt-merlin/wiki/Initialize-OPTWARE)
-2. [Setting up New Generation Optware](https://github.com/Optware/Optware-ng) (External link)
-3. [Installing Transmission through Optware](/RMerl/asuswrt-merlin/wiki/Transmission-through-Optware)
-4. [Cherokee Web Server](http://www.hqt.ro/cherokee-web-server-through-optware) (External link)
-5. [PyLoad Download Manager through Optware](http://www.hqt.ro/pyload-download-manager-through-optware) (External link)
-6. [Webcam video surveillance Optware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer) (External link)
-
 #### Chroot Debian
 1. [Plex Media Server on Arm Routers](http://www.hqt.ro/plex-media-server-through-debian-arm/) (External link)
 2. [Minidlna Upnp Media Server through debian](/RMerl/asuswrt-merlin/wiki/Media-Server-through-debian) (link list)
