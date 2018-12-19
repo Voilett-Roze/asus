@@ -112,7 +112,7 @@ This will ensure that Asuswrt will properly mount /opt at boot time.
 After the reboot, the optware directory should be initialized and automounted by Asuswrt.  It's now time to initialize Entware itself:
 
 ```shell
-wget -O - http://pkg.entware.net/binaries/mipsel/installer/install.sh | sh
+wget -O - http://pkg.entware.net/binaries/mipsel/installer/installer.sh | sh
 ```
 
 Now we have to configure Asuswrt to automatically stop/start services:
