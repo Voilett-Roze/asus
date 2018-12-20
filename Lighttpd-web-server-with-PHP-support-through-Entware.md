@@ -93,3 +93,7 @@ Go to [Port forwarding page](router.asus.com/Advanced_VirtualServer_Content.asp)
 Youtube video [here](http://youtu.be/KHABSd7qB2M)
 
 Post issues [here](https://www.hqt.ro/lighttpd-web-server-with-php-support-through-entware-ng/)
+
+Detailed up to date instructions [here](http://www.giuseppeparrello.it/en/net_router_install_full_webserver.php)
+_^ I could not get the lighttpd php server to work without the directions from this last link ^
+would be nice if someone has the time to update this wiki with those directions_
