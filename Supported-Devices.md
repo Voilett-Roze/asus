@@ -18,7 +18,7 @@ Please read this page instead: https://www.snbforums.com/threads/the-tm-ac1900-i
 | RT-AC66U | :white_check_mark: |  |
 | RT-AC56U | :white_check_mark: | :white_check_mark: |
 | RT-AC66U_B1 (use the RT-AC68U firmware) | :white_check_mark: | :white_check_mark: |
-| RT-AC68U, RT-AC68P, RT-AC68UF (including HW revision C1 and E1) | :white_check_mark: | :white_check_mark: |
+| RT-AC68U, RT-AC68P, RT-AC68UF  | :white_check_mark: | :white_check_mark: |
 | RT-AC86U |   | :white_check_mark: |
 | RT-AC2900 (use the RT-AC86U firmware) |  | :white_check_mark: |
 | RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware) |  :white_check_mark:  | :white_check_mark: |
