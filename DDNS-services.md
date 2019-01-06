@@ -42,16 +42,22 @@ Verify the configuration using:
 inadyn --check-config -f /jffs/inadyn.conf
 ```
 
-Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your custom config.  Such a script would look like this:
+Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your custom config. The script must be placed in `/jffs/scripts/`. Such a script would look like this:
 
 ```
-#!/bin/sh/
+#!/bin/sh
 /usr/sbin/inadyn -f /jffs/inadyn.conf -e "/sbin/ddns_custom_updated 1" --exec-nochg "/sbin/ddns_custom_updated 1"
+```
+
+Give the `ddns-start` execute permissions:
+
+```
+chmod +x /jffs/scripts/ddns-start
 ```
 
 Note In-a-dyn will take care of calling ddns_updated as appropriate if the update succeeded when using these parameters, so no need to explicitly run it manually after the update.
 
-On the webui, set your DDNS provider to "CUSTOM".
+On the webui, set your DDNS provider to "CUSTOM" and provide a hostname. Apply the changes and you should see a `Registration is successful` dialog.
 
 
 ## Updating multiple services
