@@ -113,8 +113,6 @@ Now reboot your router , Its time for some testing
 
 ![foto10](http://members.home.nl/frits.pruymboom/Firewall%20packets%207.PNG)
 
-
-
 **ALTERNATIVE**
 
 Use this script if you only want to specify one port to wake up your server
@@ -150,3 +148,43 @@ OLD=$NEW
 fi
 done 
 ```
+
+**Alternative 2 - Not logging all accepted & multiple server waking**
+
+If you dont want to log everything you can leave the firewall logged packets to none if you create a "nat-start" script containing:
+
+    #!/bin/sh
+    iptables -I FORWARD -d <Destination IP> -p tcp --dport <Destination_Port> -j LOG --log-prefix "[2WAKE] <Mac_Addr_To_wake> "
+
+and the wake.sh containing:
+
+    #!/bin/sh
+    
+    INTERVAL=3
+    NUMP=1
+    OLD=""
+    IFACE=br0
+    WOL=/usr/sbin/ether-wake
+    
+    logger "AUTO WOL Script started at" `date`
+    
+    while sleep $INTERVAL;do
+    NEW=`dmesg | awk '/2WAKE/ {print }' | tail -1`
+    
+    if [ "$NEW" != "" -a "$NEW" != "$OLD" ]; then
+    
+       MAC=`dmesg | awk -F'[=| ]' '/2WAKE/ {print $2}' | tail -1`
+       TARGET=`dmesg | awk -F'[=| ]' '/2WAKE/ {print $10}' | tail -1`
+       SRC=`dmesg | awk -F'[=| ]' '/2WAKE/ {print $8}' | tail -1`
+    
+       if ping -qc $NUMP $TARGET >/dev/null; then
+          logger "NOWAKE $TARGET was accessed by $SRC and is already alive at" `date`
+              sleep 500
+       else
+          logger "WAKE $SRC causes WOL of $TARGET using $MAC at" `date`
+          $WOL -i $IFACE $MAC | logger
+          sleep 5
+       fi
+       OLD=$NEW
+    fi
+    done
