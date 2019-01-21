@@ -1,4 +1,4 @@
->Note: _This might need to be revised following the switch to In-a-Dyn with version 384.7._
+>Note: _This might need to be revised following the switch to In-a-Dyn with version 384.7, this page could be merged with [[DDNS-services]]._
 
 ### Introduction
 If you set the DDNS (dynamic DNS) service to "Custom", then you can fully control the update process through a `ddns-start` user script (which could launch a custom update client, or run a simple "wget" on a provider's update URL). The ddns-start script is passed the WAN IP as an argument.
@@ -27,7 +27,7 @@ and change it to get the IP from an external source
 ```
 IP=$(wget -O - -q http://myip.dnsomatic.com/)
 ```
-The above uses dnsomatic, but it can be modified to work with any source. The OpenWrt wiki provides a list [here](https://openwrt.org/docs/guide-user/services/ddns/client?s[]=http&s[]=domains&s[]=google&s[]=checkip), see § Detecting public IP.
+The above uses dnsomatic, but it can be modified to work with any source. The OpenWrt wiki provides a list [here](https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip).
 
 # Using a DDNS with VPN
 Here is an example of a script for redirecting a DDNS to a VPN IP, in openvpn-event script, add:
@@ -52,4 +52,5 @@ and make it executable
 chmod 700 /jffs/scripts/up.sh
 ```
 
-For more sample scripts please check the following [[link|DDNS-Sample-Scripts]]
+# Scripts for specific providers
+Sample scripts for many DDNS providers and DNS services are available [[here|DDNS-Sample-Scripts]].
