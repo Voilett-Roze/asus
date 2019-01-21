@@ -1,5 +1,4 @@
-Under _Parental Control_ (or _AiProtection_ on newer router models) there is a section called DNSFilter.  On this 
-page you can force the use of a specific nameserver (DNS) that provides security/parental filtering.  This can be done globally, or on a per device basis.  Each of them can have a nameserver enforced.  For example, you can have your LAN use OpenDNS's server to provide basic filtering, but force your children's devices to use Yandex's family DNS server that filters out malicious and adult content.
+Under _LAN_ there is a tab called _DNSFilter_.  On this page you can force the use of a specific nameserver (DNS) that provides security/parental filtering.  This can be done globally, or on a per device basis.  Each of them can have a nameserver enforced.  For example, you can have your LAN use OpenDNS's server to provide basic filtering, but force your children's devices to use Yandex's family DNS server that filters out malicious and adult content.
 
 If using a global filter, then specific devices can be told to bypass the global filter, by creating a client rule for these, and setting it to "_No Filtering_".
 
