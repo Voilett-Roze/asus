@@ -42,7 +42,7 @@ Connect to your router through SSH (you can use PUTTY on windows). Default IP ad
     * **To save and quit editor** quit typing with `ESC` and write `:wq` and hit `ENTER`
 
 ## Last steps
-1. Reboot rooter with `reboot` command in ssh or through web interface. (Rebooting is not strictly necessary; restarting the `dnsmasq` service is sufficient: `service restart_dnsmasq`)
+1. Reboot router with `reboot` command in ssh or through web interface. (Rebooting is not strictly necessary; restarting the `dnsmasq` service is sufficient: `service restart_dnsmasq`)
 2. Go to `Administration -> System` and disable `Enable SSH` config option
 
 # More
