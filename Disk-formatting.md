@@ -6,8 +6,8 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 - Limitations of managing disks directly on the router
 - Automatically formatting disks with the AMTM script
 - Wipe/Zero disk with dd to avoid errors caused by old partition tables
-- Create a clean new Master Boot Record partition table
-- Create a new partition: with 
+- Create a new partition table
+- Create a new partition
 - Format a partition to ext2, ext3, ext4
 - Adjust filesystem features like disk labels and journaling
 - Disk mounting and unmounting
