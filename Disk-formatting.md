@@ -16,7 +16,7 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 - About
 	- Requirements
 	- Limitations & Important Notes
-	- Methods: Automatic or Manual?
+	- [Methods: Automatic or Manual?](#methods-automatic-or-manual)
 - [Automatic Disk Formatting Script](/RMerl/asuswrt-merlin/wiki/Disk-formatting#automatic-disk-formatting-script)
 - [Manual Step-by-Step Instructions](/RMerl/asuswrt-merlin/wiki/Disk-formatting#manual-step-by-step-instructions)
 	1. [Preparations](/RMerl/asuswrt-merlin/wiki/Disk-formatting#1-preparations)
