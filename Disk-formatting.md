@@ -1,6 +1,6 @@
 # Guide to disk formatting with ASUS-WRT Merlin
 
-Learn how ASUS routers can be used to directly repartition and format attached USB disks from the command line. Follow a step-by-step guide or use a simple interactive menu-based script to automatically format disks to ext2, ext3, ext4 filesystem.
+Learn how ASUS routers can be used to directly repartition and format attached USB disks from the command line. Follow a step-by-step guide or use a simple interactive menu-based script to automatically format disks to ext2, ext3, ext4 filesystem. Disks larger than 2TB aren't supported due to [partition table size limits](#partition-tables).
 
 ## What you'll learn in this guide:
 - Limitations of managing disks directly on the router
@@ -45,7 +45,7 @@ There are some compatibility issues with partition tables:
 - **MBR** supports maximum disk capacity 2TB (entire disk)
 - **GPT** _'GUID Partition Table'_ supports disks over 2TB
 - **GPT** is unfortunately not supported by **fdisk** on ASUS-WRT so devices using GPT will appear locked in **fdisk** and may return error message similar to "Found valid GPT with protective MBR; using GPT". In this case the existing GPT must be erased without fdisk. One solution is to zero the disk. Another solution is the disk formatting feature in AMTM.
-	> Quote: "Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with GTP on another device and then skip the whole of that step ..." -- @ColinTaylor [Source](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414)
+	> Quote: "Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with GTP on another device and then skip the whole of that step ..." -- ColinTaylor, [[SOURCE]](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414)
 
 #### Unmounting disks
 There are a few problems you can run into when unmounting disks by command line:
@@ -125,6 +125,7 @@ Things to note before continuing:
 
 **fdisk -- DOS partition maintenance program**
 Show the partition table for every disk, including unmounted disks. Include **-l** option to list:
+
 `fdisk -l`
 
 My example below shows **fdisk** output:
@@ -148,6 +149,7 @@ From my output we can see:
 
 **df -- display free disk space**
 Show human-readable filesystem usage statistics for all _mounted_ disks:
+
 `df -h`
 
 My example below shows **df** output:
@@ -172,6 +174,7 @@ From my output we can see:
 Before we can begin zero'ing the disk, creating new partition tables and formatting we MUST properly unmount the device AND remove it's mount point directory.
 
  **mount** command will list mounted devices:
+
 `mount`
 
 My example below shows **mount** output:
@@ -191,6 +194,7 @@ tmpfs on /tmp type tmpfs (rw,relatime)
 /dev/mtdblock8 on /jffs type jffs2 (rw,noatime)
 /dev/sda1 on /tmp/mnt/SANDISK type ext4 (rw,nodev,relatime)
 ```
+
 From my output we can see:
 1. **/dev/sda1** is mounted at directory **/tmp/mnt/SANDISK**
 2. **sda1** currently uses the disk label **SANDISK**
@@ -203,9 +207,11 @@ Unmounting your device can be done in two (2) different ways; using the router w
 **umount** command unmounts filesystems.
 
 My example device **SANDISK** can unmount with this command:
+
 `umount /tmp/mnt/SANDISK`
 
 If the disk was unmounted properly you should no longer see it listed:
+
 `mount`
 
 Remember there are different ways to check mount status:
@@ -219,12 +225,15 @@ My example output below lists the contents of the **/tmp/mnt** directory:
 admin@RT-AC86U:/# ls -l tmp/mnt
 drwxrwxrwx    5 admin root          4096 Jan 01 01:00 SANDISK
 ```
+
 From my output we see my example device has an obsolete mount-point.
 
 The obsolete mount point is removed with this command:
+
 `rmdir /tmp/mnt/SANDISK`
 
 If it was successfully removed then it won't be listed anymore in /tmp/mnt directory:
+
 `ls -l /tmp/mnt`
 
 ----
@@ -240,7 +249,9 @@ To be on the safe side, remove all other attached USB devices from router before
 
 **WARNING: RISK OF ACCIDENTAL DATA LOSS IF TYPED INCORRECTLY**.
 
-My example disk **/dev/sda** can be zero'd with this command: `dd if=/dev/zero of=/dev/sda count=16065 bs=512 && sync`
+My example disk **/dev/sda** can be zero'd with this command:
+
+`dd if=/dev/zero of=/dev/sda count=16065 bs=512 && sync`
 
 You see we included two (2) options in the command: **bs** is block size in bytes and **count** is the number of blocks to write. Using the default block size of **512** bytes, multiplied by a _block count_ of **16065** we can overwrite the first 8225280 bytes of the disk with zero's. This will completely erase the old partition table and the beginning of the new partition.
 
@@ -252,40 +263,50 @@ Sources:
 ----
 ### 7. Repartition disk
 
-**fdisk** command allows managing disk partitions. We must use it to create a new empty MDOS MBR partition table. **Not compatible with disks over 2TB.**
+**fdisk** command allows managing disk partitions. We must use it to create a new empty MDOS MBR partition table, which is [**not compatible with disks larger than 2TB**](#partition-tables).
 
 My example device **sda** can be modified with this command:
+
 `fdisk /dev/sda`
 
 From interactive menu, do these commands in order:
 
 **m** (or **help**) to see options:
+
 `m`
 
 **p** to see all existing partitions on disk (take note):
+
 `p`
 
 **o** to erase and create new disk partition table of type mdos MBR Master Boot Record:
+
 `o`
 
 **p** to see all partitions on disk (now we should see none):
+
 `p`
 
 **n** to begin making new partition:
+
 `n`
 
 ...then **p** to make it a primary partition:
+
 `p`
 
 ...then **1** (one) for its partition number:
+
 `1`
 
 ...then accept default values for first and last cylinder
 
 **p** to see all partitions on disk (now we should see 1 created of type ID 83 Linux):
+
 `p`
 
 **w** to write changes to disk:
+
 `w`
 
 ----
@@ -301,36 +322,49 @@ A few command options:
 For the commands below my example device is **sda1**. Your device may differ.
 
 To format as ext2 filesystem:
+
 `mke2fs -t ext2 /dev/sda1`
+
 or use the alias ASUS built-in:
+
 `mkfs.ext2 /dev/sda1`
 
 To format as ext3 filesystem:
+
 `mke2fs -t ext3 /dev/sda1`
+
 or use the alias:
+
 `mkfs.ext3 /dev/sda1`
 
 To format as ext4 with journaling off:
+
 `mke2fs -t ext4 -O ^has_journal /dev/sda1`
 
 To format as ext4 with journaling on:
+
 `mke2fs -t ext4 -O has_journal /dev/sda1`
 
 **tune2fs** command allows to adjust various filesystem parameters on ext2/ext3/ext4 filesystems.
 
 To add or change disk label:
+
 `tune2fs -L "yourDiskLabel" /dev/sda1`
 
 To disable journaling on ext4:
+
 `tune2fs -O ^has_journal /dev/sda1`
 
 To enable journaling on ext4 omit the ^:
+
 `tune2fs -O has_journal /dev/sda1`
 
 To disable 64bit filesystem compatibility:
+
 `tune2fs -O ^64bit /dev/sda1`
 
 To enable 64bit filesystem compatibility omit the ^:
+
 `tune2fs -O 64bit /dev/sda1`
 
 ----
@@ -339,9 +373,11 @@ To enable 64bit filesystem compatibility omit the ^:
 Rebooting the router is highly recommended to remount a USB device. You may encounter errors with ASUS-WRT if you try mount manually instead of rebooting.
 
 Reboot ASUS router with this command: 
+
 `/sbin/reboot`
 
 If a reboot isn't possible then try manually mount the device. My example device sda1 with label SANDISK can be mounted with this command:
+
 `mount /dev/sda1 /tmp/mnt/SANDISK`
 
 ----
