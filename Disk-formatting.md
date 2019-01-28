@@ -14,8 +14,8 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 ---- 
 ## Contents:
 - About
-	- Requirements
-	- Limitations & Important Notes
+	- [Requirements](#requirements)
+	- [Limitations & Important Notes](#limitations--important-notes)
 	- [Methods: Automatic or Manual?](#methods-automatic-or-manual)
 - [Automatic Disk Formatting Script](#automatic-disk-formatting-script)
 - [Manual Step-by-Step Instructions](#manual-step-by-step-instructions)
