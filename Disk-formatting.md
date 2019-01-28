@@ -39,6 +39,7 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 ----
 ### Limitations & Important Notes
 
+#### Partition tables
 There are some compatibility issues with partition tables:
 - **MBR** _'Master Boot Record'_ has best compatibility with ASUS-WRT
 - **MBR** supports maximum disk capacity 2TB (entire disk)
@@ -46,19 +47,25 @@ There are some compatibility issues with partition tables:
 - **GPT** is unfortunately not supported by **fdisk** on ASUS-WRT so devices using GPT will appear locked in **fdisk** and may return error message similar to "Found valid GPT with protective MBR; using GPT". In this case the existing GPT must be erased without fdisk. One solution is to zero the disk. Another solution is the disk formatting feature in AMTM.
 	> Quote: "Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with GTP on another device and then skip the whole of that step ..." -- @ColinTaylor [Source](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414)
 
+#### Unmounting disks
 There are a few problems you can run into when unmounting disks by command line:
-- it may refuse to unmount the disk because the _device or resource is busy_.
+
+##### _Device or resource is busy_
+You may be unable to unmount because the disk is being used something.
 ```
 admin@RT-AC86U:/tmp/home/root# umount -f /tmp/mnt/SANDISK/
 umount: can't unmount /tmp/mnt/SANDISK: Device or resource busy
 ```
-	> Quote: "Don't use -f. The device must be cleanly unmounted. If the user cannot unmount the device then they shouldn't proceed. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in entware." -- ColinTaylor
+This problem is difficult to avoid and the best you can do is try to stop any processes/scripts that may be utilising the disk.
+>Quote: "Don't use -f. The device must be cleanly unmounted. If the user cannot unmount the device then they shouldn't proceed. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in entware." -- ColinTaylor
+
+##### _Ghost devices_
+You may find duplicate devices get created.
 - umount command does NOT automatically remove the device mount point
 - removing mount point must be done manually
 - failure to delete the mount point for unmounted devices can result in a confusing list of duplicate "ghost" devices and other problems. 
-	>Quote: "When the router mounts a USB drive it creates a mount point (which is just a directory) with the appropriate name in /tmp/mnt. When you unmount that device using the GUI the router also deletes the mount point. If you unmount the device from the command line you will probably not think to also delete its mount point - that's the problem. If you now physically remove the USB device and then plug it back in the router will look in /tmp/mnt and see that there is already a mount point with the name it wants to use. To avoid mounting the USB drive over the top of (what it thinks is) another device it adds a suffix of (1) to the name it's going to use." -- ColinTaylor
-
-If possible you should try unmount disks from the router web GUI rather instead of umount at the command line interface. It may also be helpful to stop any processes/scripts that may be utilising the disk before attempting to unmount it.
+This problem can be avoided by remembering to manually remove the directories you disk was previously mounted as.
+>Quote: "When the router mounts a USB drive it creates a mount point (which is just a directory) with the appropriate name in /tmp/mnt. When you unmount that device using the GUI the router also deletes the mount point. If you unmount the device from the command line you will probably not think to also delete its mount point - that's the problem. If you now physically remove the USB device and then plug it back in the router will look in /tmp/mnt and see that there is already a mount point with the name it wants to use. To avoid mounting the USB drive over the top of (what it thinks is) another device it adds a suffix of (1) to the name it's going to use." -- ColinTaylor
 
 ----
 ### Methods: Automatic or Manual?
