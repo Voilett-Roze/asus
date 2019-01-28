@@ -4,7 +4,7 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 
 ## What you'll learn in this guide:
 - Limitations of managing disks directly on the router
-- [Automatically formatting disks with the AMTM script](/RMerl/asuswrt-merlin/wiki/Disk-formatting#automatic-disk-formatting-script)
+- [Automatically formatting disks with the AMTM script](#automatic-disk-formatting-script)
 - Wipe/Zero disk with dd to avoid errors caused by old partition tables
 - Create a new partition table
 - Create a new partition
@@ -17,17 +17,17 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 	- Requirements
 	- Limitations & Important Notes
 	- [Methods: Automatic or Manual?](#methods-automatic-or-manual)
-- [Automatic Disk Formatting Script](/RMerl/asuswrt-merlin/wiki/Disk-formatting#automatic-disk-formatting-script)
-- [Manual Step-by-Step Instructions](/RMerl/asuswrt-merlin/wiki/Disk-formatting#manual-step-by-step-instructions)
-	1. [Preparations](/RMerl/asuswrt-merlin/wiki/Disk-formatting#1-preparations)
-	2. [Attach disk](/RMerl/asuswrt-merlin/wiki/Disk-formatting#2-attach-usb-disk)
-	3. [Connect to router via ssh](/RMerl/asuswrt-merlin/wiki/Disk-formatting#3-connect-to-router-via-ssh)
-	4. [View disk information](/RMerl/asuswrt-merlin/wiki/Disk-formatting#4-view-disk-information)
-	5. [Unmount](/RMerl/asuswrt-merlin/wiki/Disk-formatting#5-unmount)
-	6. [Zero disk](/RMerl/asuswrt-merlin/wiki/Disk-formatting#6-zero-disk)
-	7. [Repartition disk](/RMerl/asuswrt-merlin/wiki/Disk-formatting#7-repartition-disk)
-	8. [Format and adjust filesystem features](/RMerl/asuswrt-merlin/wiki/Disk-formatting#8-format-and-adjust-filesystem-features)
-	9. [Reboot and mount disk](/RMerl/asuswrt-merlin/wiki/Disk-formatting#9-reboot-and-mount-disk)
+- [Automatic Disk Formatting Script](#automatic-disk-formatting-script)
+- [Manual Step-by-Step Instructions](#manual-step-by-step-instructions)
+	1. [Preparations](#1-preparations)
+	2. [Attach disk](#2-attach-usb-disk)
+	3. [Connect to router via ssh](#3-connect-to-router-via-ssh)
+	4. [View disk information](#4-view-disk-information)
+	5. [Unmount](#5-unmount)
+	6. [Zero disk](#6-zero-disk)
+	7. [Repartition disk](#7-repartition-disk)
+	8. [Format and adjust filesystem features](#8-format-and-adjust-filesystem-features)
+	9. [Reboot and mount disk](#9-reboot-and-mount-disk)
 - Thanks
 ---- 
 ## About
