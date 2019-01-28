@@ -51,12 +51,12 @@ There are some compatibility issues with partition tables:
 There are a few problems you can run into when unmounting disks by command line:
 
 ##### _Device or resource is busy_
-You may be unable to unmount because the disk is being used something.
+You may be unable to unmount because the disk is being used by something.
 ```
 admin@RT-AC86U:/tmp/home/root# umount -f /tmp/mnt/SANDISK/
 umount: can't unmount /tmp/mnt/SANDISK: Device or resource busy
 ```
-This problem is difficult to avoid and the best you can do is try to stop any processes/scripts that may be utilising the disk.
+This problem is difficult to avoid and the best you can do is try to stop any processes/scripts that may be utilising the disk. If you encounter this problem there is no advice available on how or what processes to kill, so the best recommendation is to unmount with the web UI.
 >Quote: "Don't use -f. The device must be cleanly unmounted. If the user cannot unmount the device then they shouldn't proceed. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in entware." -- ColinTaylor
 
 ##### _Ghost devices_
@@ -125,13 +125,14 @@ To enable SSH (LAN ONLY) go to [Administration/System](http://router.asus.com/Ad
 ----
 ### 4. View disk information
 
-We must begin by checking the information for the attached disk. The information we get here will be used for 
+We must begin by checking the information for the attached disk. 
 
 Things to note before continuing:
 - **df** command will NOT show unmounted disks.
 - **fdisk -l** command will show both mounted and unmounted disks.
 
 **fdisk -- DOS partition maintenance program**
+
 Show the partition table for every disk, including unmounted disks. Include **-l** option to list:
 
 `fdisk -l`
@@ -156,6 +157,7 @@ From my output we can see:
 6. Therefore 1 cylinder equals 8225280 bytes
 
 **df -- display free disk space**
+
 Show human-readable filesystem usage statistics for all _mounted_ disks:
 
 `df -h`
@@ -170,18 +172,21 @@ mtd:data                  8.0M    576.0K      7.4M   7% /data
 /dev/mtdblock8           48.0M      1.6M     46.4M   3% /jffs
 /dev/sda1                14.3G      2.3M     14.3G   0% /tmp/mnt/SANDISK
 ```
+
 From my output we can see:
 1. **/dev/sda1** is mounted at directory **/tmp/mnt/SANDISK**
 2. **sda1** currently uses the disk label **SANDISK**
 
 **TAKE NOTE OF YOUR OWN DEVICE DETAILS.**
 
+The information seen above will be used for all future examples.
+
 ----
 ### 5. Unmount
 
 Before we can begin zero'ing the disk, creating new partition tables and formatting we MUST properly unmount the device AND remove it's mount point directory.
 
- **mount** command will list mounted devices:
+**mount** command will list mounted devices:
 
 `mount`
 
@@ -323,8 +328,8 @@ From interactive menu, do these commands in order:
 **mke2fs** command is to create an ext2, ext3, ext4 filesystem, usually in a disk partition, where device is the special file corresponding to the device (e.g /dev/sdXX ).
 
 A few command options:
-`-t` : set file system type
-`-L` : set a new volume label
+`-t` : set file system type,
+`-L` : set a new volume label,
 `-O` : specify a feature to use
 
 For the commands below my example device is **sda1**. Your device may differ.
