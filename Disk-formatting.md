@@ -67,6 +67,14 @@ You may find duplicate devices get created.
 This problem can be avoided by remembering to manually remove the directories you disk was previously mounted as.
 >Quote: "When the router mounts a USB drive it creates a mount point (which is just a directory) with the appropriate name in /tmp/mnt. When you unmount that device using the GUI the router also deletes the mount point. If you unmount the device from the command line you will probably not think to also delete its mount point - that's the problem. If you now physically remove the USB device and then plug it back in the router will look in /tmp/mnt and see that there is already a mount point with the name it wants to use. To avoid mounting the USB drive over the top of (what it thinks is) another device it adds a suffix of (1) to the name it's going to use." -- ColinTaylor
 
+### Zero disk before creating new partition table
+There are problems that can arise if you don't zero your disk before trying to overwrite the disk with a new partition table using fdisk.
+> "... 6. Zero disk" should be marked as mandatory rather than optional. Yes it is dangerous, but I suppose the whole procedure could be called that. My concern is as I outlined in the [link](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/page-2#post-459430) you referenced in that section. Namely, if the device has previously been formatted with a partition table (unlike flash drives that usually are formatted without a partition table) as soon as you write the fdisk changes the router will look to see if there are any valid filesystems in the partitions. In this situation it's highly likely this will be the case so the router will mount them causing us problems in the subsequent steps.
+> 
+> Side note: When I was testing these scenarios for amtm I ended up in some bizarre situations, partly caused by the above. For example; first I partitioned and formatted my device as ext4.Next I used dd to wipe out just the first sector of the device, erasing the partition table. I then plugged the device into a Windows PC. Windows asks me whether I want to format it, which I do as FAT32. This puts a FAT32 header in sector 0. I remove the device from my PC and plug it into the router. The router auto-mounts it, so I unmount it. I then use fdisk again to create a new empty partition table and add one partition.
+> 
+> The thing to note here is that when fdisk creates the partition table it writes the relevant information at the end of sector 0. It leaves the rest on the sector unchanged! So...... If I plug this device into a Windows PC it thinks that it's formatted as FAT32 because there is a valid header in sector 0. If I plug the device into a Linux box it sees it as having a single ext4 partition (even though we never ran mke2fs after wiping and recreating the partition table)." -- ColinTaylor
+
 ----
 ### Methods: Automatic or Manual?
 There are two (2) methods of formatting disks attached to your router.
@@ -239,9 +247,9 @@ If it was successfully removed then it won't be listed anymore in /tmp/mnt direc
 ----
 ### 6. Zero disk
 
-**This step is OPTIONAL and can cause data loss if done incorrectly.**
-
 Before we begin creating a new partition table it is prudent to properly erase the old partition table. We can achieve this best by overwriting the beginning of the disk with 0's using a utility called **dd** data duplicator.
+
+_Previously this step was listed as optional due to risk of data loss but further research and user feedback has shown it is essential to avoid errors when creating a new partition table. For a better explanation please read the [limitations section](#zero-disk-before-creating-new-partition-table)._
 
 dd is affectionately nicknamed **DISK DESTROYER** because people can accidentally erase the wrong disk and lose their valuable data. It happens when mistyping the command simply by reversing the source and target disk.
 
