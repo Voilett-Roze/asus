@@ -19,7 +19,7 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 	- Methods: Automatic or Manual?
 - [Automatic Disk Formatting Script](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#automatic-disk-formatting-script)
 - [Manual Step-by-Step Instructions](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#manual-step-by-step-instructions)
-	1. Preparations(/RMerl/asuswrt-merlin/wiki/Disk-formatting#1-preparations)
+	1. [Preparations](/RMerl/asuswrt-merlin/wiki/Disk-formatting#1-preparations)
 	2. Attach disk
 	3. Connect to router via ssh
 	4. View disk information
