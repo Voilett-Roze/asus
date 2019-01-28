@@ -196,11 +196,9 @@ From my output we can see:
 2. **sda1** currently uses the disk label **SANDISK**
 3. **sda1** is formatted with type **ex4** filesystem
 
-Method 1: Use the router web GUI (suggested)
-If possible you should try unmount disks from the router web GUI rather instead of umount at the command line interface. It may also be helpful to stop any processes/scripts that may be utilising the disk before attempting to unmount it.
+Stop any processes/scripts that may be utilizing the disk before continuing.
 
-Method 2: Use umount at command line
-This method is less reliable and you can [read about it here](#limitations--important-notes). If you encounter problems consider unmounting using the router web UI.
+Unmounting your device can be done in two (2) different ways; using the router web UI or using the command line. It is preferable to unmount from the webUI for [reasons outlined in limitations section](#unmounting-disks) and then [skip to the next step and zero your disk](#6-zero-disk).
 
 **umount** command unmounts filesystems.
 
