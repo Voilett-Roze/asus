@@ -50,7 +50,8 @@ There are problems with unmounting disks by command line:
 - umount command does not automatically remove the device mount point
 - removing mount point must be done manually
 - failure to delete the mount point for unmounted devices can result in a confusing list of duplicate "ghost" devices and other problems. 
-- note that devices do eject properly with the router web GUI button
+- the router web UI works correctly and removes mount points
+- if possible use the web UI method instead of umount at the command line
 	>Quote: "When the router mounts a USB drive it creates a mount point (which is just a directory) with the appropriate name in /tmp/mnt. When you unmount that device using the GUI the router also deletes the mount point. If you unmount the device from the command line you will probably not think to also delete its mount point - that's the problem. If you now physically remove the USB device and then plug it back in the router will look in /tmp/mnt and see that there is already a mount point with the name it wants to use. To avoid mounting the USB drive over the top of (what it thinks is) another device it adds a suffix of (1) to the name it's going to use." -- ColinTaylor
 
 ----
@@ -155,7 +156,7 @@ From my output we can see:
 ----
 ### 5. Unmount
 
-Before we can begin repartitioning and formatting we MUST properly unmount the device AND remove it's mount point directory.
+Before we can begin zero'ing the disk, creating new partition tables and formatting we MUST properly unmount the device AND remove it's mount point directory.
 
  **mount** command will list mounted devices:
 `mount`
@@ -182,6 +183,11 @@ From my output we can see:
 2. **sda1** currently uses the disk label **SANDISK**
 3. **sda1** is formatted with type **ex4** filesystem
 
+Method 1: Use the router web GUI (suggestted)
+The preferred method of unmounting your device is using the router web GUI. It seems to be more reliable than using the umount command via ssh.
+
+Method 2: Use the command line (less reliable)
+
 **umount** command unmounts filesystems. Include **-f** option to force unmount.
 
 My example device **SANDISK** can unmount with this command:
@@ -203,7 +209,7 @@ drwxrwxrwx    5 admin root          4096 Jan 01 01:00 SANDISK
 ```
 From my output we see my example device has an obsolete mount-point.
 
-The obsolete mount point is removed with this command:
+(Note: Command not fully tested) The obsolete mount point is removed with this command:
 `rm /tmp/mnt/SANDISK`
 
 If it was successfully removed then it won't be listed anymore in /tmp/mnt directory:
@@ -284,7 +290,7 @@ For the commands below my example device is **sda1**. Your device may differ.
 
 To format as ext2 filesystem:
 `mke2fs -t ext2 /dev/sda1`
-or use the alias:
+or use the alias ASUS built-in:
 `mkfs.ext2 /dev/sda1`
 
 To format as ext3 filesystem:
