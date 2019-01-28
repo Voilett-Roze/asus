@@ -210,7 +210,7 @@ drwxrwxrwx    5 admin root          4096 Jan 01 01:00 SANDISK
 From my output we see my example device has an obsolete mount-point.
 
 (Note: Command not fully tested) The obsolete mount point is removed with this command:
-`rm /tmp/mnt/SANDISK`
+`rmdir /tmp/mnt/SANDISK`
 
 If it was successfully removed then it won't be listed anymore in /tmp/mnt directory:
 `ls -l /tmp/mnt`
