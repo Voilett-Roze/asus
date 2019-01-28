@@ -4,7 +4,7 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 
 ## What you'll learn in this guide:
 - Limitations of managing disks directly on the router
-- Automatically formatting disks with the AMTM script
+- [Automatically formatting disks with the AMTM script](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#automatic-disk-formatting-script)
 - Wipe/Zero disk with dd to avoid errors caused by old partition tables
 - Create a new partition table
 - Create a new partition
