@@ -41,35 +41,39 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 
 #### Partition tables
 There are some compatibility issues with partition tables:
-- **MBR** _'Master Boot Record'_ has best compatibility with ASUS-WRT
-- **MBR** supports maximum disk capacity 2TB (entire disk)
-- **GPT** _'GUID Partition Table'_ supports disks over 2TB
-- **GPT** is unfortunately not supported by **fdisk** on ASUS-WRT so devices using GPT will appear locked in **fdisk** and may return error message similar to "Found valid GPT with protective MBR; using GPT". In this case the existing GPT must be erased without fdisk. One solution is to zero the disk. Another solution is the disk formatting feature in AMTM.
-	> Quote: "Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with GTP on another device and then skip the whole of that step ..." -- ColinTaylor, [[SOURCE]](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414)
+- **MBR** _'Master Boot Record'_ has best compatibility with ASUS-WRT.
+- **MBR** only supports maximum disk capacity 2TB (entire disk).
+- **GPT** _'GUID Partition Table'_ supports disks over 2TB.
+- **GPT** is unfortunately not supported by **fdisk** on ASUS-WRT so devices using GPT will appear locked in **fdisk** and may return error message similar to _"Found valid GPT with protective MBR; using GPT"_. In this case the existing GPT must be erased without fdisk. One solution is to zero the disk. Another solution is the [automatic disk formatting script](#automatic-disk-formatting-script).
+	> Quote: "Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with GTP on another device and then skip the whole of that step ..." -- ColinTaylor, [[SNB Forums]](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414).
 
 #### Unmounting disks
 There are a few problems you can run into when unmounting disks by command line:
 
 ##### _Device or resource is busy_
 You may be unable to unmount because the disk is being used by something.
+- do not use -f or -l option with umount because it won't help and may corrupt data.
+- try stopping processes or scripts that may be utilizing the disk.
+- try unmounting device from the web GUI instead.
 ```
-admin@RT-AC86U:/tmp/home/root# umount -f /tmp/mnt/SANDISK/
+admin@RT-AC86U:/tmp/home/root# umount /tmp/mnt/SANDISK/
 umount: can't unmount /tmp/mnt/SANDISK: Device or resource busy
 ```
 This problem is difficult to avoid and the best you can do is try to stop any processes/scripts that may be utilising the disk. If you encounter this problem there is no advice available on how or what processes to kill, so the best recommendation is to unmount with the web UI.
->Quote: "Don't use -f. The device must be cleanly unmounted. If the user cannot unmount the device then they shouldn't proceed. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in entware." -- ColinTaylor
+>Quote: "Don't use -f. The device must be cleanly unmounted. If the user cannot unmount the device then they shouldn't proceed. Do not use the -l option of umount either. This option was suggested at one point but must not be used. It will cause problems, especially with devices that have multiple partitions. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in entware." -- ColinTaylor
 
 ##### _Ghost devices_
 You may find duplicate devices get created.
-- umount command does NOT automatically remove the device mount point
-- removing mount point must be done manually
+- umount command does NOT automatically remove the device mount point.
+- removing mount point must be done manually.
 - failure to delete the mount point for unmounted devices can result in a confusing list of duplicate "ghost" devices and other problems. 
-This problem can be avoided by remembering to manually remove the directories you disk was previously mounted as.
+
+This problem can be avoided by remembering to manually remove the directories your disk was previously mounted as.
 >Quote: "When the router mounts a USB drive it creates a mount point (which is just a directory) with the appropriate name in /tmp/mnt. When you unmount that device using the GUI the router also deletes the mount point. If you unmount the device from the command line you will probably not think to also delete its mount point - that's the problem. If you now physically remove the USB device and then plug it back in the router will look in /tmp/mnt and see that there is already a mount point with the name it wants to use. To avoid mounting the USB drive over the top of (what it thinks is) another device it adds a suffix of (1) to the name it's going to use." -- ColinTaylor
 
 ### Zero disk before creating new partition table
-There are problems that can arise if you don't zero your disk before trying to overwrite the disk with a new partition table using fdisk.
-> "Quote:... 6. Zero disk" should be marked as mandatory rather than optional. Yes it is dangerous, but I suppose the whole procedure could be called that. My concern is as I outlined in the [link](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/page-2#post-459430). Namely, if the device has previously been formatted with a partition table (unlike flash drives that usually are formatted without a partition table) as soon as you write the fdisk changes the router will look to see if there are any valid filesystems in the partitions. In this situation it's highly likely this will be the case so the router will mount them causing us problems in the subsequent steps.
+There are problems that can arise if you don't zero your disk before trying to overwrite it with a new partition table.
+> Quote:"... 6. Zero disk should be marked as mandatory rather than optional. Yes it is dangerous, but I suppose the whole procedure could be called that. My concern is as I outlined in the [link](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/page-2#post-459430). Namely, if the device has previously been formatted with a partition table (unlike flash drives that usually are formatted without a partition table) as soon as you write the fdisk changes the router will look to see if there are any valid filesystems in the partitions. In this situation it's highly likely this will be the case so the router will mount them causing us problems in the subsequent steps.
 > 
 > Side note: When I was testing these scenarios for amtm I ended up in some bizarre situations, partly caused by the above. For example; first I partitioned and formatted my device as ext4. Next I used dd to wipe out just the first sector of the device, erasing the partition table. I then plugged the device into a Windows PC. Windows asks me whether I want to format it, which I do as FAT32. This puts a FAT32 header in sector 0. I remove the device from my PC and plug it into the router. The router auto-mounts it, so I unmount it. I then use fdisk again to create a new empty partition table and add one partition.
 > 
@@ -81,7 +85,7 @@ There are two (2) methods of formatting disks attached to your router.
 1. Automatically with the AMTM - Asus Merlin Terminal Menu script.
 2. Manually by following this guide.
 
-Beginners and experts can benefit from using the automatic script to save time and stop human error. Doing the task manually requires reading and understanding what you're doing.
+Beginners and experts can benefit from using the automatic script to save time and stop human error. Doing the task manually requires reading and understanding what you are doing.
 
 ---- 
 ## Automatic Disk Formatting Script
@@ -133,7 +137,7 @@ Things to note before continuing:
 
 **fdisk -- DOS partition maintenance program**
 
-Show the partition table for every disk, including unmounted disks. Include **-l** option to list:
+List the partition table for every disk, including unmounted disks:
 
 `fdisk -l`
 
@@ -153,7 +157,7 @@ From my output we can see:
 2. It contains 1 partition, mounted as **/dev/sda1**
 3. Total disk storage capacity is 15.3GB
 4. Disk currently uses block size of 512 kb (the default)
-5. Disk considers 1 cylinder to be 16065 blocks of 512kb
+5. Disk considers 1 cylinder to be 16065 blocks of 512 kb
 6. Therefore 1 cylinder equals 8225280 bytes
 
 **df -- display free disk space**
@@ -184,7 +188,7 @@ The information seen above will be used for all future examples.
 ----
 ### 5. Unmount
 
-Before we can begin zero'ing the disk, creating new partition tables and formatting we MUST properly unmount the device AND remove it's mount point directory.
+All partitions on the device **must** be _properly_ unmounted and their respective mount points manually removed BEFORE we can zero the entire disk, write a new MBR partition table and format with an ext filesystem
 
 **mount** command will list mounted devices:
 
@@ -213,15 +217,15 @@ From my output we can see:
 2. **sda1** currently uses the disk label **SANDISK**
 3. **sda1** is formatted with type **ex4** filesystem
 
-Stop any processes/scripts that may be utilizing the disk before continuing.
-
 Unmounting your device can be done in two (2) different ways; using the router web UI or using the command line. It is preferable to unmount from the webUI for [reasons outlined in limitations section](#unmounting-disks) and then [skip to the next step and zero your disk](#6-zero-disk).
 
 **umount** command unmounts filesystems.
 
-My example device **SANDISK** can unmount with this command:
+My example device **SANDISK** can be unmounted with this command:
 
 `umount /tmp/mnt/SANDISK`
+
+Note: umount fails to work if ["device or resource is busy"](#device-or-resource-is-busy).
 
 If the disk was unmounted properly you should no longer see it listed:
 
@@ -245,9 +249,11 @@ The obsolete mount point is removed with this command:
 
 `rmdir /tmp/mnt/SANDISK`
 
-If it was successfully removed then it won't be listed anymore in /tmp/mnt directory:
+If it was successfully removed then it won't be listed anymore:
 
 `ls -l /tmp/mnt`
+
+Remember, **if your device has multiple partitions** you must **repeat this step** until ALL partitions on the device have been _properly_ unmounted and their respective mount points manually removed. Then you may continue to the next step.
 
 ----
 ### 6. Zero disk
