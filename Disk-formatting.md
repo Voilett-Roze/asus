@@ -262,6 +262,7 @@ From my output we can see my unmounted device SANDISK has an obsolete mount-poin
 The obsolete mount point directory is removed with these commands:
 
 `rm /tmp/mnt/SANDISK/.autocreated-dir`
+
 `rmdir /tmp/mnt/SANDISK`
 
 If it was successfully removed then it won't be listed anymore:
