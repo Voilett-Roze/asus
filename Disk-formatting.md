@@ -55,7 +55,7 @@ There are a few problems you can run into when unmounting disks by command line:
 
 ##### _Device or resource is busy_
 You may be unable to unmount because the disk is being used by something.
-- do not use -f or -l option with umount because it won't help and may corrupt data.
+- do not use the options `-f` or `-l` with umount because it won't help and may corrupt data.
 - try stopping processes or scripts that may be utilizing the disk.
 - try unmounting device from the web GUI instead.
 - please note disks unmounted via web GUI cannot be found when running the **fd** format disk function in the [automatic disk formatting script](#automatic-disk-formatting-script). You first would need to reboot the router to remount the disk.
@@ -75,7 +75,7 @@ You may find duplicate devices get created.
 This problem can be avoided by remembering to manually remove the directories your disk was previously mounted as.
 >Quote: "When the router mounts a USB drive it creates a mount point (which is just a directory) with the appropriate name in /tmp/mnt. When you unmount that device using the GUI the router also deletes the mount point. If you unmount the device from the command line you will probably not think to also delete its mount point - that's the problem. If you now physically remove the USB device and then plug it back in the router will look in /tmp/mnt and see that there is already a mount point with the name it wants to use. To avoid mounting the USB drive over the top of (what it thinks is) another device it adds a suffix of (1) to the name it's going to use." -- ColinTaylor
 
-Source:
+Sources:
 - [snbforums post-459159](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/#post-459159)
 - [snbforums post-459430](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/page-2#post-459430)
 
