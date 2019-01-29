@@ -503,25 +503,7 @@ else
 fi
 ....
 
-== EntryDNS
-^https://entrydns.net/^
 
-[source]
-.....
-#!/bin/sh
-# Update the following variables:
-TOKEN=your_real_token     
-
-# Should be no need to modify anything beyond this point
-resp=$(/usr/sbin/curl -s -k -X PUT -d "" https://entrydns.net/records/modify/$TOKEN)
-rcode=$?
-
-if [ "$rcode" == "0"  -a "$resp" == "OK" ]; then
-  /sbin/ddns_custom_updated 1
-else
-  /sbin/ddns_custom_updated 0
-fi
-.....
 
 == EasyDNS
 ^https://www.easydns.com/^
@@ -586,6 +568,69 @@ else
         /sbin/ddns_custom_updated 0
 fi
 ....
+== EntryDNS
+^https://entrydns.net/^
+
+[source]
+.....
+#!/bin/sh
+# Update the following variables:
+TOKEN=your_real_token     
+
+# Should be no need to modify anything beyond this point
+resp=$(/usr/sbin/curl -s -k -X PUT -d "" https://entrydns.net/records/modify/$TOKEN)
+rcode=$?
+
+if [ "$rcode" == "0"  -a "$resp" == "OK" ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+
+.....
+
+== Enom
+^https://www.enomcentral.com/^
+
+This updates @ and * records so the base domain and any subdomains will also be updated.
+Only requires the domain password entering into the script as "pw", hostname (zone) is entered into DDNS admin web page as "host" and WAN IP is passed to script as $1
+
+
+[source]
+.....
+#!/bin/sh
+# AsusWRT Merlin DDNS updater for Enom      
+# WAN IP is passed to script as $1       
+# host/domain should be set in the web admin
+# set your domain password below 
+pw=WRITE_YOUR_PASSWORD_HERE
+                                      
+host=$(nvram get ddns_hostname_x)   
+ip=${1}                             
+nserver="reseller.enom.com"         
+                                    
+wget -O- "${nserver}/interface.asp?\
+command=SetDnsHost\   
+&HostName=@\                                                                     
+&Zone=${host}\                                                                     
+&DomainPassword=${pw}\                                                           
+&Address=${ip}"                                                                  
+                                                                                 
+# the following sets a wildcard (*) so that any subdomains resolve to the same ip
+wget -O- "${nserver}/interface.asp?\
+command=SetDnsHost\   
+&HostName=*\                        
+&Zone=${host}\                                       
+&DomainPassword=${pw}\                             
+&Address=${ip}"                                    
+if [ $? -eq 0 ]; then                              
+         /sbin/ddns_custom_updated 1               
+         logger "DDNS updated ${host} set to ${ip}"
+else                                
+         /sbin/ddns_custom_updated 0
+fi
+
+.....
 
 == Gandi
 ^http://doc.livedns.gandi.net/^
