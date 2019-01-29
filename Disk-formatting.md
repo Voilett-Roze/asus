@@ -2,6 +2,8 @@
 
 Learn how ASUS routers can be used to directly repartition and format attached USB disks from the command line. Follow a step-by-step guide or use a simple interactive menu-based script to automatically format disks to ext2, ext3, ext4 filesystem. Disks larger than 2TB aren't supported due to [partition table size limits](#partition-tables).
 
+Questions? Post them to the [Official Forum Thread](https://www.snbforums.com/threads/disk-formatting-with-asus-wrt-merlin.54778/).
+
 ## What you'll learn in this guide:
 - Limitations of managing disks directly on the router
 - [Automatically formatting disks with the AMTM script](#automatic-disk-formatting-script)
@@ -11,6 +13,7 @@ Learn how ASUS routers can be used to directly repartition and format attached U
 - Format a partition to ext2, ext3, ext4
 - Adjust filesystem features like disk labels and journaling
 - Disk mounting and unmounting
+- A variety of related disk management tasks
 ---- 
 ## Contents:
 - About
@@ -67,10 +70,14 @@ This problem is difficult to avoid and the best you can do is try to stop any pr
 You may find duplicate devices get created.
 - umount command does NOT automatically remove the device mount point.
 - removing mount point must be done manually.
-- failure to delete the mount point for unmounted devices can result in a confusing list of duplicate "ghost" devices and other problems. 
+- failure to delete the mount point for unmounted devices can result in a confusing list of duplicate "ghost" devices and other problems.
 
 This problem can be avoided by remembering to manually remove the directories your disk was previously mounted as.
 >Quote: "When the router mounts a USB drive it creates a mount point (which is just a directory) with the appropriate name in /tmp/mnt. When you unmount that device using the GUI the router also deletes the mount point. If you unmount the device from the command line you will probably not think to also delete its mount point - that's the problem. If you now physically remove the USB device and then plug it back in the router will look in /tmp/mnt and see that there is already a mount point with the name it wants to use. To avoid mounting the USB drive over the top of (what it thinks is) another device it adds a suffix of (1) to the name it's going to use." -- ColinTaylor
+
+Source:
+- [snbforums post-459159](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/#post-459159)
+- [snbforums post-459430](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/page-2#post-459430)
 
 ### Zero disk before creating new partition table
 There are problems that can arise if you don't zero your disk before trying to overwrite it with a new partition table.
@@ -189,7 +196,7 @@ The information seen above will be used for all future examples.
 ----
 ### 5. Unmount
 
-All partitions on the device **must** be _properly_ unmounted and their respective mount points manually removed BEFORE we can zero the entire disk, write a new MBR partition table and format with an ext filesystem
+All partitions on the device **must** be _properly_ unmounted and their respective mount points manually removed BEFORE we can zero the entire disk, write a new MBR partition table and format with an ext2, ex3 or ex4 filesystem.
 
 **mount** command will list mounted devices:
 
@@ -218,7 +225,7 @@ From my output we can see:
 2. **sda1** currently uses the disk label **SANDISK**
 3. **sda1** is formatted with type **ex4** filesystem
 
-Unmounting your device can be done in two (2) different ways; using the router web UI or using the command line. It is preferable to unmount from the webUI for [reasons outlined in limitations section](#unmounting-disks) and then [skip to the next step and zero your disk](#6-zero-disk).
+Unmounting your device can be done in two (2) different ways; using the router web GUI or using the command line. It is preferable to unmount from the webUI for [reasons outlined in limitations section](#unmounting-disks) and then [skip to the next step and zero your disk](#6-zero-disk).
 
 **umount** command unmounts filesystems.
 
@@ -238,21 +245,27 @@ Remember there are different ways to check mount status:
 
 **umount** does **NOT** remove obsolete mount-points for unmounted devices, so we should do it manually.
 
-My example output below lists the contents of the **/tmp/mnt** directory:
+List the mount-point directories that still exist:
+
+`ls -la /tmp/mnt`
+
+My example below shows output listing contents located in the /tmp/mnt directory:
 ```
-admin@RT-AC86U:/# ls -l tmp/mnt
-drwxrwxrwx    5 admin root          4096 Jan 01 01:00 SANDISK
+admin@RT-AC86U:/# ls -la /tmp/mnt
+drwxrwxrwx    3 admin root             0 Jan 28 18:51 .
+drwxrwxrwx   17 admin root             0 Jan 29 18:18 ..
+drwxrwxrwx    5 admin root          4096 Jan 28 02:00 SANDISK
 ```
 
-From my output we see my example device has an obsolete mount-point.
+From my output we can see my unmounted device SANDISK has an obsolete mount-point.
 
-The obsolete mount point is removed with this command:
+The obsolete mount point directory is removed with this command:
 
 `rmdir /tmp/mnt/SANDISK`
 
 If it was successfully removed then it won't be listed anymore:
 
-`ls -l /tmp/mnt`
+`ls -la /tmp/mnt`
 
 Remember, **if your device has multiple partitions** you must **repeat this step** until ALL partitions on the device have been _properly_ unmounted and their respective mount points manually removed. Then you may continue to the next step.
 
@@ -403,6 +416,6 @@ If a reboot isn't possible then try manually mount the device. My example device
 ----
 ## Thanks
 
-The first version of this guide was [posted to the SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-455723) and led to the development of the [disk formatting AMTM script](https://www.snbforums.com/threads/amtm-the-snbforum-asuswrt-merlin-terminal-menu.42415/). The guide is now maintained here on the Merlin Wiki.
+The first version of this guide was [posted to the SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-455723) and led to the development of the [disk formatting AMTM script](https://www.snbforums.com/threads/amtm-the-snbforum-asuswrt-merlin-terminal-menu.42415/). The guide is now maintained here on the Merlin Wiki. Discuss the guide in the [Official Forum Thread](https://www.snbforums.com/threads/disk-formatting-with-asus-wrt-merlin.54778/).
 
 Special thanks to thelonelycoder and ColinTaylor
