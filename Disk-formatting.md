@@ -55,6 +55,7 @@ You may be unable to unmount because the disk is being used by something.
 - do not use -f or -l option with umount because it won't help and may corrupt data.
 - try stopping processes or scripts that may be utilizing the disk.
 - try unmounting device from the web GUI instead.
+- _special note: _disks unmounted via web GUI will not be found by the [automatic disk formatting script AMTM](#automatic-disk-formatting-script) when running the **fd** format disk function.
 ```
 admin@RT-AC86U:/tmp/home/root# umount /tmp/mnt/SANDISK/
 umount: can't unmount /tmp/mnt/SANDISK: Device or resource busy
