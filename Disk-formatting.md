@@ -85,7 +85,7 @@ There are problems that can arise if you don't zero your disk before trying to o
 > 
 > Side note: When I was testing these scenarios for amtm I ended up in some bizarre situations, partly caused by the above. For example; first I partitioned and formatted my device as ext4. Next I used dd to wipe out just the first sector of the device, erasing the partition table. I then plugged the device into a Windows PC. Windows asks me whether I want to format it, which I do as FAT32. This puts a FAT32 header in sector 0. I remove the device from my PC and plug it into the router. The router auto-mounts it, so I unmount it. I then use fdisk again to create a new empty partition table and add one partition.
 > 
-> The thing to note here is that when fdisk creates the partition table it writes the relevant information at the end of sector 0. It leaves the rest of the sector unchanged! So...... If I plug this device into a Windows PC it thinks that it's formatted as FAT32 because there is a valid header in sector 0. If I plug the device into a Linux box it sees it as having a single ext4 partition (even though we never ran mke2fs after wiping and recreating the partition table)." -- ColinTaylor
+> The thing to note here is that when fdisk creates the partition table it writes the relevant information at the end of sector 0. It leaves the rest of the sector unchanged! So...... If I now plug this device into a Windows PC it thinks that it's formatted as FAT32 because there is a valid header in sector 0. But if I plug the device into a Linux box it sees it as having a single partition containing an ext4 filesystem (even though we never ran mke2fs after wiping and recreating the partition table)." -- ColinTaylor
 
 ----
 ### Methods: Automatic or Manual?
