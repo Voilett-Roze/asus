@@ -79,7 +79,7 @@ Sources:
 - [snbforums post-459159](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/#post-459159)
 - [snbforums post-459430](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/page-2#post-459430)
 
-### Zero disk before creating new partition table
+#### Zero disk before creating new partition table
 There are problems that can arise if you don't zero your disk before trying to overwrite it with a new partition table.
 > Quote:"... 6. Zero disk should be marked as mandatory rather than optional. Yes it is dangerous, but I suppose the whole procedure could be called that. My concern is as I outlined in the [link](https://www.snbforums.com/threads/beta-amtm-v1-6_beta-now-with-disk-formatting-automated.54490/page-2#post-459430). Namely, if the device has previously been formatted with a partition table (unlike flash drives that usually are formatted without a partition table) as soon as you write the fdisk changes the router will look to see if there are any valid filesystems in the partitions. In this situation it's highly likely this will be the case so the router will mount them causing us problems in the subsequent steps.
 > 
