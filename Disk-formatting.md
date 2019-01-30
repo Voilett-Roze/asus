@@ -2,7 +2,7 @@
 
 Learn how ASUS routers can be used to directly repartition and format attached USB disks from the command line. Follow a step-by-step guide or use a simple interactive menu-based script to automatically format disks to ext2, ext3, ext4 filesystem. Disks larger than 2TB aren't supported due to [partition table size limits](#partition-tables).
 
-Questions? Post them to the [Official Forum Thread](https://www.snbforums.com/threads/disk-formatting-with-asus-wrt-merlin.54778/).
+Questions? Post them to the [Official Forum Thread](https://www.snbforums.com/threads/disk-formatting.54778/).
 
 ## What you'll learn in this guide:
 - Limitations of managing disks directly on the router
@@ -418,6 +418,6 @@ If a reboot isn't possible then try manually mount the device. My example device
 ----
 ## Thanks
 
-The first version of this guide was [posted to the SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-455723) and led to the development of the [disk formatting AMTM script](https://www.snbforums.com/threads/amtm-the-snbforum-asuswrt-merlin-terminal-menu.42415/). The guide is now maintained here on the Merlin Wiki. Discuss the guide in the [Official Forum Thread](https://www.snbforums.com/threads/disk-formatting-with-asus-wrt-merlin.54778/).
+The first version of this guide was [posted to the SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-455723) and led to the development of the [disk formatting AMTM script](https://www.snbforums.com/threads/amtm-the-snbforum-asuswrt-merlin-terminal-menu.42415/). The guide is now maintained here on the Merlin Wiki. Discuss the guide in the [Official Forum Thread](https://www.snbforums.com/threads/disk-formatting.54778/).
 
 Special thanks to thelonelycoder and ColinTaylor
