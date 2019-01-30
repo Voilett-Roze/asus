@@ -1,4 +1,4 @@
-# Guide to disk formatting with ASUS-WRT Merlin
+# Guide to disk formatting with Asuswrt-Merlin
 
 Learn how ASUS routers can be used to directly repartition and format attached USB disks from the command line. Follow a step-by-step guide or use a simple interactive menu-based script to automatically format disks to ext2, ext3, ext4 filesystem. Disks larger than 2TB aren't supported due to [partition table size limits](#partition-tables).
 
