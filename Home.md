@@ -92,7 +92,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 15. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions)
 16. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
 17. [Setting up a NTP Server for your LAN](/RMerl/asuswrt-merlin/wiki/Setting-up-an-NTP-Server-for-your-local-lan)
-18. [Disk formatting with ASUS-WRT Merlin](/RMerl/asuswrt-merlin/wiki/Disk-formatting)
+18. [Disk formatting](/RMerl/asuswrt-merlin/wiki/Disk-formatting)
 
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin/wiki/FAQ)
