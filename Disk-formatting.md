@@ -44,11 +44,11 @@ Questions? Post them to the [Official Forum Thread](https://www.snbforums.com/th
 
 #### Partition tables
 There are some compatibility issues with partition tables:
-- **MBR** _'Master Boot Record'_ has best compatibility with ASUS-WRT.
+- **MBR** _'Master Boot Record'_ has best compatibility with ASUSWRT.
 - **MBR** only supports maximum disk capacity 2TB (entire disk).
 - **GPT** _'GUID Partition Table'_ supports disks over 2TB.
-- **GPT** is unfortunately not supported by **fdisk** on ASUS-WRT so devices using GPT will appear locked in **fdisk** and may return error message similar to _"Found valid GPT with protective MBR; using GPT"_. In this case the existing GPT must be erased without fdisk. One solution is to zero the disk. Another solution is the [automatic disk formatting script](#automatic-disk-formatting-script).
-	> Quote: "Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with GTP on another device and then skip the whole of that step ..." -- ColinTaylor, posted on [SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414).
+- **GPT** is unfortunately not supported by **fdisk** on ASUSWRT so devices using GPT will appear locked in **fdisk** and may return error message similar to _"Found valid GPT with protective MBR; using GPT"_. In this case the existing GPT must be erased without fdisk. One solution is to zero the disk. Another solution is the [automatic disk formatting script](#automatic-disk-formatting-script).
+	> Quote: "The Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with a GTP on another device and then skip the whole of that step ..." -- ColinTaylor, posted on [SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414).
 
 #### Unmounting disks
 There are a few problems you can run into when unmounting disks by command line:
@@ -63,13 +63,13 @@ You may be unable to unmount because the disk is being used by something.
 admin@RT-AC86U:/tmp/home/root# umount /tmp/mnt/SANDISK/
 umount: can't unmount /tmp/mnt/SANDISK: Device or resource busy
 ```
-This problem is difficult to avoid and the best you can do is try to stop any processes/scripts that may be utilising the disk. If you encounter this problem there is no advice available on how or what processes to kill, so the best recommendation is to unmount with the web UI.
->Quote: "Don't use -f. The device must be cleanly unmounted. If the user cannot unmount the device then they shouldn't proceed. Do not use the -l option of umount either. This option was suggested at one point but must not be used. It will cause problems, especially with devices that have multiple partitions. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in entware." -- ColinTaylor
+This problem is difficult to avoid and the best you can do is try to stop any processes/scripts that may be utilising the disk. If you encounter this problem there is no advice available on how or what processes to kill, so the best recommendation is to unmount with the web GUI.
+>Quote: "The device must be properly unmounted. If the user cannot unmount the device then they shouldn't proceed. Using the -f option won't help. Do not use the -l option of umount either. This option was suggested at one point but must not be used. It will cause problems, especially with devices that have multiple partitions. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in Entware." -- ColinTaylor
 
 ##### _Ghost devices_
 You may find duplicate devices get created.
-- umount command does NOT automatically remove the device mount point.
-- removing mount point must be done manually.
+- the umount command does NOT automatically remove the device mount point.
+- removing the mount point must be done manually.
 - failure to delete the mount point for unmounted devices can result in a confusing list of duplicate "ghost" devices and other problems.
 
 This problem can be avoided by remembering to manually remove the directories your disk was previously mounted as.
@@ -111,7 +111,7 @@ Visit the [Developer's website](https://diversion.ch/amtm.html) and the [Forum t
 ### 1. Preparations
 - The process erases all data and partitions on the device.
 - Backup valuable data.
-- Format disk with FAT32 filesystem before beginning to ensure it is clean and detectable by ASUS-WRT firmware.
+- Format disk with FAT32 filesystem before beginning to ensure it is clean and detectable by ASUSWRT firmware.
 - To be on the safe side, remove all other attached USB devices from router before continuing.
 
 Consider checking the [ASUS Plug-n-Share Disks Compatibility List](https://event.asus.com/2009/networks/disksupport/)
@@ -123,7 +123,7 @@ Plug your USB storage device into either the USB 2.0 or USB 3.0 port.
 - USB 3.0 High Speed port: best for large capacity disks typically used for sharing large media files and video streaming.
 - USB 2.0 Low Speed port: suitable for small capacity flash-drives typically used only for router scripts like Diversion, Skynet, Stubby etc.
 
-Tip: Insufficient shielding on USB ports for some router models may cause WiFi interference on the 2.4ghz band. You may choose to enable the Reduce USB Interference option in the router Web UI.
+Tip: Insufficient shielding on USB ports for some router models may cause WiFi interference on the 2.4 GHz band. You may choose to enable the Reduce USB Interference option in the router Web GUI.
 
 ----
 ### 3. Connect to router via ssh
@@ -196,7 +196,7 @@ The information seen above will be used for all future examples.
 ----
 ### 5. Unmount
 
-All partitions on the device **must** be _properly_ unmounted and their respective mount points manually removed BEFORE we can zero the entire disk, write a new MBR partition table and format with an ext2, ex3 or ex4 filesystem.
+All partitions on the device **must** be _properly_ unmounted and their respective mount points manually removed BEFORE we can zero the disk, write a new MBR partition table and format with an ext2, ex3 or ex4 filesystem.
 
 **mount** command will list mounted devices:
 
@@ -225,7 +225,7 @@ From my output we can see:
 2. **sda1** currently uses the disk label **SANDISK**
 3. **sda1** is formatted with type **ex4** filesystem
 
-Unmounting your device can be done in two (2) different ways; using the router web GUI or using the command line. It is preferable to unmount from the webUI for [reasons outlined in limitations section](#unmounting-disks) and then [skip to the next step and zero your disk](#6-zero-disk).
+Unmounting your device can be done in two (2) different ways; using the router web GUI or using the command line. It is preferable to unmount from the web GUI for [reasons outlined in limitations section](#unmounting-disks) and then [skip to the next step and zero your disk](#6-zero-disk).
 
 **umount** command unmounts filesystems.
 
@@ -405,13 +405,15 @@ To enable 64bit filesystem compatibility omit the ^:
 ----
 ### 9. Reboot and mount disk
 
-Rebooting the router is highly recommended to remount a USB device. You may encounter errors with ASUS-WRT if you try mount manually instead of rebooting.
+Rebooting the router is highly recommended to remount the USB device. You may encounter issues with ASUSWRT if you try to mount it manually instead of rebooting.
 
-Reboot ASUS router with this command: 
+Reboot the router with this command: 
 
 `/sbin/reboot`
 
-If a reboot isn't possible then try manually mount the device. My example device sda1 with label SANDISK can be mounted with this command:
+If a reboot isn't possible then try to manually mount the device. My example device sda1 with label SANDISK can be mounted with these commands:
+
+`mkdir /tmp/mnt/SANDISK`
 
 `mount /dev/sda1 /tmp/mnt/SANDISK`
 
