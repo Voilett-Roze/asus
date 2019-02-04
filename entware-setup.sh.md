@@ -1,0 +1,1 @@
+admin@RT-AC3100-D9C8:/tmp/mnt/sda1/asusware
