@@ -1,5 +1,5 @@
 ## Introduction ##
-**Links in the Installation portion are obsolete.**
+**Links in the Installation portion are obsolete. Before the guide can be followed they must be updated!**
 This guide will help you setup advertisement filtering (similar to [Adblock Plus](http://adblockplus.org)) through your router. It is suggested to use in conjunction with a mobile device (such as an iOS or Android smartphone), as filtering a PC will cause performance loss due to hardware limitations on the router. This guide uses [privoxy](http://www.privoxy.org) (a proxy server) to capture and filter traffic from mobile devices.
 
 ## Prerequisites ##
