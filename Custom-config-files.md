@@ -73,6 +73,7 @@ The list of available postconf scripts is:
  * hosts.postconf
  * igmpproxy.postconf
  * inadyn.postconf
+ * ipsec.postconf
  * minidlna.postconf
  * mt-daap.postconf
  * openvpnclient1.postconf (1 through 5)
@@ -82,6 +83,7 @@ The list of available postconf scripts is:
  * shadow.postconf
  * smb.postconf
  * snmpd.postconf
+ * strongswan.postconf
  * torrc.postconf
  * upnp.postconf
  * vsftpd.postconf
