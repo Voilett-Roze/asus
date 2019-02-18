@@ -48,22 +48,30 @@ There are some compatibility issues with partition tables:
 - **MBR** only supports maximum disk capacity 2TB (entire disk).
 - **GPT** _'GUID Partition Table'_ supports disks over 2TB.
 - **GPT** is unfortunately not supported by **fdisk** on ASUSWRT so devices using GPT will appear locked in **fdisk** and may return error message similar to _"Found valid GPT with protective MBR; using GPT"_. In this case the existing GPT must be erased without fdisk. One solution is to zero the disk. Another solution is the [automatic disk formatting script](#automatic-disk-formatting-script).
-	> Quote: "The Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with a GTP on another device and then skip the whole of that step ..." -- ColinTaylor, posted on [SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414).
+
+> Quote: "The Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with a GTP on another device and then skip the whole of that step ..." -- ColinTaylor, posted on [SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414).
+
+Please note: if your disk is larger than 2TB you could [install entware utility **gdisk** on router to create a GPT](https://www.snbforums.com/threads/how-to-partition-bigger-than-2tb-disk-with-gpt-and-ext4.55025/#post-465862) but that is more complicated and outside the scope of this guide.
 
 #### Unmounting disks
 There are a few problems you can run into when unmounting disks by command line:
 
 ##### _Device or resource is busy_
-You may be unable to unmount because the disk is being used by something.
-- do not use the options `-f` or `-l` with umount because it won't help and may corrupt data.
-- try stopping processes or scripts that may be utilizing the disk.
-- try unmounting device from the web GUI instead.
-- please note disks unmounted via web GUI cannot be found when running the **fd** format disk function in the [automatic disk formatting script](#automatic-disk-formatting-script). You first would need to reboot the router to remount the disk.
+You cannot unmount the disk if a script or process is utilizing it.
 ```
 admin@RT-AC86U:/tmp/home/root# umount /tmp/mnt/SANDISK/
 umount: can't unmount /tmp/mnt/SANDISK: Device or resource busy
 ```
-This problem is difficult to avoid and the best you can do is try to stop any processes/scripts that may be utilising the disk. If you encounter this problem there is no advice available on how or what processes to kill, so the best recommendation is to unmount with the web GUI.
+This is a common problem and difficult to avoid if you already have scripts running on your router. We cannot advise you on what processes to kill. A better solution may be to do the following:
+1. Unmount the disk from the ASUS web GUI
+2. [Zero the disk to eradicate the existing partition table](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#6-zero-disk)
+3. Reboot the router to clear memory of the old partition table from the kernel
+4. [You should then continue on from step 5 as normal](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#5-unmount)
+
+Please note:
+- [the AMTM **fd** format disk feature](#automatic-disk-formatting-script) cannot see disks that were unmounted via web GUI. Remount the disk by rebooting the router and then AMTM should be able to find it.
+- do not use the options `-f` or `-l` with umount because it won't help and may corrupt data.
+
 >Quote: "The device must be properly unmounted. If the user cannot unmount the device then they shouldn't proceed. Using the -f option won't help. Do not use the -l option of umount either. This option was suggested at one point but must not be used. It will cause problems, especially with devices that have multiple partitions. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in Entware." -- ColinTaylor
 
 ##### _Ghost devices_
