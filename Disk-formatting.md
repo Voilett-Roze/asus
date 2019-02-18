@@ -51,7 +51,7 @@ There are some compatibility issues with partition tables:
 
 > Quote: "The Master Boot Record partition table limits the maximum size of the entire disk (not just a partition) to 2TB. If you have a disk larger than this you need to use a GUID partition table (GPT). Whilst personally I always use MBR if possible for compatibility reasons, we know that Asus officially supports disks of at least 4TB, ergo they must also support GPT. But here's the rub, the router's version of fdisk doesn't support GTP partition tables let alone have the option to create them. So owners of such devices ... will have to partition them with a GTP on another device and then skip the whole of that step ..." -- ColinTaylor, posted on [SNB Forums](https://www.snbforums.com/threads/ext4-disk-formatting-options-on-the-router.48302/page-2#post-456414).
 
-Please note: if your disk is larger than 2TB you could [install entware utility **gdisk** on router to create a GPT](https://www.snbforums.com/threads/how-to-partition-bigger-than-2tb-disk-with-gpt-and-ext4.55025/#post-465862) but that is more complicated and outside the scope of this guide.
+Please note: if your disk is larger than 2TB you could [install entware utility **gdisk** on router to create a GPT](https://www.snbforums.com/threads/how-to-partition-bigger-than-2tb-disk-with-gpt-and-ext4.55025/) but that is more complicated and outside the scope of this guide.
 
 #### Unmounting disks
 There are a few problems you can run into when unmounting disks by command line:
@@ -312,7 +312,7 @@ Disk /dev/sda doesn't contain a valid partition table
 Sources:
 - [snbforums post-447604](https://www.snbforums.com/threads/diversion-the-router-ad-blocker.48538/page-71#post-447604)
 - [snbforums post-459430](https://www.snbforums.com/threads/beta-amtm-v1-6\_beta-now-with-disk-formatting-automated.54490/page-2#post-459430)
-- [superuser question-687147](https://superuser.com/questions/687147/how-to-format-a-usb-stick-flash-drive-with-fat32-for-use-on-linux-and-windows/687189#687189).
+- [superuser question-687147](https://superuser.com/questions/687147/how-to-format-a-usb-stick-flash-drive-with-fat32-for-use-on-linux-and-windows/687189#687189)
 
 ----
 ### 7. Repartition disk
