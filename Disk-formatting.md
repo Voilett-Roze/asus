@@ -290,6 +290,17 @@ My example disk **/dev/sda** can be zero'd with this command:
 
 You see we included two (2) options in the command: **bs** is block size in bytes and **count** is the number of blocks to write. Using the default block size of **512** bytes, multiplied by a _block count_ of **16065** we can overwrite the first 8225280 bytes of the disk with zero's. This will completely erase the old partition table and the beginning of the new partition.
 
+From my output we can see the partition table has been removed:
+```
+admin@RT-AC86U:/# fdisk -l
+
+Disk /dev/sda: 15.3 GB, 15376318464 bytes
+255 heads, 63 sectors/track, 1869 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+Disk /dev/sda doesn't contain a valid partition table
+```
+
 Sources:
 - [snbforums post-447604](https://www.snbforums.com/threads/diversion-the-router-ad-blocker.48538/page-71#post-447604)
 - [snbforums post-459430](https://www.snbforums.com/threads/beta-amtm-v1-6\_beta-now-with-disk-formatting-automated.54490/page-2#post-459430)
