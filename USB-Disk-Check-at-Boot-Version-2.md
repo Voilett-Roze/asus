@@ -38,13 +38,13 @@ This script contains code blocks for every possible filesystem type to help expl
 
     # $1=device $2=filesystem type
 
+    TAG="$(basename $0)"
+    CHKLOG="/var/log/fsck.log"
+
     if [ $# -lt 2 ]; then
         logger -t "$TAG" "Missing paramter. Firmware too old?"
         exit 1
     fi
-
-    TAG="$(basename $0)"
-    CHKLOG="/var/log/fsck.log"
 
     case "$2" in
         "")
