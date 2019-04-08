@@ -95,4 +95,4 @@ This script contains code blocks for every possible filesystem type to help expl
     echo -e "\nStarting '$CHKCMD $1' at $(date)" >> $CHKLOG
     $CHKCMD "$1" >> $CHKLOG 2>&1
 
-This advanced script borrows heavily from the router's own built-in disk checker, `/usr/sbin/app_fsck.sh`. In fact you may want to use `pre-mount` as a simple wrapper for that built-in script. However, that script does have some limitations or use options that you find undesirable.
+This advanced script borrows heavily from the router's own built-in disk checker, `/usr/sbin/app_fsck.sh`. In fact you may want to use `pre-mount` as a simple wrapper for that built-in script. However, that script does have some limitations or may use options that you find undesirable.
