@@ -1,18 +1,24 @@
 # This is work in progress and not yet published!
 
 ## Background
-This guide is a followup to the original found [here](https://github.com/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot). The purpose of this guide is to provide example scripts that can be used to automatically check and repair the filesystems of USB storage devices during boot. This might be desirable because after the router has booted it can sometimes be difficult to unmount a filesystem for checking. This is especially true if that filesystem is used by Entware.
+This guide is a followup to the original found [here](https://github.com/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot). The purpose of this guide is to provide example `pre-mount` scripts that can be used to automatically check and repair the filesystems of USB storage devices during boot or when they are plugged in. This might be desirable because after the router has automatically mounted a filesystem it can sometimes be difficult to unmount it for checking. This is especially true if that filesystem is used by third-party software such as Entware.
 
-The script shown in the original guide has the following limitations:
+This guide attempts to address the following limitations present in the original script:
 1. It uses MBR partition IDs to identify the filesystem type. Unfortunately there is no guarantee that the partition ID actually matches the filesystem present in the partition.
-2. It uses a command to check NTFS filesystems that may not be present on certain router models.
-3. It makes no attempt to check HFS filesystems.
+2. It is not compatible with GPT disks.
+3. It uses a command to check NTFS filesystems that may not be present on certain router models.
+4. It makes no attempt to check HFS filesystems.
 
-Since Merlin's 384.10_3 and John's V39E1 release a second parameter (`$2`) is passed to the `pre-mount` user script. This parameter contains the filesystem type as detected by the router. This should be much more reliable than using the partition ID. The following is a list of all the possible types: `NULL`, `mbr`, `swap`, `ext2`, `ext3`, `ext4`, `hfs`, `hfs+j`, `hfs+jx`, `ntfs`, `apple_efi`, `vfat`, `unknown`.
+Since Merlin's 384.11?? and John's V39E1 firmware releases a second parameter (`$2`) is passed to the `pre-mount` user script. This parameter contains the filesystem type as detected by the router. This should be much more reliable than using the partition ID. The following is a list of all the possible types: `NULL`, `mbr`, `swap`, `ext2`, `ext3`, `ext4`, `hfs`, `hfs+j`, `hfs+jx`, `ntfs`, `apple_efi`, `vfat`, `unknown`.
 
 The first parameter is unchanged and is the device name (e.g. `/dev/sda1` or `/dev/sda`). Please note that it is valid to have a device name that doesn't end in a digit (e.g. `/dev/sda`). This typically indicates that the device has no partition table and contains a single filesystem (i.e. a Super Floppy) as commonly seen with USB flash drives.
 ## Prerequisites
-The following firmware versions or higher are required: Merlin's 384.10_3 or John's V39E1.
+The following firmware versions or higher are required: Merlin's 384.11?? or John's V39E1.
+
+## Considerations
+1. Where possible the example scripts perform a "quick" check of the filesystem. This is usually desirable because `pre-mount` is a blocking script and performing a full filesystem check could detrimentally effect boot times.
+2. When using the "Disk Scan" utility in the router's webUI bear in mind that after it has completed the device is remounted causing `pre-mount` to run again. This could mean that the device is checked a second time!
+
 ## Example scripts
 
 The following can be used as-is or as the basis for your own `pre-mount` script. I won't describe how to create or enable [user scripts](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) as that is explained elsewhere in the wiki. I have tried to write these examples in such a way that it is easy to understand how they work. They deliberately _don't_ use "clever" (i.e. non-obvious) coding techniques.
@@ -32,7 +38,7 @@ This script only checks ext2, ext3 and ext4 filesystems and sends all output to 
     fi
 
 ### Advanced script
-This script contains code blocks for every possible filesystem type to help explain the meaning of some of the less obvious ones. Indeed, I would encourage you to remove sections that you're not interested (e.g. `""`, `mbr`, `swap`, `hfs`, `apple_efi` and `unknown`) in order to keep _your_ script more manageable. Informational messages are sent to the router's syslog but the actual output from the fsck commands are sent to `/var/log/fsck.log`.
+This script contains code blocks for every possible filesystem type to help document the meaning of some of the less obvious ones. Indeed, I would encourage you to remove sections that you're not interested in (e.g. `""`, `mbr`, `swap`, `hfs`, `apple_efi` and `unknown`) in order to keep _your_ script more manageable. Informational messages are sent to the router's syslog but the actual output from the fsck commands are sent to `/var/log/fsck.log`.
 
     #!/bin/sh
 
