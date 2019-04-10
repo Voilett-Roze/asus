@@ -5,22 +5,11 @@ By default, the same services as before are supported (including full support fo
 
 
 ## Using one of the services supported by In-a-dyn but not by the Asuswrt-Merlin webui
-First, create an `inadyn.conf` config, and store it into `/jffs/` so it will persist through reboots.  Please consult the In-a-dyn [documentation](https://github.com/troglobit/inadyn) for more information on how to configure an In-a-dyn service.  Make sure your config file contains the following lines:
-
-```
-ca-trust-file = /etc/ssl/certs/ca-certificates.crt
-iterations = 1
-```
-
-This will ensure that HTTPS-based updates will be able to validate the server certificate, and also that In-a-dyn will exit once it has complete its update (Asuswrt-Merlin runs In-a-dyn as a client rather than as a daemon).
+First, create an `inadyn.conf` config, and store it into `/jffs/` so it will persist through reboots (not to be confused with `/jffs/configs/inadyn.conf`, which overwrites WebUI settings).  Please consult the In-a-dyn [documentation](https://github.com/troglobit/inadyn) for more information on how to configure an In-a-dyn service.
 
 Here is an example for a complete In-a-dyn config file for a custom service, based after selfhost.de:
 
 ```
-ca-trust-file   = /etc/ssl/certs/ca-certificates.crt
-iterations = 1
-period = 300
-
 custom selfhost {
 	ddns-server = carol.selfhost.de
 	ddns-path = "/nic/update?hostname=%%h&myip=%%i"
@@ -39,14 +28,14 @@ checkip-command = "/usr/sbin/nvram get wan0_ipaddr"
 Verify the configuration using:
 
 ```
-inadyn --check-config -f /jffs/inadyn.conf
+inadyn --check-config -f "/jffs/inadyn.conf"
 ```
 
-Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your custom config. The script must be placed in `/jffs/scripts/`. Such a script would look like this:
+Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your custom config. The script must be placed in `/jffs/scripts/`. The `-once` option will ensure that In-a-dyn will exit once it has completed its update (Asuswrt-Merlin runs In-a-dyn as a client rather than as a daemon). Such a script would look like this:
 
 ```
 #!/bin/sh
-/usr/sbin/inadyn -f /jffs/inadyn.conf -e "/sbin/ddns_custom_updated 1" --exec-nochg "/sbin/ddns_custom_updated 1"
+inadyn -once -f "/jffs/inadyn.conf" -e "/sbin/ddns_custom_updated 1" --exec-nochg "/sbin/ddns_custom_updated 1"
 ```
 
 Give the `ddns-start` execute permissions:
@@ -57,11 +46,11 @@ chmod +x /jffs/scripts/ddns-start
 
 Note In-a-dyn will take care of calling ddns_updated as appropriate if the update succeeded when using these parameters, so no need to explicitly run it manually after the update.
 
-On the webui, set your DDNS provider to "CUSTOM" and provide a hostname. Apply the changes and you should see a `Registration is successful` dialog.
+On the WebUI, set your DDNS provider to "Custom" and provide a hostname. Apply the changes and you should see a `Registration is successful` dialog.
 
 
 ## Updating multiple services
-In-a-dyn allows you to define multiple services within a single config file.  If for example you configured no-ip.com through the webui, and you also want to update freedns.afraid.org, create the following `/jffs/configs/inadyn.conf.add` file, with your second service definition:
+In-a-dyn allows you to define multiple services within a single config file.  If for example you configured no-ip.com through the WebUI, and you also want to update freedns.afraid.org, create the following `/jffs/configs/inadyn.conf.add` file, with your second service definition:
 
 ```
 provider default@freedns.afraid.org {
@@ -72,10 +61,12 @@ provider default@freedns.afraid.org {
 }
 ```
 
-Whenever Asuswrt-Merlin will issue a ddns update, both the service on the webui and your additional Freedns service will be updated at the same time.
+Whenever Asuswrt-Merlin will issue a ddns update, both the service on the WebUI and your additional Freedns service will be updated at the same time.
+
+Note that the "Custom" and "www.oray.com" providers do not use In-a-dyn, therefore `/jffs/configs/inadyn.conf`, `/jffs/configs/inadyn.conf.add` and `/jffs/scripts/inadyn.postconf` will also be unused. In-a-dyn can be called via `ddns-start` as above in these cases.
 
 
 ## DDNS updates through either double NAT or a CGNAT connection
 Also starting with 384.7, Asuswrt-Merlin lets you choose between **Internal** or **External** IP check methods.  The **Internal** method is the same one that was used until now - the IP on your WAN interface is retrieved from nvram, and provided to In-a-dyn, which will provide it to the DDNS server (provided that server supports it).  The **External** method is new, and lets the DDNS service provider determine your WAN IP (based on the IP from which you connect with it).  This will allow your provider to retrieve your real public IP if your Asus router is behind another router, or your ISP uses CGNAT to provide you with a non-public IP.
 
-Note that this parameter only applies to the built-in services listed on the webui.  If you use a custom config or script, it will be up to you to handle how the IP is provided - that webui setting will have no effect.
+Note that this parameter only applies to the built-in services listed on the WebUI.  If you use a custom config or script, it will be up to you to handle how the IP is provided - that WebUI setting will have no effect.
