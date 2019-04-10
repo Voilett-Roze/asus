@@ -13,7 +13,7 @@ Since Merlin's 384.11?? and John's V39E1 firmware releases a second parameter (`
 
 The first parameter is unchanged and is the device name (e.g. `/dev/sda1` or `/dev/sda`). Please note that it is valid to have a device name that doesn't end in a digit (e.g. `/dev/sda`). This typically indicates that the device has no partition table and contains a single filesystem (i.e. a Super Floppy) as commonly seen with USB flash drives.
 ## Prerequisites
-The following firmware versions or higher are _required_: Merlin's 384.11?? or John's V39E1.
+The following firmware versions or higher are **required**: Merlin's 384.11?? or John's V39E1.
 
 ## Considerations
 1. Where possible the example scripts perform a "quick" check of the filesystem. This is usually desirable because `pre-mount` is a blocking script and performing a full filesystem check could detrimentally effect boot times.
@@ -38,7 +38,7 @@ This script only checks ext2, ext3 and ext4 filesystems and sends **all** output
     fi
 
 ### Typical script
-This script is a cut down version of the advanced script and is probably appropriate for most users. It contains only the sections that perform the checks. Types of `""`, `mbr`, `swap`, `apple_efi` and `unknown` are ignored. Informational messages are sent to the router's syslog but the actual output from the fsck commands are sent to `/var/log/fsck.log`.
+This script is a cut down version of the Advanced script and is probably appropriate for most users. It contains only the sections that perform the checks. Types of `""`, `mbr`, `swap`, `apple_efi` and `unknown` are ignored. If you don't use HFS (i.e. Apple) disks you might want to remove that section of the code as well. Informational messages are sent to the router's syslog but the actual output from the fsck commands are sent to `/var/log/fsck.log`.
 
     #!/bin/sh
 
