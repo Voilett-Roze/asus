@@ -13,7 +13,7 @@ Since Merlin's 384.11?? and John's V39E1 firmware releases a second parameter (`
 
 The first parameter is unchanged and is the device name (e.g. `/dev/sda1` or `/dev/sda`). Please note that it is valid to have a device name that doesn't end in a digit (e.g. `/dev/sda`). This typically indicates that the device has no partition table and contains a single filesystem (i.e. a Super Floppy) as commonly seen with USB flash drives.
 ## Prerequisites
-The following firmware versions or higher are required: Merlin's 384.11?? or John's V39E1.
+The following firmware versions or higher are _required_: Merlin's 384.11?? or John's V39E1.
 
 ## Considerations
 1. Where possible the example scripts perform a "quick" check of the filesystem. This is usually desirable because `pre-mount` is a blocking script and performing a full filesystem check could detrimentally effect boot times.
@@ -23,13 +23,13 @@ The following firmware versions or higher are required: Merlin's 384.11?? or Joh
 
 The following can be used as-is or as the basis for your own `pre-mount` script. I won't describe how to create or enable [user scripts](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) as that is explained elsewhere in the wiki. I have tried to write these examples in such a way that it is easy to understand how they work. They deliberately _don't_ use "clever" (i.e. non-obvious) coding techniques.
 ### Simple script
-This script only checks ext2, ext3 and ext4 filesystems and sends all output to the router's syslog.
+This script only checks ext2, ext3 and ext4 filesystems and sends **all** output to the router's syslog.
 
     #!/bin/sh
 
     # $1=device $2=filesystem type
 
-    TAG="$(basename $0)"
+    TAG=$(basename "$0")
 
     if [ "$2" = "ext2" ] || [ "$2" = "ext3" ] || [ "$2" = "ext4" ]; then
         CHKCMD="e2fsck -p $1"
@@ -37,15 +37,57 @@ This script only checks ext2, ext3 and ext4 filesystems and sends all output to 
         $CHKCMD 2>&1 | logger -t "$TAG"
     fi
 
-### Advanced script
-This script contains code blocks for every possible filesystem type to help document the meaning of some of the less obvious ones. Indeed, I would encourage you to remove sections that you're not interested in (e.g. `""`, `mbr`, `swap`, `hfs`, `apple_efi` and `unknown`) in order to keep _your_ script more manageable. Informational messages are sent to the router's syslog but the actual output from the fsck commands are sent to `/var/log/fsck.log`.
+### Typical script
+This script is a cut down version of the advanced script and is probably appropriate for most users. It contains only the sections that perform the checks. Types of `""`, `mbr`, `swap`, `apple_efi` and `unknown` are ignored. Informational messages are sent to the router's syslog but the actual output from the fsck commands are sent to `/var/log/fsck.log`.
 
     #!/bin/sh
 
     # $1=device $2=filesystem type
 
-    TAG="$(basename $0)"
-    CHKLOG="/var/log/fsck.log"
+    TAG=$(basename "$0")
+    CHKLOG=/var/log/fsck.log
+    CHKCMD=""
+
+    case "$2" in
+        ext2|ext3|ext4)
+            CHKCMD="e2fsck -p" ;;
+        hfs|hfs+j|hfs+jx)
+            if [ -x /usr/sbin/fsck.hfsplus ]; then
+                CHKCMD="fsck.hfsplus -f"
+            elif [ -x /usr/sbin/chkhfs ]; then
+                CHKCMD="chkhfs -a -f"
+            elif [ -x /usr/sbin/fsck_hfs ]; then
+                CHKCMD="fsck_hfs -fy"
+            fi ;;
+        ntfs)
+            if [ -x /usr/sbin/chkntfs ]; then
+                CHKCMD="chkntfs -a -f"
+            elif [ -x /usr/sbin/ntfsck ]; then
+                CHKCMD="ntfsck -a"
+            fi ;;
+        vfat)
+            if [ -x /usr/sbin/fatfsck ]; then
+                CHKCMD="fatfsck -a"
+            fi ;;
+    esac
+
+    if [ -n "$CHKCMD" ]; then
+        logger -t "$TAG" "Running '$CHKCMD $1' - see output in $CHKLOG"
+        echo -e "\nStarting '$CHKCMD $1' at $(date)" >> $CHKLOG
+        $CHKCMD "$1" >> $CHKLOG 2>&1
+    fi
+
+
+### Advanced script
+This script contains code blocks for every possible filesystem type to help document the meaning of some of the less obvious ones. I would encourage you to remove sections that you're not interested in in order to keep _your_ script more manageable. Informational messages are sent to the router's syslog but the actual output from the fsck commands are sent to `/var/log/fsck.log`.
+
+    #!/bin/sh
+
+    # $1=device $2=filesystem type
+
+    TAG=$(basename "$0")
+    CHKLOG=/var/log/fsck.log
+    CHKCMD=""
 
     if [ $# -lt 2 ]; then
         logger -t "$TAG" "Missing paramter. Firmware too old?"
@@ -54,51 +96,45 @@ This script contains code blocks for every possible filesystem type to help docu
 
     case "$2" in
         "")
-            logger -t "$TAG" "Error reading device $1"
-            exit 1 ;;
+            logger -t "$TAG" "Error reading device $1" ;;
         mbr)
-            logger -t "$TAG" "No partitions found in MBR ($1)"
-            exit 1 ;;
+            logger -t "$TAG" "No partitions found in MBR ($1)" ;;
         swap)
-            logger -t "$TAG" "$1 is a swap partition"
-            exit 0 ;;
+            logger -t "$TAG" "$1 is a swap partition" ;;
         ext2|ext3|ext4)
             CHKCMD="e2fsck -p" ;;
         hfs|hfs+j|hfs+jx)
-            hfs_mod="$(nvram get usb_hfs_mod)"
-            if [ "$hfs_mod" = "open" ]; then
+            if [ -x /usr/sbin/fsck.hfsplus ]; then
                 CHKCMD="fsck.hfsplus -f"
-            elif [ "$hfs_mod" = "paragon" ]; then
+            elif [ -x /usr/sbin/chkhfs ]; then
                 CHKCMD="chkhfs -a -f"
-            elif [ "$ntfs_mod" = "tuxera" ]; then
+            elif [ -x /usr/sbin/fsck_hfs ]; then
                 CHKCMD="fsck_hfs -fy"
-            else
-                exit 1
             fi ;;
         ntfs)
-            ntfs_mod="$(nvram get usb_ntfs_mod)"
-            if [ "$ntfs_mod" = "paragon" ] || [ -z "$(nvram dump | grep usb_ntfs_mod)" ]; then
+            if [ -x /usr/sbin/chkntfs ]; then
                 CHKCMD="chkntfs -a -f"
-            elif [ "$ntfs_mod" = "tuxera" ]; then
+            elif [ -x /usr/sbin/ntfsck ]; then
                 CHKCMD="ntfsck -a"
-            else
-                exit 1
             fi ;;
         apple_efi)
-            logger -t "$TAG" "$1 is an Apple EFI system partition"
-            exit 0 ;;
+            logger -t "$TAG" "$1 is an Apple EFI system partition" ;;
         vfat)
-            CHKCMD="fatfsck -a" ;;
+            if [ -x /usr/sbin/fatfsck ]; then
+                CHKCMD="fatfsck -a"
+            fi ;;
         unknown)
-            logger -t "$TAG" "$1 has an unknown filesystem (e.g. exFAT) or no partition table (e.g. blank media)"
-            exit 1 ;;
+            logger -t "$TAG" "$1 has an unknown filesystem (e.g. exFAT) or no partition table (e.g. blank media)" ;;
         *)
-            logger -t "$TAG" "Unexpected filesystem type $2 for $1"
-            exit 1 ;;
+            logger -t "$TAG" "Unexpected filesystem type $2 for $1" ;;
     esac
 
-    logger -t "$TAG" "Running '$CHKCMD $1' - see output in $CHKLOG"
-    echo -e "\nStarting '$CHKCMD $1' at $(date)" >> $CHKLOG
-    $CHKCMD "$1" >> $CHKLOG 2>&1
+    if [ -n "$CHKCMD" ]; then
+        logger -t "$TAG" "Running '$CHKCMD $1' - see output in $CHKLOG"
+        echo -e "\nStarting '$CHKCMD $1' at $(date)" >> $CHKLOG
+        $CHKCMD "$1" >> $CHKLOG 2>&1
+    fi
 
-This advanced script borrows heavily from the router's own built-in Disk Scan utility, `/usr/sbin/app_fsck.sh`. In fact you may want to use `pre-mount` as a simple wrapper for that script instead. However, that script does have some limitations and may use options that you find undesirable such as performing a "full" check.
+***
+
+The Typical and Advanced scripts borrow heavily from the router's own built-in Disk Scan utility, `/usr/sbin/app_fsck.sh`. In fact you may want to use `pre-mount` as a simple wrapper for that script instead. However, that script does have some limitations and may use options that you find undesirable such as performing a "full" check.
