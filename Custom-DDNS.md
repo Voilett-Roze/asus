@@ -25,31 +25,44 @@ IP=${1}
 ```
 and change it to get the IP from an external source
 ```
-IP=$(wget -O - -q http://myip.dnsomatic.com/)
+IP="$(curl -fs4 https://myip.dnsomatic.com/)"
 ```
 The above uses dnsomatic, but it can be modified to work with any source. The OpenWrt wiki provides a list [here](https://openwrt.org/docs/guide-user/services/ddns/client#detecting_public_ip).
 
 # Using a DDNS with VPN
-Here is an example of a script for redirecting a DDNS to a VPN IP, in openvpn-event script, add:
-```
-sh /jffs/scripts/up.sh &
-```
-create /jffs/scripts/up.sh and add the following code, editing the username, password and dyndns host
+Here is an example of a script for redirecting a DDNS to a VPN IP, in `/jffs/scripts/openvpn-event` add:
 ```
 #!/bin/sh
-#keep looping until all the routing for the VPN tunnel is established
-while [ ! -n  "`ifconfig | grep tun11`" ]; do
-    sleep 1
-done
-#once established, get VPN IP
-VPNIP=$(wget -qO - http://cfaj.freeshell.org/ipaddr.cgi)
-sleep 10
-ez-ipupdate -S dyndns -u user:password -h host.dyndns.org -a $VPNIP #update dyndns with VPN IP
-exit 0
+
+if [ "$script_type" = "up" ] && [ "$vpn_interface" = "tun11" ]; then
+	# OpenVPN tunnel won't open until openvpn-event script is finished, run the rest in a background shell
+	(
+		# Loop until VPN tunnel is established or the timeout limit is reached
+		COUNTER=0
+		LIMIT=10
+		while [ "$COUNTER" -le "$LIMIT" ] && ! ifconfig | grep -Fq "tun11"; do
+			sleep 1
+			COUNTER=$((COUNTER + 1))
+		done
+
+		# Update your DDNS here, some examples below
+
+		# Update dyndns via ez-ipupdate with VPN IP (pre 384.7)
+		VPNIP="$(curl -fs4 http://myip.dnsomatic.com/)"
+		ez-ipupdate -S "dyndns" -u "user:password" -h "host.dyndns.org" -a "$VPNIP"
+
+		# Update via inadyn (384.7+)
+		inadyn -once -f "/jffs/inadyn.conf"
+
+		# Update via curl
+		API="xxxxxxxxxxxxxxxx" # Your afraid.org API Key
+		curl -fs -o /dev/null "https://freedns.afraid.org/dynamic/update.php?${API}"
+	) &
+fi
 ```
-and make it executable
+and make sure it's executable
 ```
-chmod 700 /jffs/scripts/up.sh
+chmod +x /jffs/scripts/openvpn-event
 ```
 
 # Scripts for specific providers
