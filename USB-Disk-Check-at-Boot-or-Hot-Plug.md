@@ -90,7 +90,7 @@ This script contains code blocks for every possible filesystem type to help docu
     CHKCMD=""
 
     if [ $# -lt 2 ]; then
-        logger -t "$TAG" "Missing paramter. Firmware too old?"
+        logger -t "$TAG" "Missing parameter. Firmware too old?"
         exit 1
     fi
 
