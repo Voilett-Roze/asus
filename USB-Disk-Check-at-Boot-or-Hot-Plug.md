@@ -66,9 +66,7 @@ This script is a cut down version of the Advanced script and is probably appropr
                 CHKCMD="ntfsck -a"
             fi ;;
         vfat)
-            if [ -x /usr/sbin/fatfsck ]; then
-                CHKCMD="fatfsck -a"
-            fi ;;
+            CHKCMD="fatfsck -a" ;;
     esac
 
     if [ -n "$CHKCMD" ]; then
@@ -120,9 +118,7 @@ This script contains code blocks for every possible filesystem type to help docu
         apple_efi)
             logger -t "$TAG" "$1 is an Apple EFI system partition" ;;
         vfat)
-            if [ -x /usr/sbin/fatfsck ]; then
-                CHKCMD="fatfsck -a"
-            fi ;;
+            CHKCMD="fatfsck -a" ;;
         unknown)
             logger -t "$TAG" "$1 has an unknown filesystem (e.g. exFAT) or no partition table (e.g. blank media)" ;;
         *)
