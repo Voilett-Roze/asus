@@ -9,11 +9,11 @@ This guide attempts to address the following limitations present in the original
 3. It uses a command to check NTFS filesystems that may not be present on certain router models.
 4. It makes no attempt to check HFS filesystems.
 
-Since Merlin's 384.11?? and John's V39E1 firmware releases a second parameter (`$2`) is passed to the `pre-mount` user script. This parameter contains the filesystem type as detected by the router. This should be much more reliable than using the partition ID. The following is a list of all the possible types: `NULL`, `mbr`, `swap`, `ext2`, `ext3`, `ext4`, `hfs`, `hfs+j`, `hfs+jx`, `ntfs`, `apple_efi`, `vfat`, `unknown`.
+Since Merlin's 384.11 and John's V39E1 firmware releases a second parameter (`$2`) is passed to the `pre-mount` user script. This parameter contains the filesystem type as detected by the router. This should be much more reliable than using the partition ID. The following is a list of all the possible types: `NULL`, `mbr`, `swap`, `ext2`, `ext3`, `ext4`, `hfs`, `hfs+j`, `hfs+jx`, `ntfs`, `apple_efi`, `vfat`, `unknown`.
 
-The first parameter is unchanged and is the device name (e.g. `/dev/sda1` or `/dev/sda`). Please note that it is valid to have a device name that doesn't end in a digit (e.g. `/dev/sda`). This typically indicates that the device has no partition table and contains a single filesystem (i.e. a Super Floppy) as commonly seen with USB flash drives.
+The first parameter (`$1`) is unchanged and is the device name (e.g. `/dev/sda1` or `/dev/sda`). Please note that it is valid to have a device name that doesn't end in a digit (e.g. `/dev/sda`). This typically indicates that the device has no partition table and contains a single filesystem (i.e. a Super Floppy) as commonly seen with USB flash drives.
 ## Prerequisites
-The following firmware versions or higher are **required**: Merlin's 384.11?? or John's V39E1.
+The following firmware versions or higher are **required**: Merlin's 384.11 or John's V39E1.
 
 ## Considerations
 1. Where possible the example scripts perform a "quick" check of the filesystem. This is usually desirable because `pre-mount` is a blocking script and performing a full filesystem check could detrimentally effect boot times.
