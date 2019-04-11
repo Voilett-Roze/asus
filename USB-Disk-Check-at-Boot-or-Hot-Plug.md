@@ -3,10 +3,10 @@
 ## Background
 This guide is a followup to the original found [here](https://github.com/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot). The purpose of this guide is to provide example `pre-mount` scripts that can be used to automatically check and repair the filesystems of USB storage devices during boot or when they are plugged in. This might be desirable because after the router has automatically mounted a filesystem it can sometimes be difficult to unmount it for checking. This is especially true if that filesystem is used by third-party software such as Entware.
 
-This guide attempts to address the following limitations present in the original script:
-1. It uses MBR partition IDs to identify the filesystem type. Unfortunately there is no guarantee that the partition ID actually matches the filesystem present in the partition.
-2. It is not compatible with GPT disks.
-3. It uses a command to check NTFS filesystems that may not be present on certain router models.
+This guide attempts to address the following limitations of the original script:
+1. It is not compatible with GPT disks.
+2. It uses MBR partition IDs to identify the filesystem type. Unfortunately there is no guarantee that the partition ID actually matches the filesystem present in the partition.
+3. It uses a command to check NTFS filesystems that is not present in [John's firmware](https://www.snbforums.com/threads/fork-asuswrt-merlin-374-43-lts-releases-v39e1.18914/).
 4. It makes no attempt to check HFS filesystems.
 
 Since Merlin's 384.11 and John's V39E1 firmware releases a second parameter (`$2`) is passed to the `pre-mount` user script. This parameter contains the filesystem type as detected by the router. This should be much more reliable than using the partition ID. The following is a list of all the possible types: `NULL`, `mbr`, `swap`, `ext2`, `ext3`, `ext4`, `hfs`, `hfs+j`, `hfs+jx`, `ntfs`, `apple_efi`, `vfat`, `unknown`.
