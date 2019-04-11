@@ -29,12 +29,9 @@ This script only checks ext2, ext3 and ext4 filesystems and sends **all** output
 
     # $1=device $2=filesystem type
 
-    TAG=$(basename "$0")
-
     if [ "$2" = "ext2" ] || [ "$2" = "ext3" ] || [ "$2" = "ext4" ]; then
-        CHKCMD="e2fsck -p $1"
-        logger -t "$TAG" "Running '$CHKCMD'"
-        $CHKCMD 2>&1 | logger -t "$TAG"
+        logger -t "pre-mount" "Checking filesystem on $1"
+        e2fsck -p $1 2>&1 | logger -t "pre-mount"
     fi
 
 ### Typical script
