@@ -52,9 +52,7 @@ This script is a cut down version of the Advanced script and is probably appropr
         ext2|ext3|ext4)
             CHKCMD="e2fsck -p" ;;
         hfs|hfs+j|hfs+jx)
-            if [ -x /usr/sbin/fsck.hfsplus ]; then
-                CHKCMD="fsck.hfsplus -f"
-            elif [ -x /usr/sbin/chkhfs ]; then
+            if [ -x /usr/sbin/chkhfs ]; then
                 CHKCMD="chkhfs -a -f"
             elif [ -x /usr/sbin/fsck_hfs ]; then
                 CHKCMD="fsck_hfs -fy"
@@ -102,9 +100,7 @@ This script contains code blocks for every possible filesystem type to help docu
         ext2|ext3|ext4)
             CHKCMD="e2fsck -p" ;;
         hfs|hfs+j|hfs+jx)
-            if [ -x /usr/sbin/fsck.hfsplus ]; then
-                CHKCMD="fsck.hfsplus -f"
-            elif [ -x /usr/sbin/chkhfs ]; then
+            if [ -x /usr/sbin/chkhfs ]; then
                 CHKCMD="chkhfs -a -f"
             elif [ -x /usr/sbin/fsck_hfs ]; then
                 CHKCMD="fsck_hfs -fy"
