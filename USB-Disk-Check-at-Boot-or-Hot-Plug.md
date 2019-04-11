@@ -31,7 +31,7 @@ This script only checks ext2, ext3 and ext4 filesystems and sends **all** output
 
     if [ "$2" = "ext2" ] || [ "$2" = "ext3" ] || [ "$2" = "ext4" ]; then
         logger -t "pre-mount" "Checking filesystem on $1"
-        e2fsck -p $1 2>&1 | logger -t "pre-mount"
+        e2fsck -p "$1" 2>&1 | logger -t "pre-mount"
     fi
 
 ### Typical script
