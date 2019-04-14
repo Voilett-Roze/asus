@@ -1,5 +1,3 @@
-# This is work in progress and not yet published!
-
 ## Background
 This guide is a followup to the original found [here](https://github.com/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot). The purpose of this guide is to provide example `pre-mount` scripts that can be used to automatically check and repair the filesystems of USB storage devices during boot or when they are plugged in. This might be desirable because after the router has automatically mounted a filesystem it can sometimes be difficult to unmount it for checking. This is especially true if that filesystem is used by third-party software such as Entware.
 
