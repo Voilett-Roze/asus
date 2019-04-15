@@ -382,7 +382,7 @@ SUBDOMAIN="yoursubdomain"
 TOKEN="your-token"
 
 # no modification below needed
-curl --silent "https://www.duckdns.org/update?domains=$SUBDOMAIN&token=$TOKEN&ip=" >/dev/null 2>&1
+curl --silent "https://www.duckdns.org/update?domains=$SUBDOMAIN&token=$TOKEN&ip=$1" >/dev/null 2>&1
 if [ $? -eq 0 ];
 then
     /sbin/ddns_custom_updated 1
