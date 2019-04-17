@@ -16,7 +16,8 @@ The following firmware versions or higher are **required**: Merlin's 384.11 or J
 
 ## Considerations
 1. Where possible the example scripts perform a "quick" check of the filesystem. This is usually desirable because `pre-mount` is a blocking script and performing a full filesystem check could detrimentally effect boot times.
-2. When using the "Disk Scan" utility in the router's webUI bear in mind that after it has completed the device is remounted causing `pre-mount` to run again. This could mean that the device is checked a second time!
+2. By default a "full" check of an ext2, ext3 or ext4 filesystem is forced if it has been mounted more than 20 times or more than six months has passed since the last check. This behaviour can be changed with the `tune2fs` command.
+3. When using the "Disk Scan" utility in the router's webUI bear in mind that after it has completed the device is remounted causing `pre-mount` to run again. This could mean that the device is checked a second time!
 
 ## Example scripts
 
