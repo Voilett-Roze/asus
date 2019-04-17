@@ -52,7 +52,7 @@ This script is a cut down version of the Advanced script and is probably appropr
             if [ -x /usr/sbin/chkhfs ]; then
                 CHKCMD="chkhfs -a -f"
             elif [ -x /usr/sbin/fsck_hfs ]; then
-                CHKCMD="fsck_hfs -fy"
+                CHKCMD="fsck_hfs -d -ay"
             fi ;;
         ntfs)
             if [ -x /usr/sbin/chkntfs ]; then
@@ -100,7 +100,7 @@ This script contains code blocks for every possible filesystem type to help docu
             if [ -x /usr/sbin/chkhfs ]; then
                 CHKCMD="chkhfs -a -f"
             elif [ -x /usr/sbin/fsck_hfs ]; then
-                CHKCMD="fsck_hfs -fy"
+                CHKCMD="fsck_hfs -d -ay"
             fi ;;
         ntfs)
             if [ -x /usr/sbin/chkntfs ]; then
