@@ -88,11 +88,12 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 11. [Setting a random password for guest wifi](/RMerl/asuswrt-merlin/wiki/Setting-a-random-password-for-guest-wifi)
 12. [Tinc VPN on AsusWRT-Merlin](http://nwgat.ninja/tinc-vpn-on-asuswrt-merlin/) (External Link)
 13. [LUKS Encrypted USB Drive HOWTO](LUKS-Encrypted-USB-Drive-HOWTO)
-14. [Disk Check at Boot](/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot)
-15. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions)
-16. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
-17. [Setting up a NTP Server for your LAN](/RMerl/asuswrt-merlin/wiki/Setting-up-an-NTP-Server-for-your-local-lan)
-18. [Disk formatting](/RMerl/asuswrt-merlin/wiki/Disk-formatting)
+14. [USB Disk Check at Boot](/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot)
+15. [USB Disk Check at Boot or Hot Plug (improved version)](https://github.com/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot-or-Hot-Plug-(improved-version))
+16. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions)
+17. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
+18. [Setting up a NTP Server for your LAN](/RMerl/asuswrt-merlin/wiki/Setting-up-an-NTP-Server-for-your-local-lan)
+19. [Disk formatting](/RMerl/asuswrt-merlin/wiki/Disk-formatting)
 
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin/wiki/FAQ)
