@@ -1,1 +1,1 @@
-# [W🦷W](Https://SkinPhoniqa.beezer.com)
+# [W🦷W](Https://SkinPhoniqa.gq)
