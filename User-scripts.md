@@ -32,7 +32,7 @@ Called after NAT rules (i.e. port forwards and such) have been applied to the NA
 Called right after JFFS got mounted, and before any of the services get started. This is the earliest part of the boot process where you can insert something.
 
 ### pre-mount
-Called just before a partition gets mounted.  This is run in a blocking call and will block the mounting of the partition for which it is invoked until its execution is complete or it times out.  This is done so that it can be used for things like running `e2fsck` on the partition before mounting.  This script is passed the device path being mounted (e.g. `/dev/sda1`) as an argument which can be used in the script using `$1`.
+Called just before a partition gets mounted.  This is run in a blocking call and will block the mounting of the partition for which it is invoked until its execution is complete or it times out.  This is done so that it can be used for things like running `e2fsck` on the partition before mounting.  This script is passed the device path being mounted (e.g. `/dev/sda1`) as an argument which can be used in the script using `$1`. Since firmware 384.11 a second argument is passed (`$2`) that contains the filesystem type (e.g. `ext3`).
 
 ### post-mount
 Called just after a partition got mounted.  The script is passed the mount point (the filesystem path where the partition was mounted, e.g. `/tmp/mnt/OPT`) as an argument which can be used in the script using `$1`.
