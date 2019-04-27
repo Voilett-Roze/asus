@@ -52,7 +52,7 @@ if [ "$script_type" = "up" ] && [ "$vpn_interface" = "tun11" ]; then
 		ez-ipupdate -S "dyndns" -u "user:password" -h "host.dyndns.org" -a "$VPNIP"
 
 		# Update via inadyn (384.7+)
-		inadyn -once -f "/jffs/inadyn.conf"
+		inadyn --once -f "/jffs/inadyn.conf"
 
 		# Update via curl
 		API="xxxxxxxxxxxxxxxx" # Your afraid.org API Key
