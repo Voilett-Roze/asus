@@ -31,7 +31,7 @@ Verify the configuration using:
 inadyn --check-config -f "/jffs/inadyn.conf"
 ```
 
-Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your custom config. The script must be placed in `/jffs/scripts/`. The `-once` option will ensure that In-a-dyn will exit once it has completed its update (Asuswrt-Merlin runs In-a-dyn as a client rather than as a daemon). Such a script would look like this:
+Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your custom config. The script must be placed in `/jffs/scripts/`. The `--once` option will ensure that In-a-dyn will exit once it has completed its update (Asuswrt-Merlin runs In-a-dyn as a client rather than as a daemon). Such a script would look like this:
 
 ```
 #!/bin/sh
