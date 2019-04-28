@@ -19,6 +19,9 @@ Called before all system services are stopped, usually on a reboot.
 ### service-event
 Called before a service event is called (i.e. restart_httpd, restart_wireless, etc...).  First argument is the event (typically _stop_, _start_ or _restart_), second argument is the target (_wireless_, _httpd_, etc...).  This is a blocking script, meaning that it will prevent the execution of the event itself until the script either completes or times out.
 
+### service-event-end
+Introduced in firmware 384.11.  Called after a service event completes (i.e. restart_httpd, restart_wireless, etc...).  First argument is the event (typically stop, start or restart), second argument is the target (wireless, httpd, etc...). 
+
 ### wan-start
 Called after the WAN interface came up.  Good place to put scripts that depend on the WAN interface (e.g. to update an IPv6 tunnel or a dynamic DNS service).  The Internet connection is unlikely to be active when this script is run.  Add a `sleep` line to delay running until the connection is complete, or loop until your command succeeds.
 
