@@ -8,7 +8,7 @@ Pixelserv is a tool used to create a 1x1 transparent image can be used in combin
 * Use a blocklist: [Diversion](https://diversion.ch/). Note: This Ad-blocker includes the installation of pixelserv-tls
 
 ## Pixelserv Installation (auto-install)
-* [Diversion](https://diversion.ch/) by @thelonelycoder, optional install of pixelserv-tls as an addon
+* [Diversion](https://diversion.ch/) by @thelonelycoder, the Diversion Standard edition auto-installs and configures pixelserv-tls. 
 
 ### Setting arguments in /opt/etc/init.d/S80pixelserv-tls
 
