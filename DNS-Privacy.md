@@ -1,18 +1,19 @@
-### DSN Privacy
+## DSN Privacy
 
 Introduced in 384.11, DNS Privacy allows you to better secure your DNS queries through the use of a secured/encrypted connection.  At this time, only DNS-over-TLS (or DoT for short) is supported.
 
-The feature can be enabled on the WAN -> Internet Connection page.  After enabling it, you must also enter at least one server in the DoT server list.  You can pick them from the Presets drop-down menu, or manually configure them in the list below.  Note that the server must explicitly support the DoT protocol, you cannot use a regular DNS there such as the ones provided by your ISP.
+## Configuration
+The feature can be configured on the WAN -> Internet Connection page.  When enabling it, you must also enter at least one server in the DoT server list.  You can pick them from the Presets drop-down menu by selecting an entry, and then clicking on the Add button in the list below to add it to the table.  You can also manually enter the server parameters in the list to add a server not available from the existing presets.  Note that the server must explicitly support the DoT protocol, you cannot use a regular DNS server there such as the ones provided by your ISP.  DoH and DNSCrypt servers are not currently supported either.
 
 Description of the server entry fields:
 * **Address:** The IP address of the DNS server.
-* **TLS Port (optional):** Port to use (defaults to 853 if left blank).
+* **TLS Port (optional):** Port to use (defaults to 853 if left empty).
 * **TLS Hostname:** the TLS Hostname used by the security certificate.
 * **SPKI Fingerprint (optional):** a SHA256 hash of the certificate (check if your server provider requires this, or leave empty)
 
 To ensure enhanced security, it's recommended to also enable DNSSEC, and set it to also validate unsigned replies (make sure the DoT servers you use do support DNSSEC first, otherwise name resolution will fail).
 
-> IMPORTANT: make sure you didn't enter a custom DNS server on the LAN -> DHCP page.  For DNS Privacy to work, the DHCP  server must point your client at the router's IP to use as their DNS server.  Likewise, your client must not be configured with a static DNS other than the router's IP.
+> IMPORTANT: make sure you didn't enter a custom DNS server on the _LAN -> DHCP_ page.  For DNS Privacy to work, the DHCP  server must point your client at the router's IP to use as their DNS server.  Likewise, your client must not be configured with a static DNS other than the router's IP.
 
 You can monitor that DoT is properly being used by installing tcpdump through Entware, and monitoring trafic on ports 53 and 853 of the WAN interface (usually eth0):
 
@@ -26,7 +27,7 @@ Ideally, there should no longer be any trafic on port 53, and everything being s
 
 
 ## How this works
-When enabled, the router will configure dnsmasq to instruct it to use the Stubby service running on the router instead of the DNS servers provided by your ISP (or manually configured in the _DNS Server 1_ and _2_ fields, if you have disabled the "_Connect to DNS Server automatically_" option).  Stubby will then send the name resolution queries to the configured DoT servers, and return their results to dnsmasq, which will apply DNSSEC validation, store the results in its cache, and provide the result to the requesting client.
+When enabled, all DNS requests you send to your router will be redirected to the servers you have configured for DNS Privacy, encrypting the connection between your router and those servers.  Local name resolutions will be unaffected, and dnsmasq will still be able to provide full DNSSEC and rebind protection services.
 
 Note that TLS requires a properly configured clock.  DNS Privacy won't use encryption until after your router's clock has been properly set through NTP.
 
