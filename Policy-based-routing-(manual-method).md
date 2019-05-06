@@ -1,3 +1,6 @@
+### This script is flawed on later versions of AsusWRT, for several reasons (conflicting use of an ASUS reserved fwmark is one) ###
+#### Continue at your own risk ####
+
 ## Introduction ##
 
 This guide will help you program which devices go through the [VPN](http://en.wikipedia.org/wiki/Virtual_private_network) and which devices go to your local [ISP](http://en.wikipedia.org/wiki/Internet_service_provider) by creating 2 different scripts.
