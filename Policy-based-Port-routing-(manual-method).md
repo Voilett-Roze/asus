@@ -45,15 +45,15 @@ Once the RPDB fwmarks are defined/ACTIVE, it is a simple case of adding (to **na
 
 ***Example 1.***
 
-Selectively route Web HTTP/HTTPS (Port 80 and 443) traffic from **192.168.1.99** via **VPN Client 2**
+Selectively route **Web HTTP/HTTPS** (**Port 80** and **443**) traffic from **192.168.1.99** via **VPN Client 2**
 ```
 iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.99 -p tcp -m multiport --dport 80,443 -j MARK --set-mark 0x2000/02000
 ```
 ***Example 2.***
 
-Suppose **ALL** traffic from LAN device **192.168.1.88** is routed via a **VPN** but hosts the **RDP** service (Port 3389)
+Suppose **ALL** traffic from LAN device **192.168.1.88** is routed via a **VPN** but hosts the **RDP** service (**Port 3389**)
 
-To allow access inbound from the **WAN **you will also need to ensure that **Port 3389** is forwarded in the WAN - Virtual Server / Port Forwarding GUI.
+To allow access inbound from the **WAN** you will also need to ensure that **Port 3389** is forwarded in the WAN - Virtual Server / Port Forwarding GUI.
 ```
 iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.88 -p tcp -m multiport --sport 3389 -j MARK --set-mark 0x8000/0x8000
 ```
