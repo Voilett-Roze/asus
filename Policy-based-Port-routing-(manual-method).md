@@ -73,7 +73,7 @@ However, the use of IPSETs can greatly enhance the RPDB fwmark Selective Routing
 e.g. A single IPSET Selective Routing rule can reference (thousands) of Source/Destinations IPs,Ports,MACs and Domains.
 
 ```
-iptables -t mangle -A PREROUTING -i br0 -m set --match-set VPN1 src,dst -j MARK --set-xmark 0x1000/0x1000
+iptables -t mangle -A PREROUTING -i br0 -m set --match-set VPN1 src,src,dst -j MARK --set-xmark 0x1000/0x1000
 ```
 where IPSET VPN1 could contain multiple IPSETS i.e. a 'Ports' only IPSET,a Source IP/CIDR,Destination Port IPSET, and a Source MAC IPSET etc. 
 
