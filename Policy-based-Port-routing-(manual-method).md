@@ -70,7 +70,7 @@ iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.100-192
 
 However, the use of IPSETs can greatly enhance the RPDB fwmark Selective Routing method, both by performance and flexibility.
 
-A single IPSET Selective Routing rule can reference (thousands) of Source/Destinations IPs,Ports,MACs and Domains.
+e.g. A single IPSET Selective Routing rule can reference (thousands) of Source/Destinations IPs,Ports,MACs and Domains.
 
 ```
 iptables -t mangle -A PREROUTING -i br0 -m set --match-set VPN1 src,dst -j MARK --set-xmark 0x1000/0x1000
