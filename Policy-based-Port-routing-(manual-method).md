@@ -31,12 +31,12 @@ ip rule
 ```
 The RPDB fwmark rules should be created using **/jff/scripts/services-start**
 ```
-ip rule add from 0/0 fwmark "0x8000/0x8000" table main   prio 9990             # WAN   fwmark
-ip rule add from 0/0 fwmark "0x7000/0x7000" table ovpnc4 prio 9991             # VPN 4 fwmark
-ip rule add from 0/0 fwmark "0x3000/0x3000" table ovpnc5 prio 9992             # VPN 5 fwmark
-ip rule add from 0/0 fwmark "0x1000/0x1000" table ovpnc1 prio 9993             # VPN 1 fwmark
-ip rule add from 0/0 fwmark "0x2000/0x2000" table ovpnc2 prio 9994             # VPN 2 fwmark
-ip rule add from 0/0 fwmark "0x4000/0x4000" table ovpnc3 prio 9995             # VPN 3 fwmark
+ip rule add from 0/0 fwmark "0x8000/0x8000" table main   prio 9990        # WAN   fwmark
+ip rule add from 0/0 fwmark "0x7000/0x7000" table ovpnc4 prio 9991        # VPN 4 fwmark
+ip rule add from 0/0 fwmark "0x3000/0x3000" table ovpnc5 prio 9992        # VPN 5 fwmark
+ip rule add from 0/0 fwmark "0x1000/0x1000" table ovpnc1 prio 9993        # VPN 1 fwmark
+ip rule add from 0/0 fwmark "0x2000/0x2000" table ovpnc2 prio 9994        # VPN 2 fwmark
+ip rule add from 0/0 fwmark "0x4000/0x4000" table ovpnc3 prio 9995        # VPN 3 fwmark
 ```
 or they can be added on demand when the appropriate VPN Client is started, and deleted when the VPN Client is stopped.
 (see openvpn-event triggers _vpnclientX-route-pre-up/vpnclientX-down_)
