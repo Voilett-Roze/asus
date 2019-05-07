@@ -72,11 +72,12 @@ However, the use of IPSETs can greatly enhance the RPDB fwmark Selective Routing
 
 A single IPSET Selective Routing rule can reference (thousands) of Source/Destinations IPs,Ports,MACs and Domains.
 
-```iptables -t mangle -A PREROUTING -i br0 -m set --match-set VPN1 src,dst -j MARK --set-xmark 0x1000/0x1000```
-
+```
+iptables -t mangle -A PREROUTING -i br0 -m set --match-set VPN1 src,dst -j MARK --set-xmark 0x1000/0x1000
+```
 where IPSET VPN1 could contain multiple IPSETS i.e. a 'Ports' only IPSET,a Source IP/CIDR,Destination Port IPSET, and a Source MAC IPSET etc. 
 
-NOTE: Small Netbuilder member @Xentrk makes use of the IPSET technique for the Selective Routing of domains such as Netflix, Hulu, BBC etc.
+NOTE: [Small Netbuilder member @Xentrk](https://www.snbforums.com/members/xentrk.49161/) makes use of the IPSET technique for the Selective Routing of domains such as **Netflix**, **Hulu**, **BBC** etc.
 
-[Selective Routing of Netflix](https://www.snbforums.com/threads/selective-routing-for-netflix.42661/)
+e.g. [Selective Routing of Netflix](https://www.snbforums.com/threads/selective-routing-for-netflix.42661/)
 
