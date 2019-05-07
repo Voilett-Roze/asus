@@ -41,7 +41,7 @@ ip rule add from 0/0 fwmark "0x4000/0x4000" table ovpnc3 prio 9995        # VPN 
 or they can be added on demand when the appropriate VPN Client is started, and deleted when the VPN Client is stopped.
 (see openvpn-event triggers _vpnclientX-route-pre-up/vpnclientX-down_)
 
-Once the RPDB fwmarks are defined/ACTIVE, it is a simple case of adding the appropriate iptables rule to Selectively route the desired Ports via the designated VPN Client.
+Once the RPDB fwmarks are defined/ACTIVE, it is a simple case of adding (to **nat-start** or the _openvpn-event_ **route-up** trigger etc.) the appropriate iptables rule to Selectively route the desired Ports via the designated VPN Client.
 
 ***Example 1.***
 
