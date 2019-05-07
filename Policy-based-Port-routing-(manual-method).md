@@ -65,7 +65,7 @@ You can also specify a range of ports and even combine the Selective Port Routin
 Ten LAN devices (**192.168.1.100** to **192.168.1.109** inclusive) will Selectively Route thirteen ports (**80,443** and **54000** to **54010** inclusive) via **VPN Client 3** 
 
 ```
-iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.100-192.168.1.9 -p tcp -m multiport --dport 80,443,54000:54010 -j MARK --set-mark 0x4000/04000
+iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.100-192.168.1.109 -p tcp -m multiport --dport 80,443,54000:54010 -j MARK --set-mark 0x4000/04000
 ```
 
 However, the use of IPSETs can greatly enhance the RPDB fwmark Selective Routing method, both by performance and flexibility.
