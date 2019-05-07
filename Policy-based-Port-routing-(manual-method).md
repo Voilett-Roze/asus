@@ -43,7 +43,7 @@ or they can be added on demand when the appropriate VPN Client is started, and d
 
 Once the RPDB fwmarks are defined/ACTIVE, it is a simple case of adding the appropriate iptables rule to Selectively route the desired Ports via the designated VPN Client.
 
-***Example1.***
+***Example 1.***
 
 Selectively route Web HTTP/HTTPS (Port 80 and 443) traffic from **192.168.1.99** via **VPN Client 2**
 ```
@@ -57,3 +57,26 @@ To allow access inbound from the **WAN **you will also need to ensure that **Por
 ```
 iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.88 -p tcp -m multiport --sport 3389 -j MARK --set-mark 0x8000/0x8000
 ```
+
+***Example 3.***
+
+You can also specify a range of ports and even combine the Selective Port Routing with multiple source/destinations etc.
+
+Ten LAN devices (**192.168.1.100** to **192.168.1.109** inclusive) will Selectively Route thirteen ports (**80,443** and **54000** to **54010** inclusive) via **VPN Client 3** 
+
+```
+iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.100-192.168.1.9 -p tcp -m multiport --dport 80,443,54000:54010 -j MARK --set-mark 0x4000/04000
+```
+
+However, the use of IPSETs can greatly enhance the RPDB fwmark Selective Routing method, both by performance and flexibility.
+
+A single IPSET Selective Routing rule can reference (thousands) of Source/Destinations IPs,Ports,MACs and Domains.
+
+```iptables -t mangle -A PREROUTING -i br0 -m set --match-set VPN1 src,dst -j MARK --set-xmark 0x1000/0x1000```
+
+where IPSET VPN1 could contain multiple IPSETS i.e. a 'Ports' only IPSET,a Source IP/CIDR,Destination Port IPSET, and a Source MAC IPSET etc. 
+
+NOTE: Small Netbuilder member @Xentrk makes use of the IPSET technique for the Selective Routing of domains such as Netflix, Hulu, BBC etc.
+
+[Selective Routing of Netflix](https://www.snbforums.com/threads/selective-routing-for-netflix.42661/)
+
