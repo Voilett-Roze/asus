@@ -38,6 +38,7 @@ The list of available config overrides:
  * profile (shell profile, only profile.add supported)
  * smb.conf
  * snmpd.conf
+ * stubby.yml (only stubby.yml.add supported)
  * torrc
  * vsftpd.conf
  * upnp (for miniupnpd)
@@ -84,6 +85,7 @@ The list of available postconf scripts is:
  * smb.postconf
  * snmpd.postconf
  * strongswan.postconf
+ * stubby.postconf
  * torrc.postconf
  * upnp.postconf
  * vsftpd.postconf
