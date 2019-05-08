@@ -1,4 +1,4 @@
-## DSN Privacy
+## DNS Privacy
 
 Introduced in 384.11, DNS Privacy allows you to better secure your DNS queries through the use of a secured/encrypted connection.  At this time, only DNS-over-TLS (or DoT for short) is supported.
 
