@@ -29,6 +29,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 14. [Using a custom webui/FTP SSL certificate](/RMerl/asuswrt-merlin/wiki/Custom-SSL-certificates)
 15. [QoS Queue Disciplines (codel/fq_codel)](/RMerl/asuswrt-merlin/wiki/QoS-Queue-Disciplines)
 16. [Wi-Fi Radar](/RMerl/asuswrt-merlin/wiki/Wi-Fi-Radar)
+17. [DNS Privacy](/RMerl/asuswrt-merlin/wiki/DNS-Privacy) (DNS-over-TLS)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin/wiki/About-OpenVPN)
