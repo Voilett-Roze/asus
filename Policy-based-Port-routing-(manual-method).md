@@ -29,8 +29,11 @@ ip rule
 32766:  from all lookup main
 32767:  from all lookup default
 ```
-The RPDB fwmark rules should be created using **/jffs/scripts/nat-start**
+The **RPDB** fwmark rules should be created by script **/jffs/scripts/nat-start** (see Wki entry [User scripts](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) if **nat-start** doesn't exist)
+
 ```
+#!/bin/sh
+
 ip rule add from 0/0 fwmark "0x8000/0x8000" table main   prio 9990        # WAN   fwmark
 ip rule add from 0/0 fwmark "0x7000/0x7000" table ovpnc4 prio 9991        # VPN 4 fwmark
 ip rule add from 0/0 fwmark "0x3000/0x3000" table ovpnc5 prio 9992        # VPN 5 fwmark
