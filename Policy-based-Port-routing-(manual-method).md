@@ -34,6 +34,8 @@ The **RPDB** fwmark rules should be created by script **/jffs/scripts/nat-start*
 ```
 #!/bin/sh
 
+sleep 10            # During the boot process nat-start may run multiple times so this is required               
+
 ip rule add from 0/0 fwmark "0x8000/0x8000" table main   prio 9990        # WAN   fwmark
 ip rule add from 0/0 fwmark "0x7000/0x7000" table ovpnc4 prio 9991        # VPN 4 fwmark
 ip rule add from 0/0 fwmark "0x3000/0x3000" table ovpnc5 prio 9992        # VPN 5 fwmark
