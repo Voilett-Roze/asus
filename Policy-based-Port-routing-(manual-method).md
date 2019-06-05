@@ -80,6 +80,15 @@ Ten LAN devices (**192.168.1.100** to **192.168.1.109** inclusive) will Selectiv
 iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.100-192.168.1.109 -p tcp -m multiport --dport 80,443,54000:54010 -j MARK --set-mark 0x4000/0x4000
 ```
 
+***Example 4.***
+
+Services hosted on the router may also be routed via the **VPN**, replace **X** with the **VPN** instance, and substitute **--sport xxxx/--dport yyyy** as required by the application.
+
+```
+iptables -t mangle -A OUTPUT -p tcp -m multiport --sport xxxx  -j MARK --set-mark 0xX000/0xX000
+iptables -t nat -A POSTROUTING -s $(nvram get wan0_ipaddr) -o tun1X -j MASQUERADE
+```
+
 However, the use of IPSETs can greatly enhance the RPDB fwmark Selective Routing method, both by performance and flexibility.
 
 e.g. A single IPSET Selective Routing rule can reference (thousands) of Source/Destinations IPs,Ports,MACs and Domains.
