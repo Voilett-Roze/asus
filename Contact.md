@@ -1,8 +1,8 @@
-* **Homepage:** https://asuswrt.lostrealm.ca
-* **Download:** https://asuswrt.lostrealm.ca/download
+* **Homepage:** https://www.asuswrt-merlin.net/
+* **Download:** https://www.asuswrt-merlin.net/download
 * **SNBForums (official support forum):** http://www.snbforums.com/forums/asuswrt-merlin.42/
 * **Twitter:** https://twitter.com/RMerlinDev
-* **Email:** rmerl (at) lostrealm (dot) ca
+* **Email:** merlin (at) asuswrt-merlin (dot) net
 * **IRC:** RMerlin on Freenode - #asuswrt channel
 
 Development news will be posted on SNBForums, and occasionally on Twitter.  You can also keep track of ongoing development through the GitHub repository.
