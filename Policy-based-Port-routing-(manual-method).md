@@ -89,6 +89,13 @@ iptables -t mangle -A OUTPUT -p tcp -m multiport --sport xxxx  -j MARK --set-mar
 iptables -t nat -A POSTROUTING -s $(nvram get wan0_ipaddr) -o tun1X -j MASQUERADE
 ```
 
+***Example 5.***
+
+Selectively route **Web HTTP/HTTPS** (**Port 80** and **443**) traffic from **MAC address** **xx:xx:xx:xx:xx:xx** via **VPN Client 2**
+```
+iptables -t mangle -A PREROUTING -i br0 -m mac --mac-source xx:xx:xx:xx:xx:xx -p tcp -m multiport --dport 80,443 -j MARK --set-mark 0x2000/0x2000
+```
+
 However, the use of IPSETs can greatly enhance the RPDB fwmark Selective Routing method, both by performance and flexibility.
 
 e.g. A single IPSET Selective Routing rule can reference (thousands) of Source/Destinations IPs,Ports,MACs and Domains.
