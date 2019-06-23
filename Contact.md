@@ -4,6 +4,7 @@
 * **Twitter:** https://twitter.com/RMerlinDev
 * **Email:** merlin (at) asuswrt-merlin (dot) net
 * **IRC:** RMerlin on Freenode - #asuswrt channel
+* **Telegram:** [@asuswrt](https://t.me/asuswrt) channel
 
 Development news will be posted on SNBForums, and occasionally on Twitter.  You can also keep track of ongoing development through the GitHub repository.
 
