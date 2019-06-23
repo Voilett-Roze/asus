@@ -1,6 +1,6 @@
 ## Introduction ##
 
-This guide will help you implement Selective Port routing, via the [VPN](http://en.wikipedia.org/wiki/Virtual_private_network) (or Selectively Route Ports via the WAN  - local [ISP](http://en.wikipedia.org/wiki/Internet_service_provider))
+This guide will help you implement Selective Port (or MAC address) routing, via the [VPN](http://en.wikipedia.org/wiki/Virtual_private_network) (or Selectively Route Ports via the WAN  - local [ISP](http://en.wikipedia.org/wiki/Internet_service_provider))
 
 
 ## Prerequisites ##
