@@ -16,7 +16,7 @@ The installation and configuration process must be done through telnet or SSH.  
 
 ### The easier way
 
-Install [amtm] (https://diversion.ch/amtm.html) and use the menu to install Entware. Installing a swap file is also highly recommended, and can also be achieved using amtm. 
+Install [amtm](https://diversion.ch/amtm.html) and use the menu to install Entware. Installing a swap file is also highly recommended, and can also be achieved using amtm. 
 
 
 ### The easy way
