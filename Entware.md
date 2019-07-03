@@ -14,6 +14,11 @@ After uninstalling, you should make sure "asusware.arm" or "asusware.*" dir on m
 
 The installation and configuration process must be done through telnet or SSH.  If that part scares you, then forget about Entware already: everything must be installed and configured through telnet/SSH.
 
+### The easier way
+
+Install [amtm] (https://diversion.ch/amtm.html) and use the menu to install Entware. Installing a swap file is also highly recommended, and can also be achieved using amtm. 
+
+
 ### The easy way
 
 Starting with v3.0.0.4.270.25 a new script has been introduced to facilitate Entware installation. After installing a [USB drive](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting), just type in terminal:
