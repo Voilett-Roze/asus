@@ -2,6 +2,7 @@ The router can be accessed over SSH (through Dropbear).  Password-based login wi
 
 ## Connecting to the router via SSH
 **Requirements**
+* ssh is enabled on your router (Administration > System > Enable SSH)
 * ssh client (examples: macOS via Terminal, Linux via Terminal)
 
 Make a connection to the router with this command:  
