@@ -72,7 +72,7 @@ _**NOTE:**_ To allow access inbound from the **WAN** you will also need to ensur
 
 ***
 
-_Port FORWARD without using the GUI_
+_Port FORWARD **without** using the GUI_
 
 e.g. Expose say **Port 63389** to the **WAN**, which is actually **RDP Port 3389** internally, hosted on **192.168.1.88**
 ```
