@@ -65,10 +65,23 @@ iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.99 -p t
 
 Suppose **ALL** traffic from LAN device **192.168.1.88** is routed via a **VPN** but hosts the **RDP** service (**Port 3389**)
 
-To allow access inbound from the **WAN** you will also need to ensure that **Port 3389** is forwarded in the WAN - Virtual Server / Port Forwarding GUI.
 ```
 iptables -t mangle -A PREROUTING -i br0 -m iprange --src-range 192.168.1.88 -p tcp -m multiport --sport 3389 -j MARK --set-mark 0x8000/0x8000
 ```
+_**NOTE:**_ To allow access inbound from the **WAN** you will also need to ensure that **Port 3389** is forwarded in the _**WAN** - **Virtual Server** / **Port Forwarding** GUI_.
+
+***
+
+_Port FORWARD without using the GUI_
+
+e.g. Expose say **Port 63389** to the **WAN**, which is actually **RDP Port 3389** internally, hosted on **192.168.1.88**
+```
+iptables -t nat -D VSERVER -p tcp -m tcp --dport 63389 -j DNAT --to-destination 192.168.1.88:3389 2> /dev/null
+iptables -t nat -I VSERVER -p tcp -m tcp --dport 63389 -j DNAT --to-destination 192.168.1.88:3389
+```
+
+***
+
 
 ***Example 3.***
 
