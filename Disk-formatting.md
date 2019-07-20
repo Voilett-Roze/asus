@@ -69,7 +69,6 @@ This is a common problem and difficult to avoid if you already have scripts runn
 4. [You should then continue on from step 5 as normal](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#5-unmount)
 
 Please note:
-- [the AMTM **fd** format disk feature](#automatic-disk-formatting-script) cannot see disks that were unmounted via web GUI. Remount the disk by rebooting the router and then AMTM should be able to find it.
 - do not use the options `-f` or `-l` with umount because it won't help and may corrupt data.
 
 >Quote: "The device must be properly unmounted. If the user cannot unmount the device then they shouldn't proceed. Using the -f option won't help. Do not use the -l option of umount either. This option was suggested at one point but must not be used. It will cause problems, especially with devices that have multiple partitions. There's no easy way to solve this. It's really up to the user to know what processes are currently using the device and to terminate them. The usual way of identifying such processes is with the fuser command. Unfortunately that isn't part of the normal firmware, although it is in Entware." -- ColinTaylor
