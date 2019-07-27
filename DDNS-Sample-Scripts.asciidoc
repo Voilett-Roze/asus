@@ -160,28 +160,37 @@ fi
 ....
 
 == DigitalOcean
+^https://www.digitalocean.com/docs/networking/dns/^
+
+You can find details on how to obtain the record id for your DigitalOcean DNS records in https://surdu.me/2019/07/28/digital-ocean-ddns.html[this blog post].
 
 [source]
 ....
 #!/bin/sh
 
-ACCESS_TOKEN= #See https://www.digitalocean.com/docs/api/create-personal-access-token/
-RECORDID= #Find it using browser's Network tab while on your domain's DNS page on DigitalOcean or use the API
-DOMAIN=example.com
+ACCESS_TOKEN=#See https://www.digitalocean.com/docs/api/create-personal-access-token/
+DOMAIN=#YOUR-DOMAIN
+RECORD_IDS=#(RECORD_ID_1 RECORD_ID_2 RECORD_ID_n)
+
 IP=${1}
 
-curl \
-  -fs -o /dev/null \
-  -X PUT \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $ACCESS_TOKEN" \
-  -d "{\"data\":\"$IP\"}" "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$RECORDID" \
+for ID in "${RECORD_IDS[@]}"
+do
+  curl \
+    -fs -o /dev/null \
+    -X PUT \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $ACCESS_TOKEN" \
+    -d "{\"data\":\"$IP\"}" \
+    "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
+done
 
 if [ $? -eq 0 ]; then
   /sbin/ddns_custom_updated 1
 else
   /sbin/ddns_custom_updated 0
 fi
+
 ....
 
 == DNS Made Easy
