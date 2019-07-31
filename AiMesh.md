@@ -1,0 +1,13 @@
+## AiMesh support
+Asuswrt-Merlin 384.13 adds full support for AiMesh (both as a primary router and as a node).  Nodes can run either stock Asus or Asuswrt-Merlin (384.13 or newer), however the primary router must run Asuswrt-Merlin if you want any of your nodes to also use this firmware. This means you cannot use a GT-AX11000 master running stock Asus with an RT-AC86U node running Asuswrt-Merlin, for example. However you can use an RT-AC86U running Asuswrt-Merlin as your primary router, with a Lyra Trio node running stock Asus.  You can also run a mixture of Asus/Merlin nodes at the same time, adding an RT-AC68U node running Asuswrt-Merlin to that same mesh.  If running a mixture of stock and Merlin nodes, I recommend trying to run firmware releases that were released at approximately the same time, for having the best chance of avoiding compatibility issues.  That means a 1 year old Asus firmware might not necessarily be fully compatible with the just-released 384.13, which is based on this summer's 384_45717 release from Asus.
+
+Nodes running this firmware will have one limitation over running on the stock firmware, which is they will lack the ability to automatically download and install new firmware versions.  New firmware availability notification will still work, and the changelog will also be visible through the webui, but you will have to use the node's Upload hyperlink to manually upload any new firmware.  Nodes running on the stock firmware will retain their ability to do live updates by using the global Firmware Upgrade button.
+
+While Merlin-based nodes seem to work fine so far (aside from the above limitation), there is generally little benefit in running it on a node, so it's generally recommended to leave your nodes on the stock Asus firmware.
+
+Note that AiMesh can sometimes be less stable than using a plain router + access point or repeater configuration.  AiMesh implementation being closed source, there is nothing that can be done about that.  This also means that there are zero chances of adding support to unsupported models such as the RT-AC87U or RT-AC3200, or enhancing/implementing additional features specific to AiMesh.  Only Asus can technically do that, since any change has to be made within components for which only they have access to the source code.
+
+## Configuration
+The process is identical to that under the stock firmware.  It is recommended to follow the official documentation, on the [Asus website](https://www.asus.com/ca-en/support/FAQ/1035087).
+
+This is already mentioned in the documentation, but just to reiterate: configuring a **node** will require that node to be reset to factory defaults.
