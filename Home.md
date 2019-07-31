@@ -30,6 +30,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 15. [QoS Queue Disciplines (codel/fq_codel)](/RMerl/asuswrt-merlin/wiki/QoS-Queue-Disciplines)
 16. [Wi-Fi Radar](/RMerl/asuswrt-merlin/wiki/Wi-Fi-Radar)
 17. [DNS Privacy](/RMerl/asuswrt-merlin/wiki/DNS-Privacy) (DNS-over-TLS)
+18. [AiMesh](/RMerl/asuswrt-merlin/wiki/AiMesh)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin/wiki/About-OpenVPN)
