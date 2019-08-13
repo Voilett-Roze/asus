@@ -170,20 +170,17 @@ You can find details on how to obtain the record id for your DigitalOcean DNS re
 
 ACCESS_TOKEN=#See https://www.digitalocean.com/docs/api/create-personal-access-token/
 DOMAIN=#YOUR-DOMAIN
-RECORD_IDS=#(RECORD_ID_1 RECORD_ID_2 RECORD_ID_n)
+RECORD_ID=#YOUR-RECORD-ID
 
 IP=${1}
 
-for ID in "${RECORD_IDS[@]}"
-do
-  curl \
-    -fs -o /dev/null \
-    -X PUT \
-    -H "Content-Type: application/json" \
-    -H "Authorization: Bearer $ACCESS_TOKEN" \
-    -d "{\"data\":\"$IP\"}" \
-    "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$ID"
-done
+curl \
+  -fs -o /dev/null \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -d "{\"data\":\"$IP\"}" \
+  "https://api.digitalocean.com/v2/domains/$DOMAIN/records/$RECORD_ID"
 
 if [ $? -eq 0 ]; then
   /sbin/ddns_custom_updated 1
