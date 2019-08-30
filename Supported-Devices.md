@@ -23,6 +23,7 @@ Please read this page instead: https://www.snbforums.com/threads/the-tm-ac1900-i
 | RT-AC2900 (use the RT-AC86U firmware) |  | :white_check_mark: |
 | RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware) |  :white_check_mark:  | :white_check_mark: |
 | RT-AC3200 |  :white_check_mark:  | :white_check_mark: |
+| RT-AC86U |  :white_check_mark:  | :white_check_mark: |
 | RT-AC87U |  :white_check_mark:  | :white_check_mark: |
 | RT-AC88U |  :white_check_mark:  | :white_check_mark: |
 | RT-AC3100 |  :white_check_mark:  | :white_check_mark: |
