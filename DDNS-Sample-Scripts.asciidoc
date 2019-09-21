@@ -107,6 +107,37 @@ else
 fi
 ....
 
+== Binero
+^https://www.binero.se/guider/guider-dom-nnamn/dns/anv-ndning-av-dyndns^
+
+This scripts add support for using curl with Binero.se. Edit url and credentials.
+
+[source]
+....
+#!/bin/sh
+
+url="first.test.com second.test.com"           # can add multiple domains separated by space
+credentials=username:password                  # username and password
+wanip=${1}
+
+binero_dns_update() {
+   for domain in $url
+      do
+         hostname='hostname='"$domain"
+         myip='myip='"$wanip"
+         status=$(curl -s -u "$credentials" -d "$hostname" -d "$myip" https://dyndns.binero.se/nic/update)
+         logger -s -t ddns "Domain $domain reports $status"
+      done
+      case "$status" in
+         good*|nochg*) /sbin/ddns_custom_updated 1 ;;
+         abuse) /sbin/ddns_custom_updated 1 ;;
+         *) /sbin/ddns_custom_updated 0 ;;
+      esac
+}
+binero_dns_update
+exit 0
+....
+
 == ChangeIP
 ^https://www.changeip.com/dns.php^
 
