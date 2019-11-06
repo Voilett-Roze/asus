@@ -39,6 +39,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 4. [Policy-based routing](/RMerl/asuswrt-merlin/wiki/Policy-based-routing)
 5. [Policy-based routing - manual method **v380.xx firmware or later** now **DEPRECATED**](/RMerl/asuswrt-merlin/wiki/Policy-based-routing-(manual-method))
 6. [Policy-based Port (or MAC address) routing - manual method](/RMerl/asuswrt-merlin/wiki/Policy-based-Port-routing-(manual-method))
+7. [Static ip for OpenVPN clients](https://github.com/RMerl/asuswrt-merlin/wiki/Static-ip-for-OpenVPN-clients)
 
 ### External software repositories
 
