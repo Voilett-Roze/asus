@@ -10,31 +10,45 @@
 :warning-caption: :warning:
 
 == Asus
-NOTE: Starting with 384.7, you can now use AsusDDNS in a multiple NAT situation by switching to "External" WAN IP check method on the webui.  The following script will only work for previous versions, as the ez-ipupdate client has been replaced with In-a-Dyn.
-
-Asus DDNS for use in multiple-NAT environment.
+Asus DDNS as a custom script.
 
 [source]
 ....
                                                                                       
 #!/bin/sh
-# based on asuswrt-merlin.ng-master\release\src\router\rc\services.c
-# by DSR! - https://github.com/xchwarze
 
-# only for ddns_server_x === WWW.ASUS.COM
-host=$(nvram get ddns_hostname_x)
-ip=$(curl --silent http://api.ipify.org/)
+# Set the host name, ending with .asuscomm.com is optional
+HOSTNAME='test'
 
-# nserver=$(nvram get ddns_serverhost_x)
-nserver="nwsrv-ns1.asus.com"
+# The IP address to use
+IP="$1"
 
-ez-ipupdate -S dyndns -a $ip -h $host -A 2 -s $nserver -q > /dev/null 2>&1
+# Asus DDNS server
+ASUS_SERVER='nwsrv-ns1.asus.com'
 
-if [ $? -eq 0 ]; then
-  /sbin/ddns_custom_updated 1
-else
-  /sbin/ddns_custom_updated 0
-fi
+# Router MAC address location is hardware dependent
+for LAN_MAC_NAME in et0macaddr et1macaddr et2macaddr; do
+	MAC_ADDR="$(nvram get "$LAN_MAC_NAME")"
+	if [ -n "$MAC_ADDR" ] && [ "$MAC_ADDR" != '00:00:00:00:00:00' ]; then
+		break
+	fi
+done
+
+# Use openssl to generate the password
+PASSWORD="$(printf '%s' "${MAC_ADDR//:/}${IP//./}" | openssl md5 -hmac "$(nvram get secret_code)" 2>/dev/null | awk '{print toupper($2)}')"
+
+# Try to update
+HTTP_RESULT="$(curl -fs -w '%{http_code}' -o /dev/null -u "${MAC_ADDR//:/}:$PASSWORD" "http://$ASUS_SERVER/ddns/update.jsp?hostname=${HOSTNAME%.asuscomm.com}.asuscomm.com&myip=$IP")"
+
+# Full code list https://github.com/RMerl/asuswrt-merlin.ng/blob/master/release/src/router/inadyn/plugins/asuscomm.c#L293
+case "$HTTP_RESULT" in
+	200|220|230)
+		/sbin/ddns_custom_updated 1
+	;;
+	*)
+		/sbin/ddns_custom_updated 0
+	;;
+esac
 
 ....
 
