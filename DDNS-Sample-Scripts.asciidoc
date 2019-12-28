@@ -183,8 +183,7 @@ record on your account.
 [source]
 ....
 #!/bin/sh
- 
-EMAIL= # Your Email
+
 ZONEID= # Your zone id, hex16 string
 RECORDID= # You DNS record ID, hex16 string
 RECORDNAME= # Your DNS record name, e.g. sub.example.com
@@ -192,8 +191,7 @@ API= # Cloudflare API Key
 IP=${1}
  
 curl -fs -o /dev/null -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONEID/dns_records/$RECORDID" \
-  -H "X-Auth-Email: $EMAIL" \
-  -H "X-Auth-Key: $API" \
+  -H "Authorization: Bearer $API" \
   -H "Content-Type: application/json" \
   --data "{\"type\":\"A\",\"name\":\"$RECORDNAME\",\"content\":\"$IP\",\"ttl\":120,\"proxied\":false}"
    
