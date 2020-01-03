@@ -42,7 +42,7 @@ fi
 sed -i "s/MyPage.asp/$MyPage/g" /www/user/$MyPage
 
 # Insert link at the end of the Tools menu.  Match partial string, since tabname can change between builds (if using an AS tag)
-sed -i "/url: \"Tools_OtherSettings.asp\", tabName:/!b;n;c{url: \"$MyPage\", tabName: \"My Page\"}," /tmp/menuTree.js
+sed -i "/url: \"Tools_OtherSettings.asp\", tabName:/a {url: \"$MyPage\", tabName: \"My Page\"}," /tmp/menuTree.js
 
 # sed and binding mounts don't work well together, so remount modified file
 umount /www/require/modules/menuTree.js && mount -o bind /tmp/menuTree.js /www/require/modules/menuTree.js
