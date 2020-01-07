@@ -1,12 +1,13 @@
 # Third party addons
 
-Starting with 384.15, Asuswrt-Merlin now supports web integration for third party addons.  Up to a maximum of five custom pages can be added at any location on the webui.
+## Introduction
+Starting with 384.15, Asuswrt-Merlin now supports web integration for third party addons.  Up to a maximum of ten custom pages can be added on any existing section of the webui, as a new tab.
 
 There is also a dedicated settings storage for addons, separate from nvram, and therefore not bound to its limitations (i.e. you can create new settings without having to recompile a firmware image).
 
 
 ## Locations
-The _/jffs/addons/_ directory is the standard location.  You should create a directory there to store all your files.
+The _/jffs/addons/_ directory is the standard location.  You should create a directory there to store all your files.  Do not add files at the root of this directory.
 
 The user-defined settings for all addons will be stored in _/jffs/addons/custom_settings.txt_.
 
@@ -50,12 +51,17 @@ umount /www/require/modules/menuTree.js && mount -o bind /tmp/menuTree.js /www/r
 
 
 ## Custom settings
-Since new nvram settings cannot be dynamically added without a firmware rebuild, and also because of size limitations on the newer Broadcom HND platform, a new repository was implemented.  The _/jffs/addons/custom_settings.txt_ file will contain third party settings.  The max total size is about 8 KB.  Each line will contain one setting, defined like this:
+Since new nvram settings cannot be dynamically added without a firmware rebuild, and also because of size limitations on the newer Broadcom HND platform (where new variables are limited to values of 100 bytes max), a new settings repository was implemented for addons.  The _/jffs/addons/custom_settings.txt_ file will contain all these third party settings.  Each line will contain one setting, defined like this:
 
 ```
 setting1 My First Setting
 setting2 My Second Setting
 ```
+Variable names should be limited to alphanumeric, the dash (-) and the underscore (_) character.  The maximum length for a name is 29 characters.
+
+The variable content should in theory allow any 7-bit ASCII printable characters.    The size limit for the content is 2999 characters.
+
+The maximum total size of the whole repository is 8 KB.  Due to these size limitations, try to avoid storing large amount of data there - use separate files instead if you need to.  If it gets any larger, settings will be truncated when processed by the web server.
 
 You should define a namespace to ensure easy identification of your settings, since all addons will share the same repository.  This would look like this:
 
@@ -146,24 +152,132 @@ And in _/jffs/scripts/service-event_, call your script:
 ```
 #!/bin/sh
 
-# MyService
+### MyService start
 /jffs/addons/my_addon/myservice.sh $*
+### MyService end
 ```
 
+> Note: Avoid adding complex scripts to the system _/jffs/scripts/*_ scripts.  Instead, put your script in your _/jffs/addons/my_addon/_ folder, and call that script from the relevant system script.  That way, you can easily develop an uninstaller that would look for those start/end lines, and remove the entire block without affecting other installed addons.
 
-## Notes
-- When designing your addon, decide on a namespace to use as the prefix for all
-  your settings: my_addon_version, my_addon_state, etc...
-- Do not put files at the root of _/jffs/addons/_.  Instead, create a folder there
-  to store all your files.
-- Avoid adding complex scripts to the system _/jffs/scripts/*_ scripts.  Instead, put
-  your script in your _/jffs/addons/my_addon/_ folder, and call that script from
-  the relevant system script, like this:
+
+## Example custom page
+Here is a simple example page, which you can use as a starting point.
+
 ```
-    ### my_addon start
-    /jffs/addons/my_addon/launch.sh
-    ### my_addon end
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Expires" CONTENT="-1">
+<link rel="shortcut icon" href="images/favicon.png">
+<link rel="icon" href="images/favicon.png">
+<title>Test page</title>
+<link rel="stylesheet" type="text/css" href="index_style.css">
+<link rel="stylesheet" type="text/css" href="form_style.css">
+<script language="JavaScript" type="text/javascript" src="/state.js"></script>
+<script language="JavaScript" type="text/javascript" src="/general.js"></script>
+<script language="JavaScript" type="text/javascript" src="/popup.js"></script>
+<script language="JavaScript" type="text/javascript" src="/help.js"></script>
+<script type="text/javascript" language="JavaScript" src="/validator.js"></script>
+<script>
+
+
+var custom_settings = <% get_custom_settings(); %>;
+
+function initial(){
+        show_menu();
+
+        if (custom_settings.diversion_path == undefined)
+                document.getElementById('diversion_path').value = "/tmp/default";
+        else
+                document.getElementById('diversion_path').value = custom_settings.diversion_path;
+}
+
+function applySettings(){
+        /* Retrieve value from input fields, and store in object */
+        custom_settings.diversion_path = document.getElementById('diversion_path').value;
+
+        /* Store object as a string in the amng_custom hidden input field */
+        document.getElementById('amng_custom').value = JSON.stringify(custom_settings);
+
+        /* Apply */
+        showLoading();
+        document.form.submit();
+}
+</script>
+
+                            
+</head>
+<body onload="initial();"  class="bg">
+<div id="TopBanner"></div>
+<div id="Loading" class="popup_bg"></div>
+<iframe name="hidden_frame" id="hidden_frame" src="" width="0" height="0" frameborder="0"></iframe>
+<form method="post" name="form" action="start_apply.htm" target="hidden_frame">
+<input type="hidden" name="current_page" value="MyPage.asp">
+<input type="hidden" name="next_page" value="MyPage.asp">
+<input type="hidden" name="group_id" value="">
+<input type="hidden" name="modified" value="0">
+<input type="hidden" name="action_mode" value="apply">
+<input type="hidden" name="action_wait" value="5">
+<input type="hidden" name="first_time" value="">
+<input type="hidden" name="action_script" value="">
+<input type="hidden" name="preferred_lang" id="preferred_lang" value="<% nvram_get("preferred_lang"); %>">
+<input type="hidden" name="firmver" value="<% nvram_get("firmver"); %>">
+<input type="hidden" name="amng_custom" id="amng_custom" value="">
+
+<table class="content" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td width="17">&nbsp;</td>
+<td valign="top" width="202">
+<div id="mainMenu"></div>
+<div id="subMenu"></div>
+</td>
+<td valign="top">
+<div id="tabMenu" class="submenuBlock"></div>
+<table width="98%" border="0" align="left" cellpadding="0" cellspacing="0">
+<tr>
+<td align="left" valign="top">
+<table width="760px" border="0" cellpadding="5" cellspacing="0" bordercolor="#6b8fa3" class="FormTitle" id="FormTitle">
+<tr>
+<td bgcolor="#4D595D" colspan="3" valign="top">
+<div>&nbsp;</div>
+<div class="formfonttitle">Test page - Custom settings</div>
+<div style="margin:10px 0 10px 5px;" class="splitLine"></div>
+<div class="formfontdesc"><#1838#></div>
+
+<table width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3" class="FormTable">
+
+        <tr>
+                <th>Diversion path</th>
+                <td>
+                        <input type="text" maxlength="100" class="input_25_table" id="diversion_path" autocorrect="off" autocapitalize="off">
+                </td>
+        </tr>
+</table>
+<div class="apply_gen">
+        <input name="button" type="button" class="button_gen" onclick="applySettings();" value="Apply"/>
+</div>
+</form>
+
+<div>
+<table class="apply_gen">
+<tr class="apply_gen" valign="top">
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+<td width="10" align="center" valign="top"></td>
+</tr>
+</table>
+<div id="footer"></div>
+</body>
+</html>
 ```
-  That way, your can easily develop an uninstaller that would look for those start/end lines, and remove the entire block without affecting other installed addons.
-- Avoid storing unnecessarily large amounts of data in the custom_settings repository, as its size is limited.
-- The size limit for a setting's name is 29 character.  The size limit for the assigned value is 2999 characters.  The maximum total size of the whole repository is 8 KB.
