@@ -59,9 +59,9 @@ setting2 My Second Setting
 ```
 Variable names should be limited to alphanumeric, the dash (-) and the underscore (_) character.  The maximum length for a name is 29 characters.
 
-The variable content should in theory allow any 7-bit ASCII printable characters.    The size limit for the content is 2999 characters.
+The variable content should in theory allow any 7-bit ASCII printable characters.    The size limit for the content is 2999 characters.  If you need more complex values (like strings with carriage returns), it's recommended to use base64 encoding, or to move the data to a separate file (if it's too large or too complex).  Note that you could write these files to the /www/user/ folder if read access from your web page is necessary.  In that case, make sure to either use a unique name (reusing your established namespace, for example), or to store data in a sub-directory.
 
-The maximum total size of the whole repository is 8 KB.  Due to these size limitations, try to avoid storing large amount of data there - use separate files instead if you need to.  If it gets any larger, settings will be truncated when processed by the web server.
+The maximum total size of the whole repository is 8 KB.  Due to these size limitations, try to avoid storing large amounts of data there - use separate files instead if you need to.  If it gets any larger, settings will be truncated when processed by the web server.
 
 You should define a namespace to ensure easy identification of your settings, since all addons will share the same repository.  This would look like this:
 
