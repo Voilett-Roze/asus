@@ -31,13 +31,13 @@ rm /tmp/mail.txt
 If your SMTP server requires authentication, you can pass them as additional arguments.  To see the available options, just run "sendmail -h".
 
 ***
-If you don't have a smtp email account from your ISP, [JANGO SMTP](https://www.jangosmtp.com/) could be the solution, it offers a [30-day free trial account](https://app.jangosmtp.com/free-trial-smtp.aspx). Note: they stopped offering the former free account that allowed you to send 200 mails a month for free.
+If you don't have a smtp email account from your ISP, [MailJet's SMTP relay serice](https://www.mailjet.com/feature/smtp-relay/) could be the solution, it offers 200 mails for free a day. MailJet is a European based company in France, Paris.
 
-Now just fill your _wan-start script_ with the following lines but don't forget to replace first **your-jangosmtp-fromaddress**, **your-jangomail-username**, **your-jangomail-password** and **your-email-address** where to receive notifications.
+Now just fill your _wan-start script_ with the following lines but don't forget to replace the first lines with the data of your SMTP relay server (e.g. MailJet) and the email address where to receive notifications.
 ```
 #!/bin/sh
-SMTP="relay.jangosmtp.net:587"
-FROM="your-jangosmtp-fromaddress"
+SMTP="in-v3.mailjet.com:587"
+FROM="your-mailjet-fromaddress"
 FROMNAME="ASUS ROUTER"
 TO="your-email-address"
 
