@@ -33,7 +33,7 @@ If your SMTP server requires authentication, you can pass them as additional arg
 ***
 If you don't have a smtp email account from your ISP, [MailJet's SMTP relay serice](https://www.mailjet.com/feature/smtp-relay/) could be the solution, it offers 200 mails for free a day. MailJet is a European based company in France, Paris.
 
-Now just fill your _wan-start script_ with the following lines but don't forget to replace the first lines with the data of your SMTP relay server (e.g. MailJet) and the email address where to receive notifications.
+Now just fill your _wan-start script_ with the following lines but don't forget to replace the according lines with the data of your SMTP relay server (e.g. MailJet) and the email address where to receive notifications.
 ```
 #!/bin/sh
 SMTP="in-v3.mailjet.com:587"
@@ -57,7 +57,7 @@ echo "---- " >>/tmp/mail.txt
 echo "Your friendly router." >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
 
-cat /tmp/mail.txt | /usr/sbin/sendmail -S"$SMTP" -f"$FROM" $TO -au"your-jangomail-username" -ap"your-jangomail-password"
+cat /tmp/mail.txt | /usr/sbin/sendmail -S"$SMTP" -f"$FROM" $TO -au"your-MailJet-username" -ap"your-MailJet-password"
 
 rm /tmp/mail.txt
 ```
