@@ -5,6 +5,8 @@ Starting with 384.15, Asuswrt-Merlin now supports web integration for third part
 
 There is also a dedicated settings storage for addons, separate from nvram, and therefore not bound to its limitations (i.e. you can create new settings without having to recompile a firmware image).
 
+Support can be detected by the presence of the _am_addons_ flag in the rc_support nvram value.
+
 
 ## Locations
 The _/jffs/addons/_ directory is the standard location.  You should create a directory there to store all your files.  Do not add files at the root of this directory.
