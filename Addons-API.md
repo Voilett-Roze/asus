@@ -13,24 +13,25 @@ The user-defined settings for all addons will be stored in _/jffs/addons/custom_
 
 
 ## Custom pages
-The firmware supports up to five custom pages.  These pages should be mounted at boot time through a script, which should ideally be called from services-start.  You should put your custom page in the _/jffs/addons/my_addon/_ folder along with the install script.  Here is a sample of an install script, which will also insert your page as a new tab in the Tools section.
+The firmware supports up to ten custom pages.  These pages should be mounted at boot time through a script, which should ideally be called from services-start.  You should put your custom page in the _/jffs/addons/my_addon/_ folder along with the install script.  Here is a sample of an install script, which will also insert your page as a new tab in the Tools section.
 
 ```
 #!/bin/sh
 
 source /usr/sbin/helper.sh
 
-# Locate the first available mount point
-MyPage=$(get_webui_page)
-if [ $MyPage = "none" ]
+# Obtain the first available mount point in $am_webui_page
+am_get_webui_page /jffs/addons/my_addon/MyPage.asp
+
+if [ "$am_webui_page" = "none" ]
 then
         logger "MyPage" "Unable to install Mypage"
         exit 5
 fi
-logger "MyPage" "Mounting MyPage as $MyPage"
+logger "MyPage" "Mounting MyPage as $am_webui_page"
 
 # Copy custom page
-cp /jffs/addons/my_addon/MyPage.asp /www/user/$MyPage
+cp /jffs/addons/my_addon/MyPage.asp /www/user/$am_webui_page
 
 # Copy menuTree (if no other script has done it yet) so we can modify it
 if [ ! -f /tmp/menuTree.js ]
@@ -40,10 +41,10 @@ then
 fi
 
 # Set correct return URL within your copied page
-sed -i "s/MyPage.asp/$MyPage/g" /www/user/$MyPage
+sed -i "s/MyPage.asp/$am_webui_page/g" /www/user/$am_webui_page
 
 # Insert link at the end of the Tools menu.  Match partial string, since tabname can change between builds (if using an AS tag)
-sed -i "/url: \"Tools_OtherSettings.asp\", tabName:/a {url: \"$MyPage\", tabName: \"My Page\"}," /tmp/menuTree.js
+sed -i "/url: \"Tools_OtherSettings.asp\", tabName:/a {url: \"$am_webui_page\", tabName: \"My Page\"}," /tmp/menuTree.js
 
 # sed and binding mounts don't work well together, so remount modified file
 umount /www/require/modules/menuTree.js && mount -o bind /tmp/menuTree.js /www/require/modules/menuTree.js
@@ -72,8 +73,25 @@ diversion_version 2.0
 diversion_whitelist /jffs/addons/diversion/my-whitelist.txt
 ```
 
+### Shell usage
+For shell script manipulation, helper.sh provide a pair of functions to retrieve and store content.
 
-Within your page, you can access these settings as a Javascript Object, by inserting the following near the start of your page:
+```
+am_settings_set setting_name new_value
+am_settings_get setting_name
+````
+
+Examples:
+
+```
+# set a value
+am_settings_set addon_title Cool Addon 1.0
+# retrieve it, in the $TITLE variable
+TITLE=$(am_settings_get addon_tittle)
+```
+
+### Web usage
+For web integration, you can access these settings within your page as a Javascript Object, by inserting the following near the start of your page:
 
 ```
 var custom_settings = <% get_custom_settings(); %>;
