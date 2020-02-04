@@ -8,7 +8,6 @@ ___
 * [MatchIP Utility - Search IPSet lists for an IP](#matchip-utility---search-ipset-lists-for-an-ip)  
 * [Tor and Countries Block](#tor-and-countries-block)  
 * [iblocklist-loader](#iblocklist-loader)  
-* [Dynamically Ban Malicious IP's](#dynamically-ban-malicious-ips) 
 
 # MatchIP Utility - Search IPset lists for an IP
 
@@ -159,5 +158,5 @@ chmod +x /jffs/scripts/iblocklist-loader.sh
 # Load ipset filter rules
 sh /jffs/scripts/iblocklist-loader.sh
 ```
-There are other settings on the script that is documented within the script itself that should be self explanatory. If you have questions or need further details, please ask on the [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) on SnBForums.
+There are other settings on the script that is documented within the script itself that should be self explanatory. If you have questions or need further details, please ask on the [forum thread](https://www.snbforums.com/threads/iblocklist-com-generic-ipset-loader-for-ipset-v6-and-v4.37976/) on SNBForums.
 ___
