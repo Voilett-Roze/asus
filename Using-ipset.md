@@ -19,11 +19,13 @@ Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) wh
 | `RT-AC68U`   |         | x       |
 | `RT-AC68P`   |         | x       |
 | `RT-AC68UF`  |         | x       |
+| `RT-AC86U`   |         | x       |
 | `RT-AC87U`   |         | x       |
+| `RT-AX88U`   |         | x       |
 | `RT-AC88U`   |         | x       |
-| `RT-AC1750`  |         |         |
-| `RT-AC1900`  |         |         |
-| `RT-AC1900P` |         |         |
+| `RT-AC1750`  |         | x       |
+| `RT-AC1900`  |         | x       |
+| `RT-AC1900P` |         | x       |
 | `RT-AC3100`  |         | x       |
 | `RT-AC3200`  |         | x       |
 | `RT-AC5300`  |         | x       |
@@ -35,13 +37,26 @@ There is a full list of script that are maintained by users, most of the scripts
 
 >ATTENTION: Scripters, feel free to append to this list and then link installation instructions on the [installation instructions page](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions), please dont add full scripts to that page cause it gets messy "keep it light".
 
-| `Scriptname` |`Ipset Version`|`Maintained by`|Description|
+&nbsp;
+&nbsp;
+
+#### Actively Maintained Scripts
+
+| `Scriptname` |`Ipset Version`|`Maintained by`|`Description`|
+|--------------|:-------:|:-------------:|:----------------------------------:
+|[Skynet - Router Firewall & Security Enhancements](https://github.com/Adamm00/IPSet_ASUS#installation)|6|Adamm| Malware Blacklist / Country / ASN / Manual IP Blocking|
+
+&nbsp;
+&nbsp;
+
+#### Deprecated / Non-Maintained Scripts
+
+
+| `Scriptname` |`Ipset Version`|`Maintained by`|`Description`|
 |--------------|:-------:|:-------------:|:----------------------------------:
 |[MatchIP Utility](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#matchip-utility---search-ipset-lists-for-an-ip)|4,6|redhat27|Search ipsets for a specific IP|
 |[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|Blocks Tor nodes or countries| 
 |[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist|
-|[Skynet - Firewall Addition](https://github.com/Adamm00/IPSet_ASUS#installation)|6|Adamm|Dynamic Malware/Country/Manual IP Blocking| 
-|[Dynamically Ban Malicious IP's](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#dynamically-ban-malicious-ips)|6|Martineau|N/A|
 |[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian)|4| |Peerguardian|
 |[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|4| |Peerguardian|
 |[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v3)|4| |Peerguardian|
