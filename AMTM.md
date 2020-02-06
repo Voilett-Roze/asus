@@ -43,7 +43,7 @@ amtm also offers an interface for managing a number of other features:
 | amtm themes | thelonelycoder |
 
 ## Usage ##
-amtm can be launched over SSH, as there is no web interface for it.  In addition to enabling SSH support on your router, some of its scripts will have additional requirements, most commonly you will need to enable _Enable JFFS custom scripts and configs_ on the web interface, under_ Administration -> System_.  A USB disk is also required by many of its scripts.
+amtm can be launched over SSH, as there is no web interface for it.  In addition to enabling SSH support on your router, some of its scripts will have additional requirements, most commonly you will need to set _Enable JFFS custom scripts and configs_ on the web interface to _Yes_, under _Administration -> System_.  A USB disk is also required by many of its scripts.
 
 Connect to your router using an SSH client (Xshell, putty, etc...), then launch amtm by simply typing "amtm" in the console.  A menu will appear, guiding you through the various options available.  Installing Entware is usually the first step you should do, since many scripts will require it.
 
