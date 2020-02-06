@@ -27,7 +27,7 @@ amtm currently supports these popular scripts:
 | uiDivStats | Jack Yaz | [Link](https://www.snbforums.com/threads/uidivstats-webui-for-diversion-statistics.56393/) |
 | uiScribe | Jack Yaz | [Link](https://www.snbforums.com/threads/uiscribe-custom-system-log-page-for-scribed-logs.57040/) |
 | Stubby DNS | Xentrk and Adamm | _deprecated_ |
-| DNSCrypt | bigeyes0x0 |  |
+| DNSCrypt | bigeyes0x0 | [Link](https://www.snbforums.com/threads/release-dnscrypt-installer-for-asuswrt.36071/) |
 | Pixelserv-tls | kvic | [Link](https://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/) |
 
 
