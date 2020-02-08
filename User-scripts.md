@@ -22,7 +22,23 @@ Called before a service event is called (e.g. restart_httpd, restart_wireless, e
 ### service-event-end
 Introduced in firmware 384.11.  Called after a service event completes (e.g. restart_httpd, restart_wireless, etc...).  First argument is the event (typically _stop_, _start_ or _restart_), second argument is the target (_wireless_, _httpd_, etc...). 
 
+### wan-event
+Called after an event related to the WAN interface occurs.  The script will received two parameter:
+$1 will contain the WAN unit (0 for Primary, or 1 for Secondary)
+$2 will contain the event type, from the following list (the list can vary between firmware versions):
+* init
+* connecting
+* connected
+* disconnected
+* stopped
+* disabled
+* stopping
+
+The old wan-start script would occur on a "connected" event.  Note that after a connected event occur, the Internet connection might not yet be fully functional.  You should probably add a slight pause before you try to initiate anything requiring Internet access, or write your own code to wait until the connection becomes functional.
+
 ### wan-start
+_(deprecated since 384.15, please use wan-event instead)_
+
 Called after the WAN interface came up.  Good place to put scripts that depend on the WAN interface (e.g. to update an IPv6 tunnel or a dynamic DNS service).  The Internet connection is unlikely to be active when this script is run.  Add a `sleep` line to delay running until the connection is complete, or loop until your command succeeds.
 
 ### firewall-start
