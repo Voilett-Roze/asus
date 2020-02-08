@@ -1,4 +1,5 @@
 ## About ##
+**amtm - the Asuswrt-Merlin Terminal Menu**
 amtm is a shell-based front end that manages popular scripts for wireless routers running Asuswrt-Merlin firmware.  It also offers a couple of additional management features.
 
 Starting with Asuswrt-Merlin 384.15, amtm is included in the firmware.
@@ -25,7 +26,7 @@ amtm currently supports these popular scripts:
 | uiDivStats | Jack Yaz | [Link](https://www.snbforums.com/threads/uidivstats-webui-for-diversion-statistics.56393/) |
 | uiScribe | Jack Yaz | [Link](https://www.snbforums.com/threads/uiscribe-custom-system-log-page-for-scribed-logs.57040/) |
 | Stubby DNS | Xentrk and Adamm | _deprecated_ |
-| DNSCrypt | bigeyes0x0 | [Link](https://www.snbforums.com/threads/release-dnscrypt-installer-for-asuswrt.36071/) |
+| DNSCrypt | bigeyes0x0, SomeWhereOverTheRainBow | [Link](https://www.snbforums.com/threads/release-dnscrypt-installer-for-asuswrt.36071/) |
 | Pixelserv-tls | kvic | [Link](https://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/) |
 
 
@@ -50,3 +51,6 @@ Before installing any of the scripts it is strongly recommended that you read th
 
 ## amtm License ##
 amtm is free to use under the GNU General Public License, version 3 (GPL-3.0)
+
+## Screenshot amtm v3.1.1, FW##
+[![amtm v3.1.1](https://i.imgur.com/3qYg2cL.png "amtm v3.1.1")](https://i.imgur.com/3qYg2cL.png "amtm v3.1.1")
