@@ -1,9 +1,7 @@
 ## About ##
-amtm is a front end that manages popular scripts for wireless routers running Asuswrt-Merlin firmware.
+amtm is a shell-based front end that manages popular scripts for wireless routers running Asuswrt-Merlin firmware.  It also offers a couple of additional management features.
 
 Starting with Asuswrt-Merlin 384.15, amtm is included in the firmware.
-
-amtm is intended to be a helper script, a convenient shortcut manager to install and manage various third party scripts on your router.
 
 There is a [support thread](https://www.snbforums.com/threads/amtm-the-asuswrt-merlin-terminal-menu.42415/) at SNBForums that is dedicated to amtm.
 
