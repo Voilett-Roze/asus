@@ -12,127 +12,13 @@ After uninstalling, you should make sure "asusware.arm" or "asusware.*" dir on m
 
 ### Setup
 
+You will need to plug a USB disk that's formatted in a native Linux filesystem (ext2, ext3 or ext4).
+
 The installation and configuration process must be done through telnet or SSH.  If that part scares you, then forget about Entware already: everything must be installed and configured through telnet/SSH.
 
-### The easier way
+To start the installation process, first connect to your router over SSH.  Then, launch the amtm application by simply running "amtm".  The menu will offer you an option to initiate the Entware installation.
 
-Install [amtm](https://diversion.ch/amtm.html) and use the menu to install Entware. Installing a swap file is also highly recommended, and can also be achieved using amtm. 
-
-
-### The easy way
-
-Starting with v3.0.0.4.270.25 a new script has been introduced to facilitate Entware installation. After installing a [USB drive](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting), just type in terminal:
-```
-entware-setup.sh
-```
-
-```
-admin@RT-AC66U:/tmp/mnt/sda1/asusware# entware-setup.sh
- Info:  This script will guide you through the Entware installation.
- Info:  Script modifies only "entware" folder on the chosen drive,
- Info:  no other data will be touched. Existing installation will be
- Info:  replaced with this one. Also some start scripts will be installed,
- Info:  the old ones will be saved to .entwarejffs_scripts_backup.tgz
-
- Info:  Looking for available partitions...
-[1] --> /tmp/mnt/sda1
- =>  Please enter partition number or 0 to exit
-```
-Choose a partition where Entware should be installed, in this case is only [1] --> /tmp/mnt/sda1
-```
-[0-1]: 1
- Info:  /tmp/mnt/sda1 selected.
-
- Info:  Creating /tmp/mnt/sda1/entware folder...
- * Warning:  Deleting old /tmp/opt symlink...
- Info:  Creating /tmp/opt symlink...
- Info:  Creating /jffs scripts backup...
-tar: removing leading '/' from member names
- Info:  Modifying start scripts...
- Info:  Starting Entware deployment....
-
-Info: Creating folders...
-Info: Deploying opkg package manager...
-Downloading /opt/bin/opkg... success!
-Downloading /opt/etc/opkg.conf... success!
-Downloading /opt/etc/profile... success!
-Downloading /opt/etc/init.d/rc.func... success!
-Downloading /opt/etc/init.d/rc.unslung... success!
-Info: Basic packages installation...
-Downloading http://pkg.entware.net/binaries/mipsel/Packages.gz.
-Updated list of available packages in /opt/var/opkg-lists/entware-ng.
-Installing ldconfig (1.0.12-1) to root...
-Downloading http://pkg.entware.net/binaries/mipsel/ldconfig_1.0.12-1_mipselsf.ipk.
-Installing findutils (4.5.14-1) to root...
-Downloading http://pkg.entware.net/binaries/mipsel/findutils_4.5.14-1_mipselsf.ipk.
-Installing libc (1.0.12-1) to root...
-Downloading http://pkg.entware.net/binaries/mipsel/libc_1.0.12-1_mipselsf.ipk.
-Installing libgcc (4.8.5-1) to root...
-Downloading http://pkg.entware.net/binaries/mipsel/libgcc_4.8.5-1_mipselsf.ipk.
-Installing libssp (4.8.5-1) to root...
-Downloading http://pkg.entware.net/binaries/mipsel/libssp_4.8.5-1_mipselsf.ipk.
-Configuring ldconfig.
-Configuring libgcc.
-Configuring libc.
-Configuring libssp.
-Configuring findutils.
- 
-Congratulations! If there are no errors above then Entware-ng is successfully initialized.
- 
-Found a Bug? Please report at https://github.com/Entware-ng/Entware-ng/issues
- 
-Type 'opkg install <pkg_name>' to install necessary package.
-```
-The script will create a new directory named "entware" and not "asusware" like in the "old" way, but the result is the same:
-```
-admin@RT-AC66U:/tmp/home/root/# cd /opt
-admin@RT-AC66U:/tmp/mnt/sda1/entware# 
-```
-***
-
-### The "old" way
-First, determine which disk will contain your Entware installation.  This is most likely sda1 if you only have one disk plugged in, with one single partition:
-
-```
-cd /mnt/sda1
-```
-
-If you have previously used Optware or Download Master you must remove the current installation:
-
-```
-rm -rf asusware[.arm]
-reboot
-```
-
-Now, let's initialize the Optware support inside Asuswrt:
-
-```
-mkdir /mnt/sda1/asusware.arm
-touch /mnt/sda1/asusware.arm/.asusrouter
-reboot
-```
-
-This will ensure that Asuswrt will properly mount /opt at boot time.
-
-After the reboot, the optware directory should be initialized and automounted by Asuswrt.  It's now time to initialize Entware itself:
-
-```shell
-wget -O - http://pkg.entware.net/binaries/mipsel/installer/installer.sh | sh
-```
-
-Now we have to configure Asuswrt to automatically stop/start services:
-
-```
-echo "#!/bin/sh" > /jffs/scripts/services-start
-echo "sleep 20" >> /jffs/scripts/services-start
-echo "/opt/etc/init.d/rc.unslung start" >> /jffs/scripts/services-start
-echo "#!/bin/sh" > /jffs/scripts/services-stop
-echo "/opt/etc/init.d/rc.unslung stop" >> /jffs/scripts/services-stop
-chmod a+rx /jffs/scripts/*
-```
-_(Skip the two lines about "#!/bin/sh" if you already have an existing services-xxxx script)_
-
-And you're done.  You might need to reboot your router to fully initialize your Entware environment.
+If you are running a firmware version older than 384.15 (or 384.13_4 for the RT-AC87U and RT-AC3200), then you start the installation by running "entware-setup.sh" instead.
 
 
 ### Usage
