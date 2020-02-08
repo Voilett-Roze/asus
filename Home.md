@@ -31,6 +31,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 16. [Wi-Fi Radar](/RMerl/asuswrt-merlin/wiki/Wi-Fi-Radar)
 17. [DNS Privacy](/RMerl/asuswrt-merlin/wiki/DNS-Privacy) (DNS-over-TLS)
 18. [AiMesh](/RMerl/asuswrt-merlin/wiki/AiMesh)
+19. [AMTM - Asuswrt-Merlin Terminal Menu](/RMerl/asuswrt-merlin/wiki/AMTM)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin/wiki/About-OpenVPN)
@@ -62,6 +63,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 3. [Compile from source using Linux Mint](/RMerl/asuswrt-merlin/wiki/Compile-Firmware-from-source-using-Linux-Mint)
 4. [Compiling from source using a Debian-based Linux Distribution](/RMerl/asuswrt-merlin/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution)
 5. [Apply patches to source files](/RMerl/asuswrt-merlin/wiki/Applying-patches-to-source-files)
+6. [Addons API](/RMerl/asuswrt-merlin/wiki/Addons-API)
 
 ### Networking HowTo and Guides
 1. [Iptables tricks and tips](/RMerl/asuswrt-merlin/wiki/Iptables-tips)
