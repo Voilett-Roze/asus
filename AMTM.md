@@ -20,6 +20,7 @@ amtm currently supports these popular scripts:
 | YazFi | Jack Yaz | [Link](https://www.snbforums.com/threads/yazfi-enhanced-asuswrt-merlin-guest-wifi-inc-ssid-vpn-client.45924/) |
 | scribe | cmkelley | [Link](https://www.snbforums.com/threads/scribe-syslog-ng-and-logrotate-installer.55853/) |
 | x3mRouting | Xentrk | [Link](https://www.snbforums.com/threads/x3mrouting-selective-routing-for-asuswrt-merlin-firmware.57793/) |
+| unbound Manager | Martineau | [Link](https://www.snbforums.com/threads/release-unbound_manager-manager-installer-utility-for-unbound-recursive-dns-server.61669/) |
 | connmon |Jack Yaz | [Link](https://www.snbforums.com/threads/connmon-internet-connection-monitoring.56163/) |
 | ntpMerlin | Jack Yaz | [Link](https://www.snbforums.com/threads/ntpmerlin-ntp-daemon-for-asuswrt-merlin.55756/) |
 | scMerlin | Jack Yaz | [Link](https://www.snbforums.com/threads/scmerlin-service-and-script-control-menu-for-asuswrt-merlin.56277/) |
