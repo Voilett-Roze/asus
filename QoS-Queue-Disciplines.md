@@ -21,4 +21,4 @@ As not everyone's network is the same, your results may vary depending on numero
 
 
 ### Availability
-Note that due to the age of the kernel used by the RT-N66U and RT-AC66U, these two models do not support the new queue disciplines.
+Note that due to the age of the kernel used by the RT-N66U and RT-AC66U (not to be confused with the RT-AC66U B1), these two models do not support the new queue disciplines.
