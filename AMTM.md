@@ -30,7 +30,7 @@ amtm currently supports these popular scripts:
 | Stubby DNS | Xentrk and Adamm | _deprecated_ |
 | DNSCrypt | bigeyes0x0, SomeWhereOverTheRainBow | [Link](https://www.snbforums.com/threads/release-dnscrypt-installer-for-asuswrt.36071/) |
 | Pixelserv-tls | kvic | [Link](https://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/) |
-
+| NVRAM Save/Restore Utility | Xentrk, John9527 & others | [Link](https://www.snbforums.com/threads/release-nvram-save-restore-utility.61722/) |
 
 amtm also offers an interface for managing a number of other features:
 
