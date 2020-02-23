@@ -44,7 +44,7 @@ The next step: you need to somehow tell Hurricane Electric what your current IPv
 
 ### Configuring a tunnel endpoint update script
 
-For the second method, you will need to enable the [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) partition and custom configs and scripts.  Once that's done, create a `/jffs/scripts/wan-start` [user script](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) that will take care of updating HE with your current WAN IP.  Here is an example script:
+For the second method, you will need to enable the [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) partition and custom configs and scripts.  Once that's done, create a `/jffs/scripts/wan-start` [user script](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) that will take care of updating HE with your current WAN IP.  Here is an example script:
 
 NOTE: If your tunnel was made before 19th Jan 2014, you need to uncomment the second wget line in the script, and comment the first. That's because old tunnels need your md5'd password, and newer ones need the tunnel update key. The detailed API is updating on [website](https://forums.he.net/index.php?topic=3153.0). Check it if anything goes wrong.
 

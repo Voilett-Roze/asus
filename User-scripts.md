@@ -1,7 +1,7 @@
 ## About user scripts
 While Asuswrt-Merlin only adds a limited number of new features over the original firmware, a lot of customizations can be achieved through the use of user scripts.  These will allow you to set up custom firewall rules, create jobs that can be run at scheduled intervals, or start new services.
 
-Those scripts are stored in the internal non-volatile flash in the [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) partition.  Support for these scripts must be enabled, under Administration -> System on the webui.
+Those scripts are stored in the internal non-volatile flash in the [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) partition.  Support for these scripts must be enabled, under Administration -> System on the webui.
 
 
 ## Available scripts:
@@ -67,14 +67,14 @@ Called whenever a DHCP event occurs on the WAN interface.  The type of event is 
 Called whenever an OpenVPN server gets started/stopped, or an OpenVPN client connects to a remote server.  Uses the same syntax/parameters as the "up" and "down" scripts in OpenVPN.
 
 ### ddns-start
-Called at the end of a DDNS update process.  This script is also called when setting the DDNS type to "Custom".  The script gets passed the WAN IP as an argument, which can be used in the script using `$1`.  When handling a "Custom" DDNS, this script is also responsible for reporting the success or failure of the update process.  See the [Custom DDNS](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS) section for more information.
+Called at the end of a DDNS update process.  This script is also called when setting the DDNS type to "Custom".  The script gets passed the WAN IP as an argument, which can be used in the script using `$1`.  When handling a "Custom" DDNS, this script is also responsible for reporting the success or failure of the update process.  See the [Custom DDNS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-DDNS) section for more information.
 
 ### update-notification
-Called when the scheduled new firmware version availability check detects there's a new firmware available for download. See [update notification example](https://github.com/RMerl/asuswrt-merlin/wiki/update-notification-example) for more info.
+Called when the scheduled new firmware version availability check detects there's a new firmware available for download. See [update notification example](https://github.com/RMerl/asuswrt-merlin.ng/wiki/update-notification-example) for more info.
 
 
 ## Postconf scripts
-Note that in addition to these, you can also use the numerous postconf scripts supported by the firmware, which allow you to execute a script between the moment a service's config file is generated and the service is about to be executed.  See the [Postconf scripts](https://github.com/RMerl/asuswrt-merlin/wiki/Custom-config-files#postconf-scripts) section for more information.
+Note that in addition to these, you can also use the numerous postconf scripts supported by the firmware, which allow you to execute a script between the moment a service's config file is generated and the service is about to be executed.  See the [Postconf scripts](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-config-files#postconf-scripts) section for more information.
 
 
 ## Creating scripts

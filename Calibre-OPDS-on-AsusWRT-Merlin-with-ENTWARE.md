@@ -6,7 +6,7 @@ You need: A router with ENTWARE repository activated and an hard-drive attached 
 At this moment (Apr 2018) Optware has a too old version of the php engine, so you need to change and go to Entware.
 
 ## Let's Start
-Install and update ENTWARE. ( ASUS WRT Merlin: https://github.com/RMerl/asuswrt-merlin/wiki/Entware , general: https://github.com/Entware-ng/Entware-ng/wiki )
+Install and update ENTWARE. ( ASUS WRT Merlin: https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware , general: https://github.com/Entware-ng/Entware-ng/wiki )
 
 `opkg update`
 
@@ -21,7 +21,7 @@ Should work also with the php built in webserver ( https://github.com/seblucas/c
 (Probably opkg will install some other packages as dependency for this)
 
 
-Configure lighttpd : (from: https://github.com/RMerl/asuswrt-merlin/wiki/Lighttpd-web-server-with-PHP-support-through-Entware )
+Configure lighttpd : (from: https://github.com/RMerl/asuswrt-merlin.ng/wiki/Lighttpd-web-server-with-PHP-support-through-Entware )
 
 
 	sed -i 's/#server.port                 = 81/server.port                 = 81/g' "/opt/etc/lighttpd/lighttpd.conf"

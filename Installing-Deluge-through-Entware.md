@@ -11,8 +11,8 @@ I will also assume that your disk is already formatted as either Ext2 or Ext3.  
 
 Initial steps:
 
-* Enable the JFFS partition (as explained [here](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS))
-* Setup Entware (as explained [here](https://github.com/RMerl/asuswrt-merlin/wiki/Entware))
+* Enable the JFFS partition (as explained [here](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS))
+* Setup Entware (as explained [here](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware))
 
 Install the nano editor (unless you are already comfortable with the vi editor):
 

@@ -911,8 +911,8 @@ Tested and working on spanish version of OVH but should work in any language. Th
 # Git development: 
 # https://gist.github.com/atais/9ea6595072096ab8077f619bd3648da8
 # Based on
-# https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS#google-domains
-# https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS#bind9-ddns-using-nsupdate
+# https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-DDNS#google-domains
+# https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-DDNS#bind9-ddns-using-nsupdate
 ###
 
 #set -u

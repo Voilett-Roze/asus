@@ -1,6 +1,6 @@
 By using [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html), you can force all your LAN clients to use [Google's Safesearch](https://support.google.com/websearch/answer/186669) when doing any searches on their engines.
 
-For this, we need to configure dnsmasq to alias `www.google.com` (and also perhaps all other [Google's domains](https://www.google.com/supported_domains)) to `forcesafesearch.google.com`.  To do so, make sure [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs) + [custom config/script](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) options are enabled.  Then, create a `/jffs/configs/dnsmasq.conf.add` script.
+For this, we need to configure dnsmasq to alias `www.google.com` (and also perhaps all other [Google's domains](https://www.google.com/supported_domains)) to `forcesafesearch.google.com`.  To do so, make sure [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Jffs) + [custom config/script](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) options are enabled.  Then, create a `/jffs/configs/dnsmasq.conf.add` script.
 
 There are two different methods through which this can be done.
 

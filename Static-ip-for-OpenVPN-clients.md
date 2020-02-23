@@ -3,7 +3,7 @@ Sometimes, it can be useful to have VPN clients with static ip, for instance whe
 # 1. Setup the router
 ## 1.1. Generate certs with easy-rsa
 You need to generate cert for the server and unique certs for each client using easy-rsa tool. To do so, just follow this tutorial:  
-https://github.com/RMerl/asuswrt-merlin/wiki/Generating-OpenVPN-keys-using-Easy-RSA  
+https://github.com/RMerl/asuswrt-merlin.ng/wiki/Generating-OpenVPN-keys-using-Easy-RSA  
 Once it is done, just get all the files generated in the [folder you've chosen]/easy-rsa/keys. You can use WinSCP for that.
 
 ## 1.2. Use the generated certs in the router

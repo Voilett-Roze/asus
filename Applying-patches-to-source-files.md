@@ -33,4 +33,4 @@ patch -p1 < /home/router/Downloads/sonybdp-sx90.patch
 
 ***
 
-Now we are ready to [build the firmware](https://github.com/RMerl/asuswrt-merlin/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution).
+Now we are ready to [build the firmware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution).

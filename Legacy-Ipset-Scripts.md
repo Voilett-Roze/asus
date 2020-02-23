@@ -1,4 +1,4 @@
-> These scripts are considered legacy scripts, they have no maintainers and getting support on them might get tricky, they also only supports ipset version 4 so if you have a new router these scripts will not work, please consult the chart on [here](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset)
+> These scripts are considered legacy scripts, they have no maintainers and getting support on them might get tricky, they also only supports ipset version 4 so if you have a new router these scripts will not work, please consult the chart on [here](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Using-ipset)
 
 # Peer Guardian
 

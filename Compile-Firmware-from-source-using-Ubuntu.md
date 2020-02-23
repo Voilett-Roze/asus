@@ -19,7 +19,7 @@ But on the other hand your router is VERY hard to brick!
 
 ## Additional information
 
-Ubuntu is a derivative of Debian, so you may benefit from also looking at [the instructions for Debian-derived distributions in general](/RMerl/asuswrt-merlin/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution).
+Ubuntu is a derivative of Debian, so you may benefit from also looking at [the instructions for Debian-derived distributions in general](/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution).
 
 ## Example: building under Ubuntu 12.04
 
@@ -81,7 +81,7 @@ If you are ready, install these packages & make yourself a well deserved coffee 
 
 Now we are going to download RMerlin's hard work.
 
-**Note:** a very detailed guide on how to download the source code can be found [on this Wiki page](/RMerl/asuswrt-merlin/wiki/Download-the-latest-source-code-from-GitHub).
+**Note:** a very detailed guide on how to download the source code can be found [on this Wiki page](/RMerl/asuswrt-merlin.ng/wiki/Download-the-latest-source-code-from-GitHub).
 
 Legacy 380.xx branch
 

@@ -2,7 +2,7 @@
 The solution and opinions expressed in this guide are those of the author (latenitetech), unless or until someone else edits this particular wiki article.  This is not blessed by RMerlin or anyone else of authority, but provided by a relative noobie primarily aimed at other noobies to help them make the most of this amazing compilation of software.  Use at your own risk, or move on if this is too daunting for you.
 
 ## USB Disk Check at Boot for Routers running AsusWRT-Merlin 
-This guide shows one way to set up your router to automatically check your USB storage devices on boot, as mentioned in the Wiki guide for User Scripts:  https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts
+This guide shows one way to set up your router to automatically check your USB storage devices on boot, as mentioned in the Wiki guide for User Scripts:  https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts
 
 It assumes you've already enabled user-scripts (_"scripts must be enabled, under Administration -> System on the webui"_).  It does not depend on entware as it only uses functionality already built into the firmware, but some of the tips included here are related to entware and how it interacts with this solution.
 
@@ -37,7 +37,7 @@ The basic installation is quite trivial; just install the contents of the follow
     echo -e "\nStarting '$CHKCMD $1' at `date`" >> $CHKLOG
     $CHKCMD $1 >> $CHKLOG 2>&1
     
-And be sure to follow the script creation guidelines near the bottom of https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts
+And be sure to follow the script creation guidelines near the bottom of https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts
 > _… you must save files with a UNIX encoding. Note that Windows's Notepad cannot save with a UNIX encoding - get Notepad++ instead. You can also directly edit them on the router through SSH or telnet, by using vi or nano, both included in the firmware. These two will create files already encoded in the proper format._
 
 So for Windows users, one quick option is to run nano via ssh or telnet, then just copy/paste the contents of the above script into the nano window, and finally save as /jffs/scripts/pre-mount.
@@ -57,7 +57,7 @@ Due to the possible variation in boot time created by this script, current add-o
 
 Browsing threads under http://www.snbforums.com, you'll find this 'wait loop for entware to start' is an old issue, dating back at least to 2013, and probably before.  And there's a bit of a religious debate about what the right solution is.  The simplest solution, advocated by many long-time users of this environment (and just slightly modifying the default installation method), is just make the wait loop longer.  Changing the _'i=30'_ to _'i=60'_ at the top of the services-start script (the number of seconds to wait) will likely fix a "normal" boot (where the disk check goes by quickly), but other than setting it to many minutes, it's a poor solution for when the disk check has to do serious work.  In that case, you'll likely have to the start the services manually (run _'/opt/etc/init.d/rc.unslung start_' from a telnet or ssh window), or reboot again to get everything started up correctly.  But there is a good alternative (at least I think it's good …), but first read these caveats before pursuing the alternative.
 
-a)  There are certain popular add-on applications that require and/or enforce the original services-start design for entware.  One such application is AB-Solution (https://github.com/RMerl/asuswrt-merlin/wiki/How-to-use-Adblock-using-Pixelserv).  If you use that application (or plan to), skip the alternate solution below as that's not an option.  There are likely other apps with this restriction that I'm not aware of, so you may have to revert back to the 'services-start delay loop' method if you adopt the below alternative and find something doesn't work with it.
+a)  There are certain popular add-on applications that require and/or enforce the original services-start design for entware.  One such application is AB-Solution (https://github.com/RMerl/asuswrt-merlin.ng/wiki/How-to-use-Adblock-using-Pixelserv).  If you use that application (or plan to), skip the alternate solution below as that's not an option.  There are likely other apps with this restriction that I'm not aware of, so you may have to revert back to the 'services-start delay loop' method if you adopt the below alternative and find something doesn't work with it.
 
 b)  Certain routers (the RT-N66U is one such example) can utilize an SD card for the entware volume and when configured this way, has a different boot sequence than routers employing strictly USB storage volumes.  It's been reported that the change recommended below is incompatible with such configurations, so the below method would not apply.
 

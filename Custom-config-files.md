@@ -58,7 +58,7 @@ A lot of the configuration scripts used by the router services (such as dnsmasq)
 
 Postconf scripts are the solution to that.  Those scripts are executed after the router has generated a configuration script, but before the related service gets started.  This means you can use those scripts to manipulate the configuration script, using tools such as "sed" for example.  You can also use these scripts for any other type of action that you wish to execute just before the daemon gets started (for instance, modifying a firewall rule, logging some sort of notification, etc...)
 
-Postconf scripts must be stored in _/jffs/scripts/_ .  The path/filename of the target config file is passed as argument to the postconf script. Please also read the general notes on creating scripts [here](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts#creating-scripts).
+Postconf scripts must be stored in _/jffs/scripts/_ .  The path/filename of the target config file is passed as argument to the postconf script. Please also read the general notes on creating scripts [here](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts#creating-scripts).
 
 The list of available postconf scripts is:
 

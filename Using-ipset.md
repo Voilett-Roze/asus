@@ -35,7 +35,7 @@ Newer router has [ipset version 6](http://ipset.netfilter.org/ipset.man.html) wh
 
 There is a full list of script that are maintained by users, most of the scripts are have various functions for blocking connections please read the description carefully before installing any of these scripts, not all scripts have maintainers and getting support on those scripts can be tricky.
 
->ATTENTION: Scripters, feel free to append to this list and then link installation instructions on the [installation instructions page](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions), please dont add full scripts to that page cause it gets messy "keep it light".
+>ATTENTION: Scripters, feel free to append to this list and then link installation instructions on the [installation instructions page](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Ipset-script-installation-instructions), please dont add full scripts to that page cause it gets messy "keep it light".
 
 &nbsp;
 &nbsp;
@@ -54,10 +54,10 @@ There is a full list of script that are maintained by users, most of the scripts
 
 | `Scriptname` |`Ipset Version`|`Maintained by`|`Description`|
 |--------------|:-------:|:-------------:|:----------------------------------:
-|[MatchIP Utility](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#matchip-utility---search-ipset-lists-for-an-ip)|4,6|redhat27|Search ipsets for a specific IP|
-|[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|Blocks Tor nodes or countries| 
-|[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist|
-|[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian)|4| |Peerguardian|
-|[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|4| |Peerguardian|
-|[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#peer-guardian-v3)|4| |Peerguardian|
-|[Disable Windows 10 Tracking](https://github.com/RMerl/asuswrt-merlin/wiki/Legacy-Ipset-Scripts#disable-windows10-tracking)|4| |Blocks Telemetry|
+|[MatchIP Utility](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Ipset-script-installation-instructions#matchip-utility---search-ipset-lists-for-an-ip)|4,6|redhat27|Search ipsets for a specific IP|
+|[Tor and Countries Block](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Ipset-script-installation-instructions#tor-and-countries-block)|4,6|redhat27|Blocks Tor nodes or countries| 
+|[iblocklist-loader](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Ipset-script-installation-instructions#iblocklist-loader)|4,6|redhat27|Block or allow using any list from iblocklist|
+|[Peerguardian v1](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Legacy-Ipset-Scripts#peer-guardian)|4| |Peerguardian|
+|[Peerguardian v2](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Legacy-Ipset-Scripts#peer-guardian-v2)|4| |Peerguardian|
+|[Peerguardian v3](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Legacy-Ipset-Scripts#peer-guardian-v3)|4| |Peerguardian|
+|[Disable Windows 10 Tracking](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Legacy-Ipset-Scripts#disable-windows10-tracking)|4| |Blocks Telemetry|

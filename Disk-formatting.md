@@ -64,9 +64,9 @@ umount: can't unmount /tmp/mnt/SANDISK: Device or resource busy
 ```
 This is a common problem and difficult to avoid if you already have scripts running on your router. We cannot advise you on what processes to kill. A better solution may be to do the following:
 1. Unmount the disk from the ASUS web GUI
-2. [Zero the disk to eradicate the existing partition table](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#6-zero-disk)
+2. [Zero the disk to eradicate the existing partition table](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Disk-formatting#6-zero-disk)
 3. Reboot the router to clear memory of the old partition table from the kernel
-4. [You should then continue on from step 5 as normal](https://github.com/RMerl/asuswrt-merlin/wiki/Disk-formatting#5-unmount)
+4. [You should then continue on from step 5 as normal](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Disk-formatting#5-unmount)
 
 Please note:
 - do not use the options `-f` or `-l` with umount because it won't help and may corrupt data.

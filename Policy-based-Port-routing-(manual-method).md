@@ -6,7 +6,7 @@ This guide will help you implement Selective **Port** (or **MAC address**) routi
 ## Prerequisites ##
 
 * An Asuswrt-Merlin compatible ARM-based router with Asuswrt-Merlin **v380.xx** or later
-* [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) partion enabled and formatted
+* [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) partion enabled and formatted
 * A working VPN on your router (tested manually making sure the VPN works)
 * A [winSCP](http://winscp.net/eng/download.php#download2) client setup with SSH enabled on your ROUTER
 * [Notepad ++](http://notepad-plus-plus.org/)
@@ -29,7 +29,7 @@ ip rule
 32766:  from all lookup main
 32767:  from all lookup default
 ```
-The **RPDB** fwmark rules should be created by script **/jffs/scripts/nat-start** (see Wki entry [User scripts](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) if **nat-start** doesn't exist)
+The **RPDB** fwmark rules should be created by script **/jffs/scripts/nat-start** (see Wki entry [User scripts](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) if **nat-start** doesn't exist)
 
 ```
 #!/bin/sh

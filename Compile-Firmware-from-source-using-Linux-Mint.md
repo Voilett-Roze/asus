@@ -14,7 +14,7 @@ But on the other hand your router is VERY hard to brick!
 
 ## Additional information
 
-Linux Mint uses the Ubuntu repositories for a large portion of its packages. Or differently put: Linux Mint is a derivative of Ubuntu. You should be able to apply [the instructions for Ubuntu](/RMerl/asuswrt-merlin/wiki/Compile-Firmware-from-source-using-Ubuntu) also on Linux Mint.
+Linux Mint uses the Ubuntu repositories for a large portion of its packages. Or differently put: Linux Mint is a derivative of Ubuntu. You should be able to apply [the instructions for Ubuntu](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Ubuntu) also on Linux Mint.
 
 Make sure to check out the Wikipedia article on the [Linux Mint releases](http://en.wikipedia.org/wiki/List_of_Linux_Mint_releases), to see what Ubuntu release corresponds to your specific Linux Mint release.
 
@@ -63,7 +63,7 @@ libmpc2:i386
 
 * Download Merlins hard work
 
-**Note:** a very detailed guide on how to download the source code can be found [on this Wiki page](https://github.com/RMerl/asuswrt-merlin/wiki/Download-the-latest-source-code-from-GitHub).
+**Note:** a very detailed guide on how to download the source code can be found [on this Wiki page](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Download-the-latest-source-code-from-GitHub).
 
 ```bash
 git clone https://github.com/RMerl/asuswrt-merlin.git

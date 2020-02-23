@@ -13,7 +13,7 @@ Depending on your router model, things might run quite slow--it might not be wor
 
 This article does not cover auto-mounting the encrypted volume at boot, as a passphrase is required to unlock the volume.  Keeping the password on the router would defeat the entire purpose of encrypting it, so you should find an acceptable way to keep things secure.
 
-The Merlin [`post-mount` user script](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) will not try and mount an encrypted volume.  [Here is a post](http://www.snbforums.com/threads/usb-disk-encryption-on-asuswrt-merlin.31586/) describing an alternative way to do it.  (Also refer to the `lmount` and `lumount` scripts below.)
+The Merlin [`post-mount` user script](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) will not try and mount an encrypted volume.  [Here is a post](http://www.snbforums.com/threads/usb-disk-encryption-on-asuswrt-merlin.31586/) describing an alternative way to do it.  (Also refer to the `lmount` and `lumount` scripts below.)
 
 ### Steps
 
@@ -146,8 +146,8 @@ index 2f6fb71..1267060 100644
 
   If you run into problems, check out these wiki entries:
 
-    - [Compiling from source using a Debian based Linux Distribution](https://github.com/RMerl/asuswrt-merlin/wiki/Compiling-from-source-using-a-Debian-based-L)
-    - [Compile Firmware from source using Ubuntu](https://github.com/RMerl/asuswrt-merlin/wiki/Compile-Firmware-from-source-using-Ubuntu)
+    - [Compiling from source using a Debian based Linux Distribution](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-L)
+    - [Compile Firmware from source using Ubuntu](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Ubuntu)
 
   *Note*: there seems to be a way to **just** [build the particular modules we want](http://www.g-loaded.eu/2005/12/20/build-a-single-native-kernel-module/),
 but I could not figure out how to do it.  It would be major time saver!

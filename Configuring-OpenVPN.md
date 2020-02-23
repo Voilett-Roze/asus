@@ -4,7 +4,7 @@ One such tutorial that is recommended (for configuring the OpenVPN server) can b
 
 ### Custom client config files
 
-Starting with 3.0.0.4.372.31, you can now provide the OpenVPN server with your own custom client configuration (the CCD files).  First, make sure you do have [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) enabled.
+Starting with 3.0.0.4.372.31, you can now provide the OpenVPN server with your own custom client configuration (the CCD files).  First, make sure you do have [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) enabled.
 
 Enable the "Manage Client-Specific Options" option under OpenVPN Server.  Next, create the following directory (use ccd2 if you are providing config files for the second OpenVPN Server instance):
 

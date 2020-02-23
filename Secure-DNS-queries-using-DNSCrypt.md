@@ -1,6 +1,6 @@
 Here is another tutorial about enabling dnscrypt on asuswrt routers.
 
-[Install Entware](https://github.com/RMerl/asuswrt-merlin/wiki/Entware#the-easy-way), then install necessary packages:
+[Install Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware#the-easy-way), then install necessary packages:
 
 ```
 opkg install dnscrypt-proxy fake-hwclock

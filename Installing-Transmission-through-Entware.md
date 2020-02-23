@@ -12,7 +12,7 @@ For this I will assume your disk is mounted as /mnt/sda1/ (just adjust the paths
 
 I will also assume that your disk is already formatted as either Ext2 or Ext3.  If not, look on the web for information on how to reformat your disk.
 
-[Setup Entware](https://github.com/RMerl/asuswrt-merlin/wiki/Entware#the-easy-way) and install the nano editor (unless you are already comfortable with the vi editor):
+[Setup Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware#the-easy-way) and install the nano editor (unless you are already comfortable with the vi editor):
 
 ```
 opkg install nano

@@ -103,7 +103,7 @@ A common problem with recent Tivos (those depending exclusively on zeroconf) is 
 \- Install to:  _/opt/etc/init.d/S50pyTivo_   
 (Feel free to change the '50' to whatever number you want, it determines the start-up order of services under init.d.  Lower-numbered are started first.)
 
-Create this file (in UNIX-format, as described in  https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts)   
+Create this file (in UNIX-format, as described in  https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts)   
 > _… you must save files with a UNIX encoding.  Note that Windows' Notepad cannot save with a UNIX encoding - get Notepad++ instead.  You can also directly edit them on the router through ssh or telnet, by using vi or nano, both included in the firmware.  These two will create files already encoded in the proper format._
 
 For Windows users, one quick option is to run nano via telnet or ssh, then just copy/paste the contents of the desired file into the nano window, and finally save to the desired directory.

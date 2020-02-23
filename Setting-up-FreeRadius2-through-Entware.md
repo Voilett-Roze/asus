@@ -29,8 +29,8 @@ I will also assume that your storage device is already formatted as either Ext2 
 
 Initial steps:
 
-* Enable the JFFS partition (as explained [here](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS))
-* Setup Entware (as explained [here](https://github.com/RMerl/asuswrt-merlin/wiki/Entware))
+* Enable the JFFS partition (as explained [here](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS))
+* Setup Entware (as explained [here](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware))
 
 ## Installation
 

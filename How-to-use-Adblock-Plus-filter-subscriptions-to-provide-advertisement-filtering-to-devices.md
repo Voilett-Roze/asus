@@ -4,7 +4,7 @@ This guide will help you setup advertisement filtering (similar to [Adblock Plus
 
 ## Prerequisites ##
 
-To setup advertisement filtering on your router, you will need a working Entware environment. Instructions to setup Entware can be found in [this guide](https://github.com/RMerl/asuswrt-merlin/wiki/Entware).
+To setup advertisement filtering on your router, you will need a working Entware environment. Instructions to setup Entware can be found in [this guide](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware).
 
 ## Installation ##
 

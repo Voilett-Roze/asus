@@ -1,5 +1,5 @@
 ## Background
-This guide is a followup to the original found [here](https://github.com/RMerl/asuswrt-merlin/wiki/USB-Disk-Check-at-Boot). The purpose of this guide is to provide example `pre-mount` scripts that can be used to automatically check and repair the filesystems of USB storage devices during boot or when they are plugged in. This might be desirable because after the router has automatically mounted a filesystem it can sometimes be difficult to unmount it for checking. This is especially true if that filesystem is used by third-party software such as Entware.
+This guide is a followup to the original found [here](https://github.com/RMerl/asuswrt-merlin.ng/wiki/USB-Disk-Check-at-Boot). The purpose of this guide is to provide example `pre-mount` scripts that can be used to automatically check and repair the filesystems of USB storage devices during boot or when they are plugged in. This might be desirable because after the router has automatically mounted a filesystem it can sometimes be difficult to unmount it for checking. This is especially true if that filesystem is used by third-party software such as Entware.
 
 These scripts contain the following improvements over the original script:
 1. Compatibility with GPT disks (GPT is required for disks larger than 2TB).
@@ -21,7 +21,7 @@ The following firmware versions or higher are **required**: Merlin's 384.11 or J
 
 ## Example scripts
 
-The following can be used as-is or as the basis for your own `pre-mount` script. I won't describe how to create or enable [user scripts](https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts) as that is explained elsewhere in the wiki. I have tried to write these examples in such a way that it is easy to understand how they work. They deliberately _don't_ use "clever" (i.e. non-obvious) coding techniques.
+The following can be used as-is or as the basis for your own `pre-mount` script. I won't describe how to create or enable [user scripts](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) as that is explained elsewhere in the wiki. I have tried to write these examples in such a way that it is easy to understand how they work. They deliberately _don't_ use "clever" (i.e. non-obvious) coding techniques.
 ### Simple script
 This script only checks ext2, ext3 and ext4 filesystems and sends **all** output to the router's syslog.
 

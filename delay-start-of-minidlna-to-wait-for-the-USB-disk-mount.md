@@ -66,5 +66,5 @@ Hope this helps those who come across this page as I did.
 
 # Another alternate method
 Check out   
-https://github.com/RMerl/asuswrt-merlin/wiki/Minidlna:--Common-Issues-&-Solutions    
+https://github.com/RMerl/asuswrt-merlin.ng/wiki/Minidlna:--Common-Issues-&-Solutions    
 for a more comprehensive guide and solution.

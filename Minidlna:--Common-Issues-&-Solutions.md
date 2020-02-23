@@ -44,7 +44,7 @@ Once you have your EXT* file system available, follow this guide to install entw
 https://www.hqt.ro/how-to-install-new-generation-entware/
 
 Note:  While the AsusWRT-Merlin firmware already contains an entware set-up script as described in:   
-https://github.com/RMerl/asuswrt-merlin/wiki/Entware   
+https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware   
 It doesn't include the swapfile creation step.  You can still use that, but then you'll need to manually set up the swap file using something like this:   
 https://mydevtutorials.wordpress.com/2014/01/10/how-to-activate-swap-on-asus-rt-ac68u-router/
 
@@ -101,8 +101,8 @@ The Web GUI is fully functional to display the Media Server Status, change media
 * An available Linux filesystem (EXT2, EXT3 or EXT4), with enough space to hold your minidlna database and a few config files.  (100MB should be plenty, perhaps double or triple that for a huge media collection.)   
 * You have _sh_ (command line) access to the router via _telnet_ or _ssh_.   
 * If you've not installed entware, and want to proceed anyway, you still need to "Enable support for custom configs."  Follow these guides to learn about this:   
-https://github.com/RMerl/asuswrt-merlin/wiki/Custom-config-files   
-https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts
+https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-config-files   
+https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts
 
 2)  Recommended Prereq:  Install entware and swapfile (as described earlier in this article)
 
@@ -128,7 +128,7 @@ album_art_names=Cover.jpg/cover.jpg/Thumb.jpg/thumb.jpg
 #root_container=B
 ```    
 Note:  for all the new files created here, be sure to follow the script creation guidelines near the bottom of   
-https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts   
+https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts   
 > _… you must save files with a UNIX encoding.  Note that Windows' Notepad cannot save with a UNIX encoding - get Notepad++ instead.  You can also directly edit them on the router through ssh or telnet, by using vi or nano, both included in the firmware.  These two will create files already encoded in the proper format._
 
 For Windows users, one quick option is to run nano via telnet or ssh, then just copy/paste the contents of the desired file into the nano window, and finally save to your minidlna database directory.

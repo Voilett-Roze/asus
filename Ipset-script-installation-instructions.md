@@ -1,7 +1,7 @@
 ___
 > **NOTE:** This page is helpful instructions on installing the various maintained scripts if there are any issues please turn to the respective thread for support by the author.
 
->**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin/wiki/Jffs#backing-up-the-jffs-partition) in case something goes wrong. If your using multiple scripts from this make sure they dont run all at the same time that will decrease performance, use sleep command to make the script run at separate times or use && to make them run after each other.
+>**ATTENTION:** Make sure that you have a backup of your [JFFS partition](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Jffs#backing-up-the-jffs-partition) in case something goes wrong. If your using multiple scripts from this make sure they dont run all at the same time that will decrease performance, use sleep command to make the script run at separate times or use && to make them run after each other.
 ___
 
 ### Table of Contents
@@ -17,11 +17,11 @@ The below steps will show you how to add a command you can run that will search 
 
 Follow the general script installation instructions:
 
-* Enable and format [**JFFS**](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
+* Enable and format [**JFFS**](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Using your favourite text editor (e.g. nano), add the below into **/jffs/configs/profile.add**
 
-* Please make sure you only add the function that applies to the [**version of ipset**](https://github.com/RMerl/asuswrt-merlin/wiki/Using-ipset#ipset-version-and-router-models) that your router supports.
+* Please make sure you only add the function that applies to the [**version of ipset**](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Using-ipset#ipset-version-and-router-models) that your router supports.
 
 * For ipset v4:
 ```
@@ -79,7 +79,7 @@ MatchIP 8.8.8.8
 
 This example shows how to block incoming connection from [Tor](https://www.torproject.org/) nodes (iphash set type — number of ip addresses) and how to block incoming connection from whole countries (nethash set type - number of ip subnets). 
 
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://raw.githubusercontent.com/shounak-de/misc-scripts/master/create-ipset-lists.sh) to `/jffs/scripts/create-ipset-lists.sh`
 
@@ -141,7 +141,7 @@ The script uses the zipped IP range data from the iblocklist site and creates si
 
 Follow the general script installation instructions:
 
-* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin/wiki/JFFS) through WEB UI first (if not already enabled)
+* Enable and format [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) through WEB UI first (if not already enabled)
 
 * Then place [**this content**](https://raw.githubusercontent.com/shounak-de/iblocklist-loader/master/iblocklist-loader-v2.sh) to `/jffs/scripts/iblocklist-loader.sh`
 

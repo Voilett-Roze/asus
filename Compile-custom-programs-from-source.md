@@ -8,9 +8,9 @@ errors that appeared in my logs, its fairly easy to compile once you have the to
 
 First follow one of these links to setup your toolchain, ignore the very last step which compiles the firmware.
 
-* [Compiling from source using a Debian based Linux Distribution](/RMerl/asuswrt-merlin/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution)
-* [Compile Firmware from source using Linux Mint](/RMerl/asuswrt-merlin/wiki/Compile-Firmware-from-source-using-Linux-Mint)
-* [Compile firmware from source using Ubuntu](/RMerl/asuswrt-merlin/wiki/Compile-Firmware-from-source-using-Ubuntu)
+* [Compiling from source using a Debian based Linux Distribution](/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution)
+* [Compile Firmware from source using Linux Mint](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Linux-Mint)
+* [Compile firmware from source using Ubuntu](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Ubuntu)
 
 Instead of running `make DEVICEMODEL`, run:
 
