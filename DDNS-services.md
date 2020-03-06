@@ -35,8 +35,8 @@ Next, create a `ddns-start` script that will invoke In-a-dyn, pointed at your cu
 
 ```
 #!/bin/sh
-inadyn --once -f "/jffs/inadyn.conf" -e "/sbin/ddns_custom_updated 1" --continue-on-error --exec="/sbin/ddns_custom_
-updated 1"
+inadyn --once -f "/jffs/inadyn.conf" -e "/sbin/ddns_custom_updated 1" --continue-on-error "/sbin/ddns_custom_updated
+ 1"
 ```
 
 Give the `ddns-start` execute permissions:
