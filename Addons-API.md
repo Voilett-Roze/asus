@@ -51,9 +51,6 @@ then
     mount -o bind /tmp/menuTree.js /www/require/modules/menuTree.js
 fi
 
-# Set correct return URL within your copied page
-sed -i "s/MyPage.asp/$am_webui_page/g" /www/user/$am_webui_page
-
 # Insert link at the end of the Tools menu.  Match partial string, since tabname can change between builds (if using an AS tag)
 sed -i "/url: \"Tools_OtherSettings.asp\", tabName:/a {url: \"$am_webui_page\", tabName: \"My Page\"}," /tmp/menuTree.js
 
@@ -216,12 +213,20 @@ Here is a simple example page, which you can use as a starting point.
 var custom_settings = <% get_custom_settings(); %>;
 
 function initial(){
+        SetCurrentPage();
         show_menu();
 
         if (custom_settings.diversion_path == undefined)
                 document.getElementById('diversion_path').value = "/tmp/default";
         else
                 document.getElementById('diversion_path').value = custom_settings.diversion_path;
+}
+
+        
+function SetCurrentPage() {
+    /* Set the proper return pages */
+    document.form.next_page.value = window.location.pathname.substring(1);
+    document.form.current_page.value = window.location.pathname.substring(1);
 }
 
 function applySettings(){
