@@ -16,7 +16,7 @@ First of all, create the following as `/jffs/scripts/rpg-passgen.sh` and ensure 
     AUTH="login@gmail.com"
     PASS="password"
     FROMNAME="Asus Router"
-    TO="your@email.com; other@email.com"
+    TO="your@email.com other@email.com"
     
     # default password based on date if we cannot create one elsewhere
     datepasswd=`date +"%A%B%d"`
