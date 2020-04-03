@@ -44,9 +44,93 @@ The next step: you need to somehow tell Hurricane Electric what your current IPv
 
 ### Configuring a tunnel endpoint update script
 
-For the second method, you will need to enable the [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) partition and custom configs and scripts.  Once that's done, create a `/jffs/scripts/wan-start` [user script](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) that will take care of updating HE with your current WAN IP.  Here is an example script:
+#### For 384.15 and later
+For the second method, you will need to enable the [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) partition and custom configs and scripts.  Once that's done, create a `/jffs/scripts/wan-event` [user script](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) that will take care of updating HE with your current WAN IP.  Here is an example script:
 
 NOTE: If your tunnel was made before 19th Jan 2014, you need to uncomment the second wget line in the script, and comment the first. That's because old tunnels need your md5'd password, and newer ones need the tunnel update key. The detailed API is updating on [website](https://forums.he.net/index.php?topic=3153.0). Check it if anything goes wrong.
+
+```
+#!/bin/sh
+#
+# v1.40-rm3 Oct 31, 2017
+# v1.41-gunnyst May 2, 2018
+#
+
+# ***************************
+# settings
+# ***************************
+
+USERNAME="username used to log into your account"
+PASSWORD="your 'Update Key' defined on the 'Advanced' tab (newer tunnels) or password (old tunnels)"
+TUNNEL_ID="your 'Tunnel ID' defined on the 'IPv6 Tunnel' tab"
+TUNNEL_TYPE="new" # new/old tunnel type
+
+
+# ***************************
+# advanced settings
+# ***************************
+
+# optional settings
+LOGFILE="/tmp/ipv6.log"
+TIMEOUT="10" # if the WGET below takes longer you probably have an issue with IPTABLES
+
+# assuming your WAN is configured as 'eth0' this will quickly and reliably give you your public WAN IP address
+PUBLIC_IP=$(ip addr show ppp0 | awk '/inet /{gsub(/.*t/,"",$2);print$2}')
+PUBLIC_IP=${PUBLIC_IP%/*}
+
+# accept PINGs from HE's endpoint verificiation server
+#
+# NOTE: if you try to manually set the public IP on https://www.tunnelbroker.net
+#       you'll get a notice about the following IP not being able to ping your
+#       public IP as long as you run ASUSWRT with default settings
+#
+iptables -I INPUT 1 -s 66.220.2.74 -p icmp -j ACCEPT
+
+
+# ***************************
+# tunnel endpoing update
+# ***************************
+
+# update IP...
+if [ "$2" = "connected" ]; then
+  sleep 60
+
+  if [ "${TUNNEL_TYPE}" = "new" ]; then
+
+    # ... for new tunnels ...
+    if [ -z "${PUBLIC_IP}" ]; then
+      wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNEL_ID}" 2>&1
+    else
+      wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${PASSWORD}&hostname=${TUNNEL_ID}&myip=${PUBLIC_IP}" 2>&1
+    fi
+
+  else
+
+    # ... or for old tunnels
+    # get a hash of the plaintext password
+    MD5PASSWD=`echo -n ${PASSWORD} | md5sum | sed -e 's/  -//g'`
+    if [ -z "${PUBLIC_IP}" ]; then
+      wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNEL_ID}" 2>&1
+    else
+      wget --no-check-certificate --quiet --inet4-only --timeout=${TIMEOUT} -a - --output-document=${LOGFILE} "https://ipv4.tunnelbroker.net/nic/update?username=${USERNAME}&password=${MD5PASSWD}&hostname=${TUNNEL_ID}&myip=${PUBLIC_IP}" 2>&1
+    fi
+
+  fi
+
+fi
+```
+
+and don't forget to make it executable:
+```
+chmod +x /jffs/scripts/wan-event
+```
+
+Edit the first 3 parameters at the top: username, password (forolder tunnels)/update key (for newer tunnels) and tunnel ID. You can manually execute the script, then check if /tmp/ipv6.log contains your public IPv4 address to ensure that the script is running correctly.
+
+After that, you can test your tunnel by accessing, for example, http://www.whatismyipv6.com.  If you see an IPv6 (meaning a long hexadecimal string), then congratulations - you're set!
+
+#### For 384.14 and earlier
+Create a `/jffs/scripts/wan-start`script instead of `wan-event`.
 
 ```
 #!/bin/sh
@@ -118,10 +202,6 @@ and don't forget to make it executable:
 ```
 chmod +x /jffs/scripts/wan-start
 ```
-
-Edit the first 3 parameters at the top: username, password (forolder tunnels)/update key (for newer tunnels) and tunnel ID. You can manually execute the script, then check if /tmp/ipv6.log contains your public IPv4 address to ensure that the script is running correctly.
-
-After that, you can test your tunnel by accessing, for example, http://www.whatismyipv6.com.  If you see an IPv6 (meaning a long hexadecimal string), then congratulations - you're set!
 
 
 
