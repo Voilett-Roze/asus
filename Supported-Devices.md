@@ -26,6 +26,9 @@ List of supported models:
  * RT-AC3100
  * RT-AC5300
  * RT-AX88U
+ * RT-AX56U
+ * RT-AX58U
+ * RT-AX3000 (use the RT-AX58U firmware)
 
 
 
