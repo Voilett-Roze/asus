@@ -39,6 +39,7 @@ amtm also offers an interface for managing a number of other features:
 | Entware _(replaces the old entware-setup.sh)_ | zyxmon, ryzhovau, themiron |
 | USB disk check at boot | ColinTaylor, latenitetech, thelonelycoder |
 | Format disk | thelonelycoder, ColinTaylor |
+| Router LED control, smart router LED scheduler | thelonelycoder |
 | Reboot scheduler via cron job | thelonelycoder |
 | Swap file creation and management | thelonelycoder |
 | amtm themes | thelonelycoder |
