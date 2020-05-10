@@ -32,7 +32,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 17. [DNS Privacy](/RMerl/asuswrt-merlin.ng/wiki/DNS-Privacy) (DNS-over-TLS)
 18. [AiMesh](/RMerl/asuswrt-merlin.ng/wiki/AiMesh)
 19. [AMTM - Asuswrt-Merlin Terminal Menu](/RMerl/asuswrt-merlin.ng/wiki/AMTM)
-20. [QoS Optimization](/RMerl/asuswrt-merlin.ng/wiki/QoS-Optimization)
+20. [Adaptive QoS Optimization](/RMerl/asuswrt-merlin.ng/wiki/Adaptive-QoS-Optimization)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin.ng/wiki/About-OpenVPN)
