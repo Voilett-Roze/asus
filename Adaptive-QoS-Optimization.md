@@ -5,15 +5,20 @@ There are 3 different methods of QoS available - Device priority, Traditional, a
 
 ### Configuration
 
-There are limitations in the stock Adaptive QoS provided by Asus, which has led to FreshJR creating his modification script.  For installation and configuration, use [AMTM](RMerl/asuswrt-merlin.ng/wiki/AMTM) and select the FreshJRQoS script.
+There are limitations in the stock Adaptive QoS provided by Asus, which has led to FreshJR creating his modification script.  For installation and configuration of FreshJRQoS, use [AMTM](/RMerl/asuswrt-merlin.ng/wiki/AMTM) and select the FreshJRQoS script.
 
-One aspect of QoS configuration is which queueing discipline to use.  For more information on this, see [QoS Queue Disciplines](RMerl/asuswrt-merlin.ng/wiki/QoS-Queue-Disciplines)
+One aspect of QoS configuration is which queueing discipline to use.  For more information on queueing, see [QoS Queue Disciplines](/RMerl/asuswrt-merlin.ng/wiki/QoS-Queue-Disciplines).
 
-In general, you want to use the following:
+In general, you want to use the following settings:
+* FreshJRQoS script
 * no device priorities
 * Adaptive QoS
 * Manual bandwidth setting set to 85-95% of your actual speeds from a bandwidth test without QoS enabled
 * fq_codel queue discipline
+
+### When NOT to use Adaptive QoS
+
+If you have a very fast connection, e.g. gigabit, you will struggle to find a router powerful enough to provide Adaptive QoS at that speed. You may want to consider simple bandwidth allocation to specific devices to reduce traffic congestion in your local network.
 
 ### Known Issues with Adaptive QoS
 
