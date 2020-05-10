@@ -89,7 +89,7 @@ Once everything is working, you can remove the custom scripts created above with
 
 `rm /jffs/scripts/wan-event`
 
-`rm /jffs/scripts/dhcpc-even`
+`rm /jffs/scripts/dhcpc-event`
 
 ##### Known Problem Configurations
 * AC68U with Pace 5268ac gateway in DMZ+ mode
