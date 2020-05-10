@@ -41,8 +41,11 @@ or
 To better see how your DHCP is behaving, make sure JFFS scripting is enabled, then SSH to your router and run these commands
 
 `touch /jffs/scripts/wan-event`
+
 `touch /jffs/scripts/dhcpc-event`
+
 `chmod 755 /jffs/scripts/wan-event`
+
 `chmod 755 /jffs/scripts/wan-event`
 
 Then disable Adaptive QoS and watch your system log for information that your DHCP is renewing as expected, e.g.
@@ -51,9 +54,13 @@ Then disable Adaptive QoS and watch your system log for information that your DH
 Then re-enable your QoS and watch for your WAN being dropped and DHCP lease being acquired, e.g.
 
 `custom_script: Running /jffs/scripts/dhcpc-event (args: deconfig)`
+
 `custom_script: Running /jffs/scripts/wan-event (args: 0 disconnected)`
+
 `custom_script: Running /jffs/scripts/wan-event (args: 0 stopped)`
+
 `custom_script: Running /jffs/scripts/dhcpc-event (args: bound)`
+
 `custom_script: Running /jffs/scripts/wan-event (args: 0 connected)`
 
 The problem is a rule created by stock ASUS Adaptive QoS that is blocking DHCP traffic to your gateway.
@@ -71,7 +78,9 @@ If not, you can recover by turning off Adaptive QoS and restarting your firewall
 If it fixed your problem, you can make the solution permanent by adding the following to your /jffs/scripts/firewall-start script.  If that script does not exist you can create it with the touch and chmod commands above and substituting "firewall-start" for the filename.
 
 `if [ "$(nvram get qos_enable)" = "1" ] && [ "$(nvram get qos_type)" = "1" ]; then`
+
 `  iptables -t mangle -I PREROUTING 1 -i eth0 -s YOUR_GATEWAY_IP_ADDRESS/32 -p udp -m udp --sport 67 --dport 68 -j ACCEPT`
+
 `fi`
 
 then restart your router and verify QoS and DHCP are working as expected.
@@ -79,6 +88,7 @@ then restart your router and verify QoS and DHCP are working as expected.
 Once everything is working, you can remove the custom scripts created above with the commands
 
 `rm /jffs/scripts/wan-event`
+
 `rm /jffs/scripts/dhcpc-even`
 
 ##### Known Problem Configurations
