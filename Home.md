@@ -32,7 +32,6 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 17. [DNS Privacy](/RMerl/asuswrt-merlin.ng/wiki/DNS-Privacy) (DNS-over-TLS)
 18. [AiMesh](/RMerl/asuswrt-merlin.ng/wiki/AiMesh)
 19. [AMTM - Asuswrt-Merlin Terminal Menu](/RMerl/asuswrt-merlin.ng/wiki/AMTM)
-20. [Adaptive QoS Optimization](/RMerl/asuswrt-merlin.ng/wiki/Adaptive-QoS-Optimization)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin.ng/wiki/About-OpenVPN)
@@ -80,6 +79,8 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 11. [Custom domains with dnsmasq](/RMerl/asuswrt-merlin.ng/wiki/Custom-domains-with-dnsmasq)
 12. [How to use Adblock using Pixelserv](https://github.com/RMerl/asuswrt-merlin.ng/wiki/How-to-use-Adblock-using-Pixelserv)
 13. [How to block scanners, bots, malware, ransomware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/How-to-block-scanners,-bots,-malware,-ransomware)
+14. [Adaptive QoS Optimization](/RMerl/asuswrt-merlin.ng/wiki/Adaptive-QoS-Optimization)
+
 
 ### Misc HowTo and Guides
 1. [Scheduled Reboot](/RMerl/asuswrt-merlin.ng/wiki/Scheduled-Reboot)
