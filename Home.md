@@ -102,6 +102,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 17. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin.ng/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
 18. [Setting up a NTP Server for your LAN](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-an-NTP-Server-for-your-local-lan)
 19. [Disk formatting](/RMerl/asuswrt-merlin.ng/wiki/Disk-formatting)
+20. [Change the web user interface language](/RMerl/asuswrt-merlin.ng/wiki/Change-the-Web-User-Interface-language-when-it's-factory-locked)
 
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin.ng/wiki/FAQ)
