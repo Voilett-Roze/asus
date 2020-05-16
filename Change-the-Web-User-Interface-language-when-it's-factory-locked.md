@@ -2,9 +2,15 @@ In some countries (such as Japan), some ASUS routers are set to allow only one l
 
 However it's possible to use the below script to change the language on demand via SSH. To set the language at reboot/startup, the script must be added to /jffs/scripts/init-start.
 
-First you need to enable custom scripts by ticking "Enable JFFS custom scripts and configs" in Administration > System
+Questions and comments about this script on this [SNB forum thread](https://www.snbforums.com/threads/change-the-web-user-interface-language-when-its-factory-locked.64155/).
 
-Then, you have to create the following script as /jffs/scripts/set-webui-lang.sh
+## Requirements
+
+Enable custom scripts by ticking "Enable JFFS custom scripts and configs" in Administration > System
+
+## Script
+
+Create the following script as /jffs/scripts/set-webui-lang.sh
 
 ```
 #!/bin/sh
@@ -124,8 +130,9 @@ service restart_httpd > /dev/null
 
 log "Done."
 ```
+## Usage
 
-Now you can call the script to change the language, with various options
+You can call the script to change the language, with various options
 
 ```
 # Call the script with a prompt to choose the language
@@ -143,8 +150,10 @@ Now you can call the script to change the language, with various options
 # Call the script to reset the webui to factory language
 /jffs/scripts/set-webui-lang.sh -f
 ```
+## Persistence after reboot
 
-**Attention**, default factory language will be back at reboot. In order to avoid that, you can add a call to this script to /jffs/scripts/init-start. Change "EN" to whatever available language you want to set.
+In order to set your favorite language at startup, you must add a call to the script in /jffs/scripts/init-start. 
+Change "EN" to whatever available language you want to set.
 
 ```
 /jffs/scripts/set-webui-lang.sh -q EN
