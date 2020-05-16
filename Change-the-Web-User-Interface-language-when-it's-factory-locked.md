@@ -34,7 +34,7 @@ Then, you have to create the following script as /jffs/scripts/set-webui-lang.sh
 ############################################################################
 
 # Default dictionnary to use 
-DEFAULT_DICT="FR"
+DEFAULT_DICT="EN"
 
 # Get the original factory language
 FACTORY_DICT=$(nvram get preferred_lang)
