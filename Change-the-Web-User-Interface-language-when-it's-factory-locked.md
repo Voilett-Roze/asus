@@ -146,7 +146,9 @@ Now you can call the script to change the language, with various options
 
 **Attention**, default factory language will be back at reboot. In order to avoid that, you can add a call to this script to /jffs/scripts/init-start. Change "EN" to whatever available language you want to set.
 
-`/jffs/scripts/set-webui-lang.sh -q EN`
+```
+/jffs/scripts/set-webui-lang.sh -q EN
+```
 
 This one liner will do that for you, (and create /jffs/scripts/init-start if necessary). Change "EN" to whatever available language you want to set.
 
