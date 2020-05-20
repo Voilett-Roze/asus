@@ -134,6 +134,6 @@ These are additional options that you can add to the script above if a standalon
  fi
  	sleep 1
 
-The following is to setup a cron job. This simply reruns this script at whatever times specified to ensure that everything is still setup. The current setting "*/30" makes it rerun the script every 30 minuts. Place this line in a separate script. 
+The following is to setup a cron job. This simply reruns this script at whatever times specified to ensure that everything is still setup. The current setting "*/30" makes it rerun the script every 30 minutes. Place this line in a separate script. 
 
  cru a VPN_Check "*/30 * * * * /jffs/scripts/your_file_name/"  
