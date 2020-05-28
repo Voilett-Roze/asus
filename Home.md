@@ -64,6 +64,8 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 4. [Compiling from source using a Debian-based Linux Distribution](/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution)
 5. [Apply patches to source files](/RMerl/asuswrt-merlin.ng/wiki/Applying-patches-to-source-files)
 6. [Addons API](/RMerl/asuswrt-merlin.ng/wiki/Addons-API)
+7. [Setting up a build environment under WSL2](/RMerl/asuswrt-merlin.ng/wiki/Compiling-under-WSL2)
+
 
 ### Networking HowTo and Guides
 1. [Iptables tricks and tips](/RMerl/asuswrt-merlin.ng/wiki/Iptables-tips)
