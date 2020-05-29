@@ -52,6 +52,7 @@ sudo dpkg-reconfigure dash
 Now you can install all the required packages.  Note that this list may change over time as new components are added to the firmware code.
 
 ```
+sudo apt update
 sudo apt-get install libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison \
 bzip2 diffutils file flex m4 g++ gawk groff-base libncurses5-dev libtool libslang2 make patch perl pkg-config shtool \
 subversion tar texinfo zlib1g zlib1g-dev git gettext libexpat1-dev libssl-dev cvs gperf unzip \
