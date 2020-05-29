@@ -11,6 +11,10 @@ For details, please refer to the Microsoft documentation:
 
 https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
+Also, you might want to limit the number of CPU cores or memory that WSL2 is allowed to use.  This can be configured through the .wlsconf config file.  See the "Configure Global Options" section:
+
+https://docs.microsoft.com/en-us/windows/wsl/wsl-config
+
 
 ### Setting up the Linux environment
 You need to configure WSL to NOT insert the Windows search path within the Linux environment's own search path.  Failing to do so will greatly slow down the build process (in tests, the build time increased from taking 30 minutes, to taking 60-90 minutes).  Edit (or create) /etc/wsl.conf, and add the following:
