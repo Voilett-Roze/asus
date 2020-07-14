@@ -132,6 +132,8 @@ log "Done."
 ```
 ## Usage
 
+Always log off from the webui before using the script to change a language. If you don't, after changing the language, you might have a message saying "You have entered an incorrect username or password 5 times. Please try again after 5mn", and you will have to wait.
+
 You can call the script to change the language, with various options
 
 ```
@@ -162,3 +164,8 @@ Change "EN" to whatever available language you want to set.
 This one liner will do that for you, (and create /jffs/scripts/init-start if necessary). Change "EN" to whatever available language you want to set.
 
 `[[ ! -f /jffs/scripts/init-start ]] && echo -e "#!/bin/sh\n" > /jffs/scripts/init-start && chmod +x /jffs/scripts/init-start ; if ! grep -q "set-webui-lang.sh" /jffs/scripts/init-start; then echo -e "/jffs/scripts/set-webui-lang.sh -q EN\n" >> /jffs/scripts/init-start; fi`
+
+## Troubleshooting
+
+Some languages might not work however they are listed in the list of dictionnaries. In this case, you can try another language or roll back to factory language.
+
