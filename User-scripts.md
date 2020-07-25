@@ -35,7 +35,7 @@ $2 will contain the event type, from the following list (the list can vary betwe
 * disabled
 * stopping
 
-The old wan-start script would occur on a "connected" event.  Note that after a connected event occur, the Internet connection might not yet be fully functional.  You should probably add a slight pause before you try to initiate anything requiring Internet access, or write your own code to wait until the connection becomes functional.
+The old wan-start script would occur on a "connected" event.  Note that after a connected event occurs, the Internet connection might not yet be fully functional.  You should probably add a slight pause before you try to initiate anything requiring Internet access, or write your own code to wait until the connection becomes functional.
 
 ### wan-start
 _(deprecated since 384.15, please use wan-event instead)_
