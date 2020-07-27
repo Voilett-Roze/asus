@@ -23,7 +23,7 @@ Called before a service event is called (e.g. restart_httpd, restart_wireless, e
 Introduced in firmware 384.11.  Called after a service event completes (e.g. restart_httpd, restart_wireless, etc...).  First argument is the event (typically _stop_, _start_ or _restart_), second argument is the target (_wireless_, _httpd_, etc...). 
 
 ### wan-event
-Called after an event related to the WAN interface occurs.  The script will receive two parameter:
+Called after an event related to the WAN interface occurs.  The script will receive two parameters:
 
 $1 will contain the WAN unit (0 for Primary, or 1 for Secondary).  
 $2 will contain the event type, from the following list (the list can vary between firmware versions):
