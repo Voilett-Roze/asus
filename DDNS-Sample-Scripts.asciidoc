@@ -1024,22 +1024,24 @@ fi
 
 [source]
 ....
+
 #!/bin/sh
 
 IP=${1}
-APIKEY=""
-DOMAIN="example.com"
-SECRET_KEY=""
+APIKEY="INSERT_YOUR_GODADDY_API_APP_KEY_HERE"
+SECRET_KEY="INSERT_YOUR_GODADDY_API_SECRET_KEY_HERE"
+DOMAIN="INSERT_YOUR_GODADDY_DOMAIN_NAME_HERE"
+HOST="INSERT_HOSTNAME_TO_UPDATE_HERE"
 
-curl -X PUT https://api.godaddy.com/v1/domains/$DOMAIN/records/A \
-  -H "Authorization: sso-key $APIKEY:$SECRET_KEY" \
-  -H "Content-Type: application/json" \
-  -d "[{\"name\": \"@\", \"ttl\": 600, \"data\": \"$IP\"}]"
+curl -X PUT https://api.godaddy.com/v1/domains/$DOMAIN/records/A/$HOST 
+-H "Authorization: sso-key $APIKEY:$SECRET_KEY" 
+-H "Content-Type: application/json" 
+-d "[{"type": "A","name": "$HOST", "ttl": 600, "data": "$IP"}]"
 
 if [ $? -eq 0 ];
 then
-    /sbin/ddns_custom_updated 1
+/sbin/ddns_custom_updated 1
 else
-    /sbin/ddns_custom_updated 0
+/sbin/ddns_custom_updated 0
 fi
 ....
