@@ -3,7 +3,7 @@ You can download the firmware from [https://www.asuswrt-merlin.net/download](htt
 Since Asuswrt-Merlin is mostly a variant of the original Asuswrt, it means that there is no special procedure to flash it.  Just flash it the same way you would flash any regular Asus firmware.  A few notes:
 
 * Starting with Asus's 3.0.0.4.380_3000, a new firmware format is used.  To flash Asuswrt-Merlin on one of these newer firmwares, you will need 380.61 or newer.  Likewise, downgrading to an older version is not supported. (Try firmware recovery mode if you really need to downgrade.)
-* The RT-AC68U and RT-AC56U need to be at least on firmware 378.55 (or the last 378.xxx version from Asus) before you can flash 380.xx, due to the partition size change.
+* The RT-AC68U and RT-AC56U need to be at least on firmware 378.55 (or the last 378.xxx version from Asus) before you can flash 380.xx or newer, due to the partition size change.
 * It's recommended to reboot the router _before_ flashing it, to free up sufficient memory.  Otherwise, there's a chance the router might reject the firmware, due to running too low of free RAM.
 * If coming from a non-Asuswrt firmware, you will have to do a factory default reset.
 * While it is generally not necessary to restore to factory defaults, it's not a bad idea, especially if there is a big jump in version number (e.g. from 112 to 178).  No need to do the 30/30/30 dance as required by DD-WRT - just do a plain Factory Default reset, or turn the device on while keeping the WPS button pressed.  (The procedure can be different from one model to another.)
