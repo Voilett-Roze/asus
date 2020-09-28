@@ -5,8 +5,11 @@ A simple script/utility is available that reads from a configuration (ini) file 
 
 A 'Migration Mode' can be used when transferring settings between routers. This mode excludes certain variables (such as transmit power), that should evaluated based on the new hardware.
 
+## Requirements ##
+A USB drive formatted as ext2, ext3, ext4 with an available partition for the NVRAM Save/Restore Utility installation.
+
 ## Installing the Utility ##
-The latest version of the utility is hosted on [GitHub](https://github.com/Xentrk/nvram-save-restore-utility) and can be installed using [amtm](https://diversion.ch/amtm.html). 
+The latest version of the utility is hosted on [GitHub](https://github.com/Xentrk/nvram-save-restore-utility) and can be installed using [amtm](https://diversion.ch/amtm.html). amtm also has a utility to format a USB.
 
 ## Support ## 
 [User NVRAM Save/Restore Utility Support Thread](https://www.snbforums.com/threads/release-nvram-save-restore-utility.61722/)
