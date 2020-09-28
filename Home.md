@@ -106,6 +106,29 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 19. [Disk formatting](/RMerl/asuswrt-merlin.ng/wiki/Disk-formatting)
 20. [Change the webui language](/RMerl/asuswrt-merlin.ng/wiki/Change-the-webui-language-when-it's-factory-locked)
 
+### Third Party Scripts and Utilities
+1.  [amtm - the Asuswrt-Merlin Terminal Menu](https://diversion.ch/amtm.html)
+2.  [Diversion - The Router Ad Blocker](https://diversion.ch/) - maintained by thelonelycoder
+3.  [Skynet - Router Firewall & Security Enhancements](https://www.snbforums.com/threads/release-skynet-router-firewall-security-enhancements.16798/) - maintained by Adamm
+4.  [FlexQoS - Flexible QoS Enhancement Script for Adaptive QoS](https://www.snbforums.com/threads/fork-flexqos-flexible-qos-enhancement-script-for-adaptive-qos.64882/) - maintained by dave14305
+5.  [YazFi - enhanced AsusWRT-Merlin Guest WiFi inc. SSID <-> VPN Client](https://www.snbforums.com/threads/yazfi-enhanced-asuswrt-merlin-guest-wifi-inc-ssid-vpn-client.45924/) - maintained by Jack Yaz
+6.  [scribe - syslog-ng and logrotate installer](https://www.snbforums.com/threads/scribe-syslog-ng-and-logrotate-installer.55853/) - maintained by cmkelley
+7.  [x3mRouting - Selective Routing for Asuswrt-Merlin Firmware](https://www.snbforums.com/threads/x3mrouting-selective-routing-for-asuswrt-merlin-firmware.57793/) - maintained by Xentrk
+8.  [unbound Manager - (Manager/Installer utility for unbound - Recursive DNS Server)](https://www.snbforums.com/threads/release-unbound_manager-manager-installer-utility-for-unbound-recursive-dns-server.61669/) - maintained by Martineau
+9.  [connmon - Internet connection monitoring](https://www.snbforums.com/threads/connmon-internet-connection-monitoring.56163/) - maintained by Jack Yaz
+10. [ntpMerlin -  NTP Daemon for AsusWRT Merlin](https://www.snbforums.com/threads/ntpmerlin-ntp-daemon-for-asuswrt-merlin.55756/) - maintained by Jack Yaz
+11. [scMerlin -  service and script control menu for AsusWRT-Merlin](https://www.snbforums.com/threads/scmerlin-service-and-script-control-menu-for-asuswrt-merlin.56277/) - maintained by Jack Yaz
+12. [spdMerlin - Automated speedtests with graphs](https://www.snbforums.com/threads/spdmerlin-automated-speedtests-with-graphs.55904/) - maintained by Jack Yaz
+13. [uiDivStats - WebUI for Diversion statistics](https://www.snbforums.com/threads/uidivstats-webui-for-diversion-statistics.56393/) - maintained by Jack Yaz
+14. [uiScribe - Custom System Log page for "scribed" logs](https://www.snbforums.com/threads/uiscribe-custom-system-log-page-for-scribed-logs.57040/) - maintained by Jack Yaz
+15. [Stubby DNS Installer](https://www.snbforums.com/threads/stubby-installer-asuswrt-merlin.49469/) - maintained by Xentrk and Adamm (partially deprecated due to native DoT support in newer firmware)
+16. [DNSCrypt - dnscrypt installer for asuswrt](https://www.snbforums.com/threads/release-dnscrypt-installer-for-asuswrt.36071/) - maintained by bigeyes0x0
+17. [Entware](https://github.com/Entware/Entware) - maintained by zyxmon & ryzhovau
+18. [Pixelserv-tls - A Better One-pixel Webserver for Adblock](https://www.snbforums.com/threads/pixelserv-a-better-one-pixel-webserver-for-adblock.26114/) - maintained by kvic (beta support suspended)
+19. [USB disk check at boot](https://github.com/RMerl/asuswrt-merlin.ng/wiki/USB-Disk-Check-at-Boot) - maintained by ColinTaylor, latenitetech, thelonelycoder
+20. [Format disk](https://www.snbforums.com/threads/amtm-the-asuswrt-merlin-terminal-menu.42415/) - maintained by thelonelycoder and ColinTaylor. Now supports creation of up to three partitions.
+
+
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin.ng/wiki/FAQ)
 2. [Credits](/RMerl/asuswrt-merlin.ng/wiki/Credits/)
