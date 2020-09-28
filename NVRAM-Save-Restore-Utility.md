@@ -3,9 +3,10 @@ There are times when it is necessary to perform a factory reset, such as when lo
 
 A simple script/utility is available that reads from a configuration (ini) file the nvram variables associated with parts of the user configuration (excluding those unique to the router) and creates a restore script for those variables. This replaces the process of re-entering all the customized settings through the web GUI. 
 
-A 'Migration Mode' has also been added for use when transferring settings between routers. This mode excludes certain variables (such as transmit power), that should evaluated first on the new hardware.
+A 'Migration Mode' can be used when transferring settings between routers. This mode excludes certain variables (such as transmit power), that should evaluated based on the new hardware.
 
-## Obtaining the Utility #
-The latest version of the utility can be found in the Asuswrt-Merlin subforum on SmallNetBuilders Forum.  Included in the download zipfile is a QuickStart.txt that goes step-by-step on how to use a USB stick with the utility.
- 
-[User NVRAM Save/Restore Utility](http://forums.smallnetbuilder.com/showthread.php?t=19521)
+## Installing the Utility ##
+The latest version of the utility is hosted on [GitHub](https://github.com/Xentrk/nvram-save-restore-utility) and can be installed using [amtm](https://diversion.ch/amtm.html). 
+
+## Support ## 
+[User NVRAM Save/Restore Utility Support Thread](https://www.snbforums.com/threads/release-nvram-save-restore-utility.61722/)
