@@ -107,7 +107,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 20. [Change the webui language](/RMerl/asuswrt-merlin.ng/wiki/Change-the-webui-language-when-it's-factory-locked)
 
 ### Third Party Scripts and Utilities
-1.  [amtm - the Asuswrt-Merlin Terminal Menu](https://diversion.ch/amtm.html) is a front end menu that manages the third party scripts for wireless routers running Asuswrt-Merlin firmware.
+1.  [amtm - the Asuswrt-Merlin Terminal Menu](https://diversion.ch/amtm.html) is a front end menu that manages the third party scripts and utilities listed below for wireless routers running Asuswrt-Merlin firmware.
 2.  [Diversion - The Router Ad Blocker](https://diversion.ch/) - maintained by thelonelycoder
 3.  [Skynet - Router Firewall & Security Enhancements](https://www.snbforums.com/threads/release-skynet-router-firewall-security-enhancements.16798/) - maintained by Adamm
 4.  [FlexQoS - Flexible QoS Enhancement Script for Adaptive QoS](https://www.snbforums.com/threads/fork-flexqos-flexible-qos-enhancement-script-for-adaptive-qos.64882/) - maintained by dave14305
