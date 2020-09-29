@@ -19,7 +19,17 @@ Also note that this feature is only compatible with OpenVPN tunnels using a TUN 
 
 
 ### DNS behaviour
-For best results it's recommended to configure "_Accept DNS configuration_" to _Exclusive_.  When combined with Policy based routing, this means that all clients that are configured to go through the VPN will use the DNS servers provided by the VPN tunnel, but those configured to go through the WAN will keep using the ISP's DNS.
+
+For reference, the definition of the Accept DNS Configuration field values are as follows:
+
+* Disabled: DNS servers pushed by VPN provided DNS server are ignored.
+* Relaxed: DNS servers pushed by VPN provided DNS server are prepended to the current list of DNS servers, of which any can be used.
+* Strict: DNS servers pushed by the VPN provided DNS server are prepended to the current list of DNS servers, which are used in order. Existing DNS servers are only used if VPN provided ones don’t respond.
+* Exclusive: Only the pushed VPN provided DNS servers are used.
+
+"_Accept DNS configuration_" to _Exclusive_, combined with Policy based routing, means that all clients that are configured to go through the VPN will use the DNS servers provided by the VPN tunnel, but those configured to go through the WAN will keep using the ISP's DNS. The disadvantage of setting “_Accept DNS configuration_” to “_Exclusive_” is that **dnsmasq** will be bypassed since the VPN tunnel will exclusively use the DNS of the VPN Provider. The popular [Diversion](https://diversion.ch/) ad blocker program, written for the Asuswrt-Merlin firmware, will not work since Diversion requires the features of **dnsmasq**. Diversion will work over the VPN tunnel when “Accept DNS configuration” is set to “Exclusive” and Policy Rules are disabled by setting “Redirect Internet Traffic” to “All”.
+
+There are two options available if you want the OpenVPN client to use **dnsmasq** when using Policy Rules. This is done by setting "_Accept DNS Configuration_" to either "_Relaxed_,  "_Strict_" or "_Disabled_".
 
 Note that if there are multiple rules for a given client's IP (for instance if it has one rule stating that all its traffic is to go through the VPN, and an exception rule stating that traffic for a specific destination IP is to be kept through the WAN), all of its name resolution will still go through the VPN server's specified DNS.  This is because the router has no way of knowing if the DNS query is related to a specific destination.  Therefore, the safest behaviour gets used, and all the queries done by that client will use the VPN server's DNS.
 
@@ -40,4 +50,4 @@ A common configuration setup where you want your whole LAN to go through the VPN
 	LAN		192.168.1.0/24	0.0.0.0		VPN
 	Router		192.168.1.1	0.0.0.0		WAN
 
-
+NOTE: [Small Net Builder member @Xentrk](https://www.snbforums.com/members/xentrk.49161/) makes use of the IPSET technique for selective routing and includes additional selective routing features for LAN Clients, OpenVPN Clients and OpenVPN Servers. Refer to the [x3mRouting ~ Selective Routing for Asuswrt-Merlin Firmware](https://github.com/Xentrk/x3mRouting) on GitHub for more information.
