@@ -11,8 +11,6 @@ before the VPN rules).
 
 By default, all traffic go through the WAN.  What you define there with a VPN _iface_ will be routed through the VPN.  Use the WAN _iface_ to configure exceptions to configured VPN rules (for instance, if you configure a /24 to be routed through the VPN, but want one IP within that /24 to be routed through the WAN instead).
 
-You CANNOT configure a policy that will be based on a port through the webui - only on IPs (or subnets).  If you need more flexibility in your rules, you can look at this [method](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-Port-routing-(manual-method)) for port routing.  The  [x3mRouting ~ Selective Routing for Asuswrt-Merlin Firmware](https://github.com/Xentrk/x3mRouting) solution makes use of the IPSET technique for selective routing and includes additional selective routing features for LAN Clients, OpenVPN Clients and OpenVPN Servers. 
-
 Another setting exposed when enabling Policy routing is to prevent your routed clients from accessing the Internet if the VPN tunnel goes down.  To do so, enable "_Block routed clients if tunnel goes down_".
 
 Also note that this feature is only compatible with OpenVPN tunnels using a TUN interface - it's not compatible with configurations set up with a TAP interface.
@@ -33,6 +31,9 @@ There are two options available if you want the OpenVPN client to use **dnsmasq*
 
 Note that if there are multiple rules for a given client's IP (for instance if it has one rule stating that all its traffic is to go through the VPN, and an exception rule stating that traffic for a specific destination IP is to be kept through the WAN), all of its name resolution will still go through the VPN server's specified DNS.  This is because the router has no way of knowing if the DNS query is related to a specific destination.  Therefore, the safest behaviour gets used, and all the queries done by that client will use the VPN server's DNS.
 
+### Other Policy Routing Solutions
+* You CANNOT configure a policy that will be based on a port through the webui - only on IPs (or subnets).  If you need more flexibility in your rules, you can look at this [method](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-Port-routing-(manual-method)) for port routing.  * The  [x3mRouting ~ Selective Routing for Asuswrt-Merlin Firmware](https://github.com/Xentrk/x3mRouting) solution makes use of the IPSET technique for selective routing and includes additional selective routing features for LAN Clients, OpenVPN Clients and OpenVPN Servers. 
+* [YazFi](https://github.com/jackyaz/YazFi) offers the ability to route Guest WiFi Networks to a VPN Client.
 
 ### Examples
 
