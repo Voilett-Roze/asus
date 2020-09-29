@@ -31,7 +31,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 16. [Wi-Fi Radar](/RMerl/asuswrt-merlin.ng/wiki/Wi-Fi-Radar)
 17. [DNS Privacy](/RMerl/asuswrt-merlin.ng/wiki/DNS-Privacy) (DNS-over-TLS)
 18. [AiMesh](/RMerl/asuswrt-merlin.ng/wiki/AiMesh)
-19. [AMTM - Asuswrt-Merlin Terminal Menu](/RMerl/asuswrt-merlin.ng/wiki/AMTM) is a shell-based front end that manages popular scripts for wireless routers running Asuswrt-Merlin firmware. It also offers a couple of additional management features.
+19. [AMTM - Asuswrt-Merlin Terminal Menu](/RMerl/asuswrt-merlin.ng/wiki/AMTM)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin.ng/wiki/About-OpenVPN)
