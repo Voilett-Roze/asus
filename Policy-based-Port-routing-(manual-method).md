@@ -118,7 +118,5 @@ iptables -t mangle -A PREROUTING -i br0 -m set --match-set VPN1 src,src,dst -j M
 ```
 where IPSET VPN1 could contain multiple IPSETS i.e. a 'Ports' only IPSET,a Source IP/CIDR,Destination Port IPSET, and a Source MAC IPSET etc. 
 
-NOTE: [Small Netbuilder member @Xentrk](https://www.snbforums.com/members/xentrk.49161/) makes use of the IPSET technique for the Selective Routing of domains such as **Netflix**, **Hulu**, **BBC** etc.
-
-e.g. [Selective Routing of Netflix](https://www.snbforums.com/threads/selective-routing-for-netflix.42661/)
+NOTE: [Small Netbuilder member @Xentrk](https://www.snbforums.com/members/xentrk.49161/) makes use of the IPSET technique for selective routing and includes additional selective routing features for LAN Clients, OpenVPN Clients and OpenVPN Servers. Refer to the [x3mRouting ~ Selective Routing for Asuswrt-Merlin Firmware](https://github.com/Xentrk/x3mRouting) on GitHub for more information.
 
