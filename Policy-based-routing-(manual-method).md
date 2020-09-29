@@ -1,6 +1,8 @@
 ### This script is flawed on later versions of AsusWRT, for several reasons (conflicting use of an ASUS reserved fwmark is one) ###
 #### Continue at your own risk ####
 
+NOTE: [Small Netbuilder member @Xentrk](https://www.snbforums.com/members/xentrk.49161/) makes use of the IPSET technique for selective routing and includes additional selective routing features for LAN Clients, OpenVPN Clients and OpenVPN Servers. Refer to the [x3mRouting ~ Selective Routing for Asuswrt-Merlin Firmware](https://github.com/Xentrk/x3mRouting) on GitHub for more information.
+
 ## Introduction ##
 
 This guide will help you program which devices go through the [VPN](http://en.wikipedia.org/wiki/Virtual_private_network) and which devices go to your local [ISP](http://en.wikipedia.org/wiki/Internet_service_provider) by creating 2 different scripts.
