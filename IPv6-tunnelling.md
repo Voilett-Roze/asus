@@ -93,7 +93,7 @@ iptables -I INPUT 1 -s 66.220.2.74 -p icmp -j ACCEPT
 
 # update IP...
 if [ "$2" = "connected" ]; then
-  sleep 60
+  sleep 10
 
   if [ "${TUNNEL_TYPE}" = "new" ]; then
 
