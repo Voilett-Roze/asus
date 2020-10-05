@@ -14,7 +14,7 @@ To ensure enhanced security, it's recommended to also enable DNSSEC, and set it 
 
 > IMPORTANT: make sure you didn't enter a custom DNS server on the _LAN -> DHCP_ page.  For DNS Privacy to work, the DHCP  server must point your client at the router's IP to use as their DNS server.  Likewise, your client must not be configured with a static DNS other than the router's IP.
 
-> IMPORTANT: for DNS Privacy to work in IPv6, you must set IPv6 DNS Server in IPv6 page (not equivalent to add IPv6 DoT servers on the WAN -> Internet Connection page) to your router's LAN IPv6 Link-Local Address. You can find your router's LAN IPv6 Link-Local Address in System Log -> IPv6 tab.
+> IMPORTANT: for DNS Privacy to work in IPv6, you must set IPv6 DNS Server in IPv6 page (not equivalent to add IPv6 DoT servers on the WAN -> Internet Connection page) to your router's LAN IPv6 Link-Local Address. You can find your router's LAN IPv6 Link-Local Address in System Log -> IPv6 tab. Link-local address starts with fe80.
 
 You can monitor that DoT is properly being used by installing tcpdump through Entware, and monitoring trafic on ports 53 and 853 of the WAN interface (usually eth0):
 
