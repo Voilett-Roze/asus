@@ -77,7 +77,8 @@ Apply the following changes to the router's nvram:
 
 **Step 2 - Create/Edit services-start script**
 
-Include the following code in services-start script located in `/jffs/scripts/` (you will need to create this file from scratch, if you haven't done so already, with the right permissions)
+Include the following code in _**services-start**_ script located in _`/jffs/scripts/`_ 
+(Note: you will need to create the _services-start_ file from scratch, if you haven't done so already, with the right permissions)
 
     #!/bin/sh
 
@@ -111,7 +112,8 @@ Include the following code in services-start script located in `/jffs/scripts/` 
 
 **Step 3 - Create/Edit firewall-start script**
 
-Include the following code in firewall-start script located in /jffs/scripts/ (you will need to create this file from scratch, if you haven't done so already, with the right permissions)
+Include the following code in **_firewall-start_** script located in _'/jffs/scripts/'_ 
+(Note: you will need to create the _firewall-start_ file from scratch, if you haven't done so already, with the right permissions)
 
     #!/bin/sh
 
