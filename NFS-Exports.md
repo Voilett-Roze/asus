@@ -19,3 +19,5 @@ You can also manually generate an exports file by creating a file named _/jffs/c
 
 Note that by default, only NFSv3 is supported.  You can also enable NFSv2 support from that page, but this is not recommended, unless you are using an old NFS client that doesn't support V3.  NFSv2 has various 
 filesystem-level limitations.
+
+**Note**: Only native Linux filesystems like ext3 (etc) may be exported (e.g. NTFS is not supported)
