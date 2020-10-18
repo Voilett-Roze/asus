@@ -24,9 +24,7 @@ Connect to your router through SSH (you can use PUTTY on windows). Default IP ad
 1. Create configuration file for dnsmasq: `touch /jffs/configs/dnsmasq.conf.add`
 2. Edit configuration file: `vi /jffs/configs/dnsmasq.conf.add`. 
 
-    * for typing press `I`, to quit typing press `ESC`, to delete line press `ESC` and then write `dd` and press `ENTER`*
-
-    * If the file is missing after rebooting, try using the filename `/jffs/configs/dnsmasq.d/dnsmasq.conf`
+    _- for typing press `I`, to quit typing press `ESC`, to delete line press `ESC` and then write `dd` and press `ENTER`_
 
 3. Add configuration for resolving domain names into `dnsmasq.conf.add`
 
