@@ -16,20 +16,23 @@ Another setting exposed when enabling Policy routing is to prevent your routed c
 Also note that this feature is only compatible with OpenVPN tunnels using a TUN interface - it's not compatible with configurations set up with a TAP interface.
 
 
-### DNS behaviour
-
-For reference, the definition of the Accept DNS Configuration field values are as follows:
+### "Accept DNS Configuration" Definition
+The definition of the **Accept DNS Configuration** field values are as follows:
 
 * Disabled: DNS servers pushed by VPN provided DNS server are ignored.
 * Relaxed: DNS servers pushed by VPN provided DNS server are prepended to the current list of DNS servers, of which any can be used.
 * Strict: DNS servers pushed by the VPN provided DNS server are prepended to the current list of DNS servers, which are used in order. Existing DNS servers are only used if VPN provided ones don’t respond.
 * Exclusive: Only the pushed VPN provided DNS servers are used.
 
-"_Accept DNS configuration_" to _Exclusive_, combined with Policy based routing, means that all clients that are configured to go through the VPN will use the DNS servers provided by the VPN tunnel, but those configured to go through the WAN will keep using the ISP's DNS. The disadvantage of setting “_Accept DNS configuration_” to “_Exclusive_” is that **dnsmasq** will be bypassed since the VPN tunnel will exclusively use the DNS of the VPN Provider. The popular [Diversion](https://diversion.ch/) ad blocker program, written for the Asuswrt-Merlin firmware, will not work since Diversion requires the features of **dnsmasq**. Diversion will work over the VPN tunnel when “Accept DNS configuration” is set to “Exclusive” and Policy Rules are disabled by setting “Redirect Internet Traffic” to “All”.
+### "Accept DNS Configuration" Behavior
+"_Accept DNS configuration_" to _Exclusive_, combined with Policy based routing, means that all clients that are configured to go through the VPN will use the DNS servers provided by the VPN tunnel, but those configured to go through the WAN will keep using the ISP's DNS. The disadvantage of setting “_Accept DNS configuration_” to “_Exclusive_” is that **dnsmasq** will be bypassed since the VPN tunnel will exclusively use the DNS of the VPN Provider. The popular [Diversion](https://diversion.ch/) ad blocker program, written for the Asuswrt-Merlin firmware, will not work since Diversion requires the features of **dnsmasq**. There is one exception though - Diversion will work over the VPN tunnel when “Accept DNS Configuration” is set to “Exclusive” and Policy Rules are disabled by setting “Redirect Internet Traffic” to “All”.
 
-There are two options available if you want the OpenVPN client to use **dnsmasq** when using Policy Rules. This is done by setting "_Accept DNS Configuration_" to either "_Relaxed_,  "_Strict_" or "_Disabled_". The disadvantage is this will cause the DNS to "leak" for clients assigned to the VPN Clent. A work around solution is to use the built in DNS-over-TLS on the WAN page to encrypt DNS queries. 
+### Using dnsmasq with Policy Rules
+Enabling **dnsmasq** with Policy Rules is done by setting "_Accept DNS Configuration_" to either "_Relaxed_,  "_Strict_" or "_Disabled_". The one disadvantage is this will cause DNS to "leak" for clients assigned to the VPN Client.
 
-Note that if there are multiple rules for a given client's IP (for instance if it has one rule stating that all its traffic is to go through the VPN, and an exception rule stating that traffic for a specific destination IP is to be kept through the WAN), all of its name resolution will still go through the VPN server's specified DNS.  This is because the router has no way of knowing if the DNS query is related to a specific destination.  Therefore, the safest behaviour gets used, and all the queries done by that client will use the VPN server's DNS.
+To mitigate the DNS leak issue, the [DNSFilter](https://github.com/RMerl/asuswrt-merlin.ng/wiki/DNS-Filter) feature available on the LAN page can be used to configure a custom DNS for each LAN client. LAN clients assigned to use the VPN will get a DNS from the VPN Server end-point and LAN clients assigned to use the WAN interface will get a DNS from the same geo-location as the WAN interface. 
+
+Note that if there are multiple rules for a given client's IP (for instance if it has one rule stating that all its traffic is to go through the VPN, and an exception rule stating that traffic for a specific destination IP is to be kept through the WAN), all of its name resolution will still go through the VPN server's specified DNS.  This is because the router has no way of knowing if the DNS query is related to a specific destination.  Therefore, the safest behavior gets used, and all the queries done by that client will use the VPN server's DNS.
 
 ### Other Policy Routing Solutions
 * You CANNOT configure a policy that will be based on a port through the webui - only on IPs (or subnets).  If you need more flexibility in your rules, you can look at this [method](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-Port-routing-(manual-method)) for port routing.
