@@ -171,8 +171,8 @@ From my output we can see:
 1. My disk is **/dev/sda**
 2. It contains 1 partition, mounted as **/dev/sda1**
 3. Total disk storage capacity is 15.3GB
-4. Disk currently uses block size of 512 kb (the default)
-5. Disk considers 1 cylinder to be 16065 blocks of 512 kb
+4. Disk currently uses block size of 512 bytes (the default)
+5. Disk considers 1 cylinder to be 16065 blocks of 512 bytes
 6. Therefore 1 cylinder equals 8225280 bytes
 
 **df -- display free disk space**
