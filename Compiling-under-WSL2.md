@@ -1,7 +1,7 @@
 ### Introduction
 Starting with Windows 10 version 2004, Microsoft greatly enhanced the built-in Windows Subsystem for Linux (WSL).  WSL2 now uses an actual Linux kernel, which allows, among other things, to use an ext4 filesystem, and also greatly enhance performance.
 
-In testing, WSL2 even ended up being faster than a Virtualbox VM at compiling a firmware (30 minutes for VBox versus 25 mins for WSL2, tested on a laptop using an AMD 4500U).  This makes WSL2 a very environment for doing firmware builds.
+In testing, WSL2 even ended up being faster than a Virtualbox VM at compiling a firmware (30 minutes for VBox versus 25 mins for WSL2, tested on a laptop using an AMD Ryzen 5 4500U).  This makes WSL2 a very environment for doing firmware builds.
 
 
 ### Setup WSL2
@@ -17,7 +17,7 @@ https://docs.microsoft.com/en-us/windows/wsl/wsl-config
 
 
 ### Setting up the Linux environment
-You need to configure WSL to NOT insert the Windows search path within the Linux environment's own search path.  Failing to do so will greatly slow down the build process (in tests, the build time increased from taking 30 minutes, to taking 60-90 minutes).  Edit (or create) /etc/wsl.conf, and add the following:
+You need to configure WSL to NOT insert the Windows search path within the Linux environment's own search path.  Failing to do so will greatly slow down the build process (in tests, the build time increased from taking 30 minutes to taking 60-90 minutes).  Edit (or create) /etc/wsl.conf, and add the following:
 
 ```
 [interop]
@@ -39,19 +39,19 @@ Then restart your WSL instance by re-launching Ubuntu.
 
 Now, you need to enable support for 32-bit libraries, required by the toolchain.  To do so:
 
-```
+```bash
 sudo dpkg --add-architecture i386
 ```
 
 You also need to switch from dash to bash as the default shell (/bin/sh).  This is required by the newer build system used by Broadcom for the HND-based models.  To do so, run the following command, and when asked, tell it NOT to use Dash:
 
-```
+```bash
 sudo dpkg-reconfigure dash
 ```
 
 Now you can install all the required packages.  Note that this list may change over time as new components are added to the firmware code.
 
-```
+```bash
 sudo apt update
 sudo apt-get install libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison \
 bzip2 diffutils file flex m4 g++ gawk groff-base libncurses5-dev libtool libslang2 make patch perl pkg-config shtool \
@@ -63,14 +63,14 @@ xutils-dev lib32z1-dev lib32stdc++6 xsltproc gtk-doc-tools libelf1:i386
 
 Ubuntu 20.04 will probably require this as well:
 
-```
+```bash
 sudo apt install automake-1.15
 ```
 
 ### Setting up build environment
 The rest will be identical to what you would do in any actual Linux VM: get a copy of the toolchain, set it up, then get a copy of the source code, and get building.  Make sure that you do all of this inside your Linux home folder, NOT inside the Windows path.  Your home folder will be in a native ext4 filesystem.
 
-```
+```bash
 cd $HOME
 git clone https://github.com/RMerl/am-toolchains
 git clone https://github.com/RMerl/asuswrt-merlin.ng
@@ -78,14 +78,14 @@ git clone https://github.com/RMerl/asuswrt-merlin.ng
 
 It's recommended not to compile directly from your cloned repo, but instead to work on a copy of it.  This allows you to easily clean things up simply by re-syncing it with your clean copy.
 
-```
+```bash
 mkdir amng-build
 rsync -a --del asuswrt-merlin.ng/ amng-build
 ```
 
 You will now have to setup your toolchain.
 
-```
+```bash
 sudo ln -s ~/am-toolchains/brcm-arm-hnd /opt/toolchains
 
 echo "export LD_LIBRARY_PATH=$LD_LIBRARY:/opt/toolchains/crosstools-arm-gcc-5.3-linux-4.1-glibc-2.22-binutils-2.25/usr/lib" >> ~/.profile
