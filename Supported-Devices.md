@@ -21,7 +21,6 @@ List of supported models:
  * RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware)
  * RT-AC3200
  * RT-AC86U
- * RT-AC87U
  * RT-AC88U
  * RT-AC3100
  * RT-AC5300
@@ -37,5 +36,7 @@ No longer supported:
  * RT-N66U
  * RT-AC66U
  * RT-AC56U
+ * RT-AC87U
+ * RT-AC3200
 
 NOTE: all the "R" versions (for example RT-N66R) are the same as their "U" counterparts, they are just different packages aimed at large retailers.  The firmware is 100% compatible with both U and R versions of the routers.  Same with the "W" variants that are simply white.
