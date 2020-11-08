@@ -64,8 +64,8 @@ Called just before unmounting a partition.  Like pre-mount, this is a blocking s
 Called whenever a DHCP event occurs on the WAN interface.  The type of event is passed as an argument which can be used in the script using `$1`; possible event types in the version of `udhcpc` in ASUSWRT are `deconfig` (when udhcpc starts and when a lease is lost), `bound` (when a lease and new IP address are acquired), and `renew` (when a lease is renewed, but the IP did not change).
 
 ### openvpn-event
-Called whenever an OpenVPN server gets started/stopped, or an OpenVPN client connects to a remote server.  Uses the same syntax/parameters as the "up" and "down" scripts in OpenVPN. The $script_type environment variable indicates what sort of
-event occurred on the device $dev.
+Called whenever an OpenVPN server gets started/stopped, or an OpenVPN client connects to a remote server.  Uses the same syntax/parameters as the "up" and "down" scripts in OpenVPN. The `$script_type` environment variable indicates what sort of
+event occurred on the device `$dev`.
 
 ### ddns-start
 Called at the end of a DDNS update process.  This script is also called when setting the DDNS type to "Custom".  The script gets passed the WAN IP as an argument, which can be used in the script using `$1`.  When handling a "Custom" DDNS, this script is also responsible for reporting the success or failure of the update process.  See the [Custom DDNS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-DDNS) section for more information.
