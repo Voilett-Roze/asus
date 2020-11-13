@@ -28,6 +28,7 @@ List of supported models:
  * RT-AX56U
  * RT-AX58U
  * RT-AX3000 (use the RT-AX58U firmware)
+ * RT-AX86U (Since 386.1)
 
 
 
