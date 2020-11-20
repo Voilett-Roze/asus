@@ -51,7 +51,7 @@ You can restart the dnsmasq server by doing service:
 
 It does avoid to reboot the router.
 
-Also ensure you DHCP configuration have the following configuration:
+Also ensure your DHCP configuration have the following configuration:
  log-dhcp
 
 This last one produce more advance logs that could help you.
