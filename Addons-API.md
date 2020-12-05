@@ -15,7 +15,7 @@ The user-defined settings for all addons will be stored in _/jffs/addons/custom_
 
 
 ## Custom pages
-The firmware supports up to ten custom pages.  These pages should be mounted at boot time through a script, which should ideally be called from services-start.  You should put your custom page in the _/jffs/addons/my_addon/_ folder along with the install script.  Here is a sample of an install script, which will also insert your page as a new tab in the Tools section.
+The firmware supports up to 20 custom pages (10 before 386.1).  These pages should be mounted at boot time through a script, which should ideally be called from services-start.  You should put your custom page in the _/jffs/addons/my_addon/_ folder along with the install script.  Here is a sample of an install script, which will also insert your page as a new tab in the Tools section.
 
 ```
 #!/bin/sh
