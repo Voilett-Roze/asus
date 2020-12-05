@@ -7,8 +7,8 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 2. [Features](https://www.asuswrt-merlin.net/features) (External link)
 3. [Screenshots](https://www.asuswrt-merlin.net/screenshots) (External link)
 4. [Supported devices](/RMerl/asuswrt-merlin.ng/wiki/Supported-Devices)
-5. [Changelog - Legacy (380.x)](https://www.asuswrt-merlin.net/changelog) (External link)
-6. [Changelog - Current (382.x and newer)](https://www.asuswrt-merlin.net/changelog-382) (External link)
+5. [Changelog - Legacy (380.x)](https://www.asuswrt-merlin.net/changelog-380) (External link)
+6. [Changelog - Current (382.x and newer)](https://www.asuswrt-merlin.net/changelog) (External link)
 7. [Installation](/RMerl/asuswrt-merlin.ng/wiki/Installation)
 8. [Reverting](/RMerl/asuswrt-merlin.ng/wiki/Reverting/)
 
