@@ -9,7 +9,7 @@ Once you enable Policy Rules, a new section will appear below, where you can add
 The "_Iface_" field (short for Interface) lets you determine if matching traffic should be sent through the VPN tunnel or through your regular Internet access (WAN).  This allows you to define exceptions (WAN rules being processed 
 before the VPN rules).
 
-By default, all traffic go through the WAN.  What you define there with a VPN _iface_ will be routed through the VPN.  Use the WAN _Iface_ to configure exceptions to configured VPN rules (for instance, if you configure a /24 to be routed through the VPN, but want one IP within that /24 to be routed through the WAN instead).
+By default, all traffic will go through the WAN.  What you define there with a VPN _iface_ will be routed through the VPN.  Use the WAN _Iface_ to configure exceptions to configured VPN rules (for instance, if you configure a /24 to be routed through the VPN, but want one IP within that /24 to be routed through the WAN instead).
 
 Another setting exposed when enabling Policy routing is to prevent your routed clients from accessing the Internet if the VPN tunnel goes down.  To do so, enable "_Block routed clients if tunnel goes down_".
 
