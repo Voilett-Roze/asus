@@ -105,7 +105,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 18. [Setting up a NTP Server for your LAN](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-an-NTP-Server-for-your-local-lan)
 19. [Disk formatting](/RMerl/asuswrt-merlin.ng/wiki/Disk-formatting)
 20. [Change the webui language](/RMerl/asuswrt-merlin.ng/wiki/Change-the-webui-language-when-it's-factory-locked)
-
+21. [Restart WAN interface when internet is down](/RMerl/asuswrt-merlin.ng/wiki/Restart-WAN-interface-when-internet-is-down)
 
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin.ng/wiki/FAQ)
