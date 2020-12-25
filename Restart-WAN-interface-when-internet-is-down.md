@@ -101,3 +101,5 @@ https://www.snbforums.com/threads/rt-ax88u-internet-status-disconnected.67331/
 https://www.snbforums.com/threads/ac86u-random-disconnects-but-stay-on.67927/
 
 https://www.snbforums.com/threads/ax88u-behind-isp-router-internet-drops-vpn-isp-dhcp-does-not-function.68438/
+
+https://www.snbforums.com/threads/wan_connection-isps-dhcp-did-not-function-properly.56226/
