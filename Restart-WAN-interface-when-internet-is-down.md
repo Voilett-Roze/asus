@@ -66,11 +66,19 @@ fi
 
 3. Run this full command:
 ```
-touch /jffs/script/init-start ; echo 'cru a custom_wan_monitor "*/3 * * * * /jffs/scripts/custom_wan_monitor"' >> /jffs/script/init-start ; cat /jffs/script/init-start
+touch /jffs/scripts/init-start ; echo 'cru a custom_wan_monitor "*/3 * * * * /jffs/scripts/custom_wan_monitor"' >> /jffs/scripts/init-start ; cat /jffs/scripts/init-start
 ```
-See that it appended a new line to `init-start`. Reboot router.
+See that it appended a new line to `init-start`.
 
-See cron job is listed:
+4. Make both executable:
+
+```
+chmod 755 /jffs/scripts/init-start /jffs/scripts/custom_wan_monitor 
+```
+
+Reboot router.
+
+See cron job is now listed:
 ```
 cru l
 ```
