@@ -12,7 +12,7 @@ Welcome! This guide will show you how to obtain the latest version of the Asuswr
 
 To download the source code for compilation purposes, you will need the following:
 
-* A Linux-based operating environment (either a dedicated machine running Linux, or a virtual machine using [VMware](http://www.vmware.com) or [VirtualBox](https://www.virtualbox.org/)).
+* A Linux-based operating environment (either a dedicated machine running Linux, or a virtual machine using [VMware](https://www.vmware.com) or [VirtualBox](https://www.virtualbox.org/)).
 * git distributed version control system (usually available in the package manager of your Linux distribution)
 * At least 10GB free hard drive space (as of v378.55)
 
@@ -26,7 +26,7 @@ Now, clone the repository: `git clone git://github.com/RMerl/asuswrt-merlin.git`
 
 Here's what the output of this command will look like:
 
-    build@asuswrt-merlin:~$ git clone git://github.com/RMerl/asuswrt-merlin.git
+    build@asuswrt-merlin:~$ git clone git://github.com/RMerl/asuswrt-merlin.ng.git
     Cloning into asuswrt-merlin...
     remote: Counting objects: 76989, done.
     remote: Compressing objects: 100% (54069/54069), done.
