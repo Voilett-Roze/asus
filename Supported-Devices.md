@@ -29,8 +29,8 @@ List of supported models:
  * RT-AX58U
  * RT-AX3000 (use the RT-AX58U firmware)
  * RT-AX86U (Since 386.1)
- * GT-AC2900 (Since 386.1)
- * GT-AX11000 (Since 386.2)
+ * GT-AC2900 (Since 386.1) (GT models do not have ROG-specific features)
+ * GT-AX11000 (Since 386.2) (GT models do not have ROG-specific features)
 
 
 
