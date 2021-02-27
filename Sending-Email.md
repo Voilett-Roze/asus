@@ -66,7 +66,7 @@ rm /tmp/mail.txt
 
 It's possible to send emails even from **Gmail** account through openssl (thanks [Nerre](http://forums.smallnetbuilder.com/member.php?u=15302)), first we need to download a trusted certificate
 ```
-wget -c -O /jffs/configs/Equifax_Secure_Certificate_Authority.pem http://www.geotrust.com/resources/root_certificates/certificates/Equifax_Secure_Certificate_Authority.pem --no-check-certificate
+wget -c -O /jffs/configs/google_root.pem https://pki.goog/roots.pem --no-check-certificate
 ```
 Now fill your _wan-start script_ with the following text but don't forget to replace **FROM**, **AUTH**, **PASS** and **TO** values only in first six lines of the script
 ```
@@ -94,7 +94,7 @@ echo "Your friendly router." >>/tmp/mail.txt
 echo "" >>/tmp/mail.txt
 
 cat /tmp/mail.txt | sendmail -H"exec openssl s_client -quiet \
--CAfile /jffs/configs/Equifax_Secure_Certificate_Authority.pem \
+-CAfile /jffs/configs/google_root.pem \
 -connect smtp.gmail.com:587 -tls1 -starttls smtp" \
 -f"$FROM" \
 -au"$AUTH" -ap"$PASS" $TO 
