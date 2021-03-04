@@ -33,7 +33,7 @@ The list of available config overrides:
  * inadyn.conf
  * minidlna.conf
  * mt-daap.service
- * nanorc (no .add support) - as documented [here](https://www.nano-editor.org/dist/v5/nano.html#Nanorc-Files) (External page).  384.3 or newer.
+ * nanorc (no .add support) - as documented [here](https://www.nano-editor.org/dist/v2.9/nano.html#Nanorc-Files) (External page).  384.3 or newer.
  * pptpd.conf
  * profile (shell profile, only profile.add supported)
  * smb.conf
