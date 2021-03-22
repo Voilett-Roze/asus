@@ -22,7 +22,8 @@ Open the terminal and `cd` to a directory of your choosing. Note that you don't 
 
 Now, clone the repository: `git clone git://github.com/RMerl/asuswrt-merlin.git`.
 
-*This step will take some time depending on your computer's internet connection. About 1.5GiB of data will be downloaded (as of v378.55). Take a break, grab a cup of coffee, stretch your legs out.*
+*This step will take some time depending on your computer's internet connection. About 1.5GiB of data will be downloaded (as of v378.55). Take a break, grab a cup of coffee, stretch your legs out.* 
+>*(If you need only Master branch, you can clone in a little time with: `git clone git://github.com/RMerl/asuswrt-merlin.ng.git --depth=1 --single-branch`)*
 
 Here's what the output of this command will look like:
 
