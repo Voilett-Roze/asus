@@ -34,25 +34,14 @@ Follow these steps :
 
 * Create a New Virtual Machine
 
-![Create](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/Create%20new%20virtual%20mashine.png)
-
 * Select Installer disc image file (iso) ( VMware Player will tell you something about easy install, that's okay )
-
-![Select Iso](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/installer%20disc%20iso.png)
 
 * When installing Ubuntu it asks for a username it's best if you just name it ''router'' without the quotes because then you can just copy and paste from this guide no need to make everything complicated.
 
-![Name](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/important%20name.png)
-
 * Give it about 20 GB afterwards you can delete your virtual Ubuntu anyway.
-
-![20gb](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/20gb.png)
 
 * Crank up some specs give it some more ram and procesing power, It doesn't sound as a heavy work load but building your image for the router actually takes a long time on a slow processor
 
-![customize](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/customiza%20hardware.png)
-
-![crank](http://members.home.nl/frits.pruymboom/Howto%20Compile%20From%20Source/crank%20up%20the%20specs.png)
 
 When the Ubuntu installer has finished you can fire up terminal
 
