@@ -16,7 +16,12 @@ You will need to plug a USB disk that's formatted in a native Linux filesystem (
 
 The installation and configuration process must be done through telnet or SSH.  If that part scares you, then forget about Entware already: everything must be installed and configured through telnet/SSH.
 
-To start the installation process, first connect to your router over SSH.  Then, launch the amtm application by simply running "amtm".  The menu will offer you an option to initiate the Entware installation.
+To start the installation process, first connect to your router over SSH.  
+Then, launch the amtm application by simply running 
+```
+amtm
+```
+The menu will offer you an option to initiate the Entware installation.
 
 If you are running a firmware version older than 384.15 (or 384.13_4 for the RT-AC87U and RT-AC3200), then you start the installation by running "entware-setup.sh" instead.
 
