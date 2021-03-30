@@ -67,9 +67,9 @@ The problem is a rule created by stock ASUS Adaptive QoS that is blocking DHCP t
 
 ##### Changing Iptables
 
-If you think you have this problem, you can change the iptables rules to allow DHCP to your gateway by SSHing to your router and entering this command, changing "YOUR_GATEWAY_IP_ADDRESS" to the IP address of your gateway, e.g. 192.168.1.254 is the default IP for the Pace 5268ac gateway:
+If you think you have this problem, you can change the iptables rules to allow DHCP to your gateway by SSHing to your router and entering this command, changing "YOUR_GATEWAY_IP_ADDRESS" to the IP address of your gateway, e.g. 192.168.1.254 is the default IP for the Pace 5268ac gateway, as well as "WAN_IF" (usually eth0, might be eth4 on newer models):
 
-`iptables -t mangle -I PREROUTING 1 -i eth0 -s YOUR_GATEWAY_IP_ADDRESS/32 -p udp -m udp --sport 67 --dport 68 -j ACCEPT`
+`iptables -t mangle -I PREROUTING 1 -i WAN_IF -s YOUR_GATEWAY_IP_ADDRESS/32 -p udp -m udp --sport 67 --dport 68 -j ACCEPT`
 
 Then restart Adaptive QoS and see if your DHCP requests are getting through.
 
@@ -79,7 +79,7 @@ If it fixed your problem, you can make the solution permanent by adding the foll
 
 `if [ "$(nvram get qos_enable)" = "1" ] && [ "$(nvram get qos_type)" = "1" ]; then`
 
-`  iptables -t mangle -I PREROUTING 1 -i eth0 -s YOUR_GATEWAY_IP_ADDRESS/32 -p udp -m udp --sport 67 --dport 68 -j ACCEPT`
+`  iptables -t mangle -I PREROUTING 1 -i WAN_IF -s YOUR_GATEWAY_IP_ADDRESS/32 -p udp -m udp --sport 67 --dport 68 -j ACCEPT`
 
 `fi`
 
