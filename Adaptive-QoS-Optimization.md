@@ -46,7 +46,7 @@ To better see how your DHCP is behaving, make sure JFFS scripting is enabled, th
 
 `chmod 755 /jffs/scripts/wan-event`
 
-`chmod 755 /jffs/scripts/wan-event`
+`chmod 755 /jffs/scripts/dhcpc-event`
 
 Then disable Adaptive QoS and watch your system log for information that your DHCP is renewing as expected, e.g.
 `custom_script: Running /jffs/scripts/dhcpc-event (args: renew)`
