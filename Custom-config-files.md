@@ -23,6 +23,7 @@ The list of available config overrides:
  * adisk.service
  * afpd.service
  * avahi-daemon.conf
+ * cake-qos.conf (only cake-qos.conf.add supported)
  * dhcp6s.conf
  * dnsmasq.conf
  * exports (only exports.add supported)
