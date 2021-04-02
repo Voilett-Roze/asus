@@ -75,7 +75,7 @@ Called when the scheduled new firmware version availability check detects there'
 
 
 ### qos-start
-Called when Traditional QOS or Cake are done creating their stop/start script, and before running it.  You can use this script to modify the /etc/cake-qos.conf config file (contains variables used by Cake) or /tmp/qos (generated for both modes, to create/remove the tc qdisc/rule entries).  This is run in a blocking call and will pause starting QOS until it completes.
+Called when Traditional QOS or Cake are done creating their stop/start script, and before running it.  You can use this script to modify the /etc/cake-qos.conf config file (contains variables used by Cake) or /tmp/qos (generated for both modes, to create/remove the tc qdisc/rule entries).  This script gets one argument passed as parameter, which will contain "init" (when about to start QOS) or "rules" (when iptables rules have been configured for Traditional QOS).  This script is run in a blocking call and will pause starting QOS until it completes.
 
 
 ## Postconf scripts
