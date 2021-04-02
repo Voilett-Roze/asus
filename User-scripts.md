@@ -74,6 +74,10 @@ Called at the end of a DDNS update process.  This script is also called when set
 Called when the scheduled new firmware version availability check detects there's a new firmware available for download. See [update notification example](https://github.com/RMerl/asuswrt-merlin.ng/wiki/update-notification-example) for more info.
 
 
+### qos-start
+Called when Traditional QOS or Cake are done creating their stop/start script, and before running it.  You can use this script to modify the /etc/cake-qos.conf config file (contains variables used by Cake) or /tmp/qos (generated for both modes, to create/remove the tc qdisc/rule entries).  This is run in a blocking call and will pause starting QOS until it completes.
+
+
 ## Postconf scripts
 Note that in addition to these, you can also use the numerous postconf scripts supported by the firmware, which allow you to execute a script between the moment a service's config file is generated and the service is about to be executed.  See the [Postconf scripts](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-config-files#postconf-scripts) section for more information.
 
