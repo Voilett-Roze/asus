@@ -8,6 +8,7 @@ opkg install dnscrypt-proxy fake-hwclock
 
 Tell router to use new resolver:
 ```
+echo -e "#!/bin/sh\nsed -i '/^servers-file=.*/d' \$1" > /jffs/scripts/dnsmasq.postconf
 echo "no-resolv" > /jffs/configs/dnsmasq.conf.add
 echo "server=127.0.0.1#65053" >> /jffs/configs/dnsmasq.conf.add
 ```
