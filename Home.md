@@ -1,4 +1,4 @@
-This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware designed for Asus routers.s
+This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware designed for Asus routers.
 
 >Note: _As with any Wiki, this documentation is a constant work-in-progress.  Most of the content is contributed by the community - anyone with a Github account can edit it._
 
@@ -59,12 +59,13 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 
 ### Development
 1. [Download the latest source code from GitHub](/RMerl/asuswrt-merlin.ng/wiki/Download-the-latest-source-code-from-GitHub)
-2. [Compile from source using Ubuntu](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Ubuntu)
-3. [Compile from source using Linux Mint](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Linux-Mint)
-4. [Compiling from source using a Debian-based Linux Distribution](/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution)
-5. [Apply patches to source files](/RMerl/asuswrt-merlin.ng/wiki/Applying-patches-to-source-files)
-6. [Addons API](/RMerl/asuswrt-merlin.ng/wiki/Addons-API)
-7. [Setting up a build environment under WSL2](/RMerl/asuswrt-merlin.ng/wiki/Compiling-under-WSL2)
+2. [Compile from source](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source)
+3. [Compile from source using Ubuntu](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Ubuntu)
+4. [Compile from source using Linux Mint](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Linux-Mint)
+5. [Compiling from source using a Debian-based Linux Distribution](/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution)
+6. [Apply patches to source files](/RMerl/asuswrt-merlin.ng/wiki/Applying-patches-to-source-files)
+7. [Addons API](/RMerl/asuswrt-merlin.ng/wiki/Addons-API)
+8. [Setting up a build environment under WSL2](/RMerl/asuswrt-merlin.ng/wiki/Compiling-under-WSL2)
 
 
 ### Networking HowTo and Guides
