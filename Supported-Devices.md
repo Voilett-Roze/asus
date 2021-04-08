@@ -19,7 +19,6 @@ List of supported models:
  * RT-AC68U, RT-AC68P, RT-AC68UF
  * RT-AC2900 (use the RT-AC86U firmware)
  * RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware)
- * RT-AC3200
  * RT-AC86U
  * RT-AC88U
  * RT-AC3100
