@@ -73,13 +73,6 @@ mkdir ~/amng-build
 rsync -a --del ~/asuswrt-merlin.ng/ ~/amng-build
 ```
 
-> **Note**:
-> Do not build from the master branch, build from the `mainline.384` branch or `ax.384` branch.
-
-```bash
-git -C ~/amng-build checkout mainline.384
-```
-
 You will now have to setup your toolchain.
 
 **Broadcom HND ARM platform (RT-AC86U, GT-AC2900):**
