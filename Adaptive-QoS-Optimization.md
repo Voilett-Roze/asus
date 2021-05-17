@@ -24,6 +24,8 @@ If you have a very fast connection, e.g. gigabit, you will struggle to find a ro
 
 #### Adaptive QoS breaks DHCP renewal
 
+**_Note: Release 386.1 added [a fix](https://github.com/RMerl/asuswrt-merlin.ng/commit/bde9b9e36ec3f6adb10c2767ce1a6894e39c4e0a) to address this problem. The following information may no longer be applicable._**
+
 If you are having problems with your WAN connection dropping or DHCP failing to renew, and you have Adaptive QoS enabled, you may be suffering from this problem.  Asus Adaptive QoS puts in place an iptables rule that blocks DHCP renewal when your lease expires.  For some reason new DHCP requests go through, but DHCP renewals do not.  If you are on a generous ISP which sets leases for days or weeks, you would not notice.  If you are on a less generous ISP like AT&T which sets DHCP lease for 10 minutes, your DHCP renewal fails and your WAN connection will drop every 10 minutes, all day long.
 
 A known configuration that demonstrates this problem is AT&T FTTN / Uverse with Pace 5268ac gateway in DMZ+ mode to an Asus RT-AC68U router.  If you are experiencing this problem also, please update the list below to include your configuration.
