@@ -4,7 +4,7 @@
 * **AddOns support (on SNBForums):** https://www.snbforums.com/forums/asuswrt-merlin-addons.60/
 * **Twitter:** https://twitter.com/RMerlinDev
 * **Email:** merlin (at) asuswrt-merlin (dot) net
-* **IRC:** RMerlin on Freenode - #asuswrt channel
+* **IRC:** RMerlin on Libera - #asuswrt channel
 * **Telegram:** [@asuswrt](https://t.me/asuswrt) channel
 
 Development news will be posted on SNBForums, and occasionally on Twitter.  You can also keep track of ongoing development through the GitHub repository.
