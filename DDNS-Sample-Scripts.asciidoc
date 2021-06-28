@@ -989,14 +989,14 @@ SUBDOMAIN="router-or-your-own-subdomain"
 ID="your-numeric-dns-record-id"
 
 curl --silent --fail -X POST https://porkbun.com/api/json/v3/dns/edit/$DOMAIN/$ID \
-	-H "Content-Type: application/json" \
-	-d "{\"secretapikey\":\"$SECRET_KEY\",\"apikey\":\"$APIKEY\",\"name\":\"$SUBDOMAIN\",\"type\":\"A\",\"content\":\"$IP\"}"
+    -H "Content-Type: application/json" \
+    -d "{\"secretapikey\":\"$SECRET_KEY\",\"apikey\":\"$APIKEY\",\"name\":\"$SUBDOMAIN\",\"type\":\"A\",\"content\":\"$IP\"}"
 
 if [ $? -eq 0 ];
 then
-	/sbin/ddns_custom_updated 1
+    /sbin/ddns_custom_updated 1
 else
-	/sbin/ddns_custom_updated 0
+    /sbin/ddns_custom_updated 0
 fi
 ....
 
