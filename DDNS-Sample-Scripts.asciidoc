@@ -988,11 +988,13 @@ DOMAIN="yourdomain.com"
 SUBDOMAIN="router-or-your-own-subdomain"
 ID="your-numeric-dns-record-id"
 
-curl --silent --fail -X POST https://porkbun.com/api/json/v3/dns/edit/$DOMAIN/$ID \
+RESPONSE=$(curl -sb \
+    -X POST https://porkbun.com/api/json/v3/dns/edit/$DOMAIN/$ID \
     -H "Content-Type: application/json" \
-    -d "{\"secretapikey\":\"$SECRET_KEY\",\"apikey\":\"$APIKEY\",\"name\":\"$SUBDOMAIN\",\"type\":\"A\",\"content\":\"$IP\"}"
+    -d "{\"secretapikey\":\"$SECRET_KEY\",\"apikey\":\"$APIKEY\",\"name\":\"$SUBDOMAIN\",\"type\":\"A\",\"content\":\"$IP\"}")
 
-if [ $? -eq 0 ];
+if [ "$RESPONSE" = '{"status":"SUCCESS"}' ] || [ "$RESPONSE" = '{"status":"ERROR","message":"Edit error: We were unable to edit the DNS record."}' ];
+# second response means no change
 then
     /sbin/ddns_custom_updated 1
 else
