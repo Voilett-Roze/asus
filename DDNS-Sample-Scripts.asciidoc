@@ -967,6 +967,39 @@ else
 fi
 ....
 
+[[porkbun]]
+== porkbun
+^https://porkbun.com^
+
+If you use porkbun for your domains, this script can update
+any record on your account. Populate `APIKEY`, `SECRET_KEY`, `DOMAIN` and `ID` with your own values.
+You can find the ID of needed record by retrieving the DNS records from API
+(see https://porkbun.com/api/json/v3/documentation).
+Get API keys at https://porkbun.com/account/api
+
+[source]
+....
+#!/bin/sh
+
+IP=${1}
+APIKEY="pk1_xxxxxxx"
+SECRET_KEY="sk1_xxxxxx"
+DOMAIN="yourdomain.com"
+SUBDOMAIN="router-or-your-own-subdomain"
+ID="your-numeric-dns-record-id"
+
+curl --silent --fail -X POST https://porkbun.com/api/json/v3/dns/edit/$DOMAIN/$ID \
+	-H "Content-Type: application/json" \
+	-d "{\"secretapikey\":\"$SECRET_KEY\",\"apikey\":\"$APIKEY\",\"name\":\"$SUBDOMAIN\",\"type\":\"A\",\"content\":\"$IP\"}"
+
+if [ $? -eq 0 ];
+then
+	/sbin/ddns_custom_updated 1
+else
+	/sbin/ddns_custom_updated 0
+fi
+....
+
 [[strato]]
 == Strato
 ^https://www.strato.com/faq/en_us/article/671/This-is-how-easy-it-is-to-set-up-DynDNS-for-your-domains.html^
