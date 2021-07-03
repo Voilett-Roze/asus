@@ -37,10 +37,11 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 1. [About OpenVPN](/RMerl/asuswrt-merlin.ng/wiki/About-OpenVPN)
 2. [Setting up OpenVPN](/RMerl/asuswrt-merlin.ng/wiki/Configuring-OpenVPN)
 3. [Generating certs with Easy-RSA](/RMerl/asuswrt-merlin.ng/wiki/Generating-OpenVPN-keys-using-Easy-RSA)
-4. [Policy-based routing](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-routing)
-5. [Policy-based routing - manual method **v380.xx firmware or later** now **DEPRECATED**](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-routing-(manual-method))
-6. [Policy-based Port (or MAC address) routing - manual method](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-Port-routing-(manual-method))
-7. [Static ip for OpenVPN clients](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Static-ip-for-OpenVPN-clients)
+4. [Policy-based routing through VPN Director](/RMerl/asuswrt-merlin.ng/wiki/VPN-Director)
+5. [Policy-based routing (Before version 386.3)](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-routing)
+6. [Policy-based routing - manual method **v380.xx firmware or later** now **DEPRECATED**](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-routing-(manual-method))
+7. [Policy-based Port (or MAC address) routing - manual method](/RMerl/asuswrt-merlin.ng/wiki/Policy-based-Port-routing-(manual-method))
+8. [Static ip for OpenVPN clients](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Static-ip-for-OpenVPN-clients)
 
 ### External software repositories
 
