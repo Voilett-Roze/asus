@@ -547,6 +547,39 @@ else
 fi
 ....
 
+== Dynu (Version 2 of DYNU's API)
+^https://www.dynu.com/DynamicDNS^
+
+[source]
+....
+#!/bin/sh
+#
+# https://www.dynu.com/en-US/DynamicDNS/IP-Update-Protocol
+# Note: To get your domain id, send a GET request to /dns/ with your API key in the header.
+
+HOSTNAME=\"example.com\"
+GROUP=\"yourGroup\"
+PASSWORD=yourAPIKey
+DOMAIN_ID=yourDomainID
+IP=\"${1}\"
+IPsix=null
+
+URL="https://api.dynu.com/v2/dns/${DOMAIN_ID}"
+
+JSON_TEMPLATE='{"name":%s,"group":%s,"ipv4Address":%s,"ipv6Address":%s}'
+JSON=$(printf "$JSON_TEMPLATE" "$HOSTNAME" "$GROUP" "$IP" "$IPsix")
+
+curl -s -o /dev/null -w "%{HTTP_CODE}" --location --request POST "$URL" -H "Content-Type:application/json" -H "accept: application/json" -H "API-KEY: $PASSWORD" -d $JSON
+
+echo $HTTP_CODE
+
+if [ "$HTTP_CODE" == "200" ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+....
+
 == Dynu-Double-Nat
 ^https://www.dynu.com/DynamicDNS^
 
