@@ -571,13 +571,12 @@ JSON=$(printf "$JSON_TEMPLATE" "$HOSTNAME" "$GROUP" "$IP" "$IPsix")
 
 curl -s -o /dev/null -w "%{HTTP_CODE}" --location --request POST "$URL" -H "Content-Type:application/json" -H "accept: application/json" -H "API-KEY: $PASSWORD" -d $JSON
 
-echo $HTTP_CODE
-
-if [ "$HTTP_CODE" == "200" ]; then
+if [ $HTTP_CODE==200 ];then
   /sbin/ddns_custom_updated 1
 else
   /sbin/ddns_custom_updated 0
 fi
+
 ....
 
 == Dynu-Double-Nat
