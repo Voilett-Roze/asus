@@ -21,7 +21,7 @@ There are a few prerequisite for this to work:
 * qrencode : to convert WIFI password into QR code
 * coreutils-base64 : to format qrcode into data uri
 
-I'm note entering in the detail of setting up entware and lighttpd, there are plenty of resources to help achieving that.
+I'm not entering in the details of setting up entware and lighttpd, there are plenty of resources to help achieving that.
 
 ## Script
 
@@ -173,6 +173,6 @@ The script comes as is, I'm not offering any support or warranty. It works fine 
 
 The version of qrencode currently available on entware is not able to generate PNG files, hence the SVG format. It's of course possible to produce the svg file instead of a data uri and to save it on the websrv.
 
-The html file could be build up from a template, with only the variables changed by thge script. The html layout could be greatly improved.
+The html file could be build up from a template, with only the variables changed by the script. The html layout could be greatly improved.
 
 Choosing a password length of more than 25 characters doesn't display well in the current html layout. Up to you to fix that if you are paranoid enough to need such a long password.
