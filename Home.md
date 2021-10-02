@@ -98,7 +98,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 9. [User NVRAM Save/Restore](/RMerl/asuswrt-merlin.ng/wiki/NVRAM-Save-Restore-Utility)
 10. [Transfer (sync) a backup to a remote location using Rsync through a SSH tunnel between 2 Asus routers](/RMerl/asuswrt-merlin.ng/wiki/Transfer-(sync)-a-backup-to-a-remote-location-using-Rsync-through-a-SSH-tunnel-between-2-Asus-routers)
 11. [Setting a random password for guest wifi](/RMerl/asuswrt-merlin.ng/wiki/Setting-a-random-password-for-guest-wifi)
-12. [Guest WIFI QR code generator for display on local network webpage (visible from TV, smartphones...) and random password rotation](/RMerl/asuswrt-merlin.ng/wiki/Guest-WIFI-QR-code-generator-for-display-on-smart-TV---local-network-devices---random-password-rotation)
+12. [Guest WIFI QR code generator for display on local network webpage (visible from TV, smartphones...) and random password rotation](/RMerl/asuswrt-merlin.ng/wiki/Guest-WIFI-QR-code-generator-for-display-on-local-network-webpage-(visible-from-TV,-smartphones...)-and-random-password-rotation)
 13. [Tinc VPN on AsusWRT-Merlin](http://nwgat.ninja/tinc-vpn-on-asuswrt-merlin/) (External Link)
 14. [LUKS Encrypted USB Drive HOWTO](LUKS-Encrypted-USB-Drive-HOWTO)
 15. [USB Disk Check at Boot](/RMerl/asuswrt-merlin.ng/wiki/USB-Disk-Check-at-Boot)
