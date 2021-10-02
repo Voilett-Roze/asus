@@ -78,7 +78,7 @@ First of all, create the following as `/jffs/scripts/rpg-passgen.sh` and ensure 
     ############################################################################
     
     getrandopenssl () {
-        phrasepasswd=`openssl rand 8 -base64`
+        phrasepasswd=`openssl rand -base64 8`
         if [ $phrasepasswd == "" ]; then
             # we were unable to get something from openssl 
             phrasepasswd=$datepasswd
