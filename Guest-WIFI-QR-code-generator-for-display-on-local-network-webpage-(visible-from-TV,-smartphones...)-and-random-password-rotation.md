@@ -28,7 +28,7 @@ I'm not entering in the details of setting up entware and lighttpd, there are pl
 Here is the script. I put it on my usb key, as /mnt/MERLIN/rotateGuestPassword.sh, because I don't like to write too much on jffs. It produces a single basic html file and places it directly on the webserver.
 
 ```
-#!/bin/bash
+#!/bin/sh
 
 ## CONFIGURATION OF THE SCRIPT
 
