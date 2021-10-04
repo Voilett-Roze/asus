@@ -40,7 +40,7 @@ Here is the script. I put it on my usb key, as /mnt/MERLIN/rotateGuestPassword.s
 wl_list="wl0.1 wl1.1"
 
 # Path to save the html_file on the webserver
-html_file="/opt/share/www/index.html"
+html_file="/opt/share/www/guest_wifi.html"
 
 # Characters list for generated passwords. 
 # Be careful with non alphanumeric characters that might break the password generation command... 
@@ -161,7 +161,7 @@ cru a rotateGuestPassword "0 4 * * * /mnt/MERLIN/rotateGuestPassword.sh"
 
 ## Accessing the webpage
 
-With default lighttpd config, listenning on port 81, the generated webpage with the QR code is accessible through http://192.168.0.1:81/ assuming 192.168.0.1 is your router IP.
+With default lighttpd config listenning on port 81, the generated webpage with the QR code is accessible through http://192.168.0.1:81/guest_wifi.html assuming 192.168.0.1 is your router IP and that you chose /opt/share/www/guest_wifi.html for $html_file.
 
 Then I just had to set up my tv to open this web page as a home screen.
 
