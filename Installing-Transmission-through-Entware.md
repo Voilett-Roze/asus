@@ -22,7 +22,7 @@ opkg install nano
 We need to install Transmission:
 
 ```
-opkg install transmission-web transmission-daemon-openssl
+opkg install transmission-web transmission-daemon
 ```
 
 You may need to install certificate packages to connect to some https trackers:
