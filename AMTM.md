@@ -47,6 +47,7 @@ amtm also offers an interface for managing a number of other features:
 | Reboot scheduler via cron job | thelonelycoder |
 | Swap file creation and management | thelonelycoder |
 | amtm themes | thelonelycoder |
+| email settings | thelonelycoder |
 
 ## Usage ##
 amtm can be launched over SSH, as there is no web interface for it.  In addition to enabling SSH support on your router, some of its scripts will have additional requirements, most commonly you will need to set _Enable JFFS custom scripts and configs_ on the web interface to _Yes_, under _Administration -> System_.  A USB disk is also required by many of its scripts.
