@@ -1,11 +1,3 @@
-Asuswrt-Merlin is available in two separate branches:
-
-- The original (legacy) Asuswrt-Merlin (up to version 380.xxx)
-- The new generation (current) branch (version 382.xxx and newer)
-
-The Legacy branch is no longer being developed, and should not be used anymore as it's missing many recent security updates.
-
-
 ***
 ### THE T-MOBILE TM-AC1900 IS NOT SUPPORTED!
 If you own the above router, then stop reading this page.<br>
@@ -18,6 +10,7 @@ List of supported models:
  * RT-AC66U_B1 (use the RT-AC68U firmware)
  * RT-AC68U, RT-AC68P, RT-AC68UF
  * RT-AC2900 (use the RT-AC86U firmware)
+ * RT-AC68U V3 and V4 (use the RT-AC68U firmware)
  * RT-AC1900 & RT-AC1900P (use the RT-AC68U firmware)
  * RT-AC86U
  * RT-AC88U
@@ -31,6 +24,7 @@ List of supported models:
  * GT-AC2900 (GT models do not have ROG-specific features)
  * GT-AX11000 (Since 386.2) (GT models do not have ROG-specific features)
  * RT-AX68U (Since 386.2)
+ * GT-AXE11000 (Since 386.5) (GT models do not have ROG-specific features)
 
 
 
