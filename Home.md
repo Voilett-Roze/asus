@@ -64,6 +64,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 3. Setting up a virtual machine for building:
    1. [Setting up a build VM under WSL2](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-Build-VM-under-WSL2)
    2. [Setting up a build VM under Multipass](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-Build-VM-under-Multipass)
+   3. [Setting up a build VM in Docker](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-Build-VM-in-Docker)
 4. [Apply patches to source files](/RMerl/asuswrt-merlin.ng/wiki/Applying-patches-to-source-files)
 5. [Addons API](/RMerl/asuswrt-merlin.ng/wiki/Addons-API)
 6. **_OBSOLETE build instructions for older Linux versions_**:
