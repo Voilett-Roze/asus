@@ -1,4 +1,11 @@
-# How to build `asuswrt-merlin` on Linux Mint
+# **_[OBSOLETE]_** How to build `asuswrt-merlin` on Linux Mint
+
+> ***
+> **_THIS PAGE IS OUT OF DATE AND REFERS TO OBSOLETE VERSIONS OF Linux._**
+>
+> Please see [Compile Firmware from Source](Compile-Firmware-from-source.md)
+> for the latest recommended build configuration.
+> ***
 
 ## Cautionary note
 
