@@ -61,13 +61,15 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 ### Development
 1. [Download the latest source code from GitHub](/RMerl/asuswrt-merlin.ng/wiki/Download-the-latest-source-code-from-GitHub)
 2. [Compile from source](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source)
-3. [Compile from source using Ubuntu](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Ubuntu)
-4. [Compile from source using Linux Mint](/RMerl/asuswrt-merlin.ng/wiki/Compile-Firmware-from-source-using-Linux-Mint)
-5. [Compiling from source using a Debian-based Linux Distribution](/RMerl/asuswrt-merlin.ng/wiki/Compiling-from-source-using-a-Debian-based-Linux-Distribution)
-6. [Apply patches to source files](/RMerl/asuswrt-merlin.ng/wiki/Applying-patches-to-source-files)
-7. [Addons API](/RMerl/asuswrt-merlin.ng/wiki/Addons-API)
-8. [Setting up a build environment under WSL2](/RMerl/asuswrt-merlin.ng/wiki/Compiling-under-WSL2)
-
+3. Setting up a virtual machine for building:
+   1. [Setting up a build VM under WSL2](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-Build-VM-under-WSL2)
+   2. [Setting up a build VM under Multipass](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-Build-VM-under-Multipass)
+4. [Apply patches to source files](/RMerl/asuswrt-merlin.ng/wiki/Applying-patches-to-source-files)
+5. [Addons API](/RMerl/asuswrt-merlin.ng/wiki/Addons-API)
+6. **_OBSOLETE build instructions for older Linux versions_**:
+    1. [Compile from source using Ubuntu](/RMerl/asuswrt-merlin.ng/wiki/OBSOLETE-Compile-Firmware-from-source-using-Ubuntu)
+    2. [Compile from source using Linux Mint](/RMerl/asuswrt-merlin.ng/wiki/OBSOLETE-Compile-Firmware-from-source-using-Linux-Mint)
+    3. [Compiling from source using a Debian-based Linux Distribution](/RMerl/asuswrt-merlin.ng/wiki/OBSOLETE-Compiling-Firmware-from-source-using-a-Debian-based-Linux-Distribution)
 
 ### Networking HowTo and Guides
 1. [Iptables tricks and tips](/RMerl/asuswrt-merlin.ng/wiki/Iptables-tips)
