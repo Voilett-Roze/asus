@@ -1,58 +1,60 @@
 # How to build Asuswrt-merlin
 
 > **Status**:
-> This has been tested on Ubuntu 18.04.5 LTS in [Multipass](https://multipass.run).
+> The current recommended build system is Ubuntu 20.04 LTS, and this documentation
+> has been adapted to that.  Documentation for building on other Linux
+> flavors has been retained but is likely obsolete and will be marked as
+> such.
 
-## Setup Multipass
+## Setup a virtual machine for builds
 
-We are going to use Ubuntu 18.04 in Multipass.
+### *Windows 10 (version 2004 and newer)*
 
-- You can download Multipass [here](https://multipass.run)
+On Windows 10 version 2004 and newer, the easiest way to set up a virtual machine for builds
+is by using the Windows Subsystem for Linux (WSL2).  See [Setting up Build VM under WLS2](Setting-up-Build-VM-under-WSL2.md)
+for instructions on how to configure WSL for a build VM.
 
-Launch an instance
+### *Linux, MacOS, older Windows*
 
-> **Note**:
-> Change the total number of CPU cores you would like to allocate.
+On Linux systems, MacOS and older Windows versions, the easiest way to set up a virtual machine
+for builds is by using Canonical's Multipass.  See See [Setting up Build VM under WLS2](Setting-up-Build-VM-under-WSL2.md)
 
-```bash
-multipass launch --name primary --cpus 2 --disk 32G --mem 2G 18.04
-```
+### *Native builds on other Linux flavors*
+
+It is highly recommended to use Multipass to create a build VM instead of trying to build
+natively on your Linux system.  However, for those who are interested in building natively
+on your Linux system, it is best to follow the steps below (adapted for your specific flavor
+of Linux) instead of the ***OBSOLETE*** documentation found elsewhere in this Wiki.
 
 ## Setting up the Linux environment
 
-The rest will be identical to what you would do in any actual Linux VM: get a copy of the toolchain, set it up, then get a copy of the source code, and get building. Make sure that you do all of this inside the instance.
+The rest will be identical to what you would do in any actual Linux VM: get a copy of the toolchain, set it up,
+then get a copy of the source code, and get building.
 
-Open a shell inside the instance
+**Make sure that you do all of this inside the instance.**
 
-```bash
-multipass shell primary
-```
-
-Now, you need to enable support for 32-bit libraries, required by the toolchain.  To do so:
+First, you need to enable support for 32-bit libraries, required by the toolchain.  To do so:
 
 ```bash
 sudo dpkg --add-architecture i386
 ```
 
-You also need to switch from dash to bash as the default shell (/bin/sh).  This is required by the newer build system used by Broadcom for the HND-based models.  To do so, run the following command, and when asked, tell it **NOT** to use Dash:
+You also need to switch from dash to bash as the default shell (/bin/sh).  This is required by the newer build system used by Broadcom for the HND-based models.  To do so, run the following command, and when asked, tell it NOT to use Dash:
 
 ```bash
 sudo dpkg-reconfigure dash
 ```
 
-Update the APT package index:
+Now you can install all the required packages.  Note that this list may change over time as new components are added to the firmware code.
 
 ```bash
 sudo apt update
-```
-
-Now you can install all the required packages.
-
-> **Note**:
-> This list may change over time as new components are added to the firmware code.
-
-```bash
-sudo apt-get install libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison bzip2 diffutils file flex m4 g++ gawk groff-base libtool libslang2 make patch perl pkg-config shtool subversion tar texinfo zlib1g zlib1g-dev gettext libexpat1-dev libssl-dev cvs gperf unzip python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++-multilib gitk libncurses5 mtd-utils libncurses5-dev libvorbis-dev git autopoint autogen sed build-essential intltool libelf1:i386 libglib2.0-dev xutils-dev lib32z1-dev lib32stdc++6 xsltproc gtk-doc-tools
+sudo apt-get install libtool-bin cmake libproxy-dev uuid-dev liblzo2-dev autoconf automake bash bison \
+bzip2 diffutils file flex m4 g++ gawk groff-base libncurses5-dev libtool libslang2 make patch perl pkg-config shtool \
+subversion tar texinfo zlib1g zlib1g-dev git gettext libexpat1-dev libssl-dev cvs gperf unzip \
+python libxml-parser-perl gcc-multilib gconf-editor libxml2-dev g++-multilib gitk libncurses5 mtd-utils \
+libncurses5-dev libvorbis-dev git autopoint autogen automake-1.15 sed build-essential intltool libglib2.0-dev \
+xutils-dev lib32z1-dev lib32stdc++6 xsltproc gtk-doc-tools libelf1:i386
 ```
 
 Now we are going to download RMerlin's hard work.
@@ -69,8 +71,8 @@ git clone https://github.com/RMerl/asuswrt-merlin.ng
 It's recommended not to compile directly from your cloned repo, but instead to work on a copy of it.  This allows you to easily clean things up simply by re-syncing it with your clean copy.
 
 ```bash
-mkdir ~/amng-build
-rsync -a --del ~/asuswrt-merlin.ng/ ~/amng-build
+mkdir amng-build
+rsync -a --del asuswrt-merlin.ng/ amng-build
 ```
 
 You will now have to setup your toolchain.
