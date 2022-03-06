@@ -17,7 +17,7 @@ for instructions on how to configure WSL for a build VM.
 ### *Linux, MacOS, older Windows*
 
 On Linux systems, MacOS and older Windows versions, the easiest way to set up a virtual machine
-for builds is by using Canonical's Multipass.  See See [Setting up Build VM under Multipass](Setting-up-Build-VM-under-Multipass)
+for builds is by using Canonical's Multipass.  See [Setting up Build VM under Multipass](Setting-up-Build-VM-under-Multipass)
 
 ### *Native builds on other Linux flavors*
 
