@@ -19,6 +19,12 @@ for instructions on how to configure WSL for a build VM.
 On Linux systems, MacOS and older Windows versions, the easiest way to set up a virtual machine
 for builds is by using Canonical's Multipass.  See [Setting up Build VM under Multipass](Setting-up-Build-VM-under-Multipass)
 
+### *Docker container as a build VM*
+
+For those who appreciate an even more abstracted build (and want to delegate the setup of the build VM to someone else),
+GNUTon has put together and maintains a Docker container with all the tools already set up.  See [Setting up a build VM in Docker](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-Build-VM-in-Docker) for links to his work.  When using this, you can skip all the steps
+of the Linux environment setup and jump right to compiling.
+
 ### *Native builds on other Linux flavors*
 
 It is highly recommended to use Multipass to create a build VM instead of trying to build
