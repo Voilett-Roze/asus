@@ -735,7 +735,7 @@ fi
 == Gandi
 ^https://api.gandi.net/docs/livedns/^
 
-This updates the `@` and `www` subdomains of a type `A` record while leaving any others intact. Change the SUBDOMAIN variable to update a specific A Record.
+This updates the `@` and `www` subdomains of a type `A` record while leaving the others intact. Change the SUBDOMAIN variable to update a specific A Record.
 
 [source]
 ....
@@ -744,19 +744,20 @@ This updates the `@` and `www` subdomains of a type `A` record while leaving any
 
 APIKEY="XXXXXXXXXXXXXXXXXXXXXXXX" # Your 24-character API key
 DOMAIN="example.com" # The domain to be updated
-SUBDOMAIN="{@,www}"    # The Sub-Domain to update, use {@,*} to update base domain (*.example.com), or change to "home" for home.example.com
+SUBDOMAIN="{@,www}" # The Sub-Domain to update, use {@,*} to update base domain (*.example.com), or change to "home" for home.example.com
 
 IP=${1}
+#IP="$(curl -fs4 https://myip.dnsomatic.com/)" # to retrieve IP address in case of double NAT
 
-curl --location --fail --silent --output /dev/null \
-     --request PUT 'https://api.gandi.net/v5/livedns/domains/${DOMAIN}/records/${SUBDOMAIN}/A' \
-     --header 'Authorization: Apikey ${APIKEY}' \
-     --header 'Content-Type: application/json' \
-     --data-raw '{
-         "rrset_values": [
-             \"${IP}\"
-         ]
-     }'
+curl -fs -o /dev/null \
+    -X PUT "https://api.gandi.net/v5/livedns/domains/${DOMAIN}/records/${SUBDOMAIN}/A" \
+    -H "Authorization: Apikey ${APIKEY}" \
+    -H "Content-Type: application/json" \
+    -d "{
+        \"rrset_values\": [
+            \"${IP}\"
+        ]
+    }"
 
 if [ $? -eq 0 ]; then
 	/sbin/ddns_custom_updated 1
