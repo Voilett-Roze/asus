@@ -71,7 +71,7 @@ Now, I've got sshd (openssh) running on port 22, and dropbear running on port 22
 
 The "openssh-server" package installs an init.d start-up script, so we shouldn't have to worry about that.
 
-Create (or add to) a shell script `/jffs/scripts/passwd.postconf` and make sure it's executable:
+Create (or add to) a shell script `/jffs/scripts/shadow.postconf` and make sure it's executable:
 ```
 #!/bin/sh
 
