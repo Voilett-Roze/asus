@@ -88,7 +88,7 @@ sshd:x:22:65534:OpenSSH Server:/opt/var/empty:/dev/null
 
 #### Profit
 
-More info on "scripts/init-start" here - https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts
+More info on "Custom config files" here - https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-config-files
 
 If everything worked out, the router can be rebooted, openssh will be listening on your preferred port, and dropbear will be listening on a different port, just in case you need it.
 
