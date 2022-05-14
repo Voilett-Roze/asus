@@ -19,10 +19,10 @@ Generate a server key: `ssh-keygen -f /opt/etc/ssh/ssh_host_rsa_key`
 
 If you have one, put a public key into `~/.ssh/authorized_keys`
 
-Edit `/opt/etc/ssh/sshd_config`. I added these lines:
+Edit `/opt/etc/ssh/sshd_config`. I added these lines for testing:
 ```
 ListenAddress 192.168.1.1
-Port 22
+Port 2222
 PermitRootLogin yes
 Ciphers +chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr,aes256-cbc
 ```
@@ -30,7 +30,7 @@ Ciphers +chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr,aes256-
 On the ssh client, edit `~/.ssh/config` as needed. I needed to add:
 `HostKeyAlgorithms       +rsa-sha2-512,rsa-sha2-256`
 
-Trying to start a server and log in now will most certainly result in an error about "account expired". Fix that by editing `/etc/shadow` to remove the last "0" on the "admin" line:
+Trying to start a server and login now will most certainly result in an error about "account expired". Fix that by editing `/etc/shadow` to remove the last "0" on the "admin" line:
 
 Before:
 `admin:$1$xxxxxxxxxxxxxxxxxxxxxxxxxxxx:0:0:99999:7:0:0:`
@@ -45,11 +45,11 @@ Or, instead of editing, run this:
 #### Test to check if the server starts and works:
 `/opt/sbin/sshd -d`
 
-Use telnet to check that the right server is listening on the right port: `telnet 192.168.1.1 22` should show something like this:`SSH-2.0-OpenSSH_9.0`
+Use telnet to check that the right server is listening on the right port: `telnet 192.168.1.1 2222` should show something like this:`SSH-2.0-OpenSSH_9.0`
 
 ssh to the router from desktop/laptop client. Pay attention to the port number, and (optionally) use verbose mode (`ssh -v`) to double-check the server's version information. There should be a line that looks like this: `debug1: Remote protocol version 2.0, remote software version OpenSSH_9.0`
 
-If needed, testing can be done via `/opt/sbin/sshd -d -o 'Port=22'`, or similar. Ultimately, all options should be set in `/opt/etc/ssh/sshd_config`.
+If needed, testing can be done via `/opt/sbin/sshd -d -o 'Port=2222'`, or similar. Ultimately, all options should be set in `/opt/etc/ssh/sshd_config`.
 
 If it doesn't work at this point, let us know what's broken and how you fixed it.
 
@@ -63,9 +63,9 @@ Then change `/opt/etc/ssh/sshd_config` to listen on port 22.
 
 If listening ports are changed, expect to see "WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!" messages, when connecting for the first time, and edit the (client side!) `~/.ssh/known_hosts` accordingly.
 
-Alternatively, on the client, edit `~/.ssh/config` to connect to port 2222, via a "Host" declaration.
+Alternatively, on the client, edit `~/.ssh/config` to connect to port 2222, via a "Host" declaration. Or be lazy and inefficient by just using `ssh -p 2222` every time.
 
-Now, I've got sshd (openssh) running on port 22, and dropbear running on port 2222, just in case.
+Now, I've got sshd (openssh) running on port 22, and dropbear running on port 2222, just in case I need it.
 
 #### Next, changes need to survive reboots.
 
@@ -77,7 +77,7 @@ Create a shell script `/jffs/bin/sshd-setup.sh` and make sure it's executable.
 
 ## add "sshd" user
 grep -q '^sshd:' /etc/passwd || {
-    echo 'sshd:x:22:65534::/run/sshd:/dev/null' >> /etc/passwd
+    echo 'sshd:x:22:65534:OpenSSH Server:/opt/var/empty:/dev/null' >> /etc/passwd
 }
 
 ## make the "admin" account not expired
