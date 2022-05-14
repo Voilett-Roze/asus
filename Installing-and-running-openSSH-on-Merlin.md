@@ -47,7 +47,7 @@ Or, instead of editing, run this:
 
 Use telnet to check that the right server is listening on the right port: `telnet 192.168.1.1 2222` should show something like this:`SSH-2.0-OpenSSH_9.0`
 
-ssh to the router from desktop/laptop client. Pay attention to the port number, and (optionally) use verbose mode (`ssh -v`) to double-check the server's version information. There should be a line that looks like this: `debug1: Remote protocol version 2.0, remote software version OpenSSH_9.0`
+ssh to the router from desktop/laptop client. Pay attention to the port number, and (optionally) use verbose mode (`ssh -v`) to double-check the server's version information, looking for something like this: `debug1: Remote protocol version 2.0, remote software version OpenSSH_9.0`
 
 If needed, testing can be done via `/opt/sbin/sshd -d -o 'Port=2222'`, or similar. Ultimately, all options should be set in `/opt/etc/ssh/sshd_config`.
 
