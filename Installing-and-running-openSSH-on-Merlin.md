@@ -71,23 +71,17 @@ Now, I've got sshd (openssh) running on port 22, and dropbear running on port 22
 
 The "openssh-server" package installs an init.d start-up script, so we shouldn't have to worry about that.
 
-Create a shell script `/jffs/bin/sshd-setup.sh` and make sure it's executable.
+Create (or add to) a shell script `/jffs/scripts/passwd.postconf` and make sure it's executable.
 ```
 #!/bin/sh
-
-## add "sshd" user
-grep -q '^sshd:' /etc/passwd || {
-    echo 'sshd:x:22:65534:OpenSSH Server:/opt/var/empty:/dev/null' >> /etc/passwd
-}
 
 ## make the "admin" account not expired
 sed -i.bak.sshd '/^admin:/ s!:0:$!::!' /etc/shadow
 ```
 
-Add this to `/jffs/scripts/init-start`, and make sure that's executable:
+Create (or add to) `/jffs/configs/passwd.add`:
 ```
-## set-up for sshd
-/jffs/bin/sshd-setup.sh
+sshd:x:22:65534:OpenSSH Server:/opt/var/empty:/dev/null
 ```
 
 #### Reboot, test, double-check everything.
