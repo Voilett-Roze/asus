@@ -38,9 +38,11 @@ Before:
 After:
 `admin:$1$xxxxxxxxxxxxxxxxxxxxxxxxxxxx:0:0:99999:7:0::`
 
-Or, instead of editing, run this:
+Or, instead of editing `/etc/shadow` (as directly above), run this:
 `sed -i.bak.sshd '/^admin/ s!:0:$!::!' /etc/shadow`
 
+Add an "sshd" user to `/etc/passwd`
+`sshd:x:22:65534:OpenSSH Server:/opt/var/empty:/dev/null`
 
 #### Test to check if the server starts and works:
 `/opt/sbin/sshd -d`
