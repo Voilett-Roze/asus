@@ -41,7 +41,8 @@ After:
 Or, instead of editing `/etc/shadow` (as directly above), run this:
 `sed -i.bak.sshd '/^admin/ s!:0:$!::!' /etc/shadow`
 
-Add an "sshd" user to `/etc/passwd`
+Add an "sshd" user to `/etc/passwd`:
+
 `sshd:x:22:65534:OpenSSH Server:/opt/var/empty:/dev/null`
 
 #### Test to check if the server starts and works:
