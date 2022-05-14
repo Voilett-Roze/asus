@@ -3,7 +3,7 @@
 I got tired of dropbear taking too long to establish a connection, and then dropping the connection every minute or two. So I got an openssh-server running on Merlin.
 
 * Tested on RT-AC68U, running 386.5_2
-* I'm documenting sort of as go. This was not thoroughly tested from scratch, and my documentation may be incomplete or wrong, but it should still serve as a starting point; hopefully others can confirm that it works, or update it as needed
+* I'm documenting sort of as I go. This was not thoroughly tested from scratch, and my documentation may be incomplete or wrong, but it should still serve as a starting point; hopefully others can confirm that it works, or update it as needed
 * I'm assuming that you know and understand the basics of setting up and configuring an ssh server and client via CLI
 * I'm glossing over or completely ignoring prerequisites (eg opkg, jffs, how to edit files)
 * I'm glossing over configuration and setup options (eg RSA vs DSA vs ECDSA) which may or may not be more or less suitable to other environments, or even my own setup
