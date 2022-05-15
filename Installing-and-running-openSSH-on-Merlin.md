@@ -30,7 +30,9 @@ Ciphers +chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr,aes256-
 On the ssh client, edit `~/.ssh/config` as needed. I needed to add:
 `HostKeyAlgorithms       +rsa-sha2-512,rsa-sha2-256`
 
-Trying to start a server and login now will most certainly result in an error about "account expired". Fix that by editing `/etc/shadow` to remove the last "0" on the "admin" line:
+Trying to start a server now will likely fail, and trying to login now will most certainly result in an error about "account expired". Fix those problems by "fixing" `/etc/shadow` and `/etc/passwd`.
+
+Edit `/etc/shadow` to remove the last "0" on the "admin" line:
 
 Before:
 `admin:$1$xxxxxxxxxxxxxxxxxxxxxxxxxxxx:0:0:99999:7:0:0:`
