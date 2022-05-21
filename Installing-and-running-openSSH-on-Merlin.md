@@ -48,7 +48,7 @@ Add an "sshd" user to `/etc/passwd`:
 `sshd:x:22:65534:OpenSSH Server:/opt/var/empty:/dev/null`
 
 #### Test to check if the server starts and works:
-`/opt/sbin/sshd -d`
+`/opt/sbin/sshd -D`
 
 Use telnet to check that the right server is listening on the right port: `telnet 192.168.1.1 2222` should show something like this:`SSH-2.0-OpenSSH_9.0`
 
