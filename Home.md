@@ -113,6 +113,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 21. [Change the webui language](/RMerl/asuswrt-merlin.ng/wiki/Change-the-webui-language-when-it's-factory-locked)
 22. [Restart WAN interface when internet is down](/RMerl/asuswrt-merlin.ng/wiki/Restart-WAN-interface-when-internet-is-down)
 23. [Installing and running openSSH on Merlin](/RMerl/asuswrt-merlin.ng/wiki/Installing-and-running-openSSH-on-Merlin)
+24. [Enable PXE booting into netboot.xyz](/RMerl/asuswrt-merlin.ng/wiki/Enable-PXE-booting-into-netboot.xyz)
 
 ### Reference:
 1. [FAQ](/RMerl/asuswrt-merlin.ng/wiki/FAQ)
