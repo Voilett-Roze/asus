@@ -1,19 +1,17 @@
 This will enable legacy BIOS, and UEFI devices to PXE boot into the https://github.com/netbootxyz/netboot.xyz menu.
 
-Assume your AsusWRT-Merlin router is 192.168.1.1
+Assume your AsusWRT-Merlin router is 192.168.1.1; Login to GUI
 1. LAN -> DHCP Server -> Basic Config: Set "Enable the DHCP Server" to Yes; IP Pool Starting Address: 192.168.1.2; IP Pool Ending Address: 192.168.1.254
-2. Administration -> System -> Persistent JFFS2 partition: Set "Enable JFFS custom scripts and configs" to Yes
-3. Administration -> System -> Service: "Enable SSH"
-4. Reboot the box
+2. Administration -> System -> Service: Set "Enable SSH" to LAN Only
+3. Administration -> System -> Persistent JFFS2 partition: Set "Enable JFFS custom scripts and configs" to Yes  
+   _Note: JFFS is a writeable section of the flash memory (the size will vary between router models, with the newer models having a bit over 60 MB of space available), which will allow you to store small files (such as scripts) inside the router without needing to have a USB disk plugged in. This space will survive reboot (**but it might NOT survive firmware flashing, so back it up first before flashing!**)._
+4. Reboot the router from the GUI and wait until you can ping 192.168.1.1
 5. `ssh username@192.168.1.1`
-6. `cd /jffs`
-7. `mkdir tftproot`
-8. `cd tftproot`
-9. `curl -o netboot.xyz.kpxe https://boot.netboot.xyz/ipxe/netboot.xyz.kpxe`
-10. `curl -o netboot.xyz.efi https://boot.netboot.xyz/ipxe/netboot.xyz.efi`
-11. `cd /jffs/configs`
-12. `touch dnsmasq.conf.add`
-13. `nano dnsmasq.conf.add` and add the following:
+6. `mkdir /jffs/tftproot`
+7. `curl -o /jffs/tftproot/netboot.xyz.kpxe https://boot.netboot.xyz/ipxe/netboot.xyz.kpxe`
+8. `curl -o /jffs/tftproot/netboot.xyz.efi https://boot.netboot.xyz/ipxe/netboot.xyz.efi`
+9. `touch /jffs/configs/dnsmasq.conf.add`
+10. `nano /jffs/configs/dnsmasq.conf.add` and add the following:
 
 > enable-tftp  
 > tftp-root=/jffs/tftproot  
@@ -30,8 +28,8 @@ Assume your AsusWRT-Merlin router is 192.168.1.1
 > dhcp-match=set:efi64-2,60,PXEClient:Arch:00009  
 > dhcp-boot=tag:efi64-2,netboot.xyz.efi,,192.168.1.1  
 
-14. `reboot` and wait until you can ping 192.168.1.1
-15. from another device confirm that TFTP is working on the router
+11. `reboot` and wait until you can ping 192.168.1.1
+12. from another device confirm that TFTP is working on the router
 
 > `tftp 192.168.1.1`  
 > tftp> `get netboot.xyz.kpxe`  
