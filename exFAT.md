@@ -5,5 +5,5 @@ exFAT is a filesystem suitable for SSDs and Flash Drives. ExFAT was licensed by 
 1. Install exFAT-fuse from entware via opkg
 2. Run fdisk -l to find the drive name with the exFAT fs
 3. Create a mount point with mkdir -p /mnt/media
-4. Mount the drive with mount.exfat-fuse /dev/<drive name> /mnt/media
+4. Mount the drive with mount.exfat-fuse /dev/$drive-name /mnt/media
 5. Optionally, setup this process with a /jffs/scripts/service-start script for step 4
