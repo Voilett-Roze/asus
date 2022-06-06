@@ -21,14 +21,14 @@ service saned
     socket_type = stream
     server = /opt/sbin/saned
     protocol = tcp
-    user = admin
+    user = <REPLACE HERE WITH YOUR ADMIN USERNAME>
     group = root
     wait = no
     disable = no
 }
 ```
 * Edit file `/opt/share/dbus-1/system.conf` and replace the following line:  
-**`<user>root</user>`**  
+**`<user>__REPLACE HERE WITH YOUR ADMIN USERNAME__</user>`**  
 with  
 **`<user>admin</user>`**  
 * Edit file `/opt/etc/sane.d/saned.conf` and add your subnet to allow access, for example: 192.168.1.0/24  
