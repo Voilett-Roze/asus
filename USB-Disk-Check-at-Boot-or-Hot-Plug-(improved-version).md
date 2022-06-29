@@ -41,6 +41,7 @@ This script is a cut down version of the Advanced script and is probably appropr
 
     # $1=device $2=filesystem type
 
+    TZ=$(cat /etc/TZ); export TZ
     TAG=$(basename "$0")
     CHKLOG=/var/log/fsck.log
     CHKCMD=""
@@ -78,6 +79,7 @@ This script contains code blocks for every possible filesystem type to help docu
 
     # $1=device $2=filesystem type
 
+    TZ=$(cat /etc/TZ); export TZ
     TAG=$(basename "$0")
     CHKLOG=/var/log/fsck.log
     CHKCMD=""
