@@ -12,7 +12,12 @@ After uninstalling, you should make sure "asusware.arm" or "asusware.*" dir on m
 
 ### Setup
 
-You will need to plug a USB disk that's formatted in a native Linux filesystem (ext2, ext3 or ext4).
+You will need to plug a USB disk that's formatted in a native Linux filesystem (ext2, ext3 or ext4). To format a disk, use amtm. 
+Plug a USB disk into your router then start amtm with
+```
+amtm
+```
+and use the 'fd' option to format a disk.
 
 The installation and configuration process must be done through telnet or SSH.  If that part scares you, then forget about Entware already: everything must be installed and configured through telnet/SSH.
 
@@ -21,7 +26,7 @@ Then, launch the amtm application by simply running
 ```
 amtm
 ```
-The menu will offer you an option to initiate the Entware installation.
+The menu will offer you the option 'ep' to initiate the Entware installation.
 
 If you are running a firmware version older than 384.15 (or 384.13_4 for the RT-AC87U and RT-AC3200), then you start the installation by running "entware-setup.sh" instead.
 
