@@ -36,6 +36,7 @@ amtm currently supports these popular scripts:
 | Vnstat | dev_null | [Link](https://www.snbforums.com/threads/beta-2-vnstat-on-merlin-ui-cli-and-email-data-use-monitoring-with-full-install-and-menu.70727/) |
 | WireGuard Session Manager | Martineau | [Link](https://www.snbforums.com/forums/asuswrt-merlin-addons.60/?prefix_id=32&starter_id=13215) |
 | Asuswrt-Merlin-AdGuardHome-Installer | SomeWhereOverTheRainBow | [Link](https://www.snbforums.com/threads/new-release-asuswrt-merlin-adguardhome-installer.76506/) |
+| VPNMON-R2 | Viktor Jaep | [Link](https://www.snbforums.com/forums/asuswrt-merlin-addons.60/?prefix_id=36) |
 
 amtm also offers an interface for managing a number of other features:
 
@@ -49,6 +50,7 @@ amtm also offers an interface for managing a number of other features:
 | Swap file creation and management | thelonelycoder |
 | amtm themes | thelonelycoder |
 | email settings | thelonelycoder |
+| 10 router games to choose from | thelonelycoder |
 
 ## Usage ##
 amtm can be launched over SSH, as there is no web interface for it.  In addition to enabling SSH support on your router, some of its scripts will have additional requirements, most commonly you will need to set _Enable JFFS custom scripts and configs_ on the web interface to _Yes_, under _Administration -> System_.  A USB disk is also required by many of its scripts.
@@ -66,4 +68,4 @@ Before installing any of the scripts it is strongly recommended that you read th
 amtm is free to use under the GNU General Public License, version 3 (GPL-3.0)
 
 ## Screenshot amtm v3.1.1, FW ##
-[![amtm v3.1.1](https://i.imgur.com/3qYg2cL.png "amtm v3.1.1")](https://i.imgur.com/3qYg2cL.png "amtm v3.1.1")
+[![amtm v3.3](https://cdn.imgchest.com/files/6yxkcrjmq7w.png "amtm v3.3")](https://cdn.imgchest.com/files/6yxkcrjmq7w.png "amtm v3.3")
