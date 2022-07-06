@@ -67,5 +67,5 @@ Before installing any of the scripts it is strongly recommended that you read th
 ## amtm License ##
 amtm is free to use under the GNU General Public License, version 3 (GPL-3.0)
 
-## Screenshot amtm v3.1.1, FW ##
+## Screenshot amtm v3.3 ##
 [![amtm v3.3](https://cdn.imgchest.com/files/6yxkcrjmq7w.png "amtm v3.3")](https://cdn.imgchest.com/files/6yxkcrjmq7w.png "amtm v3.3")
