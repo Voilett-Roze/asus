@@ -5,7 +5,8 @@ amtm is a shell-based front end that manages popular scripts for wireless router
 
 Starting with Asuswrt-Merlin 384.15, amtm is included in the firmware.
 
-There is a [support thread](https://www.snbforums.com/threads/amtm-the-asuswrt-merlin-terminal-menu.42415/) at SNBForums that is dedicated to amtm.
+amtm is maintained by @decoderman, aka thelonelycoder. [GitHub repo](https://github.com/decoderman/amtm), [Website](https://diversion.ch/amtm.html)
+There are [support threads](https://www.snbforums.com/forums/asuswrt-merlin-addons.60/?prefix_id=16&starter_id=25480) at SNBForums that are dedicated to amtm.
 
  
 ## Features ##
