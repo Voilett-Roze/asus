@@ -23,6 +23,7 @@ We need to install Transmission:
 
 ```
 opkg install transmission-web transmission-daemon
+opkg install transmission-remote transmission-daemon
 ```
 
 You may need to install certificate packages to connect to some https trackers:
