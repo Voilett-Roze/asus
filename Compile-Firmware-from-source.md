@@ -157,13 +157,13 @@ make rt-ax58u
 
 **RT-AX86U firmware**
 ```bash
-cd ~/amng-build/release/src-rt-5.02p1axhnd.675x
+cd ~/amng-build/release/src-rt-5.02L.07p2axhnd
 make rt-ax86u
 ```
 
 **RT-AX88U firmware**
 ```bash
-cd ~/amng-build/rrelease/src-rt-5.02axhnd
+cd ~/amng-build/release/src-rt-5.02axhnd
 make rt-ax88u
 ```
 
@@ -181,7 +181,7 @@ make gt-ax11000
 
 **RT-AX68U firmware**
 ```bash
-cd ~/amng-build/release/src-rt-5.02p1axhnd.675x
+cd ~/amng-build/release/src-rt-5.02L.07p2axhnd
 make rt-ax68u
 ```
 
