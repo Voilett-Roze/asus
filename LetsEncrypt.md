@@ -8,10 +8,10 @@ The choice **Server: Custom** will use a [user script](User-scripts) `/jffs/scri
 #!/bin/sh
 exec /sbin/ddns_custom_updated 1
 ```
-Unfortunately, Let's Encrypt would work in this way, at least not in the 386.7 release. It appeared that the `/usr/sbin/acme.sh` will not be invoked at all. In the 386.7 release, the script is based on version 2.8.3 of [acme.sh](https://github.com/acmesh-official/acme.sh/), which could be too old to work.
+Unfortunately, Let's Encrypt would not work in this way, at least not in the 386.7 release. It appeared that the `/usr/sbin/acme.sh` will not be invoked at all. In the 386.7 release, the script is based on version 2.8.3 of [acme.sh](https://github.com/acmesh-official/acme.sh/), which could be too old to work.
 
 # Invoking Let's Encrypt via SSH
-The script `acme.sh` supports a `--standalone` mode that will start a HTTP server in port 80 to implement a challenge-response connection with the certificate authority. This mode requires that port 80 is available. By default, the ASUS web server (`httpd`) will listen at port 80, even if HTTP logins are disabled in the web UI.
+The script `acme.sh` supports a `--standalone` mode that will start a HTTP server in port 80 to implement a challenge-response connection with the certificate authority. This mode requires that port 80 be available. By default, the ASUS web UI server (`httpd`) will listen at port 80, even if HTTP logins are disabled in the web UI.
 
 1. In the web UI, under **Administration - System** and **Local Access Config**, ensure that the **HTTP LAN port** is _not_ 80.
 1. Invoke the following commands.
