@@ -18,7 +18,7 @@ List of supported models:
  * RT-AC5300
  * RT-AX88U
  * RT-AX56U
- * RT-AX58U
+ * RT-AX58U (v2 is not supported)
  * RT-AX3000 (use the RT-AX58U firmware)
  * RT-AX86S (use the RT-AX86U firmware)
  * RT-AX86U
@@ -26,8 +26,22 @@ List of supported models:
  * GT-AX11000 (Since 386.2) (GT models do not have ROG-specific features)
  * RT-AX68U (Since 386.2)
  * GT-AXE11000 (Since 386.5) (GT models do not have ROG-specific features)
+ * GT-AX6000 (Since 386.6)
+ * ZenWiFi Pro XT12 (Since 386.6)
+ * GT-AX11000 PRO (Since 386.8)
+ * GT-AXE16000 (Since 386.8)
 
+Older platform:
 
+    RT-AC66U_B1 (same firmware as the RT-AC68U)
+    RT-AC68U (all versions and revisions)
+    RT-AC68P (same firmware as RT-AC68U)
+    RT-AC68UF (same firmware as RT-AC68U)
+    RT-AC1900 (same firmware as RT-AC68U)
+    RT-AC1900P (same firmware as RT-AC68U)
+    RT-AC88U
+    RT-AC3100
+    RT-AC5300
 
 No longer supported:
  * RT-N16
