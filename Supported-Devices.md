@@ -31,18 +31,6 @@ List of supported models:
  * GT-AX11000 PRO (Since 386.8)
  * GT-AXE16000 (Since 386.8)
 
-Older platform:
-
-    RT-AC66U_B1 (same firmware as the RT-AC68U)
-    RT-AC68U (all versions and revisions)
-    RT-AC68P (same firmware as RT-AC68U)
-    RT-AC68UF (same firmware as RT-AC68U)
-    RT-AC1900 (same firmware as RT-AC68U)
-    RT-AC1900P (same firmware as RT-AC68U)
-    RT-AC88U
-    RT-AC3100
-    RT-AC5300
-
 No longer supported:
  * RT-N16
  * RT-N66U
