@@ -4,6 +4,6 @@ To intercept NTP connections from LAN clients and redirect them to the router's 
 
 ### 3rd Party Addons
 
-There is a addon package for Asuswrt-Merlin Firmware called ntpMerlin. ntpMerlin implements an NTP time server for AsusWRT Merlin with charts for daily, weekly and monthly summaries of performance. A choice between ntpd and chrony is available.
+There is an addon package for Asuswrt-Merlin Firmware called ntpMerlin. ntpMerlin implements an NTP time server for AsusWRT Merlin with charts for daily, weekly and monthly summaries of performance. A choice between ntpd and chrony is available.
 
 https://www.snbforums.com/threads/ntpmerlin-v3-x.68508/
