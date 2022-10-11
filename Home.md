@@ -108,7 +108,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 16. [USB Disk Check at Boot or Hot Plug (improved version)](https://github.com/RMerl/asuswrt-merlin.ng/wiki/USB-Disk-Check-at-Boot-or-Hot-Plug-(improved-version))
 17. [Minidlna: Common Issues & Solutions](/RMerl/asuswrt-merlin.ng/wiki/Minidlna:--Common-Issues-&-Solutions)
 18. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin.ng/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
-19. [Setting up a NTP Server for your LAN](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-an-NTP-Server-for-your-local-lan)
+19. [Setting up an NTP time server for your LAN](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-an-NTP-time-server-for-your-LAN)
 20. [Disk formatting](/RMerl/asuswrt-merlin.ng/wiki/Disk-formatting)
 21. [Change the webui language](/RMerl/asuswrt-merlin.ng/wiki/Change-the-webui-language-when-it's-factory-locked)
 22. [Restart WAN interface when internet is down](/RMerl/asuswrt-merlin.ng/wiki/Restart-WAN-interface-when-internet-is-down)
