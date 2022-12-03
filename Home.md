@@ -27,12 +27,11 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 12. [NFS Exports](/RMerl/asuswrt-merlin.ng/wiki/NFS-Exports)
 13. [DNS Director](/RMerl/asuswrt-merlin.ng/wiki/DNS-Director)
 14. [Using a custom webui/FTP SSL certificate](/RMerl/asuswrt-merlin.ng/wiki/Custom-SSL-certificates)
-15. [QoS Queue Disciplines (codel/fq_codel)](/RMerl/asuswrt-merlin.ng/wiki/QoS-Queue-Disciplines)
-16. [Wi-Fi Radar](/RMerl/asuswrt-merlin.ng/wiki/Wi-Fi-Radar)
-17. [DNS Privacy](/RMerl/asuswrt-merlin.ng/wiki/DNS-Privacy) (DNS-over-TLS)
-18. [AiMesh](/RMerl/asuswrt-merlin.ng/wiki/AiMesh)
-19. [AMTM - Asuswrt-Merlin Terminal Menu](/RMerl/asuswrt-merlin.ng/wiki/AMTM)
-20. [Policy-based routing through VPN Director](/RMerl/asuswrt-merlin.ng/wiki/VPN-Director)
+15. [Wi-Fi Radar](/RMerl/asuswrt-merlin.ng/wiki/Wi-Fi-Radar)
+16. [DNS Privacy](/RMerl/asuswrt-merlin.ng/wiki/DNS-Privacy) (DNS-over-TLS)
+17. [AiMesh](/RMerl/asuswrt-merlin.ng/wiki/AiMesh)
+18. [AMTM - Asuswrt-Merlin Terminal Menu](/RMerl/asuswrt-merlin.ng/wiki/AMTM)
+19. [Policy-based routing through VPN Director](/RMerl/asuswrt-merlin.ng/wiki/VPN-Director)
 
 ### OpenVPN
 1. [About OpenVPN](/RMerl/asuswrt-merlin.ng/wiki/About-OpenVPN)
