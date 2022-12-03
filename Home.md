@@ -25,7 +25,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 10. [Mounting remote CIFS shares](/RMerl/asuswrt-merlin.ng/wiki/Mounting-remote-CIFS-shares)
 11. [Disk Spindown when idle](/RMerl/asuswrt-merlin.ng/wiki/Disk-Spindown-when-idle)
 12. [NFS Exports](/RMerl/asuswrt-merlin.ng/wiki/NFS-Exports)
-13. [DNS Filter](/RMerl/asuswrt-merlin.ng/wiki/DNS-Filter)
+13. [DNS Director](/RMerl/asuswrt-merlin.ng/wiki/DNS-Director)
 14. [Using a custom webui/FTP SSL certificate](/RMerl/asuswrt-merlin.ng/wiki/Custom-SSL-certificates)
 15. [QoS Queue Disciplines (codel/fq_codel)](/RMerl/asuswrt-merlin.ng/wiki/QoS-Queue-Disciplines)
 16. [Wi-Fi Radar](/RMerl/asuswrt-merlin.ng/wiki/Wi-Fi-Radar)
