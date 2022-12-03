@@ -64,8 +64,7 @@ Called just before unmounting a partition.  Like pre-mount, this is a blocking s
 Called whenever a DHCP event occurs on the WAN interface.  The type of event is passed as an argument which can be used in the script using `$1`; possible event types in the version of `udhcpc` in ASUSWRT are `deconfig` (when udhcpc starts and when a lease is lost), `bound` (when a lease and new IP address are acquired), and `renew` (when a lease is renewed, but the IP did not change).
 
 ### openvpn-event
-Called whenever an OpenVPN server gets started/stopped, or an OpenVPN client connects to a remote server.  Uses the same syntax/parameters as the "up" and "down" scripts in OpenVPN. The `$script_type` environment variable indicates what sort of
-event occurred on the device `$dev`.
+Called whenever an OpenVPN server gets started/stopped, or an OpenVPN client connects to a remote server.  Uses the same syntax/parameters as the "up" and "down" scripts in OpenVPN. The `$script_type` environment variable indicates what sort of event occurred on the device `$dev`.
 
 ### ddns-start
 Called at the end of a DDNS update process.  This script is also called when setting the DDNS type to "Custom".  The script gets passed the WAN IP as an argument, which can be used in the script using `$1`.  When handling a "Custom" DDNS, this script is also responsible for reporting the success or failure of the update process.  See the [Custom DDNS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Custom-DDNS) section for more information.
@@ -73,9 +72,14 @@ Called at the end of a DDNS update process.  This script is also called when set
 ### update-notification
 Called when the scheduled new firmware version availability check detects there's a new firmware available for download. See [update notification example](https://github.com/RMerl/asuswrt-merlin.ng/wiki/update-notification-example) for more info.
 
-
 ### qos-start
 Called when Traditional QOS or Cake are done creating their stop/start script, and before running it.  You can use this script to modify the /etc/cake-qos.conf config file (contains variables used by Cake) or /tmp/qos (generated for both modes, to create/remove the tc qdisc/rule entries).  This script gets one argument passed as parameter, which will contain "init" (when about to start QOS) or "rules" (when iptables rules have been configured for Traditional QOS).  This script is run in a blocking call and will pause starting QOS until it completes.
+
+### wgserver-stop and wgserver-start
+Called when the WireGuard server is stopped or started.
+
+### wgclient-stop and wgclient-start
+Called when a WireGuard client is stopped or started.  The client unit number (1-5) is passed to the script as argument.
 
 
 ## Postconf scripts
