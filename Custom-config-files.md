@@ -1,7 +1,7 @@
-The services executed by the router such as _minidlna_ or _dnsmasq_ relies on dynamically-generated config files.  There are various methods through which you can interact with these config files to customize them.
+The services executed by the router such as _minidlna_ or _dnsmasq_ rely on dynamically-generated config files.  There are various methods through which you can interact with these config files to customize them.
 
 ### Enabling support for custom configs ###
-Starting with 378.50, this functionality is disabled by default.  To enable it, go to Administration -> System, then enable it under the JFFS section.
+This functionality is disabled by default.  To enable it, go to Administration -> System, then enable it under the JFFS section.
 
 If you accidentally lock yourself out of your router due to a bugged custom config, a factory default reset will let you regain access to your router
 
@@ -43,6 +43,9 @@ The list of available config overrides:
  * torrc
  * vsftpd.conf
  * upnp (for miniupnpd)
+ * wgclient%d (%d = unit number)
+ * wgserver
+ * wgserver_peer (peer config file generated to connect to the local server)
 
 Also, you can put your own OpenVPN ccd files in the following directories:
 
@@ -90,6 +93,10 @@ The list of available postconf scripts is:
  * torrc.postconf
  * upnp.postconf
  * vsftpd.postconf
+ * wgclient%d.postconf (%d = unit number, between 1 and 5)
+ * wgserver.postconf
+ * wgserver_peer.postconf (for generation of the remote peer config file)
+
 
 To make things easier for novice users who don't want to learn the arcane details of using "sed", a script providing support functions is available.  The following dnsmasq.postconf script demonstrates how to modify the maximum number of leases in the dnsmasq configuration:
 
