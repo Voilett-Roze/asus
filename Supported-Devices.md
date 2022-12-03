@@ -30,6 +30,7 @@ List of supported models:
  * ZenWiFi Pro XT12 (Since 386.6)
  * GT-AX11000 PRO (Since 386.8)
  * GT-AXE16000 (Since 386.8)
+ * RT-AX86U PRO (Since 388.1)
 
 No longer supported:
  * RT-N16
