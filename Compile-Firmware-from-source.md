@@ -25,6 +25,13 @@ For those who appreciate an even more abstracted build (and want to delegate the
 GNUTon has put together and maintains a Docker container with all the tools already set up.  See [Setting up a build VM in Docker](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-Build-VM-in-Docker) for links to his work.  When using this, you can skip all the steps
 of the Linux environment setup and jump right to compiling.
 
+Nota bene for Mac users: The kernel sources will require a CASE-SENSITIVE filesystem to build!  If you are using the 
+Docker container to build, it will inherit the case-sensitivity of your system's filesystem, which is likely case-INsensitive. 
+The easiest way to avoid lots of pain is to create a disk image file (use Disk Utility, New Image -> Blank Image, make sure
+that the Format option is a case-sensitive format, and give the image ~10GB or so.  Create and mount the image (which will
+likely be mounted under `/Volumes`), then clone your git repository into that mounted volume, launching the docker build container
+from that location to bind-mount the case-sensitive repo to `/build` within the container.
+
 ### *Native builds on other Linux flavors*
 
 It is highly recommended to use Multipass to create a build VM instead of trying to build
