@@ -33,8 +33,8 @@ When enabled, all DNS requests you send to your router will be redirected to the
 Note that TLS requires a properly configured clock.  DNS Privacy won't use encryption until after your router's clock has been properly set through NTP.
 
 
-### DNSFilter
-DNSFilter still works as before, as an override for the DNS configuration used on your router's WAN page, or on the clients themselves.  If a client is configured to use a specific DNS server (for example, OpenDNS), then that client will still use OpenDNS, bypassing the DNS Privacy settings.  This also means you can force your clients to use DNS Privacy by configuring DNSFilter for "Router" mode.  This way, any DNS queries done on your LAN (even with hardcoded DNS servers, like the Netflix Android application which is hardcoded to use 8.8.8.8) will use DNS Privacy.
+### DNSDirector
+DNSDirector still works as before, as an override for the DNS configuration used on your router's WAN page, or on the clients themselves.  If a client is configured to use a specific DNS server (for example, OpenDNS), then that client will still use OpenDNS, bypassing the DNS Privacy settings.  This also means you can force your clients to use DNS Privacy by configuring DNSDirector for "Router" mode.  This way, any DNS queries done on your LAN (even with hardcoded DNS servers, like the Netflix Android application which is hardcoded to use 8.8.8.8) will use DNS Privacy.
 
 
 ### OpenVPN Clients
