@@ -44,7 +44,7 @@ find the tag that matches our installed version:
 
 2. Prepare Build Environment: 
 
-  For this, you should [follow the Merlin README.TXT](https://github.com/RMerl/asuswrt-merlin/blob/master/README.TXT) to install dependencies, make required symlinks for the build tools, and update your `PATH`.
+  For this, you should [follow the Merlin README.TXT](https://github.com/RMerl/asuswrt-merlin.ng/blob/master/README.TXT) to install dependencies, make required symlinks for the build tools, and update your `PATH`.
 
 3. Configure Kernel Modules:
 
