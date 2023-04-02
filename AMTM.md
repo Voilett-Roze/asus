@@ -38,6 +38,9 @@ amtm currently supports these popular scripts:
 | Asuswrt-Merlin-AdGuardHome-Installer | SomeWhereOverTheRainBow | [Link](https://www.snbforums.com/threads/new-release-asuswrt-merlin-adguardhome-installer.76506/) |
 | VPNMON-R2 | Viktor Jaep | [Link](https://www.snbforums.com/forums/asuswrt-merlin-addons.60/?prefix_id=36) |
 | RTRMON | Viktor Jaep | [Link](https://www.snbforums.com/forums/asuswrt-merlin-addons.60/) |
+| WICENS | Maverickcdn | [Link](https://www.snbforums.com/threads/wicens-wan-ip-change-email-notification-script.69294/) |
+| KILLMON | Viktor Jaep | [Link](https://www.snbforums.com/threads/killmon-v1-05-feb-20-2023-ip4-ip6-vpn-kill-switch-monitor-configurator.81758/) |
+| Dual WAN Failover | Ranger802004 | [Link](https://www.snbforums.com/threads/dual-wan-failover-v2-0-2-release.83674/) |
 
 amtm also offers an interface for managing a number of other features:
 
@@ -52,6 +55,7 @@ amtm also offers an interface for managing a number of other features:
 | amtm themes | thelonelycoder |
 | email settings | thelonelycoder |
 | 10 router games to choose from | thelonelycoder |
+| Keep a history of entered shell commands | thelonelycoder
 
 ## Usage ##
 amtm can be launched over SSH, as there is no web interface for it.  In addition to enabling SSH support on your router, some of its scripts will have additional requirements, most commonly you will need to set _Enable JFFS custom scripts and configs_ on the web interface to _Yes_, under _Administration -> System_.  A USB disk is also required by many of its scripts.
