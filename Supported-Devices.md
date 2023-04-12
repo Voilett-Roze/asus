@@ -31,6 +31,7 @@ List of supported models:
  * GT-AX11000 PRO (Since 386.8)
  * GT-AXE16000 (Since 386.8)
  * RT-AX86U PRO (Since 388.1)
+ * RT-AX88U PRO (Since 388.2)
 
 No longer supported:
  * RT-N16
