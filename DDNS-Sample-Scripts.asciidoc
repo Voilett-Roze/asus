@@ -417,6 +417,11 @@ APIRequest() {
   printf "${RESPONSE}"
 }
 
+if [ -z "${IP}" ]; then                                                      
+  logger "No IP address provided for update"                              
+  fail                                                          
+fi
+
 # Get current record value
 OLD_VALUE="`APIRequest dns-list_records 'type=A&editable=1' \
                        | grep "\s${RECORD}\sA" | awk '{print $5}'`"
@@ -424,10 +429,15 @@ if [ $? -ne 0 ]; then fail; fi
 
 if [ "${OLD_VALUE}" != "${IP}" ]; then
   if [ -n "${OLD_VALUE}" ]; then
-    # Remove the existing record
-    APIRequest dns-remove_record "record=${RECORD}&type=A&value=${OLD_VALUE}"
+    # Remove the existing records
+    logger "removing existing entries"                             
+    for entry in ${OLD_VALUE}; do                                  
+      logger "Deleting entry: $entry"                              
+      APIRequest dns-remove_record "record=${RECORD}&type=A&value=$entry" > /dev/null
+    done
   fi
   # Add the new record
+  logger "adding new entry: ${IP}"
   APIRequest dns-add_record "record=${RECORD}&type=A&value=${IP}"
 fi
 
