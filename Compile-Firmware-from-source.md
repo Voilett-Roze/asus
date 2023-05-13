@@ -51,6 +51,25 @@ First, you need to enable support for 32-bit libraries, required by the toolchai
 ```bash
 sudo dpkg --add-architecture i386
 ```
+Due to the i386 architecture being phase out, some extra steps are needed:
+
+from this page : https://askubuntu.com/questions/1211022/how-to-install-i386-amd64-packages-on-arm-or-any-other-arch-from-ubuntu-ports
+
+```bash
+# replace 'deb' with 'deb [arch=armhf]'
+sudo sed 's/^deb http/deb [arch=armhf] http/' -i '/etc/apt/sources.list'
+```
+
+Add a file like /etc/apt/sources.list.d/i386.list with the x86 mirror servers:
+```bash
+sudo tee -a /etc/apt/sources.list.d/i386.list > /dev/null <<EOT
+deb [arch=i386] http://security.ubuntu.com/ubuntu/ focal-security  main restricted universe multiverse
+deb [arch=i386]  http://archive.ubuntu.com/ubuntu/ focal           main restricted universe multiverse
+deb [arch=i386]  http://archive.ubuntu.com/ubuntu/ focal-updates   main restricted universe multiverse
+deb [arch=i386]  http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+EOT
+```
+
 
 You also need to switch from dash to bash as the default shell (/bin/sh).  This is required by the newer build system used by Broadcom for the HND-based models.  To do so, run the following command, and when asked, tell it NOT to use Dash:
 
