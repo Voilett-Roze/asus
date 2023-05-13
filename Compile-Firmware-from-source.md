@@ -51,13 +51,13 @@ First, you need to enable support for 32-bit libraries, required by the toolchai
 ```bash
 sudo dpkg --add-architecture i386
 ```
-Due to the i386 architecture being phase out, some extra steps are needed:
+Due to the i386 architecture being phased out, some extra steps are needed at least on arm systems
 
 from this page : https://askubuntu.com/questions/1211022/how-to-install-i386-amd64-packages-on-arm-or-any-other-arch-from-ubuntu-ports
 
 ```bash
-# replace 'deb' with 'deb [arch=armhf]'
-sudo sed 's/^deb http/deb [arch=armhf] http/' -i '/etc/apt/sources.list'
+# replace 'deb' with 'deb [arch=arm64]'
+sudo sed 's/^deb http/deb [arch=arm64] http/' -i '/etc/apt/sources.list'
 ```
 
 Add a file like /etc/apt/sources.list.d/i386.list with the x86 mirror servers:
