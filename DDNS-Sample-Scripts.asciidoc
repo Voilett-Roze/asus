@@ -987,8 +987,8 @@ ovh_dns_update $USER $PASS $HOST $IP
 
 exit 0
 ....
------
-== Pair
+
+== Pair Domains
 ^https://www.pairdomains.com/kb/posts/336?from=pairnic^
 
 This will add/update A records for Pair DDNS.
