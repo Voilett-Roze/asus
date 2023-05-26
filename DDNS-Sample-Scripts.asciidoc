@@ -987,6 +987,39 @@ ovh_dns_update $USER $PASS $HOST $IP
 
 exit 0
 ....
+-----
+== Pair
+^https://www.pairdomains.com/kb/posts/336?from=pairnic^
+
+This will add/update A records for Pair DDNS.
+
+[source]
+....
+#!/bin/sh
+# https://www.pairdomains.com/kb/posts/336?from=pairnic
+# make sure this file has eXecutable atrributes
+# use @.mypairdomain.com for top-level or subdomain.mypairdomain.com
+host=
+pass=
+
+wanip=$1
+hostx=$(echo $host | sed 's/@.//')
+resolvedip=$(nslookup $hostx | grep $hostx -A1 | awk '/^Address / {print $3}')
+
+if [ "$wanip" == "$resolvedip" ]; then
+      logger "DDNS: WAN IP ($wanip) unchanged, no update necessary"
+      /sbin/ddns_custom_updated 1
+else
+		response=$(curl -s https://pairdomains:$pass@dynamic.pairdomains.com/nic/update?hostname=$host)
+        if [ "$response" == "good $wanip" ]; then
+            logger "DDNS: DNS updated to $wanip from $resolvedip"
+            /sbin/ddns_custom_updated 1
+        else
+            logger "DDNS: Update error. $response"
+            /sbin/ddns_custom_updated 0
+        fi
+fi
+....
 
 [[pddyandexru]]
 == pdd.yandex.ru
