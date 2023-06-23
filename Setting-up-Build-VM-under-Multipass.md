@@ -13,7 +13,7 @@ We are going to use Ubuntu 20.04 in Multipass.
 ### Launch an instance
 
 ```bash
-multipass launch --name primary --cpus 4 --disk 32G --mem 2G 20.04
+multipass launch --name primary --cpus 4 --disk 32G --memory 2G 20.04
 ```
 
 ### Open a shell inside the instance
