@@ -56,6 +56,8 @@ amtm also offers an interface for managing a number of other features:
 | email settings | thelonelycoder |
 | 10 router games to choose from | thelonelycoder |
 | Keep a history of entered shell commands | thelonelycoder
+| Router date keeper | thelonelycoder
+| amtm and third party script reset/remove options | thelonelycoder
 
 ## Usage ##
 amtm can be launched over SSH, as there is no web interface for it.  In addition to enabling SSH support on your router, some of its scripts will have additional requirements, most commonly you will need to set _Enable JFFS custom scripts and configs_ on the web interface to _Yes_, under _Administration -> System_.  A USB disk is also required by many of its scripts.
