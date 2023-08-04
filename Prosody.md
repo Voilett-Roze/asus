@@ -55,5 +55,8 @@ To enable connections from the WAN, create a [user script](User-scripts) `/jffs/
 ```sh
 #!/bin/sh
 iptables -I INPUT -p tcp -m tcp -i "$1" --dport 5222 --jump ACCEPT
+iptables -I INPUT -p tcp -m tcp -i "$1" --dport 5269 --jump ACCEPT
 ```
 This script will be run each time when **Enable Firewall** is changed to _Yes_ in the web user interface, or the router is started up.
+
+The port number 5222 is for client-to-server connections and 5269 for server-to-server XMPP (s2s, federated network).
