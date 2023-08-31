@@ -19,7 +19,7 @@ List of supported models:
  * RT-AX88U
  * RT-AX56U
  * RT-AX58U (v2 is not supported)
- * RT-AX3000 (use the RT-AX58U firmware)
+ * RT-AX3000 (v1: use the RT-AX58U firmware; v2 is [not supported](https://www.asuswrt-merlin.net/about))
  * RT-AX86S (use the RT-AX86U firmware)
  * RT-AX86U
  * GT-AC2900 (GT models do not have ROG-specific features)
@@ -42,3 +42,4 @@ No longer supported:
  * RT-AC3200
 
 NOTE: all the "R" versions (for example RT-N66R) are the same as their "U" counterparts, they are just different packages aimed at large retailers.  The firmware is 100% compatible with both U and R versions of the routers.  Same with the "W" variants that are simply white.
+
