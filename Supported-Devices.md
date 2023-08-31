@@ -5,6 +5,8 @@ Please read this page instead: https://www.snbforums.com/threads/the-tm-ac1900-i
 
 ***
 
+**Note:** this list may not be up to date with [this](https://www.asuswrt-merlin.net/about) list.
+
 List of supported models:
 
  * RT-AC66U_B1 (use the RT-AC68U firmware)
