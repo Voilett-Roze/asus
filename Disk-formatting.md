@@ -139,8 +139,6 @@ Login to the router via ssh using your preferred client.
 
 To enable SSH (LAN ONLY) go to [Administration/System](http://router.asus.com/Advanced_System_Content.asp)
 
-***Do not enable SSH for WAN or you will get hacked.***
-
 ----
 ### 4. View disk information
 
