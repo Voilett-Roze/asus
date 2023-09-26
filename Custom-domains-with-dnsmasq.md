@@ -6,7 +6,7 @@ With dnsmasq you are able to create custom domains within your network or route 
 1. Go to `Administration -> System`
 2. Enable: `Enable JFFS custom scripts and configs` config option
 3. Enable: `Enable SSH` config option
-4. Go to `LAN -> DNS Filter` (`Parental Controls -> DNSFilter` on older models)
+4. Go to `LAN -> DNS Filter` (`Parental Controls -> DNSFilter` on older models) (`LAN -> DNS Director` on firmware version >= 388.1)
 5. Disable: `Enable DNS-based Filtering`
 
 ## Adjust DHCP Server Options
