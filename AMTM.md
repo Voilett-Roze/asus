@@ -41,6 +41,8 @@ amtm currently supports these popular scripts:
 | WICENS | Maverickcdn | [Link](https://www.snbforums.com/threads/wicens-wan-ip-change-email-notification-script.69294/) |
 | KILLMON | Viktor Jaep | [Link](https://www.snbforums.com/threads/killmon-v1-05-feb-20-2023-ip4-ip6-vpn-kill-switch-monitor-configurator.81758/) |
 | Dual WAN Failover | Ranger802004 | [Link](https://www.snbforums.com/threads/dual-wan-failover-v2-0-2-release.83674/) |
+| BACKUPMON | Viktor Jaep | [Link](https://www.snbforums.com/threads/backupmon-v1-22-oct-2-2023-backup-restore-your-router-jffs-nvram-external-usb-drive.86645/) |
+| Domain-based VPN Routing | Ranger802004 | [Link](https://www.snbforums.com/threads/domain-based-vpn-routing-script.79264/) |
 
 amtm also offers an interface for managing a number of other features:
 
@@ -58,6 +60,7 @@ amtm also offers an interface for managing a number of other features:
 | Keep a history of entered shell commands | thelonelycoder
 | Router date keeper | thelonelycoder
 | amtm and third party script reset/remove options | thelonelycoder
+| Show all cron jobs | thelonelycoder
 
 ## Usage ##
 amtm can be launched over SSH, as there is no web interface for it.  In addition to enabling SSH support on your router, some of its scripts will have additional requirements, most commonly you will need to set _Enable JFFS custom scripts and configs_ on the web interface to _Yes_, under _Administration -> System_.  A USB disk is also required by many of its scripts.
@@ -74,5 +77,5 @@ Before installing any of the scripts it is strongly recommended that you read th
 ## amtm License ##
 amtm is free to use under the GNU General Public License, version 3 (GPL-3.0)
 
-## Screenshot amtm v3.3 ##
-[![amtm v3.3](https://cdn.imgchest.com/files/6yxkcrjmq7w.png "amtm v3.3")](https://cdn.imgchest.com/files/6yxkcrjmq7w.png "amtm v3.3")
+## Screenshot amtm v4.0 ##
+[![amtm v4.0](https://cdn.imgchest.com/files/j7mmcw6w8n7.png "amtm v4.0")](https://cdn.imgchest.com/files/j7mmcw6w8n7.png "amtm v4.0")
