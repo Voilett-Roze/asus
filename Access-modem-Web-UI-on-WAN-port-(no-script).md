@@ -39,3 +39,10 @@ your modem and router will be configured to utilize different subnets.
    Then retry step (3) above.
 
 **That's it !**
+
+If the above does not work, you can assign a virtual interface to eth0 - the WAN port. Keep your WAN config to "Automatic IP" then SSH into your merlin router, and use this command:
+
+``` ifconfig eth0:1 192.168.0.2 netmask 225.225.225.0 ```
+
+What this does is you assign a virtual interface to modem subnet 192.168.0.1 used in the example above. For the majority of us, it might be 192.168.1.1
+Do check before you assign the interface. After assigning, go to 192.168.0.1 (your modem webui page) to test.
