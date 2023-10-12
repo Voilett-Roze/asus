@@ -49,3 +49,5 @@ If the above does not work, you can assign a virtual interface to eth0 - the WAN
 What this does is you assign a virtual interface to modem subnet 192.168.0.1 used in the example above. For the majority of us, it might be 192.168.1.1
 Do check before you assign the interface. After assigning, go to 192.168.0.1 (your modem webui page) to test.
 >>Do note the command ***does not persist*** after reboot.
+
+To make it persist, go to jffs/scripts, modify init-start to include the above ifconfig command.
