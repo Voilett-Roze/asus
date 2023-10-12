@@ -44,10 +44,8 @@ your modem and router will be configured to utilize different subnets.
 
 If the above does not work, you can assign a virtual interface to eth0 - the WAN port. Keep your WAN config to "Automatic IP" then SSH into your merlin router, and use this command:
 
-``` ifconfig eth0:1 192.168.0.2 netmask 225.225.225.0 ```
+``` ifconfig eth0:1 192.168.0.2 netmask 255.255.255.0 ```
 
 What this does is you assign a virtual interface to modem subnet 192.168.0.1 used in the example above. For the majority of us, it might be 192.168.1.1
 Do check before you assign the interface. After assigning, go to 192.168.0.1 (your modem webui page) to test.
-
-## Troubleshooting
-For some reason, on certain merlin firmware you might encounter error ```ifconfig: SIOCSIFNETMASK: Invalid argument```, try go to your modem webui IP(192.168.0.1) or ping 192.168.0.1. If there is a response, you can safely ignore this. Do note the command ***does not persist*** after reboot.
+>>Do note the command ***does not persist*** after reboot.
