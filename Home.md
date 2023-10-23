@@ -105,7 +105,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 14. [USB Disk Check at Boot](/RMerl/asuswrt-merlin.ng/wiki/USB-Disk-Check-at-Boot)
 15. [USB Disk Check at Boot or Hot Plug (improved version)](https://github.com/RMerl/asuswrt-merlin.ng/wiki/USB-Disk-Check-at-Boot-or-Hot-Plug-(improved-version))
 16. [Minidlna - Common Issues & Solutions](/RMerl/asuswrt-merlin.ng/wiki/Minidlna-‐-Common-Issues-&-Solutions)
-17. [pyTivo:  How-To Guide](/RMerl/asuswrt-merlin.ng/wiki/pyTivo-on-AsusWRT-Merlin-Router:--How-To-Guide)
+17. [pyTivo - How-To Guide](/RMerl/asuswrt-merlin.ng/wiki/pyTivo-on-AsusWRT-Merlin-Router-‐-How-To-Guide)
 18. [Setting up an NTP time server for your LAN](/RMerl/asuswrt-merlin.ng/wiki/Setting-up-an-NTP-time-server-for-your-LAN)
 19. [Disk formatting](/RMerl/asuswrt-merlin.ng/wiki/Disk-formatting)
 20. [Change the webui language](/RMerl/asuswrt-merlin.ng/wiki/Change-the-webui-language-when-it's-factory-locked)
