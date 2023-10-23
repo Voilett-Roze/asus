@@ -81,7 +81,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 7. [Link Aggregation Setup](/RMerl/asuswrt-merlin.ng/wiki/Link-Aggregation)
 8. [Access modem Web UI on WAN port (no script)](/RMerl/asuswrt-merlin.ng/wiki/Access-modem-Web-UI-on-WAN-port-(no-script))
 9. [Enforce the use of Google Safesearch on your LAN](/RMerl/asuswrt-merlin.ng/wiki/Enforce-Safesearch)
-10. [How to have dedicated DHCP options bind to a specific SSID?](/RMerl/asuswrt-merlin.ng/wiki/How-to-have-dedicated-DHCP-options-bind-to-a-specific-SSID%3F)
+10. [How to have dedicated DHCP options bind to a specific SSID](/RMerl/asuswrt-merlin.ng/wiki/How-to-have-dedicated-DHCP-options-bind-to-a-specific-SSID)
 11. [Custom domains with dnsmasq](/RMerl/asuswrt-merlin.ng/wiki/Custom-domains-with-dnsmasq)
 12. [How to use Adblock using Pixelserv](https://github.com/RMerl/asuswrt-merlin.ng/wiki/How-to-use-Adblock-using-Pixelserv)
 13. [How to block scanners, bots, malware, ransomware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/How-to-block-scanners,-bots,-malware,-ransomware)
