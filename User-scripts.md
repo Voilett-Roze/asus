@@ -3,6 +3,13 @@ While Asuswrt-Merlin only adds a limited number of new features over the origina
 
 Those scripts are stored in the internal non-volatile flash in the [JFFS](https://github.com/RMerl/asuswrt-merlin.ng/wiki/JFFS) partition.  Support for these scripts must be enabled, under Administration -> System on the webui.
 
+To enable user scripts on an aimesh node, SSH into the node and run the following commands:
+
+```
+nvram set jffs2_scripts="1"
+nvram commit
+reboot
+```
 
 ## Available scripts:
 
