@@ -1,9 +1,9 @@
 ## About ##
 **amtm - the Asuswrt-Merlin Terminal Menu**
 
-amtm is a shell-based front end that manages popular scripts for wireless routers running Asuswrt-Merlin firmware.  It also offers a couple of additional management features.
+amtm is a shell-based front end that manages popular scripts for wireless routers running Asuswrt-Merlin firmware.
 
-Starting with Asuswrt-Merlin firmware 384.15, amtm is included in the firmware.
+Starting with Asuswrt-Merlin 384.15, amtm is included in the firmware.
 
 amtm is maintained by [@decoderman](https://github.com/decoderman), aka thelonelycoder. [GitHub repo](https://github.com/decoderman/amtm), [Website](https://diversion.ch/amtm.html).  
 There are [support threads](https://www.snbforums.com/threads/amtm-4-2-the-asuswrt-merlin-terminal-menu-released-january-13-2024.79665/) at SNBForums that are dedicated to amtm.
