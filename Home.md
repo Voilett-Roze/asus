@@ -54,8 +54,11 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 7. [Webcam video surveillance Entware](http://www.hqt.ro/webcam-video-surveillance-via-mjpg-streamer-entware/) (External link)
 
 #### Chroot Debian
-1. [Plex Media Server on Arm Routers](http://www.hqt.ro/plex-media-server-through-debian-arm/) (External link)
-2. [Minidlna Upnp Media Server through debian](/RMerl/asuswrt-merlin.ng/wiki/Media-Server-through-debian) (link list)
+1. [Plex Media Server on Arm Routers](http://www.hqt.ro/plex-media-server-through-debian-arm/) (External link, [Accessed by The Wayback Machine](https://web.archive.org/web/20230130003657/https://hqt.ro/plex-media-server-through-debian-arm/)) 
+2. [Plex Media Server on Armhf (RT-AX58U etc.) Routers](https://web.archive.org/web/20230512030731/https://hqt.ro/plex-media-server-on-asuswrt-armhf-routers/) (External link, accessed by the The Wayback Machine)
+3. [Debian 12 Bookworm + Plex Media Server (Asus RT-AX86S)](https://www.snbforums.com/threads/debian-12-bookworm-plex-media-server-asus-rt-ax86s.86175/) (External link)*
+*the most up-to-date guide, written for Arm64 routers, but works for Armhf too, just change to your processor architecture when installing debian through debootstrap)
+4. [Minidlna Upnp Media Server through debian](/RMerl/asuswrt-merlin.ng/wiki/Media-Server-through-debian) (link list)
 
 ### Development
 1. [Download the latest source code from GitHub](/RMerl/asuswrt-merlin.ng/wiki/Download-the-latest-source-code-from-GitHub)
