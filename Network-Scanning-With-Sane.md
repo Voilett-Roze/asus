@@ -68,7 +68,7 @@ eula = 1
 version = $HPLIP_VERSION
 EOT
 ```
-* You may also need to add `/opt/share/hplip/scan/plugins/bb_marvell.so` file which you can obtain from hplip package and put there manually
+* You may also need to add `/opt/share/hplip/scan/plugins/bb_marvell.so` file which you can obtain from [hplip-plugin](https://developers.hp.com/hp-linux-imaging-and-printing/plugins) package and place there manually
 
 ### Test functionality:
 * Type: `scanimage -L`, your device should be displayed
