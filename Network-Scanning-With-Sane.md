@@ -87,5 +87,8 @@ NOTE: should you experience an error about missing `/opt/share/hplip/scan/plugin
 * Download SaneTwain [http://sanetwain.ozuzo.net](http://sanetwain.ozuzo.net)
 * On start-up put the router's ip/host
 
+### Web UI (Linux / Docker):
+* Check https://github.com/sbs20/scanservjs
+
 Suggestions are always welcomed.
  
