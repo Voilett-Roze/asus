@@ -45,30 +45,34 @@ fi
 ### HP:
 * Ssh to router and type the command: `opkg --force-overwrite install hplip hplip-full`
 * Create `/opt/etc/init.d/S01hplip` file and put the following content:
-```
-#!/bin/sh
+  <details>
+  <summary>Script</summary>
 
-PATH=/sbin:/bin:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin
+    ```
+    #!/bin/sh
+    
+    PATH=/sbin:/bin:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin
+    
+    HPLIP_VERSION=$(grep ^version= /opt/etc/hp/hplip.conf | sed -En 's/version=(.*)/\1/p')
+    
+    if [ -z "$HPLIP_VERSION" ]; then
+        logger "hplip version not found in /opt/etc/hp/hplip.conf"
+        exit 0
+    fi
 
-HPLIP_VERSION=$(grep ^version= /opt/etc/hp/hplip.conf | sed -En 's/version=(.*)/\1/p')
-
-if [ -z "$HPLIP_VERSION" ]; then
-	logger "hplip version not found in /opt/etc/hp/hplip.conf"
-	exit 0
-else
-	logger "creating /var/lib/hp/hplip.state with version $HPLIP_VERSION"
-fi
-
-mkdir -p /var/lib/hp
-
-cat <<EOT > /var/lib/hp/hplip.state
-[plugin]
-installed = 1
-eula = 1
-version = $HPLIP_VERSION
-EOT
-```
-* You may also need to add `/opt/share/hplip/scan/plugins/bb_marvell.so` file which you can obtain from [hplip-plugin](https://developers.hp.com/hp-linux-imaging-and-printing/plugins) package and place there manually
+    logger "creating /var/lib/hp/hplip.state with version $HPLIP_VERSION"
+    
+    mkdir -p /var/lib/hp
+    
+    cat <<EOT > /var/lib/hp/hplip.state
+    [plugin]
+    installed = 1
+    eula = 1
+    version = $HPLIP_VERSION
+    EOT
+    ```
+  </details>
+NOTE: should you experience an error about missing `/opt/share/hplip/scan/plugins/bb_marvell.so` or other plugins in the system log, add the required files from [hplip-plugin](https://developers.hp.com/hp-linux-imaging-and-printing/plugins): download the .run file of the corresponding plugin version (run `grep ^version= /opt/etc/hp/hplip.conf` to find out), open it as a tar archive and extract the arm32 or arm64 versions (depending on your router model) of the missing plugins to the corresponding locations indicated in the log.
 
 ### Test functionality:
 * Type: `scanimage -L`, your device should be displayed
