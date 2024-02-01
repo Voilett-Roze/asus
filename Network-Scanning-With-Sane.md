@@ -43,7 +43,32 @@ fi
 ```
 ### Special Hardware Instructions
 ### HP:
-* Ssh to router and type the command: `opkg --force-overwrite install hplip`
+* Ssh to router and type the command: `opkg --force-overwrite install hplip hplip-full`
+* Create `/opt/etc/init.d/S01hplip` file and put the following content:
+```
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin
+
+HPLIP_VERSION=$(grep ^version= /opt/etc/hp/hplip.conf | sed -En 's/version=(.*)/\1/p')
+
+if [ -z "$HPLIP_VERSION" ]; then
+	logger "hplip version not found in /opt/etc/hp/hplip.conf"
+	exit 0
+else
+	logger "creating /var/lib/hp/hplip.state with version $HPLIP_VERSION"
+fi
+
+mkdir -p /var/lib/hp
+
+cat <<EOT > /var/lib/hp/hplip.state
+[plugin]
+installed = 1
+eula = 1
+version = $HPLIP_VERSION
+EOT
+```
+* You may also need to add `/opt/share/hplip/scan/plugins/bb_marvell.so` file which you can obtain from hplip package and put there manually
 
 ### Test functionality:
 * Type: `scanimage -L`, your device should be displayed
