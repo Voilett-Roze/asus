@@ -2,8 +2,10 @@ Note that the below manual usage is still possible but there has long since been
 amtm has a built in method to enter all email credentials and store these in a central and accessible place for other addons to use.
 Link to the [amtm wiki](https://www.snbforums.com/forums/asuswrt-merlin-addons.60/?prefix_id=10&starter_id=25480)
 
-Multiple addons supported by amtm and many that are not use these credentials to send mail.
-And now starts the original manual method.
+Multiple addons supported by amtm and many that are not use these credentials to send emails.
+
+And now, below starts the original manual method.
+
 
 Asuswrt-Merlin includes a cutdown version of sendmail which can be used to send mail from the router.  Basic usage will look like this:
 
