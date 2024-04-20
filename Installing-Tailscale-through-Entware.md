@@ -24,7 +24,6 @@ Configuring tailscale.
 By default tailscale operates in [kernel mode](https://tailscale.com/kb/1177/kernel-vs-userspace-routers?q=userspace-networking). Kernel mode is more performant than userspace mode but may be incompatible with certain Merlin addons and features. Depending on which mode you choose the following changes are required.
 
 **2.1 Kernel Mode**
-
 Add/change the following lines in `/opt/etc/init.d/S06tailscaled`.
 ```
 PRECMD="modprobe tun"
@@ -37,15 +36,13 @@ if [ -x /opt/bin/tailscale ]; then tailscale down; tailscale up; fi
 ```
 
 **2.2 Userspace Mode**
-
 Change the following lines in `/opt/etc/init.d/S06tailscaled`.
 ```
 ARGS="--tun=userspace-networking --state=/opt/var/tailscaled.state"
 PREARGS="nohup"
 ```
-
+No firewall changes are needed in userspace mode.
 ### 3. Start tailscale
-
 Use the following command to start the tailscale daemon, or reboot the router.
 ```
 # /opt/etc/init.d/S06tailscaled start
@@ -89,5 +86,5 @@ Please restart tailscaled to finish the update.
  Shutting down tailscaled...              done.
  Starting tailscaled...              done.
 ```
-### 6. Known Issues
+## Known Issues
 1. Be aware that upgrading the tailscale Entware package (`opkg upgrade`) will overwrite any changes made to `/opt/etc/init.d/S06tailscaled`. Make sure you know what changes you have made so that you can reapply them after the upgrade.
