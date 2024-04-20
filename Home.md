@@ -89,6 +89,7 @@ This is the official Wiki/documentation for Asuswrt-merlin, a custom firmware de
 12. [How to use Adblock using Pixelserv](https://github.com/RMerl/asuswrt-merlin.ng/wiki/How-to-use-Adblock-using-Pixelserv)
 13. [How to block scanners, bots, malware, ransomware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/How-to-block-scanners,-bots,-malware,-ransomware)
 14. [Adaptive QoS Optimization](/RMerl/asuswrt-merlin.ng/wiki/Adaptive-QoS-Optimization)
+15. [Installing Tailscale through Entware](/RMerl/asuswrt-merlin.ng/wiki/Installing-Tailscale-through-Entware)
 
 
 ### Misc HowTo and Guides
