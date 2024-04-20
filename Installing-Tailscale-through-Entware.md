@@ -24,6 +24,7 @@ Configuring tailscale.
 By default tailscale operates in [kernel mode](https://tailscale.com/kb/1177/kernel-vs-userspace-routers?q=userspace-networking). Kernel mode is more performant than userspace mode but may be incompatible with certain Merlin addons and features. Depending on which mode you choose the following changes are required.
 
 **2.1 Kernel Mode**
+
 Add/change the following lines in `/opt/etc/init.d/S06tailscaled`.
 ```
 PRECMD="modprobe tun"
@@ -36,6 +37,7 @@ if [ -x /opt/bin/tailscale ]; then tailscale down; tailscale up; fi
 ```
 
 **2.2 Userspace Mode**
+
 Change the following lines in `/opt/etc/init.d/S06tailscaled`.
 ```
 ARGS="--tun=userspace-networking --state=/opt/var/tailscaled.state"
