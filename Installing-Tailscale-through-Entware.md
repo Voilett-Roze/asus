@@ -4,7 +4,7 @@ Tailscale is a VPN service that makes the devices and applications you own acces
 https://tailscale.com/kb/1151/what-is-tailscale
 
 ## Prerequisites
-This installation guide assumes you are already familiar with the general operation of tailscale. Extensive documentation is available on the tailscale website and it is not the purpose of this guide to replicate it here. https://tailscale.com/kb/1017/install
+This installation guide assumes you are already familiar with the general operation of tailscale. [Extensive documentation](https://tailscale.com/kb/1017/install) is available on the tailscale website and it is not the purpose of this guide to replicate it here.
 
 You must already have a working installation of [Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware#the-easy-way) on your router.
 
@@ -76,13 +76,13 @@ https://tailscale.com/kb/1241/tailscale-up
 
 https://tailscale.com/kb/1080/cli#set
 
-Examples:
+**Examples**
 
-To reset tailscale to a standalone device (not advertising itself as an exit node or subnet router):
+Reset tailscale to a standalone device (not advertising itself as an exit node or subnet router):
 ```
 tailscale up --reset
 ```
-To tell tailscale stop advertising itself as an exit node:
+Tell tailscale to stop advertising itself as an exit node:
 ```
 tailscale set --advertise-exit-node=false
 ```
@@ -115,8 +115,10 @@ To remove tailscale from your router run the following commands. If you made cha
 # /opt/etc/init.d/S06tailscaled stop
  Checking tailscaled...              alive.
  Shutting down tailscaled...              done.
+
 # opkg remove tailscale
 Removing package tailscale from root...
+
 # rm /opt/var/tailscaled.state
 ```
 Now go to the tailscale [admin console](https://login.tailscale.com/admin/machines) and find the entry for the router. Click on `...`/`Remove...` and remove the machine.
