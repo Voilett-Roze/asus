@@ -6,7 +6,7 @@ https://tailscale.com/kb/1151/what-is-tailscale
 ## Prerequisites
 This installation guide assumes you are already familiar with the general operation of tailscale. Extensive documentation is available on the tailscale website and it is not the purpose of this guide to replicate it here. https://tailscale.com/kb/1017/install
 
-You must already have a working installation on [Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware#the-easy-way) on your router.
+You must already have a working installation of [Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware#the-easy-way) on your router.
 
 You also need to have created a Tailscale account to use with your devices. https://tailscale.com/kb/1017/install#step-1-sign-up-for-an-account
 ## Installation
@@ -82,7 +82,7 @@ To configure the router as an exit node but not a subnet router:
 ```
 tailscale up --advertise-exit-node --reset
 ```
-Many other options are available including LAN to LAN setups but that is beyond the scope of this wiki.
+Many other options are available including LAN to LAN setups but that is beyond the scope of this guide.
 
 ## Updating tailscale (or not).
 I recommend you _don't_ update tailscale directly from the tailscale website using the commands below as it may not be fully compatible with asuswrt-merlin. The tailscale Entware package is periodically updated and can be upgraded just like any other Entware package using `opkg upgrade`.
