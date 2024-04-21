@@ -70,17 +70,21 @@ Success.
 ```
 
 ## Reconfiguring Tailscale
-Tailscale's behaviour can be changed by using `tailscale up` to set or reset various flags. See the official documentation here: https://tailscale.com/kb/1241/tailscale-up
+Tailscale's behaviour can be changed by setting various flags using `tailscale up` or `tailscale set`. See the official documentation here:
+
+https://tailscale.com/kb/1241/tailscale-up
+
+https://tailscale.com/kb/1080/cli#set
 
 Examples:
 
-To configure the router as a standalone device and stop advertising itself as an exit node and subnet router:
+To reset tailscale to a standalone device (not advertising itself as an exit node or subnet router):
 ```
 tailscale up --reset
 ```
-To configure the router as an exit node but not a subnet router:
+To tell tailscale stop advertising itself as an exit node:
 ```
-tailscale up --advertise-exit-node --reset
+tailscale set --advertise-exit-node=false
 ```
 Many other options are available including LAN to LAN setups but that is beyond the scope of this guide.
 
