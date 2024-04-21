@@ -69,6 +69,21 @@ To authenticate, visit:
 Success.
 ```
 
+## Reconfiguring Tailscale
+Tailscale's behaviour can be changed by using `tailscale up` to set or reset various flags. See the official documentation here: https://tailscale.com/kb/1241/tailscale-up
+
+Examples:
+
+To configure the router as a standalone device and stop advertising itself as an exit node and subnet router:
+```
+tailscale up --reset
+```
+To configure the router as an exit node but not a subnet router:
+```
+tailscale up --advertise-exit-node --reset
+```
+Many other options are available including LAN to LAN setups but that is beyond the scope of this wiki.
+
 ## Updating tailscale (or not).
 I recommend you _don't_ update tailscale directly from the tailscale website using the commands below as it may not be fully compatible with asuswrt-merlin. The tailscale Entware package is periodically updated and can be upgraded just like any other Entware package using `opkg upgrade`.
 ```
