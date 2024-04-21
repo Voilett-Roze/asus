@@ -3,10 +3,12 @@ Tailscale is a VPN service that makes the devices and applications you own acces
 
 https://tailscale.com/kb/1151/what-is-tailscale
 
-## Initial configuration
-This guide assumes you have a working installation on [Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware#the-easy-way) on your router.
+## Prerequisites
+This installation guide assumes you are already familiar with the general operation of tailscale. Extensive documentation is available on the tailscale website and it is not the purpose of this guide to replicate it here. https://tailscale.com/kb/1017/install
 
-You also need to have created a Tailscale account to use with your devices. https://tailscale.com/kb/1017/install
+You must already have a working installation on [Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware#the-easy-way) on your router.
+
+You also need to have created a Tailscale account to use with your devices. https://tailscale.com/kb/1017/install#step-1-sign-up-for-an-account
 ## Installation
 ### 1. Install tailscale
 
@@ -53,7 +55,7 @@ Use the following command to start the tailscale daemon, or reboot the router.
 ### 4. Configure tailscale as an exit node and subnet router
 This is a one-time task. If your LAN uses a different IP address or subnet mask change the command below to match your system.
 
-Once you get the authentication URL paste it into a browser and connect the device using your tailscale account. Find your router's name in the Tailscale Machines list, click on `...`/`Edit route settings...` and enable Subnet routes and Exit node.
+Copy your unique authentication URL and paste it into a browser. Connect the device using your tailscale account. Find your router's name in the Tailscale Machines list, click on `...`/`Edit route settings...` and enable Subnet routes and Exit node.
 
 Return to your terminal session and you should see the "Success" message.
 
@@ -62,12 +64,12 @@ Return to your terminal session and you should see the "Success" message.
 
 To authenticate, visit:
 
-        https://login.tailscale.com/a/29ce323012ea8
+        https://login.tailscale.com/a/xxxxxxxxxxxxx
 
 Success.
 ```
 
-### 5. Updating tailscale (or not).
+## Updating tailscale (or not).
 I recommend you _don't_ update tailscale directly from the tailscale website using the commands below as it may not be fully compatible with asuswrt-merlin. The tailscale Entware package is periodically updated and can be upgraded just like any other Entware package using `opkg upgrade`.
 ```
 # tailscale update
@@ -88,5 +90,17 @@ Please restart tailscaled to finish the update.
  Shutting down tailscaled...              done.
  Starting tailscaled...              done.
 ```
+## Uninstalling tailscale
+To remove tailscale from your router run the following commands. If you made changes to `/jffs/scripts/firewall-start` you should undo that also.
+```
+# /opt/etc/init.d/S06tailscaled stop
+ Checking tailscaled...              alive.
+ Shutting down tailscaled...              done.
+# opkg remove tailscale
+Removing package tailscale from root...
+# rm /opt/var/tailscaled.state
+```
+Now go to the tailscale [admin console](https://login.tailscale.com/admin/machines) and find the entry for the router. Click on `...`/`Remove...` and remove the machine.
+
 ## Known Issues
 1. Be aware that upgrading the tailscale Entware package (`opkg upgrade`) will overwrite any changes made to `/opt/etc/init.d/S06tailscaled`. Make sure you know what changes you have made so that you can reapply them after the upgrade.
