@@ -30,6 +30,7 @@ By default tailscale operates in [kernel mode](https://tailscale.com/kb/1177/ker
 Add/change the following lines in `/opt/etc/init.d/S06tailscaled`.
 ```
 PRECMD="modprobe tun"
+ARGS="--state=/opt/var/tailscaled.state --statedir=/opt/var/lib/tailscale"
 PREARGS="nohup"
 ```
 Create a `/jffs/scripts/firewall-start` [user script](https://github.com/RMerl/asuswrt-merlin.ng/wiki/User-scripts) as follows, or add the line to the existing script if you have one. Remember to make the script executable.
@@ -42,7 +43,7 @@ if [ -x /opt/bin/tailscale ]; then tailscale down; tailscale up; fi
 
 Change the following lines in `/opt/etc/init.d/S06tailscaled`.
 ```
-ARGS="--tun=userspace-networking --state=/opt/var/tailscaled.state"
+ARGS="--state=/opt/var/tailscaled.state --statedir=/opt/var/lib/tailscale --tun=userspace-networking"
 PREARGS="nohup"
 ```
 No firewall changes are needed in userspace mode.
