@@ -16,6 +16,8 @@ Finally, like all [[user scripts|User-scripts]], the option to support custom sc
 
 After enabling custom scripts, place the contents of your update script in `/jffs/scripts/ddns-start` and Enable the DDNS Client in WAN -> DDNS and use `Custom` as Server.
 
+> Note: if you use custom scripts to update ddns with both IPv4 and IPv6, you may need to set WAN -> DDNS --> IPv6 Update--> No and use `ddns-start` script to update both IPv4 and IPv6 record.
+
 # Using a DDNS with Double NAT
 If your ASUS router is double NATed behind your ISP's router, you may need to
 retrieve your external IP rather than using the one passed to it from the
