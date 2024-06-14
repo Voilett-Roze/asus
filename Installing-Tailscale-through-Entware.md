@@ -22,6 +22,7 @@ Downloading https://bin.entware.net/aarch64-k3.10/ca-bundle_20230311-1_all.ipk
 Configuring ca-bundle.
 Configuring tailscale.
 ```
+**N.B.** Older routers that use kernel 2.6 (e.g. RT-AC68U) should instead install the `tailscale_nohf` package.
 ### 2. Kernel vs. Userspace Mode
 By default Tailscale operates in [kernel mode](https://tailscale.com/kb/1177/kernel-vs-userspace-routers?q=userspace-networking). Kernel mode is more performant than userspace mode but may be incompatible with certain Merlin addons and features. Depending on which mode you choose the following changes are required.
 
