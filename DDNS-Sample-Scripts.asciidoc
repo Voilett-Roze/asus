@@ -81,6 +81,32 @@ fi
 
 https://gist.github.com/venator85/0b677e535dd35e2cd02c54ed445221ed[Gist link]
 
+== Beebyte
+^https://beebyte.se/^
+
+If you use Beebyte for your domains, this script can update any A record on your account. Find your API key https://portal.beebyte.se/organisation/apikey/[here].
+
+[source]
+....
+#!/bin/sh
+
+API= # Beebyte API key
+DOMAIN= # Your domain, e.g. example.com
+RECORD= # Your domain record, e.g. sub.example.com or example.com for domain root
+IP=${1}
+
+curl -fs -o /dev/null -X POST "https://portal.beebyte.se/api/v1/domain/${DOMAIN}/record/" \
+  -H "API-KEY: $API" \
+  -H "Content-Type: application/json" \
+  --data "{\"name\":\"$RECORD\",\"ttl\":1800,\"record_type\":\"A\",\"record_data\":\"$IP\",\"overwrite\":true}"
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
+....
+
 == BIND9 DDNS using nsupdate
 
 If you run your own DNS server with BIND9, this script uses nsupdate to
